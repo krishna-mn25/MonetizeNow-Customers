@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MonetizeNow · Usage Billing Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#eef0f7;color:#1a1a2e;padding:2.5rem 2rem;min-height:100vh}
+.page{max-width:800px;margin:0 auto}
+.pill-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:#4a5080;background:#fff;border:1px solid #d8daea;border-radius:20px;padding:4px 12px;margin-bottom:1.75rem;letter-spacing:.03em}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:#4a6cf7;flex-shrink:0}
+.page-title{font-size:38px;font-weight:700;color:#1a1a2e;line-height:1.15;margin-bottom:.75rem}
+.page-title span{color:#4a6cf7}
+.page-sub{font-size:14px;color:#5c5f7a;line-height:1.65;max-width:520px;margin-bottom:2rem}
+.system-pills{display:flex;align-items:center;gap:10px;margin-bottom:2.5rem}
+.sys-pill{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;color:#1a1a2e;background:#fff;border:1px solid #d8daea;border-radius:8px;padding:7px 14px}
+.sys-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-sf{background:#00a1e0}
+.dot-mn{background:#4a6cf7}
+.sys-arrow{color:#9096b0;font-size:14px}
+.divider{border:none;border-top:1px solid #d8daea;margin:2rem 0}
+.layer-label{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#4a6cf7;padding:0 0 6px;margin-top:1.75rem;margin-bottom:2px}
+.layer-label:first-of-type{margin-top:0}
+.row{display:grid;gap:10px;margin-top:8px}
+.row-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.row-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:620px){.row-3,.row-2{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid #d8daea;border-radius:12px;padding:15px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:#9ba3d4;box-shadow:0 2px 8px rgba(74,108,247,.08)}
+.card.active{border-color:#4a6cf7;box-shadow:0 0 0 3px rgba(74,108,247,.1)}
+.card-title{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:3px}
+.card-sub{font-size:11px;color:#5c5f7a;line-height:1.45}
+.badge{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-bottom:7px;letter-spacing:.04em}
+.badge-blue{background:#eef1fd;color:#2d44b0}
+.badge-teal{background:#e3f6f0;color:#0a6147}
+.badge-amber{background:#fef3e2;color:#7a4a08}
+.badge-gray{background:#f1f2f6;color:#4a5070}
+.badge-coral{background:#fdeee9;color:#7a2a10}
+.arrow-row{display:flex;justify-content:space-around;padding:4px 0;opacity:.25}
+.arrow-row span{font-size:15px;color:#4a5070}
+.detail-panel{border-radius:12px;border:1px solid #d8daea;overflow:hidden;margin-top:8px;display:none;background:#fff}
+.detail-panel.open{display:block}
+.detail-header{padding:13px 16px;border-bottom:1px solid #eef0f7;background:#f7f8fc}
+.detail-header-title{font-size:14px;font-weight:600;color:#1a1a2e}
+.detail-header-sub{font-size:12px;color:#5c5f7a;margin-top:2px}
+.detail-tabs{display:flex;border-bottom:1px solid #eef0f7;background:#f7f8fc}
+.tab{padding:9px 15px;font-size:12px;font-weight:500;cursor:pointer;color:#5c5f7a;border:none;border-bottom:2px solid transparent;background:none;font-family:inherit;transition:color .15s,border-color .15s}
+.tab:hover{color:#4a6cf7}
+.tab.active{color:#4a6cf7;border-bottom-color:#4a6cf7;font-weight:600}
+.tab-content{padding:14px 16px;display:none}
+.tab-content.active{display:block}
+.mn-config{background:#f7f8fc;border-radius:8px;padding:11px 13px;margin-top:8px;border:1px solid #eef0f7}
+.mn-config-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4a6cf7;margin-bottom:7px}
+.mn-field{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid #eef0f7;font-size:12px}
+.mn-field:last-child{border-bottom:none}
+.mn-field-key{color:#5c5f7a;flex:0 0 46%}
+.mn-field-val{color:#1a1a2e;font-weight:600;text-align:right;flex:0 0 52%}
+.flow-step{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #eef0f7;font-size:12px}
+.flow-step:last-child{border-bottom:none}
+.step-num{width:20px;height:20px;border-radius:50%;background:#4a6cf7;color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-text{color:#1a1a2e;line-height:1.55}
+.step-detail{color:#5c5f7a;font-size:11px;margin-top:3px}
+.warning-box{background:#fef3e2;border-radius:8px;padding:10px 13px;margin-top:2px;font-size:12px;color:#7a4a08;line-height:1.55;border:1px solid #fde5b8}
+.footer-note{font-size:11px;color:#9096b0;margin-top:1.5rem;padding-top:12px;border-top:1px solid #d8daea;line-height:1.65}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="pill-tag"><span class="pill-dot"></span>Architecture Blueprint · 2025</div>
+
+<div class="page-title">Usage Billing <span>Architecture</span></div>
+<div class="page-sub">How MonetizeNow models prepaid credit pools, metered consumption, and arrears billing. Built for RevOps and Finance teams who want to understand exactly how each piece fits before configuration begins.</div>
+
+<div class="system-pills">
+  <div class="sys-pill"><span class="sys-dot dot-sf"></span>Salesforce</div>
+  <span class="sys-arrow">⇄</span>
+  <div class="sys-pill"><span class="sys-dot dot-mn"></span>MonetizeNow</div>
+</div>
+
+<hr class="divider">
+
+<div class="layer-label">Setup · Product catalog configuration</div>
+<div class="row row-3">
+  <div class="card" id="c-prepaid" onclick="toggle('prepaid')">
+    <div class="badge badge-blue">Product type</div>
+    <div class="card-title">Prepaid credit pool</div>
+    <div class="card-sub">Included spend committed upfront. Scoped to usage charges only.</div>
+  </div>
+  <div class="card" id="c-usage" onclick="toggle('usage')">
+    <div class="badge badge-teal">Product type</div>
+    <div class="card-title">Usage / overage product</div>
+    <div class="card-sub">Metered monthly, billed in arrears. Per-unit rate on consumption.</div>
+  </div>
+  <div class="card" id="c-payment" onclick="toggle('payment')">
+    <div class="badge badge-gray">Integration</div>
+    <div class="card-title">Card on file (Stripe)</div>
+    <div class="card-sub">Payment method stored on account. Auto-charges at month close.</div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-prepaid">
+  <div class="detail-header">
+    <div class="detail-header-title">Prepaid credit pool</div>
+    <div class="detail-header-sub">How included spend is modeled in MonetizeNow</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('prepaid','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('prepaid','mn',this)">MN catalog config</button>
+    <button class="tab" onclick="switchTab('prepaid','howto',this)">How to set it up</button>
+  </div>
+  <div class="tab-content active" id="prepaid-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Customer commits to a prepaid pool, e.g. $500 of included credits per period.</div><div class="step-detail">This sits on a contract as a one-time product, not a recurring subscription line.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Pool scope is set to usage charges only. It draws down against metered consumption, not flat fees or platform charges.</div><div class="step-detail">Credit application runs automatically at invoice time.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">At invoice time, pool offsets usage charge first. Remaining balance becomes overage.</div><div class="step-detail">MN tracks amountCredited and net overage on every invoice line item.</div></div></div>
+  </div>
+  <div class="tab-content" id="prepaid-mn">
+    <div class="mn-config"><div class="mn-config-label">Product catalog · prepaid credit product</div>
+      <div class="mn-field"><span class="mn-field-key">Product type</span><span class="mn-field-val">ONETIME_PREPAID_CREDIT</span></div>
+      <div class="mn-field"><span class="mn-field-key">Credit scope</span><span class="mn-field-val">USAGE_PRODUCTS only</span></div>
+      <div class="mn-field"><span class="mn-field-key">Credit value</span><span class="mn-field-val">$X (e.g. $500)</span></div>
+      <div class="mn-field"><span class="mn-field-key">Billing interval</span><span class="mn-field-val">One-time per contract</span></div>
+      <div class="mn-field"><span class="mn-field-key">Application order</span><span class="mn-field-val">Applied before overage fires</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="prepaid-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">In MN product catalog, create a new product and select type: Prepaid Credit.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Set credit scope to "Usage products only." This prevents pool from offsetting platform or flat fees.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Set credit value to match committed tier (e.g. $500). This becomes pool ceiling.</div></div></div>
+    <div class="flow-step"><div class="step-num">4</div><div><div class="step-text">Add this product to a customer quote as a one-time line item alongside a recurring usage product.</div></div></div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-usage">
+  <div class="detail-header">
+    <div class="detail-header-title">Usage / overage product</div>
+    <div class="detail-header-sub">How metered consumption maps to billing in MonetizeNow</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('usage','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('usage','mn',this)">MN catalog config</button>
+    <button class="tab" onclick="switchTab('usage','howto',this)">How to set it up</button>
+  </div>
+  <div class="tab-content active" id="usage-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Usage events are posted to MN via API throughout each month as credits are consumed.</div><div class="step-detail">Each event carries a quantity and a metering dimension key.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">At end of billing period, MN calculates total consumption and applies your per-unit rate.</div><div class="step-detail">Tiered, flat, and volume pricing models are all supported.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Usage invoice is generated in arrears, after a period closes.</div><div class="step-detail">Controlled via subscriptionTiming = ARREARS on rate configuration.</div></div></div>
+  </div>
+  <div class="tab-content" id="usage-mn">
+    <div class="mn-config"><div class="mn-config-label">Product catalog · usage product</div>
+      <div class="mn-field"><span class="mn-field-key">Product type</span><span class="mn-field-val">USAGE</span></div>
+      <div class="mn-field"><span class="mn-field-key">Subscription timing</span><span class="mn-field-val">ARREARS</span></div>
+      <div class="mn-field"><span class="mn-field-key">Billing frequency</span><span class="mn-field-val">MONTHLY</span></div>
+      <div class="mn-field"><span class="mn-field-key">Price model</span><span class="mn-field-val">FLAT, TIERED, or VOLUME</span></div>
+      <div class="mn-field"><span class="mn-field-key">Metering dimension</span><span class="mn-field-val">Custom key (e.g. ai_credits)</span></div>
+      <div class="mn-field"><span class="mn-field-key">Example overage rate</span><span class="mn-field-val">$0.002 / credit</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="usage-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Create a product with type: Usage in MN catalog. Name it to match your metering dimension.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Add a Rate with billing frequency = Monthly and timing = Arrears.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Set price per unit. Use flat rate for simple per-credit pricing or tiered if rates change at volume thresholds.</div></div></div>
+    <div class="flow-step"><div class="step-num">4</div><div><div class="step-text">Define your metering dimension key. It must match exactly what your system uses when posting usage events.</div></div></div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-payment">
+  <div class="detail-header">
+    <div class="detail-header-title">Card on file · Stripe integration</div>
+    <div class="detail-header-sub">How auto-charge on overage works in MonetizeNow</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('payment','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('payment','mn',this)">MN integration config</button>
+    <button class="tab" onclick="switchTab('payment','howto',this)">How to set it up</button>
+  </div>
+  <div class="tab-content active" id="payment-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Customer completes a Stripe setup flow to store a card on file. No charge happens at this stage.</div><div class="step-detail">MN creates a Stripe customer and attaches a validated payment method.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">When a usage invoice finalizes at month end, MN fires an auto-charge via Stripe.</div><div class="step-detail">Retry and dunning logic handles failed payments automatically.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Failed payments surface in a dunning queue for manual escalation if retries exhaust.</div></div></div>
+  </div>
+  <div class="tab-content" id="payment-mn">
+    <div class="mn-config"><div class="mn-config-label">Stripe integration settings</div>
+      <div class="mn-field"><span class="mn-field-key">Integration type</span><span class="mn-field-val">Stripe payment processor</span></div>
+      <div class="mn-field"><span class="mn-field-key">Collection method</span><span class="mn-field-val">Card on file (SetupIntent)</span></div>
+      <div class="mn-field"><span class="mn-field-key">Charge trigger</span><span class="mn-field-val">Invoice finalized (arrears)</span></div>
+      <div class="mn-field"><span class="mn-field-key">Retry logic</span><span class="mn-field-val">Configurable dunning schedule</span></div>
+      <div class="mn-field"><span class="mn-field-key">Payment method status</span><span class="mn-field-val">ACTIVE on BillGroup</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="payment-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Connect Stripe in MN admin settings. Link your Stripe account via API key.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Use MN's customer portal or your own UI to trigger a Stripe SetupIntent. This captures a card without charging.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Once SetupIntent completes, MN attaches the payment method to customer's BillGroup automatically.</div></div></div>
+    <div class="flow-step"><div class="step-num">4</div><div><div class="step-text">All future overage invoices auto-charge against this method at month close. No manual steps required.</div></div></div>
+  </div>
+</div>
+
+<div class="arrow-row"><span>↓</span><span>↓</span><span>↓</span></div>
+
+<div class="layer-label">In-period · What happens during each month</div>
+<div class="row row-2">
+  <div class="card" id="c-limit" onclick="toggle('limit')">
+    <div class="badge badge-amber">Upstream gate</div>
+    <div class="card-title">Authorized spend limit</div>
+    <div class="card-sub">Enforced before usage is posted to MN. Lives in your ingestion layer.</div>
+  </div>
+  <div class="card" id="c-meter" onclick="toggle('meter')">
+    <div class="badge badge-teal">MN native</div>
+    <div class="card-title">Usage metering</div>
+    <div class="card-sub">Credits consumed are tracked continuously against each subscription.</div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-limit">
+  <div class="detail-header">
+    <div class="detail-header-title">Authorized spend limit</div>
+    <div class="detail-header-sub">What MN handles vs what lives upstream</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('limit','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('limit','mn',this)">What lives where</button>
+    <button class="tab" onclick="switchTab('limit','howto',this)">Implementation approach</button>
+  </div>
+  <div class="tab-content active" id="limit-overview">
+    <div class="warning-box">MN does not natively block usage mid-period when a spend cap is hit. Authorized limit enforcement lives upstream, in your usage ingestion service, before events are posted to billing.</div>
+    <div class="flow-step" style="margin-top:10px"><div class="step-num">1</div><div><div class="step-text">Your system tracks real-time credit consumption against each customer's authorized monthly limit.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">When approaching a limit (e.g. 90%), your system can alert or throttle before posting more usage events.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Once limit is hit, stop posting usage events to MN. MN bills only what it receives.</div></div></div>
+  </div>
+  <div class="tab-content" id="limit-mn">
+    <div class="mn-config"><div class="mn-config-label">Responsibility split</div>
+      <div class="mn-field"><span class="mn-field-key">Spend cap enforcement</span><span class="mn-field-val">Your ingestion layer</span></div>
+      <div class="mn-field"><span class="mn-field-key">Usage event ingestion</span><span class="mn-field-val">MonetizeNow API</span></div>
+      <div class="mn-field"><span class="mn-field-key">Subscription suspension</span><span class="mn-field-val">MN billingStatus field</span></div>
+      <div class="mn-field"><span class="mn-field-key">Limit reset (monthly)</span><span class="mn-field-val">Your system triggers</span></div>
+      <div class="mn-field"><span class="mn-field-key">Alerts at 80% / 90%</span><span class="mn-field-val">Your notification layer</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="limit-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Store authorized spend limit per customer in your system. Compare against cumulative usage before each API post.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Build threshold alerts at configurable percentages so customers are warned before hitting a cap.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">To reflect suspension in MN, set billingStatus = SUSPENDED on subscription via API when cap is hit.</div></div></div>
+    <div class="flow-step"><div class="step-num">4</div><div><div class="step-text">At start of each new billing period, reset your counter and re-activate subscription (billingStatus = ACTIVE).</div></div></div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-meter">
+  <div class="detail-header">
+    <div class="detail-header-title">Usage metering in MonetizeNow</div>
+    <div class="detail-header-sub">How consumption is tracked and accumulated during each period</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('meter','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('meter','mn',this)">MN metering config</button>
+    <button class="tab" onclick="switchTab('meter','howto',this)">How to set it up</button>
+  </div>
+  <div class="tab-content active" id="meter-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Your system posts usage events to MN via API. Each event includes quantity, timestamp, and a dimension key.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">MN accumulates events against each subscription's usage product throughout a billing period.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">At billing close, MN resolves pricing against accumulated total. Tiered rates apply automatically.</div></div></div>
+  </div>
+  <div class="tab-content" id="meter-mn">
+    <div class="mn-config"><div class="mn-config-label">Usage metering configuration</div>
+      <div class="mn-field"><span class="mn-field-key">Ingestion method</span><span class="mn-field-val">POST /usage-events API</span></div>
+      <div class="mn-field"><span class="mn-field-key">Required fields</span><span class="mn-field-val">quantity, dimension, timestamp</span></div>
+      <div class="mn-field"><span class="mn-field-key">Dimension key</span><span class="mn-field-val">Must match product config</span></div>
+      <div class="mn-field"><span class="mn-field-key">Aggregation</span><span class="mn-field-val">SUM over billing period</span></div>
+      <div class="mn-field"><span class="mn-field-key">Pricing resolution</span><span class="mn-field-val">At invoice generation</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="meter-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Instrument your application to emit a usage event whenever credits are consumed.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">POST to MN's usage events endpoint with subscription ID, dimension key, quantity, and event timestamp.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Verify dimension key in your payload matches exactly what is configured on your USAGE product in MN.</div></div></div>
+    <div class="flow-step"><div class="step-num">4</div><div><div class="step-text">MN handles deduplication and accumulation. No need to aggregate before posting.</div></div></div>
+  </div>
+</div>
+
+<div class="arrow-row"><span>↓</span><span>↓</span></div>
+
+<div class="layer-label">Month close · Automated billing cycle</div>
+<div class="row row-3">
+  <div class="card" id="c-invoice" onclick="toggle('invoice')">
+    <div class="badge badge-teal">Auto</div>
+    <div class="card-title">Invoice generated</div>
+    <div class="card-sub">Total usage for a period is calculated. Invoice line items are created.</div>
+  </div>
+  <div class="card" id="c-credits" onclick="toggle('credits')">
+    <div class="badge badge-blue">Auto</div>
+    <div class="card-title">Credits applied</div>
+    <div class="card-sub">Prepaid pool offsets usage charge first. Net remainder is calculated.</div>
+  </div>
+  <div class="card" id="c-charge" onclick="toggle('charge')">
+    <div class="badge badge-coral">Auto</div>
+    <div class="card-title">Overage charged</div>
+    <div class="card-sub">Net amount auto-charged via Stripe. Dunning handles any failures.</div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-invoice">
+  <div class="detail-header">
+    <div class="detail-header-title">Invoice generation</div>
+    <div class="detail-header-sub">What MN produces at end of each billing period</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('invoice','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('invoice','mn',this)">Invoice line items</button>
+    <button class="tab" onclick="switchTab('invoice','howto',this)">Configuration</button>
+  </div>
+  <div class="tab-content active" id="invoice-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">At billing anchor date, MN triggers invoice generation for all subscriptions on that schedule.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Usage totals are fetched from metering and priced against your configured rate.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Invoice is created in DRAFT state first. You can configure auto-finalization or require manual approval.</div></div></div>
+  </div>
+  <div class="tab-content" id="invoice-mn">
+    <div class="mn-config"><div class="mn-config-label">Invoice line item fields (key ones)</div>
+      <div class="mn-field"><span class="mn-field-key">quantity</span><span class="mn-field-val">Total credits consumed</span></div>
+      <div class="mn-field"><span class="mn-field-key">amountCredited</span><span class="mn-field-val">Prepaid pool applied</span></div>
+      <div class="mn-field"><span class="mn-field-key">minCommitAdditionalBilledAmount</span><span class="mn-field-val">Net overage billed</span></div>
+      <div class="mn-field"><span class="mn-field-key">periodStartDate / periodEndDate</span><span class="mn-field-val">Billing window</span></div>
+      <div class="mn-field"><span class="mn-field-key">status</span><span class="mn-field-val">DRAFT then FINALIZED</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="invoice-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Set billing schedule on each subscription: monthly, with anchor date matching customer's contract start.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Configure auto-finalization in billing settings if manual approval per invoice is not needed.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Set up invoice delivery rules: email to billing contact, CC to account owner.</div></div></div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-credits">
+  <div class="detail-header">
+    <div class="detail-header-title">Credit application at invoice time</div>
+    <div class="detail-header-sub">How MN applies prepaid pool against usage</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('credits','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('credits','mn',this)">How MN calculates it</button>
+    <button class="tab" onclick="switchTab('credits','howto',this)">What to verify</button>
+  </div>
+  <div class="tab-content active" id="credits-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">When invoice is generated, MN's credit policy applicator runs automatically.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Prepaid pool balance is checked. Credits apply to usage charge up to pool value.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Remaining balance after credit application is overage. That amount gets charged via Stripe.</div></div></div>
+  </div>
+  <div class="tab-content" id="credits-mn">
+    <div class="mn-config"><div class="mn-config-label">Credit application logic</div>
+      <div class="mn-field"><span class="mn-field-key">Trigger</span><span class="mn-field-val">Invoice generation</span></div>
+      <div class="mn-field"><span class="mn-field-key">Policy chain</span><span class="mn-field-val">Sequential, returns remainder</span></div>
+      <div class="mn-field"><span class="mn-field-key">Scope</span><span class="mn-field-val">Usage product charges only</span></div>
+      <div class="mn-field"><span class="mn-field-key">Max application</span><span class="mn-field-val">Pool value (e.g. $500)</span></div>
+      <div class="mn-field"><span class="mn-field-key">Overage output</span><span class="mn-field-val">Net billed to Stripe</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="credits-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Verify credit product scope is set to "Usage products only" and not "All products." This is the most common misconfiguration.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Test with a sample invoice. Confirm amountCredited equals expected pool usage and net billed equals overage only.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Confirm credit balance on each account resets correctly at start of each new period when renewing.</div></div></div>
+  </div>
+</div>
+
+<div class="detail-panel" id="p-charge">
+  <div class="detail-header">
+    <div class="detail-header-title">Overage charge via Stripe</div>
+    <div class="detail-header-sub">Auto-collect net amount at close</div>
+  </div>
+  <div class="detail-tabs">
+    <button class="tab active" onclick="switchTab('charge','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('charge','mn',this)">Stripe charge config</button>
+    <button class="tab" onclick="switchTab('charge','howto',this)">Failure handling</button>
+  </div>
+  <div class="tab-content active" id="charge-overview">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Once invoice finalizes, MN triggers a Stripe charge for net overage amount.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Charge fires against stored payment method on customer's BillGroup.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">Successful charge marks invoice paid. Failed charge enters dunning retry cycle.</div></div></div>
+  </div>
+  <div class="tab-content" id="charge-mn">
+    <div class="mn-config"><div class="mn-config-label">Stripe charge parameters</div>
+      <div class="mn-field"><span class="mn-field-key">Charge trigger</span><span class="mn-field-val">Invoice FINALIZED event</span></div>
+      <div class="mn-field"><span class="mn-field-key">Amount</span><span class="mn-field-val">Net overage (post-credit)</span></div>
+      <div class="mn-field"><span class="mn-field-key">Payment method</span><span class="mn-field-val">Card on file (BillGroup)</span></div>
+      <div class="mn-field"><span class="mn-field-key">On success</span><span class="mn-field-val">Invoice moves to PAID</span></div>
+      <div class="mn-field"><span class="mn-field-key">On failure</span><span class="mn-field-val">Dunning queue, then retry</span></div>
+    </div>
+  </div>
+  <div class="tab-content" id="charge-howto">
+    <div class="flow-step"><div class="step-num">1</div><div><div class="step-text">Configure dunning schedule in MN. Set retry intervals (e.g. day 3, day 7, day 14) and escalation behavior.</div></div></div>
+    <div class="flow-step"><div class="step-num">2</div><div><div class="step-text">Set up dunning email notifications so customers are alerted on first failure and prompted to update their card.</div></div></div>
+    <div class="flow-step"><div class="step-num">3</div><div><div class="step-text">After retries exhaust, MN flags subscription for manual escalation and assigns to your AR team via collections queue.</div></div></div>
+  </div>
+</div>
+
+<div class="footer-note">Everything from usage posted, to invoice generated, credits applied, and Stripe charge runs automatically in MonetizeNow. Click any card above for details, then explore three tabs: overview, MN catalog config, and setup steps.</div>
+
+</div>
+<script>
+const panels={prepaid:'p-prepaid',usage:'p-usage',payment:'p-payment',limit:'p-limit',meter:'p-meter',invoice:'p-invoice',credits:'p-credits',charge:'p-charge'};
+function toggle(id){
+  const card=document.getElementById('c-'+id);
+  const panel=document.getElementById(panels[id]);
+  const isOpen=panel.classList.contains('open');
+  Object.values(panels).forEach(pid=>{document.getElementById(pid).classList.remove('open')});
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+  if(!isOpen){panel.classList.add('open');card.classList.add('active')}
+}
+function switchTab(section,tab,btn){
+  const panel=document.getElementById(panels[section]);
+  panel.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  panel.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(section+'-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
