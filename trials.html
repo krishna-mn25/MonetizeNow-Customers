@@ -7,102 +7,285 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --blue: #0521AB; --blue-pale: #eff2ff; --blue-light: #D3EEF4;
-    --black: #0A0A0A; --text: #1a1a1a; --muted: #5a5a6a; --faint: #8a8a9a;
-    --border: #e8e8ee; --surface: #f8f8fb; --surface2: #f0f0f5;
-    --green: #0F6E56; --green-bg: #e8f5f1; --red: #b91c1c; --red-bg: #fef2f2;
-    --amber: #92400e; --amber-bg: #fffbeb; --sidebar: 256px; --content: 700px;
-  }
-  html { font-size: 15px; scroll-behavior: smooth; }
-  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; display: flex; min-height: 100vh; line-height: 1.6; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #0521AB; --blue-pale: #eff2ff; --blue-light: #D3EEF4;
+  --black: #0A0A0A; --text: #1a1a1a; --muted: #5a5a6a; --faint: #8a8a9a;
+  --border: #e8e8ee; --surface: #f8f8fb; --surface2: #f0f0f5;
+  --green: #0F6E56; --green-bg: #e8f5f1; --green-border: #9FE1CB;
+  --red: #b91c1c; --red-bg: #fef2f2; --red-border: #fca5a5;
+  --amber: #92400e; --amber-bg: #fffbeb;
+  --sidebar: 256px; --content: 700px;
+}
+html { font-size: 15px; scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; display: flex; min-height: 100vh; line-height: 1.6; }
 
-  .sidebar { width: var(--sidebar); min-height: 100vh; border-right: 1px solid var(--border); background: #fff; position: fixed; top: 0; left: 0; display: flex; flex-direction: column; overflow-y: auto; z-index: 20; }
-  .sidebar-top { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
-  .sidebar-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
-  .logo-mark { width: 28px; height: 28px; background: var(--blue); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-  .logo-name { font-size: 14px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; }
-  .sidebar-nav { padding: 12px 0 24px; flex: 1; }
-  .nav-group-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); padding: 12px 20px 4px; }
-  .nav-link { display: block; padding: 5px 20px; font-size: 13.5px; color: var(--muted); text-decoration: none; cursor: pointer; border-left: 2px solid transparent; transition: color 0.1s, background 0.1s; line-height: 1.4; }
-  .nav-link:hover { color: var(--text); background: var(--surface); }
-  .nav-link.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-pale); font-weight: 500; }
-  .nav-link.sub { padding-left: 32px; font-size: 13px; }
+/* SIDEBAR */
+.sidebar { width: var(--sidebar); min-height: 100vh; border-right: 1px solid var(--border); background: #fff; position: fixed; top: 0; left: 0; display: flex; flex-direction: column; overflow-y: auto; z-index: 20; }
+.sidebar-top { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
+.sidebar-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.logo-mark { width: 28px; height: 28px; background: var(--blue); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.logo-name { font-size: 14px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; }
+.sidebar-nav { padding: 12px 0 24px; flex: 1; }
+.nav-group-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); padding: 12px 20px 4px; }
+.nav-link { display: block; padding: 5px 20px; font-size: 13.5px; color: var(--muted); text-decoration: none; cursor: pointer; border-left: 2px solid transparent; transition: color 0.1s, background 0.1s; line-height: 1.4; }
+.nav-link:hover { color: var(--text); background: var(--surface); }
+.nav-link.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-pale); font-weight: 500; }
+.nav-link.sub { padding-left: 32px; font-size: 13px; }
 
-  .topbar { position: fixed; top: 0; left: var(--sidebar); right: 0; height: 52px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 40px; z-index: 10; }
-  .breadcrumb { font-size: 13px; color: var(--faint); display: flex; align-items: center; gap: 6px; }
-  .breadcrumb a { color: var(--faint); text-decoration: none; }
-  .breadcrumb span { color: var(--text); font-weight: 500; }
+/* TOPBAR */
+.topbar { position: fixed; top: 0; left: var(--sidebar); right: 0; height: 52px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 40px; z-index: 10; }
+.breadcrumb { font-size: 13px; color: var(--faint); display: flex; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--faint); text-decoration: none; }
+.breadcrumb span { color: var(--text); font-weight: 500; }
 
-  .on-this-page { position: fixed; top: 52px; right: 0; width: 200px; padding: 28px 20px; }
-  .otp-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 10px; }
-  .otp-link { display: block; color: var(--muted); text-decoration: none; padding: 3px 0; font-size: 12.5px; cursor: pointer; line-height: 1.4; }
-  .otp-link:hover { color: var(--blue); }
-  .otp-link.active { color: var(--blue); font-weight: 500; }
+/* ON THIS PAGE */
+.on-this-page { position: fixed; top: 52px; right: 0; width: 200px; padding: 28px 20px; }
+.otp-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 10px; }
+.otp-link { display: block; color: var(--muted); text-decoration: none; padding: 3px 0; font-size: 12.5px; cursor: pointer; }
+.otp-link:hover { color: var(--blue); }
+.otp-link.active { color: var(--blue); font-weight: 500; }
 
-  .main { margin-left: var(--sidebar); padding-top: 52px; flex: 1; }
-  .content { max-width: var(--content); padding: 48px 40px 80px; }
+/* MAIN */
+.main { margin-left: var(--sidebar); padding-top: 52px; flex: 1; }
+.content { max-width: var(--content); padding: 48px 40px 80px; }
 
-  h1 { font-size: 26px; font-weight: 700; color: var(--black); letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 12px; }
-  .page-intro { font-size: 15.5px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; max-width: 560px; }
-  h2 { font-size: 18px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; margin: 40px 0 12px; }
-  h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 24px 0 8px; }
-  p { font-size: 14.5px; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
-  p:last-child { margin-bottom: 0; }
-  a { color: var(--blue); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
-  ul, ol { padding-left: 20px; margin: 8px 0 14px; }
-  li { font-size: 14.5px; color: var(--text); line-height: 1.7; margin-bottom: 4px; }
-  code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; background: var(--surface2); padding: 2px 5px; border-radius: 3px; color: var(--blue); }
+/* TYPOGRAPHY */
+h1 { font-size: 26px; font-weight: 700; color: var(--black); letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 12px; }
+.page-intro { font-size: 15.5px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; max-width: 560px; }
+h2 { font-size: 18px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; margin: 40px 0 12px; }
+h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 24px 0 8px; }
+p { font-size: 14.5px; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+ul, ol { padding-left: 20px; margin: 8px 0 14px; }
+li { font-size: 14.5px; color: var(--text); line-height: 1.7; margin-bottom: 4px; }
+code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; background: var(--surface2); padding: 2px 5px; border-radius: 3px; color: var(--blue); }
 
-  .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  thead tr { border-bottom: 1.5px solid var(--border); }
-  th { text-align: left; padding: 8px 16px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); background: var(--surface); }
-  td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55; color: var(--text); font-size: 13.5px; }
-  tr:last-child td { border-bottom: none; }
-  td code { font-size: 12px; }
+/* TABLES */
+.table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+thead tr { border-bottom: 1.5px solid var(--border); }
+th { text-align: left; padding: 8px 16px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); background: var(--surface); }
+td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55; color: var(--text); font-size: 13.5px; }
+tr:last-child td { border-bottom: none; }
+td code { font-size: 12px; }
 
-  .callout { border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; background: #fafbff; padding: 14px 16px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.65; }
-  .callout strong { color: var(--text); font-weight: 600; }
-  .callout.warning { border-left-color: #d97706; background: var(--amber-bg); color: var(--amber); }
-  .callout.warning strong { color: #78350f; }
+/* CALLOUT */
+.callout { border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; background: #fafbff; padding: 14px 16px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.65; }
+.callout strong { color: var(--text); font-weight: 600; }
+.callout.warning { border-left-color: #d97706; background: var(--amber-bg); color: var(--amber); }
+.callout.warning strong { color: #78350f; }
 
-  .tag { display: inline-block; font-size: 11.5px; font-weight: 500; padding: 2px 8px; border-radius: 4px; vertical-align: middle; }
-  .tag-green { background: var(--green-bg); color: var(--green); }
-  .tag-red { background: var(--red-bg); color: var(--red); }
-  .tag-blue { background: var(--blue-pale); color: var(--blue); }
-  .tag-gray { background: var(--surface2); color: var(--muted); }
+/* TAGS */
+.tag { display: inline-block; font-size: 11.5px; font-weight: 500; padding: 2px 8px; border-radius: 4px; vertical-align: middle; }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--blue-pale); color: var(--blue); }
+.tag-gray { background: var(--surface2); color: var(--muted); }
 
-  .steps { margin: 16px 0 24px; }
-  .step { display: flex; gap: 16px; padding-bottom: 24px; position: relative; }
-  .step::before { content: ''; position: absolute; left: 13px; top: 30px; bottom: 0; width: 1px; background: var(--border); }
-  .step:last-child::before { display: none; }
-  .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
-  .step-body { flex: 1; padding-top: 4px; }
-  .step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .step-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+/* STEPS */
+.steps { margin: 16px 0 24px; }
+.step { display: flex; gap: 16px; padding-bottom: 24px; position: relative; }
+.step::before { content: ''; position: absolute; left: 13px; top: 30px; bottom: 0; width: 1px; background: var(--border); }
+.step:last-child::before { display: none; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+.step-body { flex: 1; padding-top: 4px; }
+.step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.step-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
 
-  .diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px 20px; margin: 20px 0 28px; overflow-x: auto; }
+/* DIAGRAM WRAPPER */
+.diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px 28px; margin: 20px 0 28px; overflow-x: auto; }
 
-  .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 24px; }
-  .icon-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: #fff; }
-  .icon-card-icon { width: 32px; height: 32px; background: var(--blue-pale); border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-  .icon-card-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .icon-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+/* =====================================================
+   DIAGRAM NODES — reusable CSS components
+   ===================================================== */
 
-  .section { display: none; }
-  .section.active { display: block; }
+/* Generic node */
+.dn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 110px;
+}
+.dn sub { font-size: 10.5px; font-weight: 400; margin-top: 2px; display: block; }
 
-  .page-nav { display: flex; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13.5px; }
-  .page-nav a { display: flex; flex-direction: column; gap: 3px; text-decoration: none; cursor: pointer; }
-  .page-nav a:hover .pn-title { text-decoration: underline; }
-  .pn-dir { font-size: 12px; color: var(--faint); }
-  .pn-title { color: var(--blue); font-weight: 500; }
-  .page-nav .next { text-align: right; }
-  .updated { font-size: 12.5px; color: var(--faint); margin-top: 32px; }
+/* Variants */
+.dn-blue    { background: var(--blue-pale); border: 1.5px solid var(--blue); color: var(--blue); }
+.dn-solid   { background: var(--blue); border: 1.5px solid var(--blue); color: #fff; }
+.dn-solid sub { color: #D3EEF4; }
+.dn-green   { background: var(--green-bg); border: 1.5px solid var(--green-border); color: var(--green); }
+.dn-red     { background: var(--red-bg); border: 1.5px solid var(--red-border); color: var(--red); }
+.dn-gray    { background: var(--surface2); border: 1.5px solid var(--border); color: var(--muted); }
+
+/* Arrows */
+.da { /* arrow connector */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+.da::before { content: ''; display: block; height: 1.5px; background: #c8c8d8; flex: 1; min-width: 20px; }
+.da::after  { content: '▶'; font-size: 8px; color: #c8c8d8; margin-left: -2px; }
+.da-label { font-size: 10.5px; color: var(--faint); font-style: italic; }
+
+/* Row layout for horizontal flows */
+.d-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.d-row .da { flex: 1; margin: 0 4px; }
+
+/* Branch layout — vertical stack of outcomes on right side */
+.d-branch {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+.d-branch-left { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.d-branch-right { display: flex; flex-direction: column; gap: 12px; }
+
+.d-branch-line {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Each branch row: label + arrow + node */
+.d-brow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.d-brow .d-bl { /* branch label */
+  font-size: 10.5px;
+  color: var(--faint);
+  font-style: italic;
+  min-width: 130px;
+  text-align: right;
+}
+.d-brow .d-barrow {
+  display: flex;
+  align-items: center;
+}
+.d-brow .d-barrow::before { content: ''; display: block; width: 28px; height: 1.5px; background: #c8c8d8; }
+.d-brow .d-barrow::after  { content: '▶'; font-size: 8px; color: #c8c8d8; margin-left: -1px; }
+
+/* Extend loop note */
+.d-loop-note {
+  font-size: 11px;
+  color: var(--faint);
+  font-style: italic;
+  border: 1px dashed #c8c8d8;
+  border-radius: 5px;
+  padding: 5px 12px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* ICON GRID */
+.icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 24px; }
+.icon-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: #fff; }
+.icon-card-icon { width: 32px; height: 32px; background: var(--blue-pale); border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+.icon-card-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.icon-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+/* SECTION VISIBILITY */
+.section { display: none; }
+.section.active { display: block; }
+
+/* PAGE NAV */
+.page-nav { display: flex; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13.5px; }
+.page-nav a { display: flex; flex-direction: column; gap: 3px; text-decoration: none; cursor: pointer; }
+.page-nav a:hover .pn-title { text-decoration: underline; }
+.pn-dir { font-size: 12px; color: var(--faint); }
+.pn-title { color: var(--blue); font-weight: 500; }
+.page-nav .next { text-align: right; }
+.updated { font-size: 12.5px; color: var(--faint); margin-top: 32px; }
+
+/* ARCH DIAGRAM — flexbox layout */
+.arch-diagram {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 12px 0;
+}
+.arch-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.arch-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 0 8px;
+}
+.arch-arrow-line {
+  width: 36px; height: 1.5px;
+  background: #c8c8d8;
+  position: relative;
+}
+.arch-arrow-line::after { content: '▶'; position: absolute; right: -6px; top: -5px; font-size: 8px; color: #c8c8d8; }
+.arch-arrow-label { font-size: 9.5px; color: var(--faint); white-space: nowrap; }
+
+/* STEP FLOW — horizontal numbered steps */
+.step-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 8px 0 16px;
+}
+.sf-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+}
+.sf-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sf-num.last { background: var(--green); }
+.sf-label { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.3; }
+.sf-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  padding-bottom: 18px; /* align with circle center */
+}
+.sf-arrow::before { content: ''; display: block; width: 24px; height: 1.5px; background: var(--blue); }
+.sf-arrow::after { content: '▶'; font-size: 8px; color: var(--blue); margin-left: -1px; }
+.sf-arrow.last::before { background: var(--green); }
+.sf-arrow.last::after { color: var(--green); }
 </style>
 </head>
 <body>
@@ -153,7 +336,7 @@
 
 <main class="main"><div class="content">
 
-<!-- INTRODUCTION -->
+<!-- ══════ INTRODUCTION ══════ -->
 <div class="section" id="sec-intro">
   <h1>Self-Service</h1>
   <p class="page-intro">MonetizeNow's self-service capabilities let you build product-led checkout flows, trial experiences, and billing portals directly on top of the API — without routing customers through a sales motion.</p>
@@ -178,8 +361,8 @@
   </div>
 
   <h2>How it works</h2>
-  <p>Every self-service flow runs through MonetizeNow's API. Your frontend or backend calls the API to create accounts, spin up quotes or trials, collect payment, and trigger subscription creation. MonetizeNow handles the billing logic, contract lifecycle, and revenue recognition behind it.</p>
-  <p>Stripe handles payment collection. When a customer enters card details on your checkout, that payment method gets attached to their account in MonetizeNow and charges fire automatically at billing dates.</p>
+  <p>Every self-service flow runs through MonetizeNow's API. Your frontend or backend calls the API to create accounts, spin up quotes or trials, collect payment, and trigger subscription creation. MonetizeNow handles billing logic, contract lifecycle, and revenue recognition behind it.</p>
+  <p>Stripe handles payment collection. When a customer enters card details on your checkout, that payment method is attached to their account in MonetizeNow and charges fire automatically at billing dates.</p>
 
   <h2>Key concepts</h2>
   <div class="table-wrap">
@@ -188,7 +371,7 @@
       <tbody>
         <tr><td><strong>Account</strong></td><td>Represents a customer. Holds contacts, payment methods, contracts, and trial records.</td></tr>
         <tr><td><strong>Quote</strong></td><td>Defines what a customer is buying: offerings, pricing, contract length, and terms. A processed quote creates a contract and subscription.</td></tr>
-        <tr><td><strong>Trial</strong></td><td>A time-limited free period that carries conversion config so it can become a paid subscription without extra input.</td></tr>
+        <tr><td><strong>Trial</strong></td><td>A time-limited free period that carries conversion config so it can become a paid subscription without extra input at conversion time.</td></tr>
         <tr><td><strong>Contract</strong></td><td>Created when a quote processes. Governs billing for the subscription period.</td></tr>
         <tr><td><strong>Subscription</strong></td><td>Active billing relationship created from a contract. Drives invoice generation and payment collection.</td></tr>
       </tbody>
@@ -202,7 +385,7 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- ARCHITECTURAL REQUIREMENTS -->
+<!-- ══════ ARCH REQUIREMENTS ══════ -->
 <div class="section" id="sec-arch">
   <h1>Architectural Requirements</h1>
   <p class="page-intro">Before building a self-service flow on MonetizeNow, a few things need to be in place. Most are one-time setup items.</p>
@@ -210,53 +393,59 @@
   <h2>Prerequisites</h2>
   <h3>Product catalog</h3>
   <p>At minimum, you need at least one active Offering with an active Rate. Rates define pricing — a Rate at $0 works for free trials. Products define what customers get access to.</p>
-
   <h3>Stripe connection</h3>
-  <p>Self-service checkout requires Stripe connected and configured in MonetizeNow settings. Without it, the payment step cannot complete.</p>
-
+  <p>Self-service checkout requires Stripe connected and configured in MonetizeNow settings. Without it, the payment step in checkout cannot complete.</p>
   <h3>API credentials</h3>
   <p>All self-service flows call the MonetizeNow API on behalf of a tenant. You need a valid API key scoped to your tenant, generated from API Keys in settings.</p>
 
   <h2>Architecture overview</h2>
+
   <div class="diagram-wrap">
-    <svg viewBox="0 0 600 200" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
-      <defs><marker id="a" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#c8c8d8"/></marker></defs>
-      <!-- frontend -->
-      <rect x="10" y="76" width="108" height="48" rx="6" fill="#eff2ff" stroke="#0521AB" stroke-width="1.4"/>
-      <text x="64" y="95" text-anchor="middle" font-weight="600" fill="#0521AB">Your frontend</text>
-      <text x="64" y="109" text-anchor="middle" fill="#5a5a6a">checkout / portal</text>
-      <!-- arrow to MN -->
-      <line x1="118" y1="100" x2="160" y2="100" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
-      <text x="139" y="95" text-anchor="middle" fill="#8a8a9a">API</text>
-      <!-- MN box -->
-      <rect x="161" y="60" width="130" height="80" rx="6" fill="#0521AB"/>
-      <text x="226" y="88" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">MonetizeNow</text>
-      <text x="226" y="104" text-anchor="middle" fill="#D3EEF4">Quotes · Trials</text>
-      <text x="226" y="118" text-anchor="middle" fill="#D3EEF4">Contracts · Billing</text>
-      <!-- arrows to integrations -->
-      <line x1="291" y1="82" x2="334" y2="58" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
-      <line x1="291" y1="100" x2="334" y2="100" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
-      <line x1="291" y1="118" x2="334" y2="142" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
-      <!-- Stripe -->
-      <rect x="335" y="38" width="106" height="40" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
-      <text x="388" y="55" text-anchor="middle" font-weight="600" fill="#1a1a1a">Stripe</text>
-      <text x="388" y="68" text-anchor="middle" fill="#5a5a6a">payments</text>
-      <!-- CRM -->
-      <rect x="335" y="80" width="106" height="40" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
-      <text x="388" y="97" text-anchor="middle" font-weight="600" fill="#1a1a1a">CRM</text>
-      <text x="388" y="110" text-anchor="middle" fill="#5a5a6a">Salesforce / HubSpot</text>
-      <!-- ERP -->
-      <rect x="335" y="122" width="106" height="40" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
-      <text x="388" y="139" text-anchor="middle" font-weight="600" fill="#1a1a1a">ERP / GL</text>
-      <text x="388" y="152" text-anchor="middle" fill="#5a5a6a">revenue recognition</text>
-      <!-- webhooks -->
-      <line x1="441" y1="100" x2="480" y2="100" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
-      <text x="460" y="95" text-anchor="middle" fill="#8a8a9a">webhooks</text>
-      <!-- your backend -->
-      <rect x="481" y="76" width="106" height="48" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
-      <text x="534" y="97" text-anchor="middle" font-weight="600" fill="#1a1a1a">Your backend</text>
-      <text x="534" y="111" text-anchor="middle" fill="#5a5a6a">event processing</text>
-    </svg>
+    <div class="arch-diagram">
+      <!-- Frontend -->
+      <div class="arch-col">
+        <div class="dn dn-blue" style="min-width:120px">
+          Your frontend
+          <sub>checkout / portal</sub>
+        </div>
+      </div>
+      <!-- Arrow: API calls -->
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <div class="arch-arrow-label">API calls</div>
+      </div>
+      <!-- MonetizeNow -->
+      <div class="arch-col">
+        <div class="dn dn-solid" style="min-width:150px; padding: 14px 20px;">
+          MonetizeNow
+          <sub>Quotes · Trials</sub>
+          <sub>Contracts · Billing</sub>
+        </div>
+      </div>
+      <!-- Arrow: integrations -->
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <div class="arch-arrow-label">syncs to</div>
+      </div>
+      <!-- Integrations column -->
+      <div class="arch-col" style="gap:8px;">
+        <div class="dn dn-gray" style="min-width:140px">Stripe<sub>payments</sub></div>
+        <div class="dn dn-gray" style="min-width:140px">CRM<sub>Salesforce / HubSpot</sub></div>
+        <div class="dn dn-gray" style="min-width:140px">ERP / GL<sub>revenue recognition</sub></div>
+      </div>
+      <!-- Arrow: webhooks -->
+      <div class="arch-arrow">
+        <div class="arch-arrow-line"></div>
+        <div class="arch-arrow-label">webhooks</div>
+      </div>
+      <!-- Backend -->
+      <div class="arch-col">
+        <div class="dn dn-gray" style="min-width:120px">
+          Your backend
+          <sub>event processing</sub>
+        </div>
+      </div>
+    </div>
   </div>
 
   <h2>What your code is responsible for</h2>
@@ -267,7 +456,6 @@
     <li>Collecting payment method via Stripe's SDK, then passing the payment method ID to MonetizeNow</li>
     <li>Handling webhook events to keep your own system state in sync</li>
   </ul>
-
   <div class="callout"><strong>MonetizeNow does not host a checkout UI.</strong> It provides the billing and contract infrastructure. Your frontend owns the customer-facing experience.</div>
 
   <div class="page-nav">
@@ -277,45 +465,27 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- STEP-BY-STEP WORKFLOW -->
+<!-- ══════ WORKFLOW ══════ -->
 <div class="section" id="sec-workflow">
   <h1>Step-by-Step Workflow</h1>
   <p class="page-intro">How to take a new customer from checkout to an active paid subscription using MonetizeNow's self-serve APIs.</p>
 
   <h2>New customer checkout</h2>
+
   <div class="diagram-wrap">
-    <svg viewBox="0 0 560 80" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
-      <defs><marker id="sw" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker></defs>
-      <circle cx="40" cy="34" r="16" fill="#0521AB"/>
-      <text x="40" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">1</text>
-      <text x="40" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Create</text>
-      <text x="40" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">account</text>
-      <line x1="56" y1="34" x2="82" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
-      <circle cx="98" cy="34" r="16" fill="#0521AB"/>
-      <text x="98" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">2</text>
-      <text x="98" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Build</text>
-      <text x="98" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">quote</text>
-      <line x1="114" y1="34" x2="140" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
-      <circle cx="156" cy="34" r="16" fill="#0521AB"/>
-      <text x="156" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">3</text>
-      <text x="156" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Collect</text>
-      <text x="156" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">payment</text>
-      <line x1="172" y1="34" x2="198" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
-      <circle cx="214" cy="34" r="16" fill="#0521AB"/>
-      <text x="214" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">4</text>
-      <text x="214" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Accept</text>
-      <text x="214" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">quote</text>
-      <line x1="230" y1="34" x2="256" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
-      <circle cx="272" cy="34" r="16" fill="#0521AB"/>
-      <text x="272" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">5</text>
-      <text x="272" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Process</text>
-      <text x="272" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">quote</text>
-      <line x1="288" y1="34" x2="314" y2="34" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#sw)"/>
-      <circle cx="330" cy="34" r="16" fill="#0F6E56"/>
-      <text x="330" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">6</text>
-      <text x="330" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Active</text>
-      <text x="330" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">subscription</text>
-    </svg>
+    <div class="step-flow">
+      <div class="sf-step"><div class="sf-num">1</div><div class="sf-label">Create<br>account</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">2</div><div class="sf-label">Build<br>quote</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">3</div><div class="sf-label">Collect<br>payment</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">4</div><div class="sf-label">Accept<br>quote</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">5</div><div class="sf-label">Process<br>quote</div></div>
+      <div class="sf-arrow last"></div>
+      <div class="sf-step"><div class="sf-num last">6</div><div class="sf-label">Active<br>subscription</div></div>
+    </div>
   </div>
 
   <div class="steps">
@@ -327,7 +497,7 @@
     <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Active subscription</div><div class="step-desc">Customer's subscription is live. MonetizeNow handles invoice generation, payment collection, and renewals. Listen to webhook events to keep your system in sync.</div></div></div>
   </div>
 
-  <div class="callout"><strong>For trial-first flows:</strong> instead of steps 2-5, create a trial via <code>POST /trials</code>. When the trial period ends, MonetizeNow runs those steps automatically.</div>
+  <div class="callout"><strong>For trial-first flows:</strong> instead of steps 2–5, create a trial via <code>POST /trials</code>. When the trial period ends, MonetizeNow runs those steps automatically.</div>
 
   <div class="page-nav">
     <a onclick="show('arch')"><span class="pn-dir">Previous</span><span class="pn-title">← Architectural Requirements</span></a>
@@ -336,7 +506,7 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- TRIALS OVERVIEW -->
+<!-- ══════ TRIALS OVERVIEW ══════ -->
 <div class="section active" id="sec-trials">
   <h1>Trials</h1>
   <p class="page-intro">Trials give customers a free evaluation window before billing starts. MonetizeNow manages the full lifecycle: creation, extension, conversion to a paid subscription, and cancellation.</p>
@@ -346,73 +516,80 @@
   <p>When you create a trial, you configure two things up front: what the paid quote will look like, and which products to convert onto. Both are locked at creation. At conversion time, MonetizeNow replays that configuration automatically.</p>
 
   <h2>Full trial journey</h2>
+
   <div class="diagram-wrap">
-    <svg viewBox="0 0 600 210" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
-      <defs>
-        <marker id="bl" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker>
-        <marker id="gr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#c8c8d8"/></marker>
-      </defs>
+    <!-- Row 1: MANUALLY_CANCELED floats above -->
+    <div style="display:flex; align-items:flex-end; gap:0; margin-bottom:16px;">
+      <div style="width:140px; flex-shrink:0;"></div>
+      <div style="flex:1; display:flex; justify-content:flex-start; padding-left:56px;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+          <div class="dn dn-red" style="font-size:11px;">MANUALLY_CANCELED<sub>cancelled via API</sub></div>
+          <div style="width:1.5px; height:20px; background:#c8c8d8;"></div>
+          <div style="font-size:10px; color:var(--faint); font-style:italic;">manual cancel</div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Trial created box -->
-      <rect x="8" y="80" width="108" height="44" rx="6" fill="#eff2ff" stroke="#0521AB" stroke-width="1.5"/>
-      <text x="62" y="98" text-anchor="middle" font-weight="600" fill="#0521AB">Trial created</text>
-      <text x="62" y="112" text-anchor="middle" fill="#0521AB">ACTIVE</text>
+    <!-- Main row -->
+    <div style="display:flex; align-items:center; gap:16px;">
 
-      <!-- arrow right -->
-      <line x1="116" y1="102" x2="158" y2="102" stroke="#0521AB" stroke-width="1.2" marker-end="url(#bl)"/>
+      <!-- Trial created -->
+      <div class="dn dn-blue" style="flex-shrink:0; min-width:130px;">
+        Trial created
+        <sub>ACTIVE</sub>
+      </div>
 
-      <!-- branch dot -->
-      <circle cx="168" cy="102" r="7" fill="#0521AB"/>
+      <!-- Arrow to branch -->
+      <div style="display:flex; align-items:center; flex-shrink:0;">
+        <div style="width:36px; height:1.5px; background:#0521AB;"></div>
+        <div style="font-size:8px; color:#0521AB;">▶</div>
+      </div>
 
-      <!-- extend loop on top -->
-      <path d="M62 80 Q62 46 115 46 Q168 46 168 95" fill="none" stroke="#c8c8d8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#gr)"/>
-      <text x="115" y="40" text-anchor="middle" fill="#8a8a9a">extend end date</text>
+      <!-- Branch point dot -->
+      <div style="width:12px; height:12px; border-radius:50%; background:#0521AB; flex-shrink:0;"></div>
 
-      <!-- cancel arrow (goes up-left) -->
-      <path d="M116 92 Q130 55 148 38" fill="none" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
+      <!-- Arrows + outcomes -->
+      <div style="display:flex; flex-direction:column; gap:14px; margin-left:8px;">
 
-      <!-- MANUALLY_CANCELED -->
-      <rect x="90" y="12" width="148" height="34" rx="5" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.2"/>
-      <text x="164" y="26" text-anchor="middle" font-weight="600" fill="#b91c1c">MANUALLY_CANCELED</text>
-      <text x="164" y="38" text-anchor="middle" fill="#b91c1c">cancelled via API before end date</text>
+        <!-- CONVERT_TO_PAID auto -->
+        <div class="d-brow">
+          <div class="d-bl">endAction = CONVERT_TO_PAID</div>
+          <div class="d-barrow"></div>
+          <div class="dn dn-green" style="min-width:160px;">AUTO_CONVERTED<sub>batch runs at end date</sub></div>
+          <div style="display:flex; align-items:center; margin-left:12px;">
+            <div style="width:28px; height:1.5px; background:#0F6E56;"></div>
+            <div style="font-size:8px; color:#0F6E56; margin-left:-1px;">▶</div>
+            <div class="dn dn-solid" style="margin-left:4px; min-width:140px;">Active subscription<sub>billing starts</sub></div>
+          </div>
+        </div>
 
-      <!-- top branch: CONVERT_TO_PAID -->
-      <line x1="175" y1="96" x2="232" y2="68" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
-      <text x="220" y="78" text-anchor="middle" fill="#5a5a6a">endAction =</text>
-      <text x="220" y="89" text-anchor="middle" fill="#5a5a6a">CONVERT_TO_PAID</text>
+        <!-- Manual convert -->
+        <div class="d-brow">
+          <div class="d-bl">manual API call</div>
+          <div class="d-barrow"></div>
+          <div class="dn dn-green" style="min-width:160px;">MANUALLY_CONVERTED<sub>via convert endpoint</sub></div>
+          <div style="display:flex; align-items:center; margin-left:12px;">
+            <div style="width:28px; height:1.5px; background:#0F6E56;"></div>
+            <div style="font-size:8px; color:#0F6E56; margin-left:-1px;">▶</div>
+            <div class="dn dn-solid" style="margin-left:4px; min-width:140px;">Active subscription<sub>billing starts</sub></div>
+          </div>
+        </div>
 
-      <!-- AUTO_CONVERTED -->
-      <rect x="234" y="46" width="126" height="44" rx="5" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
-      <text x="297" y="65" text-anchor="middle" font-weight="600" fill="#0F6E56">AUTO_CONVERTED</text>
-      <text x="297" y="79" text-anchor="middle" fill="#5a5a6a">batch runs at end date</text>
+        <!-- CANCEL -->
+        <div class="d-brow">
+          <div class="d-bl">endAction = CANCEL</div>
+          <div class="d-barrow"></div>
+          <div class="dn dn-gray" style="min-width:160px;">EXPIRED<sub>no subscription created</sub></div>
+        </div>
 
-      <!-- middle branch: manual convert -->
-      <line x1="175" y1="102" x2="234" y2="102" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
-      <text x="204" y="96" text-anchor="middle" fill="#5a5a6a">manual API</text>
+      </div>
+    </div>
 
-      <!-- MANUALLY_CONVERTED -->
-      <rect x="234" y="84" width="126" height="36" rx="5" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
-      <text x="297" y="100" text-anchor="middle" font-weight="600" fill="#0F6E56">MANUALLY_CONVERTED</text>
-      <text x="297" y="113" text-anchor="middle" fill="#5a5a6a">via convert API call</text>
-
-      <!-- bottom branch: CANCEL -->
-      <line x1="175" y1="108" x2="234" y2="140" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
-      <text x="216" y="136" text-anchor="middle" fill="#5a5a6a">endAction = CANCEL</text>
-
-      <!-- EXPIRED -->
-      <rect x="234" y="144" width="108" height="36" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
-      <text x="288" y="160" text-anchor="middle" font-weight="600" fill="#5a5a6a">EXPIRED</text>
-      <text x="288" y="172" text-anchor="middle" fill="#8a8a9a">no subscription created</text>
-
-      <!-- arrow to subscription from converted boxes -->
-      <line x1="360" y1="68" x2="400" y2="68" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#bl)"/>
-      <line x1="360" y1="102" x2="388" y2="80" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#bl)"/>
-
-      <!-- Active subscription -->
-      <rect x="401" y="50" width="130" height="42" rx="6" fill="#0521AB"/>
-      <text x="466" y="68" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">Active subscription</text>
-      <text x="466" y="82" text-anchor="middle" fill="#D3EEF4">billing starts</text>
-    </svg>
+    <!-- Extend note below -->
+    <div style="margin-top:20px; padding-top:16px; border-top:1px dashed var(--border); display:flex; align-items:center; gap:10px;">
+      <div style="font-size:10px; color:var(--faint); background:var(--surface2); border:1px dashed #c8c8d8; border-radius:4px; padding:5px 12px; white-space:nowrap;">↩ extend end date</div>
+      <div style="font-size:12px; color:var(--faint);">Calling the extend endpoint while the trial is ACTIVE pushes the end date forward. The end action is unchanged.</div>
+    </div>
   </div>
 
   <h2>How a trial ends</h2>
@@ -449,45 +626,80 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- TRIAL STATES -->
+<!-- ══════ TRIAL STATES ══════ -->
 <div class="section" id="sec-states">
   <h1>Trial states</h1>
   <p class="page-intro">A trial moves through a defined set of statuses from creation to its final outcome. Only active trials accept lifecycle actions.</p>
 
   <h2>State transitions</h2>
+
   <div class="diagram-wrap">
-    <svg viewBox="0 0 580 100" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
-      <defs><marker id="st" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#c8c8d8"/></marker></defs>
+    <div style="display:flex; align-items:flex-start; gap:20px;">
 
-      <!-- ACTIVE -->
-      <rect x="8" y="30" width="88" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.5"/>
-      <text x="52" y="48" text-anchor="middle" font-weight="600" fill="#0521AB">ACTIVE</text>
-      <text x="52" y="61" text-anchor="middle" fill="#5a5a6a">running</text>
+      <!-- Left: ACTIVE -->
+      <div style="display:flex; flex-direction:column; align-items:center; gap:0; flex-shrink:0; padding-top:60px;">
+        <div class="dn dn-blue" style="min-width:110px;">ACTIVE<sub>running</sub></div>
+      </div>
 
-      <!-- MANUALLY_CANCELED above -->
-      <path d="M52 30 L52 14" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
-      <rect x="8" y="2" width="142" height="22" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
-      <text x="79" y="14" text-anchor="middle" font-weight="600" fill="#b91c1c">MANUALLY_CANCELED</text>
+      <!-- Connector lines area -->
+      <div style="display:flex; flex-direction:column; justify-content:center; padding-top:60px; flex-shrink:0;">
+        <div style="display:flex; flex-direction:column; gap:0; position:relative;">
+          <!-- vertical bar -->
+          <div style="width:1.5px; height:100%; background:#c8c8d8; position:absolute; left:0; top:0;"></div>
+          <!-- horizontal ticks — these are spaced by the outcome rows below -->
+        </div>
+      </div>
 
-      <!-- three arrows right -->
-      <line x1="96" y1="42" x2="126" y2="22" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
-      <line x1="96" y1="50" x2="126" y2="50" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
-      <line x1="96" y1="58" x2="126" y2="78" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
+      <!-- Middle: branch lines to outcomes -->
+      <div style="display:flex; flex-direction:column; gap:14px; padding-top:6px;">
 
-      <!-- AUTO_CONVERTED -->
-      <rect x="127" y="10" width="122" height="28" rx="4" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
-      <text x="188" y="24" text-anchor="middle" font-weight="600" fill="#0F6E56">AUTO_CONVERTED</text>
+        <!-- MANUALLY_CANCELED at top -->
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="font-size:10.5px; color:var(--faint); font-style:italic; min-width:140px; text-align:right;">cancelled via API</div>
+          <div style="width:1.5px; height:24px; background:#c8c8d8; align-self:stretch; margin-top:-6px;"></div>
+          <div style="display:flex; align-items:center;">
+            <div style="width:28px; height:1.5px; background:#c8c8d8;"></div>
+            <div style="font-size:8px; color:#c8c8d8;">▶</div>
+          </div>
+          <div class="dn dn-red" style="min-width:170px;">MANUALLY_CANCELED<sub>operator cancel before end date</sub></div>
+        </div>
 
-      <!-- MANUALLY_CONVERTED -->
-      <rect x="127" y="36" width="122" height="28" rx="4" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
-      <text x="188" y="50" text-anchor="middle" font-weight="600" fill="#0F6E56">MANUALLY_CONVERTED</text>
+        <!-- AUTO_CONVERTED -->
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="font-size:10.5px; color:var(--faint); font-style:italic; min-width:140px; text-align:right;">endAction = CONVERT_TO_PAID, end date reached</div>
+          <div style="display:flex; align-items:center;">
+            <div style="width:28px; height:1.5px; background:#c8c8d8;"></div>
+            <div style="font-size:8px; color:#c8c8d8;">▶</div>
+          </div>
+          <div class="dn dn-green" style="min-width:170px;">AUTO_CONVERTED<sub>batch at end date</sub></div>
+        </div>
 
-      <!-- EXPIRED -->
-      <rect x="127" y="62" width="88" height="28" rx="4" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
-      <text x="171" y="76" text-anchor="middle" font-weight="600" fill="#5a5a6a">EXPIRED</text>
+        <!-- MANUALLY_CONVERTED -->
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="font-size:10.5px; color:var(--faint); font-style:italic; min-width:140px; text-align:right;">manual convert API call</div>
+          <div style="display:flex; align-items:center;">
+            <div style="width:28px; height:1.5px; background:#c8c8d8;"></div>
+            <div style="font-size:8px; color:#c8c8d8;">▶</div>
+          </div>
+          <div class="dn dn-green" style="min-width:170px;">MANUALLY_CONVERTED<sub>via convert endpoint</sub></div>
+        </div>
 
-      <text x="290" y="96" font-size="9.5" fill="#8a8a9a">All statuses on the right are terminal. A trial cannot leave a terminal status.</text>
-    </svg>
+        <!-- EXPIRED -->
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="font-size:10.5px; color:var(--faint); font-style:italic; min-width:140px; text-align:right;">endAction = CANCEL, end date reached</div>
+          <div style="display:flex; align-items:center;">
+            <div style="width:28px; height:1.5px; background:#c8c8d8;"></div>
+            <div style="font-size:8px; color:#c8c8d8;">▶</div>
+          </div>
+          <div class="dn dn-gray" style="min-width:170px;">EXPIRED<sub>no subscription created</sub></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border); font-size:12px; color:var(--faint);">
+      All statuses except ACTIVE are terminal. A trial cannot leave a terminal status.
+    </div>
   </div>
 
   <div class="table-wrap">
@@ -495,8 +707,8 @@
       <thead><tr><th>Status</th><th>What it means</th><th>Terminal</th></tr></thead>
       <tbody>
         <tr><td><code>ACTIVE</code></td><td>Trial is running. Can be extended, manually converted, or cancelled.</td><td></td></tr>
-        <tr><td><code>AUTO_CONVERTED</code></td><td>Batch converted at end date. Paid subscription is live. Quote ID is stored on the trial record.</td><td><span class="tag tag-gray">Final</span></td></tr>
-        <tr><td><code>MANUALLY_CONVERTED</code></td><td>Converted via API before end date. Same outcome: full quote, active subscription.</td><td><span class="tag tag-gray">Final</span></td></tr>
+        <tr><td><code>AUTO_CONVERTED</code></td><td>Batch converted at end date. Paid subscription is live. Quote ID stored on the trial record.</td><td><span class="tag tag-gray">Final</span></td></tr>
+        <tr><td><code>MANUALLY_CONVERTED</code></td><td>Converted via API before end date. Same outcome as auto conversion: full quote, active subscription.</td><td><span class="tag tag-gray">Final</span></td></tr>
         <tr><td><code>EXPIRED</code></td><td>Trial ended with <code>endAction = CANCEL</code>. No subscription created.</td><td><span class="tag tag-gray">Final</span></td></tr>
         <tr><td><code>MANUALLY_CANCELED</code></td><td>Cancelled via API. Cancellation reason and timestamp stored on the record.</td><td><span class="tag tag-gray">Final</span></td></tr>
       </tbody>
@@ -510,32 +722,55 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- CREATING A TRIAL -->
+<!-- ══════ CREATING ══════ -->
 <div class="section" id="sec-creating">
   <h1>Creating a trial</h1>
   <p class="page-intro">Trials are created via API. Everything needed to run the trial and convert it to a subscription is configured at creation — nothing needs to be provided again at conversion time.</p>
 
   <h2>What you configure at creation</h2>
+
   <div class="diagram-wrap">
-    <svg viewBox="0 0 560 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
-      <defs><marker id="cr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker></defs>
-      <rect x="8" y="38" width="110" height="44" rx="6" fill="#eff2ff" stroke="#0521AB" stroke-width="1.5"/>
-      <text x="63" y="56" text-anchor="middle" font-weight="600" fill="#0521AB">POST /trials</text>
-      <text x="63" y="70" text-anchor="middle" fill="#5a5a6a">your API call</text>
-      <line x1="118" y1="60" x2="155" y2="60" stroke="#0521AB" stroke-width="1.2" marker-end="url(#cr)"/>
-      <rect x="156" y="20" width="148" height="80" rx="6" fill="#0521AB"/>
-      <text x="230" y="44" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">MonetizeNow stores</text>
-      <text x="230" y="60" text-anchor="middle" fill="#D3EEF4">quoteInitDetails (JSONB)</text>
-      <text x="230" y="74" text-anchor="middle" fill="#D3EEF4">conversionPolicy (JSONB)</text>
-      <text x="230" y="88" text-anchor="middle" fill="#D3EEF4">endAction · dates · status</text>
-      <line x1="304" y1="60" x2="341" y2="60" stroke="#0521AB" stroke-width="1.2" marker-end="url(#cr)"/>
-      <rect x="342" y="14" width="148" height="92" rx="6" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
-      <text x="416" y="36" text-anchor="middle" font-weight="600" fill="#0F6E56" font-size="11">At conversion</text>
-      <text x="416" y="52" text-anchor="middle" fill="#5a5a6a">replays quoteInitDetails</text>
-      <text x="416" y="66" text-anchor="middle" fill="#5a5a6a">replays conversionPolicy</text>
-      <text x="416" y="82" text-anchor="middle" font-weight="600" fill="#0F6E56">quote + subscription</text>
-      <text x="416" y="96" text-anchor="middle" fill="#5a5a6a">no extra input needed</text>
-    </svg>
+    <div style="display:flex; align-items:stretch; gap:0;">
+
+      <div style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <div class="dn dn-blue" style="min-width:120px; padding:14px 18px;">
+          POST /trials
+          <sub>your API call</sub>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 14px; flex-shrink:0;">
+        <div style="width:36px; height:1.5px; background:#0521AB; position:relative;">
+          <div style="position:absolute; right:-6px; top:-5px; font-size:8px; color:#0521AB;">▶</div>
+        </div>
+      </div>
+
+      <div style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <div class="dn dn-solid" style="min-width:180px; padding:14px 20px; line-height:1.7;">
+          MonetizeNow stores
+          <sub>quoteInitDetails (JSONB)</sub>
+          <sub>conversionPolicy (JSONB)</sub>
+          <sub>endAction · dates · status</sub>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 14px; flex-shrink:0;">
+        <div style="width:36px; height:1.5px; background:#0521AB; position:relative;">
+          <div style="position:absolute; right:-6px; top:-5px; font-size:8px; color:#0521AB;">▶</div>
+        </div>
+        <div style="font-size:10px; color:var(--faint); margin-top:6px; white-space:nowrap;">at conversion</div>
+      </div>
+
+      <div style="flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <div class="dn dn-green" style="min-width:180px; padding:14px 20px; line-height:1.7;">
+          Replayed automatically
+          <sub>builds quote + offerings</sub>
+          <sub>processes subscription</sub>
+          <sub style="color:var(--green); font-weight:600;">no extra input needed</sub>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <h3>Quote initialization details</h3>
@@ -576,43 +811,35 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- CONVERTING TO PAID -->
+<!-- ══════ CONVERTING ══════ -->
 <div class="section" id="sec-converting">
   <h1>Converting to paid</h1>
   <p class="page-intro">When a trial converts, MonetizeNow builds and processes a full paid quote automatically using configuration stored at trial creation. No additional input is required.</p>
 
   <h2>Conversion sequence</h2>
+
   <div class="diagram-wrap">
-    <svg viewBox="0 0 560 72" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
-      <defs><marker id="cv" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker></defs>
-      <rect x="4" y="14" width="86" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
-      <text x="47" y="31" text-anchor="middle" font-weight="600" fill="#0521AB">Validate</text>
-      <text x="47" y="45" text-anchor="middle" fill="#5a5a6a">trial is ACTIVE</text>
-      <line x1="90" y1="34" x2="104" y2="34" stroke="#0521AB" stroke-width="1.1" marker-end="url(#cv)"/>
-      <rect x="105" y="14" width="90" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
-      <text x="150" y="31" text-anchor="middle" font-weight="600" fill="#0521AB">Build quote</text>
-      <text x="150" y="45" text-anchor="middle" fill="#5a5a6a">from quoteInitDetails</text>
-      <line x1="195" y1="34" x2="209" y2="34" stroke="#0521AB" stroke-width="1.1" marker-end="url(#cv)"/>
-      <rect x="210" y="14" width="90" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
-      <text x="255" y="31" text-anchor="middle" font-weight="600" fill="#0521AB">Add offerings</text>
-      <text x="255" y="45" text-anchor="middle" fill="#5a5a6a">from policy</text>
-      <line x1="300" y1="34" x2="314" y2="34" stroke="#0521AB" stroke-width="1.1" marker-end="url(#cv)"/>
-      <rect x="315" y="14" width="96" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
-      <text x="363" y="28" text-anchor="middle" font-weight="600" fill="#0521AB">Auto-process</text>
-      <text x="363" y="40" text-anchor="middle" fill="#5a5a6a">all quote stages</text>
-      <text x="363" y="52" text-anchor="middle" fill="#5a5a6a">pending→processed</text>
-      <line x1="411" y1="34" x2="425" y2="34" stroke="#0F6E56" stroke-width="1.1" marker-end="url(#cv)"/>
-      <rect x="426" y="14" width="122" height="40" rx="5" fill="#0521AB"/>
-      <text x="487" y="31" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">Active subscription</text>
-      <text x="487" y="45" text-anchor="middle" fill="#D3EEF4">trial status updated</text>
-    </svg>
+    <div class="step-flow">
+      <div class="sf-step"><div class="sf-num">1</div><div class="sf-label">Validate<br>trial is ACTIVE</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">2</div><div class="sf-label">Build quote<br>from quoteInitDetails</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">3</div><div class="sf-label">Add offerings<br>from policy</div></div>
+      <div class="sf-arrow"></div>
+      <div class="sf-step"><div class="sf-num">4</div><div class="sf-label">Auto-process<br>all quote stages</div></div>
+      <div class="sf-arrow last"></div>
+      <div class="sf-step"><div class="sf-num last">5</div><div class="sf-label">Active<br>subscription</div></div>
+    </div>
+    <div style="margin-top:12px; font-size:11.5px; color:var(--faint); padding-top:12px; border-top:1px solid var(--border);">
+      Quote stages: pending → review → approve → sent → accepted → processed. All run automatically. No manual approvals needed.
+    </div>
   </div>
 
   <div class="steps">
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Validate the trial is active</div><div class="step-desc">Conversion is blocked if the trial is in any terminal status. Only <code>ACTIVE</code> trials proceed. This guards against race conditions between batch and manual calls.</div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Build the quote from quoteInitDetails</div><div class="step-desc">A net-new quote is created. Contract start is set to the current date. Contract length, net terms, and contacts come from the trial's stored <code>quoteInitDetails</code>.</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add offerings from the conversion policy</div><div class="step-desc">Each entry in <code>trialConversionPolicy</code> becomes a quote offering: offering ID, rate, products, and quantities applied exactly as stored at trial creation.</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Auto-process through all quote stages</div><div class="step-desc">MonetizeNow advances the quote automatically: pending, review, approve, sent, accepted, processed. No manual approvals needed.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Auto-process through all quote stages</div><div class="step-desc">MonetizeNow advances the quote automatically through pending, review, approve, sent, accepted, and processed. No manual approvals are needed.</div></div></div>
     <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Update the trial record</div><div class="step-desc">Trial status becomes <code>AUTO_CONVERTED</code> or <code>MANUALLY_CONVERTED</code>. Resulting quote ID is written to the trial, linking it permanently to its subscription.</div></div></div>
   </div>
 
@@ -628,7 +855,7 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- EXTENDING -->
+<!-- ══════ EXTENDING ══════ -->
 <div class="section" id="sec-extending">
   <h1>Extending a trial</h1>
   <p class="page-intro">Active trials can have their end date pushed forward. Useful when a customer needs more evaluation time before committing.</p>
@@ -639,7 +866,6 @@
     <li>Only <code>ACTIVE</code> trials can be extended. Terminal status trials cannot be changed.</li>
     <li>New end date must be after the current end date. Extension cannot shorten a trial.</li>
   </ul>
-
   <div class="callout">Extending a trial does not change its <code>endAction</code>. A trial set to <code>CONVERT_TO_PAID</code> will still auto-convert at the new end date.</div>
 
   <h2>Multiple extensions</h2>
@@ -652,7 +878,7 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- CANCELING -->
+<!-- ══════ CANCELING ══════ -->
 <div class="section" id="sec-canceling">
   <h1>Canceling a trial</h1>
   <p class="page-intro">Trials can be cancelled at any point while active. Cancellation ends the evaluation period immediately without creating a subscription.</p>
@@ -685,7 +911,7 @@
   <div class="updated">Updated 2 months ago</div>
 </div>
 
-<!-- FAQ -->
+<!-- ══════ FAQ ══════ -->
 <div class="section" id="sec-faq">
   <h1>FAQs</h1>
   <p class="page-intro">Common questions about how trials work in MonetizeNow.</p>
@@ -731,8 +957,8 @@
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     const sec = document.getElementById(secs[id]);
     if (sec) sec.classList.add('active');
-    document.querySelectorAll('.nav-link').forEach((l,i) => { l.classList.toggle('active', navOrder[i] === id); });
-    document.querySelectorAll('.otp-link').forEach((l,i) => { l.classList.toggle('active', otpOrder[i] === id); });
+    document.querySelectorAll('.nav-link').forEach((l,i) => l.classList.toggle('active', navOrder[i] === id));
+    document.querySelectorAll('.otp-link').forEach((l,i) => l.classList.toggle('active', otpOrder[i] === id));
     const bc = document.getElementById('bc-current');
     if (bc) bc.textContent = labels[id] || 'Trials';
     document.getElementById('otp-panel').style.display = trialPages.has(id) ? 'block' : 'none';
