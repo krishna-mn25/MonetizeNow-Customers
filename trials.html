@@ -8,482 +8,141 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --blue: #0521AB;
-    --blue-light: #D3EEF4;
-    --black: #0A0A0A;
-    --text: #1a1a1a;
-    --muted: #5a5a6a;
-    --faint: #8a8a9a;
-    --border: #e8e8ee;
-    --surface: #f8f8fb;
-    --surface2: #f0f0f5;
-    --green: #0F6E56;
-    --green-bg: #e8f5f1;
-    --red: #b91c1c;
-    --red-bg: #fef2f2;
-    --amber: #92400e;
-    --amber-bg: #fffbeb;
-    --sidebar: 256px;
-    --content: 680px;
+    --blue: #0521AB; --blue-pale: #eff2ff; --blue-light: #D3EEF4;
+    --black: #0A0A0A; --text: #1a1a1a; --muted: #5a5a6a; --faint: #8a8a9a;
+    --border: #e8e8ee; --surface: #f8f8fb; --surface2: #f0f0f5;
+    --green: #0F6E56; --green-bg: #e8f5f1; --red: #b91c1c; --red-bg: #fef2f2;
+    --amber: #92400e; --amber-bg: #fffbeb; --sidebar: 256px; --content: 700px;
   }
-
   html { font-size: 15px; scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: #fff; display: flex; min-height: 100vh; line-height: 1.6; }
 
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    color: var(--text);
-    background: #fff;
-    display: flex;
-    min-height: 100vh;
-    line-height: 1.6;
-  }
-
-  /* ---- SIDEBAR ---- */
-  .sidebar {
-    width: var(--sidebar);
-    min-height: 100vh;
-    border-right: 1px solid var(--border);
-    background: #fff;
-    position: fixed;
-    top: 0; left: 0;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    z-index: 20;
-  }
-
-  .sidebar-top {
-    padding: 20px 20px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .sidebar-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    margin-bottom: 0;
-  }
-
-  .logo-mark {
-    width: 28px;
-    height: 28px;
-    background: var(--blue);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .logo-mark svg { width: 16px; height: 16px; }
-
-  .logo-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black);
-    letter-spacing: -0.01em;
-  }
-
+  .sidebar { width: var(--sidebar); min-height: 100vh; border-right: 1px solid var(--border); background: #fff; position: fixed; top: 0; left: 0; display: flex; flex-direction: column; overflow-y: auto; z-index: 20; }
+  .sidebar-top { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); }
+  .sidebar-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .logo-mark { width: 28px; height: 28px; background: var(--blue); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .logo-name { font-size: 14px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; }
   .sidebar-nav { padding: 12px 0 24px; flex: 1; }
-
-  .nav-group { margin-bottom: 4px; }
-
-  .nav-group-label {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--faint);
-    padding: 12px 20px 4px;
-  }
-
-  .nav-link {
-    display: block;
-    padding: 5px 20px;
-    font-size: 13.5px;
-    color: var(--muted);
-    text-decoration: none;
-    cursor: pointer;
-    border-left: 2px solid transparent;
-    transition: color 0.1s, background 0.1s;
-    line-height: 1.4;
-  }
-
+  .nav-group-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); padding: 12px 20px 4px; }
+  .nav-link { display: block; padding: 5px 20px; font-size: 13.5px; color: var(--muted); text-decoration: none; cursor: pointer; border-left: 2px solid transparent; transition: color 0.1s, background 0.1s; line-height: 1.4; }
   .nav-link:hover { color: var(--text); background: var(--surface); }
+  .nav-link.active { color: var(--blue); border-left-color: var(--blue); background: var(--blue-pale); font-weight: 500; }
+  .nav-link.sub { padding-left: 32px; font-size: 13px; }
 
-  .nav-link.active {
-    color: var(--blue);
-    border-left-color: var(--blue);
-    background: #f0f3ff;
-    font-weight: 500;
-  }
-
-  .nav-link.sub {
-    padding-left: 32px;
-    font-size: 13px;
-  }
-
-  /* ---- TOPBAR ---- */
-  .topbar {
-    position: fixed;
-    top: 0;
-    left: var(--sidebar);
-    right: 0;
-    height: 52px;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    padding: 0 40px;
-    z-index: 10;
-    gap: 6px;
-  }
-
-  .breadcrumb {
-    font-size: 13px;
-    color: var(--faint);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
+  .topbar { position: fixed; top: 0; left: var(--sidebar); right: 0; height: 52px; background: #fff; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 40px; z-index: 10; }
+  .breadcrumb { font-size: 13px; color: var(--faint); display: flex; align-items: center; gap: 6px; }
   .breadcrumb a { color: var(--faint); text-decoration: none; }
-  .breadcrumb a:hover { color: var(--muted); }
   .breadcrumb span { color: var(--text); font-weight: 500; }
 
-  .bc-sep { color: var(--border); }
-
-  /* ---- MAIN ---- */
-  .main {
-    margin-left: var(--sidebar);
-    padding-top: 52px;
-    flex: 1;
-    min-height: 100vh;
-  }
-
-  .content {
-    max-width: var(--content);
-    padding: 48px 40px 80px;
-  }
-
-  /* ---- ON THIS PAGE ---- */
-  .on-this-page {
-    position: fixed;
-    top: 52px;
-    right: 0;
-    width: 200px;
-    padding: 28px 20px;
-    font-size: 12px;
-  }
-
-  .otp-label {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--faint);
-    margin-bottom: 10px;
-  }
-
-  .otp-link {
-    display: block;
-    color: var(--muted);
-    text-decoration: none;
-    padding: 3px 0;
-    font-size: 12.5px;
-    cursor: pointer;
-    line-height: 1.4;
-  }
-
+  .on-this-page { position: fixed; top: 52px; right: 0; width: 200px; padding: 28px 20px; }
+  .otp-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 10px; }
+  .otp-link { display: block; color: var(--muted); text-decoration: none; padding: 3px 0; font-size: 12.5px; cursor: pointer; line-height: 1.4; }
   .otp-link:hover { color: var(--blue); }
   .otp-link.active { color: var(--blue); font-weight: 500; }
 
-  /* ---- TYPOGRAPHY ---- */
-  h1 {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--black);
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    margin-bottom: 12px;
-  }
+  .main { margin-left: var(--sidebar); padding-top: 52px; flex: 1; }
+  .content { max-width: var(--content); padding: 48px 40px 80px; }
 
-  .page-intro {
-    font-size: 15.5px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 36px;
-    max-width: 560px;
-  }
-
-  h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--black);
-    letter-spacing: -0.01em;
-    margin: 40px 0 12px;
-    padding-top: 4px;
-  }
-
-  h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text);
-    margin: 24px 0 8px;
-  }
-
-  p {
-    font-size: 14.5px;
-    color: var(--text);
-    line-height: 1.7;
-    margin-bottom: 14px;
-  }
-
+  h1 { font-size: 26px; font-weight: 700; color: var(--black); letter-spacing: -0.02em; line-height: 1.25; margin-bottom: 12px; }
+  .page-intro { font-size: 15.5px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; max-width: 560px; }
+  h2 { font-size: 18px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; margin: 40px 0 12px; }
+  h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 24px 0 8px; }
+  p { font-size: 14.5px; color: var(--text); line-height: 1.7; margin-bottom: 14px; }
   p:last-child { margin-bottom: 0; }
-
   a { color: var(--blue); text-decoration: none; }
   a:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  ul, ol { padding-left: 20px; margin: 8px 0 14px; }
+  li { font-size: 14.5px; color: var(--text); line-height: 1.7; margin-bottom: 4px; }
+  code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12.5px; background: var(--surface2); padding: 2px 5px; border-radius: 3px; color: var(--blue); }
 
-  /* ---- DIVIDER ---- */
-  hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 40px 0;
-  }
-
-  /* ---- TABLE ---- */
   .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-  }
-
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
   thead tr { border-bottom: 1.5px solid var(--border); }
-
-  th {
-    text-align: left;
-    padding: 8px 16px;
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--faint);
-    background: var(--surface);
-  }
-
-  td {
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-    line-height: 1.55;
-    color: var(--text);
-    font-size: 13.5px;
-  }
-
+  th { text-align: left; padding: 8px 16px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--faint); background: var(--surface); }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.55; color: var(--text); font-size: 13.5px; }
   tr:last-child td { border-bottom: none; }
+  td code { font-size: 12px; }
 
-  td code, th code { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 12px; background: var(--surface2); padding: 1px 5px; border-radius: 3px; color: var(--blue); }
-
-  /* ---- CODE ---- */
-  code {
-    font-family: 'SFMono-Regular', Consolas, monospace;
-    font-size: 12.5px;
-    background: var(--surface2);
-    padding: 2px 5px;
-    border-radius: 3px;
-    color: var(--blue);
-  }
-
-  /* ---- CALLOUT ---- */
-  .callout {
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--blue);
-    border-radius: 0 6px 6px 0;
-    background: #fafbff;
-    padding: 14px 16px;
-    margin: 20px 0;
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.65;
-  }
-
+  .callout { border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 0 6px 6px 0; background: #fafbff; padding: 14px 16px; margin: 20px 0; font-size: 14px; color: var(--muted); line-height: 1.65; }
   .callout strong { color: var(--text); font-weight: 600; }
-
-  .callout.warning {
-    border-left-color: #d97706;
-    background: var(--amber-bg);
-    color: var(--amber);
-  }
-
+  .callout.warning { border-left-color: #d97706; background: var(--amber-bg); color: var(--amber); }
   .callout.warning strong { color: #78350f; }
 
-  /* ---- PILL TAGS ---- */
-  .tag {
-    display: inline-block;
-    font-size: 11.5px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 4px;
-    vertical-align: middle;
-  }
-
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 500; padding: 2px 8px; border-radius: 4px; vertical-align: middle; }
   .tag-green { background: var(--green-bg); color: var(--green); }
   .tag-red { background: var(--red-bg); color: var(--red); }
-  .tag-blue { background: #eff2ff; color: var(--blue); }
-  .tag-amber { background: var(--amber-bg); color: var(--amber); }
+  .tag-blue { background: var(--blue-pale); color: var(--blue); }
   .tag-gray { background: var(--surface2); color: var(--muted); }
 
-  /* ---- STEPS ---- */
   .steps { margin: 16px 0 24px; }
-
-  .step {
-    display: flex;
-    gap: 16px;
-    padding-bottom: 24px;
-    position: relative;
-  }
-
-  .step::before {
-    content: '';
-    position: absolute;
-    left: 13px; top: 30px; bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-
+  .step { display: flex; gap: 16px; padding-bottom: 24px; position: relative; }
+  .step::before { content: ''; position: absolute; left: 13px; top: 30px; bottom: 0; width: 1px; background: var(--border); }
   .step:last-child::before { display: none; }
-
-  .step-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--blue);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-  }
-
+  .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
   .step-body { flex: 1; padding-top: 4px; }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .step-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
 
-  .step-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
+  .diagram-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px 20px; margin: 20px 0 28px; overflow-x: auto; }
 
-  .step-desc {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.65;
-  }
+  .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 24px; }
+  .icon-card { border: 1px solid var(--border); border-radius: 8px; padding: 16px; background: #fff; }
+  .icon-card-icon { width: 32px; height: 32px; background: var(--blue-pale); border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .icon-card-title { font-size: 13.5px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .icon-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
 
-  /* ---- SECTION TABS ---- */
   .section { display: none; }
   .section.active { display: block; }
 
-  /* ---- PREV/NEXT ---- */
-  .page-nav {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 56px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    font-size: 13.5px;
-  }
-
-  .page-nav a {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    text-decoration: none;
-  }
-
+  .page-nav { display: flex; justify-content: space-between; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13.5px; }
+  .page-nav a { display: flex; flex-direction: column; gap: 3px; text-decoration: none; cursor: pointer; }
   .page-nav a:hover .pn-title { text-decoration: underline; }
-
   .pn-dir { font-size: 12px; color: var(--faint); }
   .pn-title { color: var(--blue); font-weight: 500; }
-
   .page-nav .next { text-align: right; }
-
-  /* ---- UPDATED ---- */
-  .updated {
-    font-size: 12.5px;
-    color: var(--faint);
-    margin-top: 32px;
-  }
-
-  /* inline ul/ol */
-  ul, ol {
-    padding-left: 20px;
-    margin: 8px 0 14px;
-  }
-
-  li {
-    font-size: 14.5px;
-    color: var(--text);
-    line-height: 1.7;
-    margin-bottom: 4px;
-  }
+  .updated { font-size: 12.5px; color: var(--faint); margin-top: 32px; }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sidebar-top">
     <a class="sidebar-logo" href="#">
-      <div class="logo-mark">
-        <svg viewBox="0 0 16 16" fill="none"><path d="M3 13V7l5-5 5 5v6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="logo-mark"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 13V7l5-5 5 5v6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <span class="logo-name">MonetizeNow</span>
     </a>
   </div>
-
   <nav class="sidebar-nav">
-    <div class="nav-group">
-      <div class="nav-group-label">Self-Service</div>
-      <a class="nav-link" onclick="show('intro')">Introduction</a>
-      <a class="nav-link" onclick="show('arch')">Architectural Requirements</a>
-      <a class="nav-link" onclick="show('workflow')">Step-by-Step Workflow</a>
-      <a class="nav-link active" onclick="show('trials')">Trials</a>
-      <a class="nav-link sub active" onclick="show('trials')">Overview</a>
-      <a class="nav-link sub" onclick="show('states')">Trial states</a>
-      <a class="nav-link sub" onclick="show('creating')">Creating a trial</a>
-      <a class="nav-link sub" onclick="show('converting')">Converting to paid</a>
-      <a class="nav-link sub" onclick="show('extending')">Extending a trial</a>
-      <a class="nav-link sub" onclick="show('canceling')">Canceling a trial</a>
-      <a class="nav-link sub" onclick="show('faq')">FAQs</a>
-      <a class="nav-link" onclick="show('intro')">Evergreen Contracts</a>
-      <a class="nav-link" onclick="show('intro')">Building a SaaS billing portal</a>
-    </div>
+    <div class="nav-group-label">Self-Service</div>
+    <a class="nav-link" onclick="show('intro')">Introduction</a>
+    <a class="nav-link" onclick="show('arch')">Architectural Requirements</a>
+    <a class="nav-link" onclick="show('workflow')">Step-by-Step Workflow</a>
+    <a class="nav-link" onclick="show('trials')">Trials</a>
+    <a class="nav-link sub" onclick="show('trials')">Overview</a>
+    <a class="nav-link sub" onclick="show('states')">Trial states</a>
+    <a class="nav-link sub" onclick="show('creating')">Creating a trial</a>
+    <a class="nav-link sub" onclick="show('converting')">Converting to paid</a>
+    <a class="nav-link sub" onclick="show('extending')">Extending a trial</a>
+    <a class="nav-link sub" onclick="show('canceling')">Canceling a trial</a>
+    <a class="nav-link sub" onclick="show('faq')">FAQs</a>
+    <a class="nav-link" onclick="show('intro')">Evergreen Contracts</a>
+    <a class="nav-link" onclick="show('intro')">Building a SaaS billing portal</a>
   </nav>
 </aside>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="breadcrumb">
-    <a href="#">Documentation</a>
-    <span class="bc-sep">›</span>
-    <a href="#">Self-Service</a>
-    <span class="bc-sep">›</span>
-    <span>Trials</span>
+    <a href="#">Documentation</a> <span style="color:var(--border)">›</span>
+    <a href="#">Self-Service</a> <span style="color:var(--border)">›</span>
+    <span id="bc-current">Trials</span>
   </div>
 </div>
 
-<!-- ON THIS PAGE -->
-<div class="on-this-page">
+<div class="on-this-page" id="otp-panel">
   <div class="otp-label">On this page</div>
-  <a class="otp-link active" onclick="show('trials')">Overview</a>
+  <a class="otp-link" onclick="show('trials')">Overview</a>
   <a class="otp-link" onclick="show('states')">Trial states</a>
   <a class="otp-link" onclick="show('creating')">Creating a trial</a>
   <a class="otp-link" onclick="show('converting')">Converting to paid</a>
@@ -492,559 +151,592 @@
   <a class="otp-link" onclick="show('faq')">FAQs</a>
 </div>
 
-<!-- MAIN -->
-<main class="main">
-  <div class="content">
+<main class="main"><div class="content">
 
-    <!-- OVERVIEW -->
-    <div class="section active" id="sec-trials">
-      <h1>Trials</h1>
-      <p class="page-intro">Trials give customers a defined window to evaluate products before any billing starts. MonetizeNow manages the full trial lifecycle: creation, extension, conversion to a paid subscription, and cancellation.</p>
+<!-- INTRODUCTION -->
+<div class="section" id="sec-intro">
+  <h1>Self-Service</h1>
+  <p class="page-intro">MonetizeNow's self-service capabilities let you build product-led checkout flows, trial experiences, and billing portals directly on top of the API — without routing customers through a sales motion.</p>
 
-      <h2 id="what-is-a-trial">What is a trial?</h2>
-      <p>A trial is a standalone record in MonetizeNow, separate from quotes and subscriptions. It holds everything needed to become a paid subscription, but nothing about billing runs until conversion happens. Trials are always free. Billing starts from the contract start date on the subscription created at conversion.</p>
-
-      <p>When you create a trial, you configure two things up front:</p>
-
-      <ul>
-        <li><strong>What the paid subscription will look like</strong> - contract length, net terms, and contacts for the resulting quote</li>
-        <li><strong>What products and pricing to convert onto</strong> - the offerings, rates, and quantities that go on the converted quote</li>
-      </ul>
-
-      <p>Both are locked in at creation. When the trial converts, MonetizeNow replays that configuration automatically without needing any additional input.</p>
-
-      <h2 id="end-actions">How a trial ends</h2>
-      <p>Every trial is created with an <code>endAction</code>. This controls what happens automatically when the trial period expires.</p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>End action</th>
-              <th>What happens at the end date</th>
-              <th>Default</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>CONVERT_TO_PAID</code></td>
-              <td>MonetizeNow creates a fully processed quote and starts the subscription automatically. No manual step required.</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><code>CANCEL</code></td>
-              <td>Trial expires. No quote is created, no subscription starts. Customer leaves the trial period with no commitment.</td>
-              <td><span class="tag tag-blue">Default</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="callout">
-        <strong>Before the end date:</strong> either end action can be triggered manually via API at any point during the trial. Conversion doesn't have to wait for the trial to expire.
-      </div>
-
-      <h2 id="what-can-go-on-a-trial">Offering types supported</h2>
-      <p>Not all offering types can be placed on a trial. Offerings must be recurring in nature.</p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Offering type</th>
-              <th>Supported</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Subscription</td>
-              <td><span class="tag tag-green">Supported</span></td>
-            </tr>
-            <tr>
-              <td>Minimum commitment</td>
-              <td><span class="tag tag-green">Supported</span></td>
-            </tr>
-            <tr>
-              <td>Token</td>
-              <td><span class="tag tag-green">Supported</span></td>
-            </tr>
-            <tr>
-              <td>Custom percent of total</td>
-              <td><span class="tag tag-green">Supported</span></td>
-            </tr>
-            <tr>
-              <td>One-time</td>
-              <td><span class="tag tag-red">Not supported</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <p>At creation, MonetizeNow also validates that all offerings and rates are active, within their active date range, and that required products and quantities are correctly configured.</p>
-
-      <div class="page-nav">
-        <span></span>
-        <a class="next" onclick="show('states')">
-          <span class="pn-dir">Next</span>
-          <span class="pn-title">Trial states →</span>
-        </a>
-      </div>
-
-      <div class="updated">Updated 2 months ago</div>
+  <h2>What you can build</h2>
+  <div class="icon-grid">
+    <div class="icon-card">
+      <div class="icon-card-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#0521AB" stroke-width="1.4"/><path d="M5 8h6M8 5v6" stroke="#0521AB" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="icon-card-title">Checkout flows</div>
+      <div class="icon-card-desc">Let customers sign up, pick a plan, and start a subscription without a rep involved.</div>
     </div>
-
-    <!-- STATES -->
-    <div class="section" id="sec-states">
-      <h1>Trial states</h1>
-      <p class="page-intro">A trial moves through a defined set of statuses from creation through to its final outcome. Only active trials can be actioned.</p>
-
-      <h2 id="statuses">All statuses</h2>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>What it means</th>
-              <th>Terminal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>ACTIVE</code></td>
-              <td>Trial is running. It can be extended, manually converted, or cancelled.</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><code>AUTO_CONVERTED</code></td>
-              <td>Batch job converted the trial at end date. Paid subscription is live. Quote ID is stored on the trial record.</td>
-              <td><span class="tag tag-gray">Final</span></td>
-            </tr>
-            <tr>
-              <td><code>MANUALLY_CONVERTED</code></td>
-              <td>Converted via API before the end date. Same result as auto conversion: full quote, active subscription.</td>
-              <td><span class="tag tag-gray">Final</span></td>
-            </tr>
-            <tr>
-              <td><code>EXPIRED</code></td>
-              <td>Trial ended with <code>endAction = CANCEL</code>. No subscription created.</td>
-              <td><span class="tag tag-gray">Final</span></td>
-            </tr>
-            <tr>
-              <td><code>MANUALLY_CANCELED</code></td>
-              <td>Cancelled via API by an operator. Cancellation reason and timestamp are stored.</td>
-              <td><span class="tag tag-gray">Final</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2 id="state-transitions">How states transition</h2>
-      <p>Every trial starts at <code>ACTIVE</code>. From there, what happens next depends on either the <code>endAction</code> set at creation or a manual API call made during the trial period.</p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Trigger</th>
-              <th>Condition</th>
-              <th>Resulting status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>End date reached (automatic)</td>
-              <td><code>endAction = CANCEL</code></td>
-              <td><code>EXPIRED</code></td>
-            </tr>
-            <tr>
-              <td>End date reached (automatic)</td>
-              <td><code>endAction = CONVERT_TO_PAID</code></td>
-              <td><code>AUTO_CONVERTED</code></td>
-            </tr>
-            <tr>
-              <td>Manual convert API call</td>
-              <td>Trial is <code>ACTIVE</code></td>
-              <td><code>MANUALLY_CONVERTED</code></td>
-            </tr>
-            <tr>
-              <td>Manual cancel API call</td>
-              <td>Trial is <code>ACTIVE</code></td>
-              <td><code>MANUALLY_CANCELED</code></td>
-            </tr>
-            <tr>
-              <td>Extend API call</td>
-              <td>Trial is <code>ACTIVE</code>, new date is after current end date</td>
-              <td>Stays <code>ACTIVE</code> with updated end date</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="callout">
-        All terminal statuses are final. A trial that has converted, expired, or been cancelled cannot be reopened.
-      </div>
-
-      <div class="page-nav">
-        <a onclick="show('trials')">
-          <span class="pn-dir">Previous</span>
-          <span class="pn-title">← Overview</span>
-        </a>
-        <a class="next" onclick="show('creating')">
-          <span class="pn-dir">Next</span>
-          <span class="pn-title">Creating a trial →</span>
-        </a>
-      </div>
-      <div class="updated">Updated 2 months ago</div>
+    <div class="icon-card">
+      <div class="icon-card-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#0521AB" stroke-width="1.4"/><path d="M8 5v3l2 1.5" stroke="#0521AB" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="icon-card-title">Trials</div>
+      <div class="icon-card-desc">Time-bound free access that converts to a paid subscription automatically or on demand.</div>
     </div>
-
-    <!-- CREATING -->
-    <div class="section" id="sec-creating">
-      <h1>Creating a trial</h1>
-      <p class="page-intro">Trials are created via API. Everything needed to run the trial and convert it to a subscription is defined at creation time.</p>
-
-      <h2 id="what-you-provide">What you provide at creation</h2>
-      <p>Two pieces of configuration drive the entire trial lifecycle.</p>
-
-      <h3>Quote initialization details</h3>
-      <p>Defines what the paid subscription quote will look like at conversion:</p>
-      <ul>
-        <li>Contract length</li>
-        <li>Net terms</li>
-        <li>Primary contact</li>
-        <li>Billing contact</li>
-      </ul>
-
-      <h3>Conversion policy</h3>
-      <p>Defines the products that go on the converted quote:</p>
-      <ul>
-        <li>Which offerings to include</li>
-        <li>Which rate to apply per offering</li>
-        <li>Product IDs and quantities for each offering</li>
-      </ul>
-
-      <p>Both are stored on the trial record and replayed automatically at conversion. They can't be changed after the trial is created.</p>
-
-      <h2 id="other-required-fields">Other required fields</h2>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>accountId</code></td>
-              <td>Account the trial belongs to.</td>
-            </tr>
-            <tr>
-              <td><code>type</code></td>
-              <td><code>NEW</code> for a net-new trial. <code>AMENDMENT</code> is reserved for future use.</td>
-            </tr>
-            <tr>
-              <td><code>startDate</code></td>
-              <td>When the trial period begins.</td>
-            </tr>
-            <tr>
-              <td><code>endDate</code></td>
-              <td>When the trial period ends. Can be extended later while the trial is active.</td>
-            </tr>
-            <tr>
-              <td><code>endAction</code></td>
-              <td><code>CONVERT_TO_PAID</code> or <code>CANCEL</code>. Defaults to <code>CANCEL</code> if not specified.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2 id="validation-at-creation">Validation at creation</h2>
-      <p>MonetizeNow validates all configuration before creating the trial. If anything doesn't pass, the trial is rejected and nothing is written.</p>
-      <ul>
-        <li>All offerings must be active and within their active date range</li>
-        <li>All rates must be active and within their active date range</li>
-        <li>Account-scoped rates must belong to the same account as the trial</li>
-        <li>All required products on each rate must be included</li>
-        <li>Product quantities must satisfy the min and max rules on each rate</li>
-        <li>One-time offering types are not permitted</li>
-      </ul>
-
-      <div class="page-nav">
-        <a onclick="show('states')">
-          <span class="pn-dir">Previous</span>
-          <span class="pn-title">← Trial states</span>
-        </a>
-        <a class="next" onclick="show('converting')">
-          <span class="pn-dir">Next</span>
-          <span class="pn-title">Converting to paid →</span>
-        </a>
-      </div>
-      <div class="updated">Updated 2 months ago</div>
+    <div class="icon-card">
+      <div class="icon-card-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4h10M3 8h7M3 12h5" stroke="#0521AB" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="icon-card-title">Billing portals</div>
+      <div class="icon-card-desc">Customer-facing portals to manage invoices, payment methods, and subscriptions.</div>
     </div>
-
-    <!-- CONVERTING -->
-    <div class="section" id="sec-converting">
-      <h1>Converting to paid</h1>
-      <p class="page-intro">When a trial converts, MonetizeNow builds and processes a full paid quote automatically using the configuration set at trial creation. No additional input is required.</p>
-
-      <h2 id="how-conversion-works">How conversion works</h2>
-      <p>Conversion can happen two ways: automatically when the trial's end date is reached and <code>endAction = CONVERT_TO_PAID</code>, or manually via the convert API endpoint at any point during the trial.</p>
-
-      <p>Either way, MonetizeNow runs the same sequence:</p>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <div class="step-title">Build the quote</div>
-            <div class="step-desc">A net-new quote is created using the contract length, net terms, and contacts from the trial's quote initialization details. Contract start date is set to the current date.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <div class="step-title">Add offerings</div>
-            <div class="step-desc">Each entry in the trial's conversion policy is added to the quote as an offering, with the configured offering, rate, products, and quantities applied exactly as specified.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <div class="step-title">Process the quote</div>
-            <div class="step-desc">MonetizeNow automatically advances the quote through every stage: pending, review, approve, sent, accepted, and processed. No approvals need to be manually triggered.</div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <div class="step-body">
-            <div class="step-title">Update the trial</div>
-            <div class="step-desc">Trial status updates to <code>AUTO_CONVERTED</code> or <code>MANUALLY_CONVERTED</code>. Quote ID is written to the trial record, linking the trial permanently to its resulting subscription.</div>
-          </div>
-        </div>
-      </div>
-
-      <h2 id="billing-start">When billing starts</h2>
-      <p>No charges apply during the trial period. Billing starts from the contract start date on the subscription created at conversion, which is set to the date conversion runs.</p>
-
-      <h2 id="auto-conversion">Automatic conversion</h2>
-      <p>A scheduled batch job runs periodically and picks up any trials where:</p>
-      <ul>
-        <li>End date has passed</li>
-        <li>Status is <code>ACTIVE</code></li>
-        <li><code>endAction</code> is <code>CONVERT_TO_PAID</code></li>
-      </ul>
-      <p>Each trial is converted individually. If a batch run fails partway through, trials already converted keep their status. Nothing is rolled back.</p>
-
-      <div class="callout warning">
-        <strong>USD only:</strong> converted quotes are always created in USD regardless of account settings. Multi-currency trial conversion is not yet supported.
-      </div>
-
-      <div class="page-nav">
-        <a onclick="show('creating')">
-          <span class="pn-dir">Previous</span>
-          <span class="pn-title">← Creating a trial</span>
-        </a>
-        <a class="next" onclick="show('extending')">
-          <span class="pn-dir">Next</span>
-          <span class="pn-title">Extending a trial →</span>
-        </a>
-      </div>
-      <div class="updated">Updated 2 months ago</div>
-    </div>
-
-    <!-- EXTENDING -->
-    <div class="section" id="sec-extending">
-      <h1>Extending a trial</h1>
-      <p class="page-intro">Active trials can be extended by updating the end date. This is useful when a customer needs more time to evaluate before committing.</p>
-
-      <h2 id="how-extension-works">How it works</h2>
-      <p>Call the extend endpoint with a new end date. MonetizeNow updates the trial and the original end date is replaced. The trial continues as normal with the new expiry.</p>
-
-      <p>Two rules apply:</p>
-      <ul>
-        <li>Only <code>ACTIVE</code> trials can be extended. Trials in any terminal status cannot be changed.</li>
-        <li>New end date must be after the current end date. You can't shorten a trial via extension.</li>
-      </ul>
-
-      <div class="callout">
-        Extension doesn't change the trial's <code>endAction</code>. A trial set to <code>CONVERT_TO_PAID</code> will still auto-convert at the new end date. A trial set to <code>CANCEL</code> will still expire.
-      </div>
-
-      <h2 id="extending-multiple-times">Multiple extensions</h2>
-      <p>Trials can be extended more than once. Each call to the extend endpoint replaces the current end date. There is no limit on how many times a trial can be extended as long as it stays active.</p>
-
-      <div class="page-nav">
-        <a onclick="show('converting')">
-          <span class="pn-dir">Previous</span>
-          <span class="pn-title">← Converting to paid</span>
-        </a>
-        <a class="next" onclick="show('canceling')">
-          <span class="pn-dir">Next</span>
-          <span class="pn-title">Canceling a trial →</span>
-        </a>
-      </div>
-      <div class="updated">Updated 2 months ago</div>
-    </div>
-
-    <!-- CANCELING -->
-    <div class="section" id="sec-canceling">
-      <h1>Canceling a trial</h1>
-      <p class="page-intro">Trials can be cancelled at any point while active. Cancellation ends the evaluation period immediately without creating a subscription.</p>
-
-      <h2 id="how-cancellation-works">How it works</h2>
-      <p>Call the cancel endpoint with a cancellation reason. MonetizeNow marks the trial as <code>MANUALLY_CANCELED</code> and stores the reason and cancellation timestamp on the trial record.</p>
-
-      <p>Only <code>ACTIVE</code> trials can be cancelled. Attempting to cancel a trial in a terminal status returns an error.</p>
-
-      <h2 id="what-cancellation-does-not-do">What cancellation does not do</h2>
-      <p>Cancellation only affects the trial record. It does not:</p>
-      <ul>
-        <li>Affect any other contracts or subscriptions on the account</li>
-        <li>Trigger any billing or credit actions</li>
-        <li>Prevent creating a new trial for the same account in future</li>
-      </ul>
-
-      <h2 id="difference-from-expiry">Cancellation vs. expiry</h2>
-      <p>Both result in no subscription being created, but they are different outcomes:</p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Outcome</th>
-              <th>How it happens</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Cancelled</td>
-              <td>Operator calls the cancel API before end date</td>
-              <td><code>MANUALLY_CANCELED</code></td>
-            </tr>
-            <tr>
-              <td>Expired</td>
-              <td>End date passes with <code>endAction = CANCEL</code></td>
-              <td><code>EXPIRED</code></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="page-nav">
-        <a onclick="show('extending')">
-          <span class="pn-dir">Previous</span>
-          <span class="pn-title">← Extending a trial</span>
-        </a>
-        <a class="next" onclick="show('faq')">
-          <span class="pn-dir">Next</span>
-          <span class="pn-title">FAQs →</span>
-        </a>
-      </div>
-      <div class="updated">Updated 2 months ago</div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="section" id="sec-faq">
-      <h1>FAQs</h1>
-      <p class="page-intro">Common questions about how trials work in MonetizeNow.</p>
-
-      <h3>Can I change what products a trial converts onto after it's created?</h3>
-      <p>No. Offering and product configuration in the conversion policy is locked at creation. To change what a customer converts onto, cancel the existing trial and create a new one with the updated configuration.</p>
-
-      <h3>What happens if conversion fails?</h3>
-      <p>If conversion fails mid-run, the trial stays <code>ACTIVE</code>. Nothing partial is written. Resolve the underlying issue - check that offerings and rates are still active, contacts are valid, and configuration is complete - then retry conversion.</p>
-
-      <h3>Can a customer have more than one trial at the same time?</h3>
-      <p>MonetizeNow doesn't enforce a limit on concurrent trials per account at the platform level. Whether to allow multiple simultaneous trials is a business decision to manage in your own logic.</p>
-
-      <h3>Does converting a trial bypass the normal approval workflow?</h3>
-      <p>Yes. Conversion automatically advances the quote through all stages including approval. No manual approvals are triggered. If your business requires an approval step before a trial converts, manage that process before calling the convert endpoint.</p>
-
-      <h3>Can I extend a trial that has already expired or been cancelled?</h3>
-      <p>No. Extension is only available on <code>ACTIVE</code> trials. Once a trial reaches any terminal status it can't be changed.</p>
-
-      <h3>What currency are converted quotes created in?</h3>
-      <p>Converted quotes are always created in USD. If your account uses a different currency, this is a current limitation. Multi-currency trial conversion is not yet supported.</p>
-
-      <h3>Is there a way to set auto-renewal on the converted subscription?</h3>
-      <p>Not currently via trial configuration. Converted quotes always have auto-renewal set to off. Auto-renewal can be configured on the resulting contract after conversion if needed.</p>
-
-      <div class="page-nav">
-        <a onclick="show('canceling')">
-          <span class="pn-dir">Previous</span>
-          <span class="pn-title">← Canceling a trial</span>
-        </a>
-        <span></span>
-      </div>
-      <div class="updated">Updated 2 months ago</div>
-    </div>
-
-    <!-- PLACEHOLDER SECTIONS -->
-    <div class="section" id="sec-intro">
-      <h1>Introduction</h1>
-      <p class="page-intro">Self-service lets you build checkout flows, trial experiences, and billing portals on top of MonetizeNow's APIs.</p>
-      <p>Select a topic from the sidebar to get started.</p>
-    </div>
-
-    <div class="section" id="sec-arch">
-      <h1>Architectural Requirements</h1>
-      <p class="page-intro">Requirements and prerequisites for building self-service flows with MonetizeNow.</p>
-    </div>
-
-    <div class="section" id="sec-workflow">
-      <h1>Step-by-Step Workflow</h1>
-      <p class="page-intro">How to build a new customer checkout flow using MonetizeNow's self-serve APIs.</p>
-    </div>
-
   </div>
-</main>
+
+  <h2>How it works</h2>
+  <p>Every self-service flow runs through MonetizeNow's API. Your frontend or backend calls the API to create accounts, spin up quotes or trials, collect payment, and trigger subscription creation. MonetizeNow handles the billing logic, contract lifecycle, and revenue recognition behind it.</p>
+  <p>Stripe handles payment collection. When a customer enters card details on your checkout, that payment method gets attached to their account in MonetizeNow and charges fire automatically at billing dates.</p>
+
+  <h2>Key concepts</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Concept</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Account</strong></td><td>Represents a customer. Holds contacts, payment methods, contracts, and trial records.</td></tr>
+        <tr><td><strong>Quote</strong></td><td>Defines what a customer is buying: offerings, pricing, contract length, and terms. A processed quote creates a contract and subscription.</td></tr>
+        <tr><td><strong>Trial</strong></td><td>A time-limited free period that carries conversion config so it can become a paid subscription without extra input.</td></tr>
+        <tr><td><strong>Contract</strong></td><td>Created when a quote processes. Governs billing for the subscription period.</td></tr>
+        <tr><td><strong>Subscription</strong></td><td>Active billing relationship created from a contract. Drives invoice generation and payment collection.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-nav">
+    <span></span>
+    <a class="next" onclick="show('arch')"><span class="pn-dir">Next</span><span class="pn-title">Architectural Requirements →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- ARCHITECTURAL REQUIREMENTS -->
+<div class="section" id="sec-arch">
+  <h1>Architectural Requirements</h1>
+  <p class="page-intro">Before building a self-service flow on MonetizeNow, a few things need to be in place. Most are one-time setup items.</p>
+
+  <h2>Prerequisites</h2>
+  <h3>Product catalog</h3>
+  <p>At minimum, you need at least one active Offering with an active Rate. Rates define pricing — a Rate at $0 works for free trials. Products define what customers get access to.</p>
+
+  <h3>Stripe connection</h3>
+  <p>Self-service checkout requires Stripe connected and configured in MonetizeNow settings. Without it, the payment step cannot complete.</p>
+
+  <h3>API credentials</h3>
+  <p>All self-service flows call the MonetizeNow API on behalf of a tenant. You need a valid API key scoped to your tenant, generated from API Keys in settings.</p>
+
+  <h2>Architecture overview</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 600 200" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
+      <defs><marker id="a" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#c8c8d8"/></marker></defs>
+      <!-- frontend -->
+      <rect x="10" y="76" width="108" height="48" rx="6" fill="#eff2ff" stroke="#0521AB" stroke-width="1.4"/>
+      <text x="64" y="95" text-anchor="middle" font-weight="600" fill="#0521AB">Your frontend</text>
+      <text x="64" y="109" text-anchor="middle" fill="#5a5a6a">checkout / portal</text>
+      <!-- arrow to MN -->
+      <line x1="118" y1="100" x2="160" y2="100" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
+      <text x="139" y="95" text-anchor="middle" fill="#8a8a9a">API</text>
+      <!-- MN box -->
+      <rect x="161" y="60" width="130" height="80" rx="6" fill="#0521AB"/>
+      <text x="226" y="88" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">MonetizeNow</text>
+      <text x="226" y="104" text-anchor="middle" fill="#D3EEF4">Quotes · Trials</text>
+      <text x="226" y="118" text-anchor="middle" fill="#D3EEF4">Contracts · Billing</text>
+      <!-- arrows to integrations -->
+      <line x1="291" y1="82" x2="334" y2="58" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
+      <line x1="291" y1="100" x2="334" y2="100" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
+      <line x1="291" y1="118" x2="334" y2="142" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
+      <!-- Stripe -->
+      <rect x="335" y="38" width="106" height="40" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
+      <text x="388" y="55" text-anchor="middle" font-weight="600" fill="#1a1a1a">Stripe</text>
+      <text x="388" y="68" text-anchor="middle" fill="#5a5a6a">payments</text>
+      <!-- CRM -->
+      <rect x="335" y="80" width="106" height="40" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
+      <text x="388" y="97" text-anchor="middle" font-weight="600" fill="#1a1a1a">CRM</text>
+      <text x="388" y="110" text-anchor="middle" fill="#5a5a6a">Salesforce / HubSpot</text>
+      <!-- ERP -->
+      <rect x="335" y="122" width="106" height="40" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
+      <text x="388" y="139" text-anchor="middle" font-weight="600" fill="#1a1a1a">ERP / GL</text>
+      <text x="388" y="152" text-anchor="middle" fill="#5a5a6a">revenue recognition</text>
+      <!-- webhooks -->
+      <line x1="441" y1="100" x2="480" y2="100" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#a)"/>
+      <text x="460" y="95" text-anchor="middle" fill="#8a8a9a">webhooks</text>
+      <!-- your backend -->
+      <rect x="481" y="76" width="106" height="48" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
+      <text x="534" y="97" text-anchor="middle" font-weight="600" fill="#1a1a1a">Your backend</text>
+      <text x="534" y="111" text-anchor="middle" fill="#5a5a6a">event processing</text>
+    </svg>
+  </div>
+
+  <h2>What your code is responsible for</h2>
+  <ul>
+    <li>Creating and identifying customers as MonetizeNow accounts</li>
+    <li>Presenting pricing and collecting plan selection</li>
+    <li>Calling the MonetizeNow API to create quotes, trials, and process subscriptions</li>
+    <li>Collecting payment method via Stripe's SDK, then passing the payment method ID to MonetizeNow</li>
+    <li>Handling webhook events to keep your own system state in sync</li>
+  </ul>
+
+  <div class="callout"><strong>MonetizeNow does not host a checkout UI.</strong> It provides the billing and contract infrastructure. Your frontend owns the customer-facing experience.</div>
+
+  <div class="page-nav">
+    <a onclick="show('intro')"><span class="pn-dir">Previous</span><span class="pn-title">← Introduction</span></a>
+    <a class="next" onclick="show('workflow')"><span class="pn-dir">Next</span><span class="pn-title">Step-by-Step Workflow →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- STEP-BY-STEP WORKFLOW -->
+<div class="section" id="sec-workflow">
+  <h1>Step-by-Step Workflow</h1>
+  <p class="page-intro">How to take a new customer from checkout to an active paid subscription using MonetizeNow's self-serve APIs.</p>
+
+  <h2>New customer checkout</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 560 80" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+      <defs><marker id="sw" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker></defs>
+      <circle cx="40" cy="34" r="16" fill="#0521AB"/>
+      <text x="40" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">1</text>
+      <text x="40" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Create</text>
+      <text x="40" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">account</text>
+      <line x1="56" y1="34" x2="82" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
+      <circle cx="98" cy="34" r="16" fill="#0521AB"/>
+      <text x="98" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">2</text>
+      <text x="98" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Build</text>
+      <text x="98" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">quote</text>
+      <line x1="114" y1="34" x2="140" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
+      <circle cx="156" cy="34" r="16" fill="#0521AB"/>
+      <text x="156" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">3</text>
+      <text x="156" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Collect</text>
+      <text x="156" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">payment</text>
+      <line x1="172" y1="34" x2="198" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
+      <circle cx="214" cy="34" r="16" fill="#0521AB"/>
+      <text x="214" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">4</text>
+      <text x="214" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Accept</text>
+      <text x="214" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">quote</text>
+      <line x1="230" y1="34" x2="256" y2="34" stroke="#0521AB" stroke-width="1.2" marker-end="url(#sw)"/>
+      <circle cx="272" cy="34" r="16" fill="#0521AB"/>
+      <text x="272" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">5</text>
+      <text x="272" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Process</text>
+      <text x="272" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">quote</text>
+      <line x1="288" y1="34" x2="314" y2="34" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#sw)"/>
+      <circle cx="330" cy="34" r="16" fill="#0F6E56"/>
+      <text x="330" y="38.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Inter, sans-serif">6</text>
+      <text x="330" y="60" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">Active</text>
+      <text x="330" y="72" text-anchor="middle" font-size="10" fill="#5a5a6a" font-family="Inter, sans-serif">subscription</text>
+    </svg>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Create an account</div><div class="step-desc">Call <code>POST /accounts</code> with the customer's name and contact details. Save the returned account ID — it's used in every subsequent call.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Build a quote</div><div class="step-desc">Call <code>POST /quotes</code> with the account ID, your chosen offering and rate, contract length, and net terms. Add offerings and set contacts before moving forward.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Collect payment method</div><div class="step-desc">Use Stripe's frontend SDK to collect card details. Pass the resulting payment method ID to <code>POST /accounts/{id}/payment-methods</code> to attach it to the account.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Accept the quote</div><div class="step-desc">Call <code>POST /quotes/{id}/accept</code>. This advances the quote to accepted state and represents the customer's agreement to terms.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Process the quote</div><div class="step-desc">Call <code>POST /quotes/{id}/process</code>. MonetizeNow creates the contract and subscription. Billing starts per the contract start date and billing schedule.</div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">Active subscription</div><div class="step-desc">Customer's subscription is live. MonetizeNow handles invoice generation, payment collection, and renewals. Listen to webhook events to keep your system in sync.</div></div></div>
+  </div>
+
+  <div class="callout"><strong>For trial-first flows:</strong> instead of steps 2-5, create a trial via <code>POST /trials</code>. When the trial period ends, MonetizeNow runs those steps automatically.</div>
+
+  <div class="page-nav">
+    <a onclick="show('arch')"><span class="pn-dir">Previous</span><span class="pn-title">← Architectural Requirements</span></a>
+    <a class="next" onclick="show('trials')"><span class="pn-dir">Next</span><span class="pn-title">Trials →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- TRIALS OVERVIEW -->
+<div class="section active" id="sec-trials">
+  <h1>Trials</h1>
+  <p class="page-intro">Trials give customers a free evaluation window before billing starts. MonetizeNow manages the full lifecycle: creation, extension, conversion to a paid subscription, and cancellation.</p>
+
+  <h2>What is a trial?</h2>
+  <p>A trial is a standalone record in MonetizeNow, separate from quotes and subscriptions. It carries everything needed to become a paid subscription, but nothing about billing runs until conversion. Trials are always free. Billing starts from the contract start date on the subscription created at conversion.</p>
+  <p>When you create a trial, you configure two things up front: what the paid quote will look like, and which products to convert onto. Both are locked at creation. At conversion time, MonetizeNow replays that configuration automatically.</p>
+
+  <h2>Full trial journey</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 600 210" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
+      <defs>
+        <marker id="bl" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker>
+        <marker id="gr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#c8c8d8"/></marker>
+      </defs>
+
+      <!-- Trial created box -->
+      <rect x="8" y="80" width="108" height="44" rx="6" fill="#eff2ff" stroke="#0521AB" stroke-width="1.5"/>
+      <text x="62" y="98" text-anchor="middle" font-weight="600" fill="#0521AB">Trial created</text>
+      <text x="62" y="112" text-anchor="middle" fill="#0521AB">ACTIVE</text>
+
+      <!-- arrow right -->
+      <line x1="116" y1="102" x2="158" y2="102" stroke="#0521AB" stroke-width="1.2" marker-end="url(#bl)"/>
+
+      <!-- branch dot -->
+      <circle cx="168" cy="102" r="7" fill="#0521AB"/>
+
+      <!-- extend loop on top -->
+      <path d="M62 80 Q62 46 115 46 Q168 46 168 95" fill="none" stroke="#c8c8d8" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#gr)"/>
+      <text x="115" y="40" text-anchor="middle" fill="#8a8a9a">extend end date</text>
+
+      <!-- cancel arrow (goes up-left) -->
+      <path d="M116 92 Q130 55 148 38" fill="none" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
+
+      <!-- MANUALLY_CANCELED -->
+      <rect x="90" y="12" width="148" height="34" rx="5" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.2"/>
+      <text x="164" y="26" text-anchor="middle" font-weight="600" fill="#b91c1c">MANUALLY_CANCELED</text>
+      <text x="164" y="38" text-anchor="middle" fill="#b91c1c">cancelled via API before end date</text>
+
+      <!-- top branch: CONVERT_TO_PAID -->
+      <line x1="175" y1="96" x2="232" y2="68" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
+      <text x="220" y="78" text-anchor="middle" fill="#5a5a6a">endAction =</text>
+      <text x="220" y="89" text-anchor="middle" fill="#5a5a6a">CONVERT_TO_PAID</text>
+
+      <!-- AUTO_CONVERTED -->
+      <rect x="234" y="46" width="126" height="44" rx="5" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
+      <text x="297" y="65" text-anchor="middle" font-weight="600" fill="#0F6E56">AUTO_CONVERTED</text>
+      <text x="297" y="79" text-anchor="middle" fill="#5a5a6a">batch runs at end date</text>
+
+      <!-- middle branch: manual convert -->
+      <line x1="175" y1="102" x2="234" y2="102" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
+      <text x="204" y="96" text-anchor="middle" fill="#5a5a6a">manual API</text>
+
+      <!-- MANUALLY_CONVERTED -->
+      <rect x="234" y="84" width="126" height="36" rx="5" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
+      <text x="297" y="100" text-anchor="middle" font-weight="600" fill="#0F6E56">MANUALLY_CONVERTED</text>
+      <text x="297" y="113" text-anchor="middle" fill="#5a5a6a">via convert API call</text>
+
+      <!-- bottom branch: CANCEL -->
+      <line x1="175" y1="108" x2="234" y2="140" stroke="#c8c8d8" stroke-width="1.2" marker-end="url(#gr)"/>
+      <text x="216" y="136" text-anchor="middle" fill="#5a5a6a">endAction = CANCEL</text>
+
+      <!-- EXPIRED -->
+      <rect x="234" y="144" width="108" height="36" rx="5" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
+      <text x="288" y="160" text-anchor="middle" font-weight="600" fill="#5a5a6a">EXPIRED</text>
+      <text x="288" y="172" text-anchor="middle" fill="#8a8a9a">no subscription created</text>
+
+      <!-- arrow to subscription from converted boxes -->
+      <line x1="360" y1="68" x2="400" y2="68" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#bl)"/>
+      <line x1="360" y1="102" x2="388" y2="80" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#bl)"/>
+
+      <!-- Active subscription -->
+      <rect x="401" y="50" width="130" height="42" rx="6" fill="#0521AB"/>
+      <text x="466" y="68" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">Active subscription</text>
+      <text x="466" y="82" text-anchor="middle" fill="#D3EEF4">billing starts</text>
+    </svg>
+  </div>
+
+  <h2>How a trial ends</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>End action</th><th>What happens at end date</th><th>Default</th></tr></thead>
+      <tbody>
+        <tr><td><code>CONVERT_TO_PAID</code></td><td>MonetizeNow creates a fully processed quote and starts the subscription automatically.</td><td></td></tr>
+        <tr><td><code>CANCEL</code></td><td>Trial expires. No quote created, no subscription starts.</td><td><span class="tag tag-blue">Default</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">Either end action can be triggered manually via API at any point while the trial is active. Conversion doesn't have to wait for the end date.</div>
+
+  <h2>Offering types supported</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Offering type</th><th>Supported</th></tr></thead>
+      <tbody>
+        <tr><td>Subscription</td><td><span class="tag tag-green">Supported</span></td></tr>
+        <tr><td>Minimum commitment</td><td><span class="tag tag-green">Supported</span></td></tr>
+        <tr><td>Token</td><td><span class="tag tag-green">Supported</span></td></tr>
+        <tr><td>Custom percent of total</td><td><span class="tag tag-green">Supported</span></td></tr>
+        <tr><td>One-time</td><td><span class="tag tag-red">Not supported</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-nav">
+    <span></span>
+    <a class="next" onclick="show('states')"><span class="pn-dir">Next</span><span class="pn-title">Trial states →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- TRIAL STATES -->
+<div class="section" id="sec-states">
+  <h1>Trial states</h1>
+  <p class="page-intro">A trial moves through a defined set of statuses from creation to its final outcome. Only active trials accept lifecycle actions.</p>
+
+  <h2>State transitions</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 580 100" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
+      <defs><marker id="st" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#c8c8d8"/></marker></defs>
+
+      <!-- ACTIVE -->
+      <rect x="8" y="30" width="88" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.5"/>
+      <text x="52" y="48" text-anchor="middle" font-weight="600" fill="#0521AB">ACTIVE</text>
+      <text x="52" y="61" text-anchor="middle" fill="#5a5a6a">running</text>
+
+      <!-- MANUALLY_CANCELED above -->
+      <path d="M52 30 L52 14" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
+      <rect x="8" y="2" width="142" height="22" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+      <text x="79" y="14" text-anchor="middle" font-weight="600" fill="#b91c1c">MANUALLY_CANCELED</text>
+
+      <!-- three arrows right -->
+      <line x1="96" y1="42" x2="126" y2="22" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
+      <line x1="96" y1="50" x2="126" y2="50" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
+      <line x1="96" y1="58" x2="126" y2="78" stroke="#c8c8d8" stroke-width="1.1" marker-end="url(#st)"/>
+
+      <!-- AUTO_CONVERTED -->
+      <rect x="127" y="10" width="122" height="28" rx="4" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
+      <text x="188" y="24" text-anchor="middle" font-weight="600" fill="#0F6E56">AUTO_CONVERTED</text>
+
+      <!-- MANUALLY_CONVERTED -->
+      <rect x="127" y="36" width="122" height="28" rx="4" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
+      <text x="188" y="50" text-anchor="middle" font-weight="600" fill="#0F6E56">MANUALLY_CONVERTED</text>
+
+      <!-- EXPIRED -->
+      <rect x="127" y="62" width="88" height="28" rx="4" fill="#f8f8fb" stroke="#e8e8ee" stroke-width="1.2"/>
+      <text x="171" y="76" text-anchor="middle" font-weight="600" fill="#5a5a6a">EXPIRED</text>
+
+      <text x="290" y="96" font-size="9.5" fill="#8a8a9a">All statuses on the right are terminal. A trial cannot leave a terminal status.</text>
+    </svg>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Status</th><th>What it means</th><th>Terminal</th></tr></thead>
+      <tbody>
+        <tr><td><code>ACTIVE</code></td><td>Trial is running. Can be extended, manually converted, or cancelled.</td><td></td></tr>
+        <tr><td><code>AUTO_CONVERTED</code></td><td>Batch converted at end date. Paid subscription is live. Quote ID is stored on the trial record.</td><td><span class="tag tag-gray">Final</span></td></tr>
+        <tr><td><code>MANUALLY_CONVERTED</code></td><td>Converted via API before end date. Same outcome: full quote, active subscription.</td><td><span class="tag tag-gray">Final</span></td></tr>
+        <tr><td><code>EXPIRED</code></td><td>Trial ended with <code>endAction = CANCEL</code>. No subscription created.</td><td><span class="tag tag-gray">Final</span></td></tr>
+        <tr><td><code>MANUALLY_CANCELED</code></td><td>Cancelled via API. Cancellation reason and timestamp stored on the record.</td><td><span class="tag tag-gray">Final</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-nav">
+    <a onclick="show('trials')"><span class="pn-dir">Previous</span><span class="pn-title">← Overview</span></a>
+    <a class="next" onclick="show('creating')"><span class="pn-dir">Next</span><span class="pn-title">Creating a trial →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- CREATING A TRIAL -->
+<div class="section" id="sec-creating">
+  <h1>Creating a trial</h1>
+  <p class="page-intro">Trials are created via API. Everything needed to run the trial and convert it to a subscription is configured at creation — nothing needs to be provided again at conversion time.</p>
+
+  <h2>What you configure at creation</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 560 120" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
+      <defs><marker id="cr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker></defs>
+      <rect x="8" y="38" width="110" height="44" rx="6" fill="#eff2ff" stroke="#0521AB" stroke-width="1.5"/>
+      <text x="63" y="56" text-anchor="middle" font-weight="600" fill="#0521AB">POST /trials</text>
+      <text x="63" y="70" text-anchor="middle" fill="#5a5a6a">your API call</text>
+      <line x1="118" y1="60" x2="155" y2="60" stroke="#0521AB" stroke-width="1.2" marker-end="url(#cr)"/>
+      <rect x="156" y="20" width="148" height="80" rx="6" fill="#0521AB"/>
+      <text x="230" y="44" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">MonetizeNow stores</text>
+      <text x="230" y="60" text-anchor="middle" fill="#D3EEF4">quoteInitDetails (JSONB)</text>
+      <text x="230" y="74" text-anchor="middle" fill="#D3EEF4">conversionPolicy (JSONB)</text>
+      <text x="230" y="88" text-anchor="middle" fill="#D3EEF4">endAction · dates · status</text>
+      <line x1="304" y1="60" x2="341" y2="60" stroke="#0521AB" stroke-width="1.2" marker-end="url(#cr)"/>
+      <rect x="342" y="14" width="148" height="92" rx="6" fill="#e8f5f1" stroke="#5DCAA5" stroke-width="1.2"/>
+      <text x="416" y="36" text-anchor="middle" font-weight="600" fill="#0F6E56" font-size="11">At conversion</text>
+      <text x="416" y="52" text-anchor="middle" fill="#5a5a6a">replays quoteInitDetails</text>
+      <text x="416" y="66" text-anchor="middle" fill="#5a5a6a">replays conversionPolicy</text>
+      <text x="416" y="82" text-anchor="middle" font-weight="600" fill="#0F6E56">quote + subscription</text>
+      <text x="416" y="96" text-anchor="middle" fill="#5a5a6a">no extra input needed</text>
+    </svg>
+  </div>
+
+  <h3>Quote initialization details</h3>
+  <p>Defines what the paid subscription quote will look like at conversion: contract length, net terms, primary contact, and billing contact.</p>
+
+  <h3>Conversion policy</h3>
+  <p>Defines the products that go on the converted quote: which offerings, which rate per offering, and product IDs with quantities. All locked at creation and replayed verbatim at conversion.</p>
+
+  <h2>Required fields</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>accountId</code></td><td>Account this trial belongs to.</td></tr>
+        <tr><td><code>type</code></td><td><code>NEW</code> for a net-new trial.</td></tr>
+        <tr><td><code>startDate</code></td><td>When the trial period begins.</td></tr>
+        <tr><td><code>endDate</code></td><td>When the trial period ends. Can be extended while active.</td></tr>
+        <tr><td><code>endAction</code></td><td><code>CONVERT_TO_PAID</code> or <code>CANCEL</code>. Defaults to <code>CANCEL</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Validation at creation</h2>
+  <p>All configuration is validated before the trial is written. If anything fails, nothing is created.</p>
+  <ul>
+    <li>All offerings must be active and within their active date range</li>
+    <li>All rates must be active and within their active date range</li>
+    <li>Account-scoped rates must belong to the same account as the trial</li>
+    <li>All required products on each rate must be included</li>
+    <li>Product quantities must satisfy min and max rules on each rate</li>
+    <li>One-time offering types are not permitted</li>
+  </ul>
+
+  <div class="page-nav">
+    <a onclick="show('states')"><span class="pn-dir">Previous</span><span class="pn-title">← Trial states</span></a>
+    <a class="next" onclick="show('converting')"><span class="pn-dir">Next</span><span class="pn-title">Converting to paid →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- CONVERTING TO PAID -->
+<div class="section" id="sec-converting">
+  <h1>Converting to paid</h1>
+  <p class="page-intro">When a trial converts, MonetizeNow builds and processes a full paid quote automatically using configuration stored at trial creation. No additional input is required.</p>
+
+  <h2>Conversion sequence</h2>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 560 72" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif" font-size="10">
+      <defs><marker id="cv" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#0521AB"/></marker></defs>
+      <rect x="4" y="14" width="86" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
+      <text x="47" y="31" text-anchor="middle" font-weight="600" fill="#0521AB">Validate</text>
+      <text x="47" y="45" text-anchor="middle" fill="#5a5a6a">trial is ACTIVE</text>
+      <line x1="90" y1="34" x2="104" y2="34" stroke="#0521AB" stroke-width="1.1" marker-end="url(#cv)"/>
+      <rect x="105" y="14" width="90" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
+      <text x="150" y="31" text-anchor="middle" font-weight="600" fill="#0521AB">Build quote</text>
+      <text x="150" y="45" text-anchor="middle" fill="#5a5a6a">from quoteInitDetails</text>
+      <line x1="195" y1="34" x2="209" y2="34" stroke="#0521AB" stroke-width="1.1" marker-end="url(#cv)"/>
+      <rect x="210" y="14" width="90" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
+      <text x="255" y="31" text-anchor="middle" font-weight="600" fill="#0521AB">Add offerings</text>
+      <text x="255" y="45" text-anchor="middle" fill="#5a5a6a">from policy</text>
+      <line x1="300" y1="34" x2="314" y2="34" stroke="#0521AB" stroke-width="1.1" marker-end="url(#cv)"/>
+      <rect x="315" y="14" width="96" height="40" rx="5" fill="#eff2ff" stroke="#0521AB" stroke-width="1.2"/>
+      <text x="363" y="28" text-anchor="middle" font-weight="600" fill="#0521AB">Auto-process</text>
+      <text x="363" y="40" text-anchor="middle" fill="#5a5a6a">all quote stages</text>
+      <text x="363" y="52" text-anchor="middle" fill="#5a5a6a">pending→processed</text>
+      <line x1="411" y1="34" x2="425" y2="34" stroke="#0F6E56" stroke-width="1.1" marker-end="url(#cv)"/>
+      <rect x="426" y="14" width="122" height="40" rx="5" fill="#0521AB"/>
+      <text x="487" y="31" text-anchor="middle" font-weight="600" fill="#fff" font-size="11">Active subscription</text>
+      <text x="487" y="45" text-anchor="middle" fill="#D3EEF4">trial status updated</text>
+    </svg>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Validate the trial is active</div><div class="step-desc">Conversion is blocked if the trial is in any terminal status. Only <code>ACTIVE</code> trials proceed. This guards against race conditions between batch and manual calls.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Build the quote from quoteInitDetails</div><div class="step-desc">A net-new quote is created. Contract start is set to the current date. Contract length, net terms, and contacts come from the trial's stored <code>quoteInitDetails</code>.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Add offerings from the conversion policy</div><div class="step-desc">Each entry in <code>trialConversionPolicy</code> becomes a quote offering: offering ID, rate, products, and quantities applied exactly as stored at trial creation.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Auto-process through all quote stages</div><div class="step-desc">MonetizeNow advances the quote automatically: pending, review, approve, sent, accepted, processed. No manual approvals needed.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Update the trial record</div><div class="step-desc">Trial status becomes <code>AUTO_CONVERTED</code> or <code>MANUALLY_CONVERTED</code>. Resulting quote ID is written to the trial, linking it permanently to its subscription.</div></div></div>
+  </div>
+
+  <h2>When billing starts</h2>
+  <p>No charges apply during the trial period. Billing starts from the contract start date on the subscription created at conversion, which is set to the date conversion runs.</p>
+
+  <div class="callout warning"><strong>Current limitation:</strong> converted quotes are always created in USD. Multi-currency trial conversion is not yet supported.</div>
+
+  <div class="page-nav">
+    <a onclick="show('creating')"><span class="pn-dir">Previous</span><span class="pn-title">← Creating a trial</span></a>
+    <a class="next" onclick="show('extending')"><span class="pn-dir">Next</span><span class="pn-title">Extending a trial →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- EXTENDING -->
+<div class="section" id="sec-extending">
+  <h1>Extending a trial</h1>
+  <p class="page-intro">Active trials can have their end date pushed forward. Useful when a customer needs more evaluation time before committing.</p>
+
+  <h2>How it works</h2>
+  <p>Call the extend endpoint with a new end date. MonetizeNow replaces the current end date and the trial continues as normal. Two rules apply:</p>
+  <ul>
+    <li>Only <code>ACTIVE</code> trials can be extended. Terminal status trials cannot be changed.</li>
+    <li>New end date must be after the current end date. Extension cannot shorten a trial.</li>
+  </ul>
+
+  <div class="callout">Extending a trial does not change its <code>endAction</code>. A trial set to <code>CONVERT_TO_PAID</code> will still auto-convert at the new end date.</div>
+
+  <h2>Multiple extensions</h2>
+  <p>Trials can be extended more than once. Each call replaces the current end date. There is no limit on extensions as long as the trial stays active.</p>
+
+  <div class="page-nav">
+    <a onclick="show('converting')"><span class="pn-dir">Previous</span><span class="pn-title">← Converting to paid</span></a>
+    <a class="next" onclick="show('canceling')"><span class="pn-dir">Next</span><span class="pn-title">Canceling a trial →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- CANCELING -->
+<div class="section" id="sec-canceling">
+  <h1>Canceling a trial</h1>
+  <p class="page-intro">Trials can be cancelled at any point while active. Cancellation ends the evaluation period immediately without creating a subscription.</p>
+
+  <h2>How it works</h2>
+  <p>Call the cancel endpoint with a cancellation reason. MonetizeNow marks the trial as <code>MANUALLY_CANCELED</code> and stores the reason and timestamp. Only <code>ACTIVE</code> trials can be cancelled.</p>
+
+  <h2>Cancellation vs. expiry</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Outcome</th><th>How it happens</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Cancelled</td><td>Operator calls the cancel API before end date</td><td><code>MANUALLY_CANCELED</code></td></tr>
+        <tr><td>Expired</td><td>End date passes with <code>endAction = CANCEL</code></td><td><code>EXPIRED</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>What cancellation does not affect</h2>
+  <ul>
+    <li>Other contracts or subscriptions on the same account</li>
+    <li>Billing or credit state</li>
+    <li>Ability to create a new trial for the same account in future</li>
+  </ul>
+
+  <div class="page-nav">
+    <a onclick="show('extending')"><span class="pn-dir">Previous</span><span class="pn-title">← Extending a trial</span></a>
+    <a class="next" onclick="show('faq')"><span class="pn-dir">Next</span><span class="pn-title">FAQs →</span></a>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+<!-- FAQ -->
+<div class="section" id="sec-faq">
+  <h1>FAQs</h1>
+  <p class="page-intro">Common questions about how trials work in MonetizeNow.</p>
+
+  <h3>Can I change what products a trial converts onto after it's created?</h3>
+  <p>No. Offering and product configuration is locked at creation. To change what a customer converts onto, cancel the existing trial and create a new one with updated configuration.</p>
+
+  <h3>What happens if conversion fails?</h3>
+  <p>If conversion fails mid-run, the trial stays <code>ACTIVE</code> and nothing partial is written. Resolve the issue — check offerings and rates are still active, contacts are valid — then retry conversion.</p>
+
+  <h3>Does converting bypass the normal approval workflow?</h3>
+  <p>Yes. Conversion auto-advances the quote through all stages including approval. If your business requires a manual approval step before a trial converts, manage that before calling the convert endpoint.</p>
+
+  <h3>Can a trial be extended multiple times?</h3>
+  <p>Yes. Extension can be called as many times as needed while the trial is active. Each call replaces the previous end date.</p>
+
+  <h3>Can I extend a trial that has already expired or been cancelled?</h3>
+  <p>No. Extension only works on <code>ACTIVE</code> trials. Once a trial reaches any terminal status it can't be changed.</p>
+
+  <h3>What currency are converted quotes created in?</h3>
+  <p>Converted quotes are always created in USD. Multi-currency trial conversion is a current limitation.</p>
+
+  <h3>Is there a way to set auto-renewal on the converted subscription?</h3>
+  <p>Not through trial configuration. Converted quotes always have auto-renewal off. It can be configured on the resulting contract after conversion if needed.</p>
+
+  <div class="page-nav">
+    <a onclick="show('canceling')"><span class="pn-dir">Previous</span><span class="pn-title">← Canceling a trial</span></a>
+    <span></span>
+  </div>
+  <div class="updated">Updated 2 months ago</div>
+</div>
+
+</div></main>
 
 <script>
-  const sectionMap = {
-    'trials': 'sec-trials',
-    'states': 'sec-states',
-    'creating': 'sec-creating',
-    'converting': 'sec-converting',
-    'extending': 'sec-extending',
-    'canceling': 'sec-canceling',
-    'faq': 'sec-faq',
-    'intro': 'sec-intro',
-    'arch': 'sec-arch',
-    'workflow': 'sec-workflow',
-  };
-
-  const navMap = {
-    'trials': 0,
-    'states': 1,
-    'creating': 2,
-    'converting': 3,
-    'extending': 4,
-    'canceling': 5,
-    'faq': 6,
-  };
+  const secs = {trials:'sec-trials',states:'sec-states',creating:'sec-creating',converting:'sec-converting',extending:'sec-extending',canceling:'sec-canceling',faq:'sec-faq',intro:'sec-intro',arch:'sec-arch',workflow:'sec-workflow'};
+  const labels = {trials:'Trials',states:'Trial states',creating:'Creating a trial',converting:'Converting to paid',extending:'Extending a trial',canceling:'Canceling a trial',faq:'FAQs',intro:'Introduction',arch:'Architectural Requirements',workflow:'Step-by-Step Workflow'};
+  const trialPages = new Set(['trials','states','creating','converting','extending','canceling','faq']);
+  const navOrder = ['intro','arch','workflow','trials','trials','states','creating','converting','extending','canceling','faq','intro','intro'];
+  const otpOrder = ['trials','states','creating','converting','extending','canceling','faq'];
 
   function show(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    const target = document.getElementById(sectionMap[id] || 'sec-trials');
-    if (target) target.classList.add('active');
-
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    document.querySelectorAll('.otp-link').forEach(l => l.classList.remove('active'));
-
-    const navLinks = document.querySelectorAll('.nav-link');
-    const otpLinks = document.querySelectorAll('.otp-link');
-
-    if (id === 'trials' || id === 'states' || id === 'creating' || id === 'converting' || id === 'extending' || id === 'canceling' || id === 'faq') {
-      navLinks[3].classList.add('active');
-      const subIdx = navMap[id];
-      if (subIdx !== undefined && navLinks[4 + subIdx]) navLinks[4 + subIdx].classList.add('active');
-      if (otpLinks[subIdx !== undefined ? subIdx : 0]) otpLinks[subIdx !== undefined ? subIdx : 0].classList.add('active');
-    }
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const sec = document.getElementById(secs[id]);
+    if (sec) sec.classList.add('active');
+    document.querySelectorAll('.nav-link').forEach((l,i) => { l.classList.toggle('active', navOrder[i] === id); });
+    document.querySelectorAll('.otp-link').forEach((l,i) => { l.classList.toggle('active', otpOrder[i] === id); });
+    const bc = document.getElementById('bc-current');
+    if (bc) bc.textContent = labels[id] || 'Trials';
+    document.getElementById('otp-panel').style.display = trialPages.has(id) ? 'block' : 'none';
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 </script>
 </body>
