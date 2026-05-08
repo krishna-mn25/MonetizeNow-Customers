@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mercell × MonetizeNow — Data Privacy Process Walkthrough</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:#0f1117;color:#e8edf2;line-height:1.6;font-size:14px}
+.wrap{max-width:960px;margin:0 auto;padding:0 32px 80px}
+.header{padding:36px 32px 28px;border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(135deg,#0d1b2e 0%,#0f1117 60%,#0d1b2e 100%);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(37,99,235,0.1) 0%,transparent 70%);border-radius:50%}
+.header-inner{max-width:960px;margin:0 auto;position:relative;z-index:1}
+.badge-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:0.05em}
+.badge-blue{background:rgba(37,99,235,0.15);color:#60a5fa;border:1px solid rgba(37,99,235,0.3)}
+.badge-green{background:rgba(16,185,129,0.12);color:#34d399;border:1px solid rgba(16,185,129,0.3)}
+.badge-amber{background:rgba(245,158,11,0.12);color:#fbbf24;border:1px solid rgba(245,158,11,0.3)}
+.header h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.header p{font-size:13px;color:#8899aa}
+.header p strong{color:#c8d8e8}
+.nav{background:#0d1827;border-bottom:1px solid rgba(255,255,255,0.08);padding:0 32px;position:sticky;top:0;z-index:100}
+.nav-inner{max-width:960px;margin:0 auto;display:flex;overflow-x:auto}
+.tab{padding:14px 18px;font-size:13px;font-weight:500;color:#6b7a8d;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s;user-select:none}
+.tab:hover{color:#c8d8e8}
+.tab.on{color:#60a5fa;border-bottom-color:#60a5fa}
+.pane{display:none;padding-top:36px}
+.pane.on{display:block}
+.sh{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.02em;margin-bottom:6px}
+.sm{font-size:13px;color:#6b7a8d;margin-bottom:20px;max-width:600px}
+.callout{border-radius:10px;padding:14px 16px;margin:16px 0;display:flex;gap:12px;font-size:13px;line-height:1.5;border:1px solid}
+.callout i{font-size:16px;flex-shrink:0;margin-top:1px}
+.callout b{font-weight:600}
+.callout-blue{background:rgba(37,99,235,0.08);border-color:rgba(37,99,235,0.25);color:#93c5fd}
+.callout-green{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.25);color:#6ee7b7}
+.callout-amber{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);color:#fcd34d}
+.sla-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.sla-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px;text-align:center}
+.sla-v{font-size:30px;font-weight:700;color:#60a5fa;margin-bottom:4px}
+.sla-l{font-size:11px;color:#6b7a8d;line-height:1.5}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:16px 0}
+.tbl th{text-align:left;padding:9px 12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#6b7a8d;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.08)}
+.tbl td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,0.06);color:#c8d8e8;vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(255,255,255,0.02)}
+.st{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.st::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.st-live{background:rgba(16,185,129,0.12);color:#34d399}.st-live::before{background:#34d399}
+.st-manual{background:rgba(245,158,11,0.12);color:#fbbf24}.st-manual::before{background:#fbbf24}
+.st-tbd{background:rgba(148,163,184,0.1);color:#94a3b8}.st-tbd::before{background:#94a3b8}
+.st-gap{background:rgba(239,68,68,0.1);color:#f87171}.st-gap::before{background:#ef4444}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin-bottom:14px}
+.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}
+.card-sub{font-size:12px;color:#6b7a8d;margin-bottom:14px}
+.divider{height:1px;background:rgba(255,255,255,0.08);margin:24px 0}
+.flow{margin:18px 0}
+.fstep{display:flex;gap:14px;position:relative}
+.fstep:not(:last-child)::after{content:'';position:absolute;left:17px;top:36px;bottom:-4px;width:1px;background:linear-gradient(to bottom,rgba(37,99,235,0.5),rgba(255,255,255,0.06))}
+.fnum{width:34px;height:34px;border-radius:50%;background:rgba(37,99,235,0.2);color:#60a5fa;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(37,99,235,0.35);position:relative;z-index:1}
+.fnum.opt{background:rgba(245,158,11,0.15);color:#fbbf24;border-color:rgba(245,158,11,0.35)}
+.fbody{flex:1;padding:6px 0 22px}
+.ftitle{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px}
+.fdesc{font-size:13px;color:#6b7a8d;line-height:1.55}
+.fown{display:inline-block;margin-top:7px;font-size:11px;font-weight:500;padding:2px 8px;border-radius:4px}
+.fown-mn{background:rgba(37,99,235,0.12);color:#60a5fa}
+.fown-mc{background:rgba(16,185,129,0.1);color:#34d399}
+.fown-sh{background:rgba(245,158,11,0.1);color:#fbbf24}
+.oitem{display:flex;gap:12px;padding:14px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);margin-bottom:10px;font-size:13px}
+.oitem i{font-size:16px;flex-shrink:0;margin-top:2px;color:#6b7a8d}
+.otext{color:#c8d8e8;line-height:1.55}
+.otext b{color:#fff;font-weight:600}
+.ofrom{display:inline-block;margin-top:5px;font-size:11px;color:#6b7a8d}
+.slabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:#6b7a8d;margin:24px 0 10px}
+.done-item{display:flex;gap:10px;font-size:13px;padding:7px 0;color:#8899aa;border-bottom:1px solid rgba(255,255,255,0.06)}
+.done-item:last-child{border-bottom:none}
+.done-item i{color:#34d399;font-size:15px;flex-shrink:0;margin-top:2px}
+.done-card{background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:12px;padding:20px;margin-top:16px}
+.footer-bar{margin-top:60px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;font-size:12px;color:#4a5568;flex-wrap:wrap;gap:6px}
+.footer-bar strong{color:#6b7a8d}
+@media(max-width:640px){
+  .header,.nav{padding-left:16px;padding-right:16px}
+  .wrap{padding:0 16px 60px}
+  .sla-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="badge-row">
+      <span class="badge badge-blue">Ticket #4079</span>
+      <span class="badge badge-green">Call: May 8, 2026</span>
+      <span class="badge badge-amber">Draft → get feedback → finalise</span>
+    </div>
+    <h1>Data Privacy Process Walkthrough</h1>
+    <p><strong>Mercell × MonetizeNow</strong> &nbsp;·&nbsp; GDPR Data Access, Deletion &amp; Retention &nbsp;·&nbsp; For Ilze Rutina &amp; Mercell DPO</p>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="tab on" onclick="sw('overview',this)">Overview</div>
+    <div class="tab" onclick="sw('access',this)">Data access</div>
+    <div class="tab" onclick="sw('deletion',this)">Data deletion</div>
+    <div class="tab" onclick="sw('retention',this)">Retention policy</div>
+    <div class="tab" onclick="sw('open',this)">Open items</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- OVERVIEW -->
+<div class="pane on" id="p-overview">
+  <p class="sh">What we're agreeing on today</p>
+  <p class="sm">Three distinct processes — each with different owners, tooling, and SLAs. This call finalises the approach before we document and lock it in.</p>
+  <div class="callout callout-blue">
+    <i class="ti ti-bulb"></i>
+    <div><b>Purpose of this call:</b> Walk through the proposed process for each area, confirm Mercell's DPO requirements fit within the framework, and agree on next steps. We draft → you give feedback → we finalise together.</div>
+  </div>
+  <table class="tbl">
+    <thead><tr><th>Process</th><th>Who does it</th><th>Current state</th><th>Today's goal</th></tr></thead>
+    <tbody>
+      <tr><td>Data access / export</td><td>Mercell self-serve in MN</td><td><span class="st st-live">Available today</span></td><td>Confirm Mercell can do this + walk through how</td></tr>
+      <tr><td>Data deletion (right to erasure)</td><td>Mercell requests → MN executes</td><td><span class="st st-manual">Manual / to formalise</span></td><td>Agree intake process, batch cadence, SLA, scope</td></tr>
+      <tr><td>Data retention policy</td><td>MN provides → DPO reviews</td><td><span class="st st-tbd">Pending MN docs</span></td><td>Share MN retention policy for DPO assessment</td></tr>
+    </tbody>
+  </table>
+  <div class="sla-row">
+    <div class="sla-card"><div class="sla-v">7</div><div class="sla-l">Working days SLA<br>for deletion requests</div></div>
+    <div class="sla-card"><div class="sla-v">2×</div><div class="sla-l">Per week batch cadence<br>Mon + Thu (proposed)</div></div>
+    <div class="sla-card"><div class="sla-v">30d</div><div class="sla-l">Mercell's total window<br>to fulfil customer requests</div></div>
+  </div>
+  <div class="callout callout-amber">
+    <i class="ti ti-alert-triangle"></i>
+    <div><b>Critical context:</b> Deletion in MN is currently manual and irreversible. Before any execution starts, Mercell's DPO must confirm what should be deleted vs. retained — especially financial records subject to legal retention requirements.</div>
+  </div>
+</div>
+
+<!-- DATA ACCESS -->
+<div class="pane" id="p-access">
+  <p class="sh">Data access — export request process</p>
+  <p class="sm">Mercell can do this today, natively in MN, without raising a ticket. Ilze confirmed she wants a walkthrough + documentation so the team can self-serve going forward.</p>
+  <div class="callout callout-green">
+    <i class="ti ti-circle-check"></i>
+    <div><b>This one is resolved.</b> Mercell's S&amp;RevOps team can export contact-level PII, quotes, and account data directly from the MN UI. No dependency on MN support team for standard exports.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">What Mercell can export today</div>
+    <div class="card-sub">Available natively in MN UI — no ticket required</div>
+    <table class="tbl">
+      <thead><tr><th>Data object</th><th>What it contains</th><th>How to export</th></tr></thead>
+      <tbody>
+        <tr><td>Contacts</td><td>Name, email, phone, address — all PII</td><td>Contacts → Export CSV</td></tr>
+        <tr><td>Accounts</td><td>Company, billing address, associated contacts</td><td>Accounts → Export CSV</td></tr>
+        <tr><td>Quotes</td><td>Deal terms, products, pricing, contact links</td><td>Quotes → Export CSV</td></tr>
+        <tr><td>Contracts</td><td>Contract terms, signatories, dates</td><td>Contracts → Export CSV</td></tr>
+        <tr><td>Invoices</td><td>Invoice data, amounts, billing contact</td><td>Billing → Invoices → Export</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout callout-blue">
+    <i class="ti ti-database"></i>
+    <div><b>Longer-term — Snowflake integration:</b> Till is working on a direct MN → Snowflake pipeline. Once live, Mercell will have fully automated, self-serve data extracts for DPO workflows. Confirm timeline on this call.</div>
+  </div>
+  <div class="divider"></div>
+  <p class="sh" style="font-size:17px">Proposed process — data access request</p>
+  <div class="flow">
+    <div class="fstep"><div class="fnum">1</div><div class="fbody"><div class="ftitle">End customer submits data access request to Mercell</div><div class="fdesc">Customer invokes right of access (GDPR Art. 15). Mercell has 30 days to fulfil across all systems.</div><span class="fown fown-mc">Mercell</span></div></div>
+    <div class="fstep"><div class="fnum">2</div><div class="fbody"><div class="ftitle">Mercell S&amp;RevOps logs into MN and runs export</div><div class="fdesc">Native CSV export on Contacts, Quotes, Accounts, and Invoices filtered by relevant contact email / account. No ticket to MN needed.</div><span class="fown fown-mc">Mercell (self-serve)</span></div></div>
+    <div class="fstep"><div class="fnum">3</div><div class="fbody"><div class="ftitle">DPO assembles package and delivers to customer</div><div class="fdesc">Mercell's DPO combines MN export + other systems and delivers to customer within the 30-day window.</div><span class="fown fown-mc">Mercell DPO</span></div></div>
+    <div class="fstep"><div class="fnum opt">4</div><div class="fbody"><div class="ftitle">Complex cases only — raise ticket to MN</div><div class="fdesc">If the export doesn't capture everything needed (usage records, webhook logs, processing history), raise a Pylon ticket. MN extracts within 7 working days.</div><span class="fown fown-mn">MN support — edge cases only</span></div></div>
+  </div>
+  <div class="callout callout-blue">
+    <i class="ti ti-pencil"></i>
+    <div><b>Action on this call:</b> Walk Ilze through the MN export workflow live. Confirm which data objects cover the typical DPO request. Agree whether to schedule a broader enablement session for S&amp;RevOps or if this walkthrough suffices.</div>
+  </div>
+</div>
+
+<!-- DATA DELETION -->
+<div class="pane" id="p-deletion">
+  <p class="sh">Data deletion — right to erasure process</p>
+  <p class="sm">Needs to be formalised. Manual, irreversible, and GDPR-bound — we need intake process, scope, and SLAs locked before any executions start.</p>
+  <div class="callout callout-amber">
+    <i class="ti ti-alert-triangle"></i>
+    <div><b>Critical:</b> Deletions in MN are irreversible. Once a contact record is deleted it cannot be recovered. This is why we batch, confirm scope, and document before executing — not after.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">What gets deleted vs. retained</div>
+    <div class="card-sub">DPO confirmation required before first execution</div>
+    <table class="tbl">
+      <thead><tr><th>Data type</th><th>GDPR stance</th><th>MN capability</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Contact PII (name, email, phone, address)</td><td>Delete / pseudonymize</td><td>Hard delete available</td><td><span class="st st-live">Can execute</span></td></tr>
+        <tr><td>Invoice financial records</td><td>Retain — legal obligation</td><td>Retain, PII minimised</td><td><span class="st st-manual">Confirm with DPO</span></td></tr>
+        <tr><td>Contract commercial terms</td><td>Retain — financial compliance</td><td>Retain, personal fields anonymised</td><td><span class="st st-manual">Confirm with DPO</span></td></tr>
+        <tr><td>Quote history</td><td>Delete if no commercial obligation</td><td>Hard delete available</td><td><span class="st st-tbd">To confirm</span></td></tr>
+        <tr><td>Usage records</td><td>Depends on product type</td><td>Deletable</td><td><span class="st st-tbd">To confirm</span></td></tr>
+        <tr><td>Signed documents (e-signature)</td><td>Retain executed commercial docs</td><td>Sub-processor must also be notified</td><td><span class="st st-gap">Sub-processor loop needed</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="divider"></div>
+  <p class="sh" style="font-size:17px">Proposed intake process — deletion request</p>
+  <div class="flow">
+    <div class="fstep"><div class="fnum">1</div><div class="fbody"><div class="ftitle">End customer submits erasure request to Mercell</div><div class="fdesc">Customer invokes right to erasure (GDPR Art. 17). Mercell logs: customer email, request date, internal request ID.</div><span class="fown fown-mc">Mercell</span></div></div>
+    <div class="fstep"><div class="fnum">2</div><div class="fbody"><div class="ftitle">Mercell submits deletion request to MN via agreed channel</div><div class="fdesc">Via Slack or Pylon ticket with: (a) contact email, (b) account name, (c) request date, (d) Mercell internal request ID. Batch submissions preferred.</div><span class="fown fown-sh">Mercell → MN (shared action)</span></div></div>
+    <div class="fstep"><div class="fnum">3</div><div class="fbody"><div class="ftitle">MN confirms scope before any execution</div><div class="fdesc">MN confirms what will be deleted (contact PII) vs. retained (financial records). Mercell DPO confirms. No execution without explicit sign-off.</div><span class="fown fown-sh">MN + Mercell DPO</span></div></div>
+    <div class="fstep"><div class="fnum">4</div><div class="fbody"><div class="ftitle">MN executes deletion within 7 working days</div><div class="fdesc">Batch processing on Monday and Thursday. Sub-processor notification (DocuSign / Adobe Sign) initiated where applicable.</div><span class="fown fown-mn">MN</span></div></div>
+    <div class="fstep"><div class="fnum">5</div><div class="fbody"><div class="ftitle">MN sends written confirmation to Mercell S&amp;RevOps + DPO</div><div class="fdesc">Confirmation includes: what was deleted, what was retained and why, execution date, MN reference ID. Mercell DPO uses this to close the customer request within their 30-day window.</div><span class="fown fown-mn">MN → Mercell</span></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Required fields in every deletion request</div>
+    <div class="card-sub">MN will not execute without all of these</div>
+    <table class="tbl">
+      <thead><tr><th>Field</th><th>Required?</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Contact email address</td><td><span class="st st-live">Required</span></td><td>Primary identifier for lookup in MN</td></tr>
+        <tr><td>Account / company name</td><td><span class="st st-live">Required</span></td><td>Verify correct record before deletion</td></tr>
+        <tr><td>Mercell internal request ID</td><td><span class="st st-live">Required</span></td><td>Audit trail — ties MN confirmation back to customer request</td></tr>
+        <tr><td>Date of customer's original request</td><td><span class="st st-live">Required</span></td><td>SLA clock — MN must complete within 7 working days of this date</td></tr>
+        <tr><td>Scope notes</td><td>Optional</td><td>Any DPO-specific instructions beyond standard scope</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout callout-amber">
+    <i class="ti ti-calendar"></i>
+    <div><b>Batch cadence — open for discussion:</b> Monday and Thursday (Mercell proposed). Requests received by end of day Sunday → processed Monday. End of day Wednesday → processed Thursday. Confirm this works operationally for both teams.</div>
+  </div>
+</div>
+
+<!-- RETENTION -->
+<div class="pane" id="p-retention">
+  <p class="sh">Data retention policy</p>
+  <p class="sm">MN has existing GDPR documentation. This tab covers what Mercell's DPO needs to receive and the questions MN should be prepared to answer on this call.</p>
+  <div class="callout callout-blue">
+    <i class="ti ti-file-text"></i>
+    <div><b>MN has a published GDPR doc:</b> docs.monetizenow.io → GDPR Right to Erasure. Sandeep also has a document previously shared with Mercell. Both should be sent to Ilze on or before this call for DPO review.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">MN's GDPR compliance position</div>
+    <div class="card-sub">Internally confirmed — a third-party firm has certified MN as GDPR compliant</div>
+    <p style="font-size:13px;color:#8899aa;line-height:1.6">MonetizeNow has engaged a third-party firm for GDPR certification as a data processor on behalf of its tenants. The retention policy and sub-processor list are within that certification scope. A DPA should be shareable with Mercell's DPO on request.</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Questions Mercell's DPO will ask — be ready to answer</div>
+    <div class="card-sub">Prepare answers before the call</div>
+    <table class="tbl">
+      <thead><tr><th>DPO question</th><th>MN answer / status</th></tr></thead>
+      <tbody>
+        <tr><td>How long does MN retain personal data after contract cancellation?</td><td>Confirm from Sandeep's doc — no automated purge currently; deletion is manual on request</td></tr>
+        <tr><td>Is MN certified as a GDPR data processor?</td><td>Yes — third-party certified. Share certificate / DPA on this call.</td></tr>
+        <tr><td>Who are MN's sub-processors holding Mercell data?</td><td>Stripe, DocuSign / Adobe Sign, email delivery, observability tools — full list in DPA</td></tr>
+        <tr><td>Where is data stored — EU or outside EU?</td><td><span class="st st-gap">Confirm data residency before this call</span></td></tr>
+        <tr><td>Does MN have a Data Processing Agreement (DPA)?</td><td>Confirm and share with Ilze for DPO review</td></tr>
+        <tr><td>What happens to data after MN contract ends?</td><td>Covered in DPA — confirm post-cancellation retention period</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout callout-amber">
+    <i class="ti ti-road"></i>
+    <div><b>Long-term product gap — flagged to Spencer:</b> Post-cancellation data purge is entirely manual today. For EU customers this creates ongoing compliance risk. Automated retention schedules triggered by contract cancellation are the long-term fix. Mercell is the first to formalise this need — others will follow.</div>
+  </div>
+</div>
+
+<!-- OPEN ITEMS -->
+<div class="pane" id="p-open">
+  <p class="sh">Open items — what we need from this call</p>
+  <p class="sm">Every item below needs a clear owner and a date before this call ends. Krishna will draft the formal process doc within 5 business days of having the inputs.</p>
+  <div class="callout callout-blue">
+    <i class="ti ti-target"></i>
+    <div><b>Goal by end of call:</b> Every item has a name and a date next to it. That's what moves this from "on hold" to "draft → DPO review → closed."</div>
+  </div>
+  <div class="slabel">From Mercell</div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>DPO deletion / retention framework</b> — what gets deleted (contact PII) vs. retained (financial records), and under what conditions. Gate before first execution.<br><span class="ofrom">Owner: Ilze → DPO &nbsp;·&nbsp; Needed before: first deletion batch</span></div></div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Confirm Mon + Thu as batch days</b> — Mercell proposed this. Confirm it works operationally for submitting requests in time for each cycle.<br><span class="ofrom">Owner: Ilze / S&amp;RevOps &nbsp;·&nbsp; Decide: on this call</span></div></div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Preferred intake channel for deletion requests</b> — Slack message in shared channel, or Pylon ticket? Affects how MN tracks and audits requests.<br><span class="ofrom">Owner: Mercell preference &nbsp;·&nbsp; Decide: on this call</span></div></div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Named DPO contact at Mercell</b> — MN needs a named contact for deletion confirmations and audit trail.<br><span class="ofrom">Owner: Ilze &nbsp;·&nbsp; Confirm: on this call</span></div></div>
+  <div class="slabel">From MonetizeNow</div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Share MN retention policy + DPA with Ilze</b> — Sandeep has the doc. Needs to be sent formally for DPO review.<br><span class="ofrom">Owner: Sandeep → Krishna &nbsp;·&nbsp; Due: before / on this call</span></div></div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Confirm MN data residency for EU customers</b> — DPO will ask. Needs a definitive answer.<br><span class="ofrom">Owner: Sandeep / Engineering &nbsp;·&nbsp; Due: before this call</span></div></div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Resolve pseudonymisation vs. hard delete scope</b> — Silas flagged unclear clauses in the GDPR doc (hard delete vs. irreversible pseudonymization, sub-processor propagation, suppression register). Needs internal resolution before the final process doc.<br><span class="ofrom">Owner: Sandeep → Silas &nbsp;·&nbsp; Due: before finalising process doc</span></div></div>
+  <div class="oitem"><i class="ti ti-square"></i><div class="otext"><b>Draft and share final process document</b> — Krishna to write up agreed process for all three areas, get DPO sign-off, add to shared knowledge base.<br><span class="ofrom">Owner: Krishna &nbsp;·&nbsp; Due: within 5 business days of this call</span></div></div>
+  <div class="divider"></div>
+  <div class="done-card">
+    <div class="card-title" style="color:#34d399;margin-bottom:4px">Definition of done — ticket #4079</div>
+    <div class="card-sub" style="margin-bottom:14px">What "closed" looks like</div>
+    <div class="done-item"><i class="ti ti-circle-check"></i><span>Data access export walkthrough complete — Mercell can self-serve exports in MN</span></div>
+    <div class="done-item"><i class="ti ti-circle-check"></i><span>Formal deletion process documented and agreed — intake channel, required fields, batch schedule, SLA, confirmation workflow</span></div>
+    <div class="done-item"><i class="ti ti-circle-check"></i><span>MN retention policy / DPA shared and reviewed by Mercell DPO</span></div>
+    <div class="done-item"><i class="ti ti-circle-check"></i><span>Process document signed off by Mercell DPO and added to both teams' knowledge bases</span></div>
+    <div class="done-item"><i class="ti ti-circle-check"></i><span>Ticket closed — automated retention escalated to Product for EU GDPR roadmap</span></div>
+  </div>
+</div>
+
+<div class="footer-bar">
+  <div>Prepared for: <strong>Mercell × MonetizeNow — May 8, 2026</strong></div>
+  <div>Ticket <strong>#4079</strong> &nbsp;·&nbsp; Krishna Immanni &nbsp;·&nbsp; Ilze Rutina (Mercell)</div>
+</div>
+</div>
+
+<script>
+function sw(id,el){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  el.classList.add('on');
+}
+</script>
+</body>
+</html>
