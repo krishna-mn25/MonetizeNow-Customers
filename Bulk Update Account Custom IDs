@@ -1,0 +1,69 @@
+#!/bin/bash
+# =========================================================
+# MonetizeNow Bulk CustomId Updater
+# GET-then-PUT: no hardcoded names, no escaping issues
+# =========================================================
+
+API_KEY="YOUR_API_KEY"
+BASE_URL="https://api.monetizeplatform.com/api/accounts"
+INPUT_FILE="updates.csv"
+LOG="customid_update_log.txt"
+
+echo "=== Started: $(date) ===" | tee "$LOG"
+
+tail -n +2 "$INPUT_FILE" | while IFS=',' read -r ACCT_ID CUSTOM_ID _REST; do
+
+  ACCT_ID=$(echo "$ACCT_ID" | tr -d ' \r\n')
+  CUSTOM_ID=$(echo "$CUSTOM_ID" | tr -d ' \r\n')
+  [ -z "$ACCT_ID" ] || [ -z "$CUSTOM_ID" ] && continue
+
+  # --- GET current account (save to temp file) ---
+  TMPGET=$(mktemp)
+  curl -s -X GET "$BASE_URL/$ACCT_ID" \
+    -H 'accept: application/json' \
+    -H "x-api-key: $API_KEY" > "$TMPGET"
+
+  # --- Build PUT payload with python3 (all special chars handled) ---
+  TMPPUT=$(mktemp)
+  python3 - "$TMPGET" "$CUSTOM_ID" "$TMPPUT" << 'PYEOF'
+import sys, json
+get_file, custom_id, out_file = sys.argv[1], sys.argv[2], sys.argv[3]
+with open(get_file) as f:
+    acct = json.load(f)
+payload = {
+    "accountName": acct["accountName"],
+    "status": acct["status"],
+    "customId": custom_id
+}
+with open(out_file, "w") as f:
+    json.dump(payload, f)
+PYEOF
+
+  if [ $? -ne 0 ] || [ ! -s "$TMPPUT" ]; then
+    echo "FAIL_GET  $ACCT_ID" | tee -a "$LOG"
+    rm -f "$TMPGET" "$TMPPUT"; continue
+  fi
+
+  # --- PUT update (payload read from file = no escaping) ---
+  curl -s -X PUT "$BASE_URL/$ACCT_ID" \
+    -H 'accept: application/json' \
+    -H 'content-type: application/json' \
+    -H "x-api-key: $API_KEY" \
+    --data @"$TMPPUT" > "$TMPGET"
+
+  # --- Verify customId in response ---
+  RESULT=$(python3 - "$TMPGET" "$CUSTOM_ID" << 'PYEOF'
+import sys, json
+with open(sys.argv[1]) as f:
+    d = json.load(f)
+print("OK" if d.get("customId") == sys.argv[2] else "FAIL_PUT")
+PYEOF
+  )
+
+  echo "$RESULT  $ACCT_ID  ->  $CUSTOM_ID" | tee -a "$LOG"
+  rm -f "$TMPGET" "$TMPPUT"
+  sleep 0.3
+
+done
+
+echo "=== Finished: $(date) ===" | tee -a "$LOG"
