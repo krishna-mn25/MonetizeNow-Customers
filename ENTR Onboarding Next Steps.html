@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENTR × MonetizeNow · Next Steps</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;450;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --mn:#0521AB; --mn-d:#03178A; --mn-l:#3A56C8;
+  --lb:#D3EEF4; --lb-d:#A8DDE8; --lb2:#F0FAFD;
+  --hs:#FF7A59; --hs-b:#FFF1ED; --hs-br:#FFD4C5; --hs-d:#E55B3D;
+  --qb:#2CA01C; --qb-b:#E8F8E5; --qb-br:#B5E2AB; --qb-d:#1F7715;
+  --sl:#611F69; --sl-b:#F4E9F6;
+  --ink:#0A1428; --ink-2:#1A2540; --ink-3:#2D3B5C;
+  --body:#3A4866; --sub:#6B7A99; --mute:#94A3B8;
+  --border:#E4EAF5; --border-2:#D0DCF0; --border-s:#EEF2F8;
+  --bg:#FFFFFF; --off:#FAFBFE; --soft:#F4F7FC;
+  --green:#16A34A; --green-d:#15803D; --green-b:#DCFCE7; --green-br:#86EFAC;
+  --amber:#D97706; --amber-d:#B45309; --amber-b:#FEF3C7; --amber-br:#FCD34D;
+  --red:#DC2626; --red-d:#991B1B; --red-b:#FEE2E2; --red-br:#FECACA;
+  --p-new:#0521AB; --p-amend:#0F766E; --p-renew:#7C3AED;
+
+  --shadow-sm:0 1px 2px rgba(10,20,40,0.04), 0 1px 3px rgba(10,20,40,0.06);
+  --shadow-md:0 4px 12px rgba(10,20,40,0.06), 0 2px 6px rgba(10,20,40,0.04);
+  --shadow-lg:0 12px 32px rgba(10,20,40,0.08), 0 4px 12px rgba(10,20,40,0.05);
+  --shadow-xl:0 24px 64px rgba(10,20,40,0.12), 0 12px 24px rgba(10,20,40,0.06);
+  --shadow-mn:0 12px 32px rgba(5,33,171,0.18), 0 4px 12px rgba(5,33,171,0.1);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-out:cubic-bezier(.4,0,.2,1);
+}
+
+html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:'Inter',system-ui,sans-serif;font-feature-settings:"ss01","cv11","cv02";color:var(--body);letter-spacing:-0.005em;}
+#deck{position:relative;width:100vw;height:100vh;overflow:hidden;}
+
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translateX(40px) scale(0.99);transition:opacity 0.5s var(--ease), transform 0.5s var(--ease);overflow:hidden;}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0) scale(1);}
+.slide.light{background:var(--bg);}
+.slide.off{background:var(--off);}
+.slide.soft{background:var(--soft);}
+.slide.dark{background:linear-gradient(180deg,#020817 0%,#0A1428 100%);}
+.slide.hero{
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(5,33,171,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 100%, rgba(124,58,237,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(211,238,244,0.04) 0%, transparent 60%),
+    linear-gradient(180deg,#020817 0%,#0A1428 100%);
+}
+
+.grain{position:absolute;inset:0;opacity:0.4;pointer-events:none;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+#nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:rgba(10,20,40,0.85);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);padding:9px 12px 9px 18px;border-radius:100px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;}
+.nav-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:white;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.nav-btn:hover:not(:disabled){background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.25);transform:scale(1.05);}
+.nav-btn:disabled{opacity:0.25;cursor:default;}
+#slide-counter{font-size:11.5px;color:rgba(255,255,255,0.55);font-weight:500;letter-spacing:0.06em;min-width:42px;text-align:center;font-variant-numeric:tabular-nums;}
+.nav-dots{display:flex;gap:5px;align-items:center;padding:0 4px;}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all 0.25s var(--ease);}
+.nav-dot:hover{background:rgba(255,255,255,0.4);}
+.nav-dot.active{background:var(--lb);width:18px;border-radius:3px;}
+#hint{position:fixed;bottom:32px;right:32px;font-size:10.5px;color:rgba(255,255,255,0.25);letter-spacing:0.04em;z-index:100;font-family:'JetBrains Mono',monospace;}
+
+.chrome{display:flex;justify-content:space-between;align-items:center;padding:18px 56px;flex-shrink:0;position:relative;z-index:2;}
+.chrome.l{background:rgba(255,255,255,0.6);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-s);}
+.chrome.o{background:rgba(250,251,254,0.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-s);}
+.chrome.s{background:rgba(244,247,252,0.7);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-s);}
+.chrome.d{border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(10,20,40,0.4);backdrop-filter:blur(12px);}
+
+.logo-row{display:flex;align-items:center;gap:10px;}
+.mark{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;letter-spacing:-0.04em;position:relative;overflow:hidden;}
+.mark.mn{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);color:white;box-shadow:0 4px 12px rgba(5,33,171,0.3);}
+.mark.entr{background:linear-gradient(135deg,#0A1428 0%,#2D3B5C 100%);color:white;box-shadow:0 4px 12px rgba(10,20,40,0.3);}
+.mark.entr::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 0%, transparent 50%);}
+.brand{font-size:14px;font-weight:700;letter-spacing:-0.02em;}
+.chrome.l .brand,.chrome.o .brand,.chrome.s .brand{color:var(--ink);}
+.chrome.d .brand{color:white;}
+.x{font-size:14px;color:rgba(255,255,255,0.3);font-weight:300;margin:0 4px;}
+.chrome.l .x,.chrome.o .x,.chrome.s .x{color:var(--mute);}
+.tag-r{font-size:11.5px;font-weight:500;letter-spacing:0.04em;}
+.chrome.l .tag-r,.chrome.o .tag-r,.chrome.s .tag-r{color:var(--sub);}
+.chrome.d .tag-r{color:rgba(255,255,255,0.45);}
+.pg{font-size:11px;font-weight:500;font-family:'JetBrains Mono',monospace;color:var(--mute);font-variant-numeric:tabular-nums;}
+
+.body{flex:1;padding:32px 56px 88px;overflow:hidden;display:flex;flex-direction:column;position:relative;z-index:2;}
+
+.ph{margin-bottom:24px;flex-shrink:0;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;}
+.ph-left{flex:1;min-width:0;}
+.ph-eye{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;display:inline-flex;align-items:center;gap:8px;}
+.ph-eye::before{content:"";width:18px;height:1.5px;background:currentColor;display:inline-block;border-radius:2px;}
+.light .ph-eye,.off .ph-eye,.soft .ph-eye{color:var(--mn);}
+.dark .ph-eye,.hero .ph-eye{color:var(--lb);}
+.ph h2{font-family:'DM Serif Display',serif;font-size:42px;font-weight:400;line-height:1.05;letter-spacing:-0.022em;}
+.light .ph h2,.off .ph h2,.soft .ph h2{color:var(--ink);}
+.dark .ph h2,.hero .ph h2{color:white;}
+.ph .sub{font-size:14px;color:var(--sub);margin-top:10px;line-height:1.55;max-width:680px;font-weight:400;}
+.dark .ph .sub,.hero .ph .sub{color:rgba(255,255,255,0.6);}
+.ph-right{flex-shrink:0;text-align:right;}
+.ph-stat{font-family:'DM Serif Display',serif;font-size:48px;line-height:1;color:var(--mn);letter-spacing:-0.02em;}
+.dark .ph-stat,.hero .ph-stat{color:white;}
+.ph-stat-l{font-size:10.5px;color:var(--sub);letter-spacing:0.12em;text-transform:uppercase;margin-top:6px;font-weight:600;}
+.dark .ph-stat-l,.hero .ph-stat-l{color:rgba(255,255,255,0.55);}
+
+.hero-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 72px 60px;position:relative;z-index:2;}
+.hero-logos{display:flex;align-items:center;gap:18px;margin-bottom:40px;}
+.hero-logos .mark{width:46px;height:46px;border-radius:11px;font-size:18px;}
+.hero-logos .brand{font-size:20px;font-weight:700;color:white;letter-spacing:-0.02em;}
+.hero-logos .x{font-size:22px;color:rgba(255,255,255,0.3);margin:0 4px;}
+.hero-h1{font-family:'DM Serif Display',serif;font-size:78px;font-weight:400;line-height:1;color:white;margin-bottom:24px;max-width:980px;letter-spacing:-0.028em;}
+.hero-h1 em{color:var(--lb);font-style:italic;font-weight:400;}
+.hero-h1 .accent{background:linear-gradient(120deg,#7C9BFF 0%,#D3EEF4 50%,#7C9BFF 100%);background-clip:text;-webkit-background-clip:text;color:transparent;font-style:italic;}
+.hero-sub{font-size:17px;font-weight:400;color:rgba(255,255,255,0.65);max-width:620px;line-height:1.6;margin-bottom:40px;}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;}
+.hp{font-size:12px;font-weight:500;padding:7px 14px;border-radius:24px;display:inline-flex;align-items:center;gap:7px;backdrop-filter:blur(8px);}
+.hp.done{color:#86EFAC;background:rgba(22,163,74,0.15);border:1px solid rgba(134,239,172,0.25);}
+.hp.done::before{content:"";width:6px;height:6px;background:#4ADE80;border-radius:50%;box-shadow:0 0 8px #4ADE80;}
+.hp.pending{color:rgba(255,255,255,0.65);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);}
+.hp.pending::before{content:"";width:6px;height:6px;border:1.5px solid rgba(255,255,255,0.4);border-radius:50%;}
+.hp.active{color:var(--lb);background:rgba(211,238,244,0.12);border:1px solid rgba(211,238,244,0.3);font-weight:600;}
+.hp.active::before{content:"";width:6px;height:6px;background:var(--lb);border-radius:50%;box-shadow:0 0 12px var(--lb);}
+
+.hero-foot{display:flex;justify-content:space-between;align-items:center;padding:18px 72px;border-top:1px solid rgba(255,255,255,0.08);position:relative;z-index:2;}
+.hero-foot span{font-size:11.5px;color:rgba(255,255,255,0.35);letter-spacing:0.05em;font-weight:500;}
+.hero-deco{position:absolute;top:80px;right:60px;width:380px;height:380px;opacity:0.7;pointer-events:none;background:conic-gradient(from 90deg at 50% 50%, rgba(124,155,255,0) 0deg, rgba(124,155,255,0.2) 90deg, rgba(211,238,244,0.3) 180deg, rgba(124,155,255,0.2) 270deg, rgba(124,155,255,0) 360deg);border-radius:50%;filter:blur(60px);animation:spin 30s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.journey{display:flex;align-items:stretch;gap:0;flex:1;min-height:0;margin-bottom:20px;}
+.j-step{flex:1;cursor:pointer;position:relative;display:flex;flex-direction:column;transition:all 0.3s var(--ease);}
+.j-step + .j-step{margin-left:8px;}
+.j-step .j-conn{position:absolute;top:32px;left:-12px;width:14px;height:2px;background:linear-gradient(90deg,var(--border-2) 0%,transparent 100%);z-index:0;}
+.j-step:first-child .j-conn{display:none;}
+.j-card{background:white;border:1.5px solid var(--border);border-radius:14px;padding:18px;flex:1;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:all 0.35s var(--ease);box-shadow:var(--shadow-sm);}
+.j-step:hover .j-card{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--mn);}
+.j-step.done .j-card{background:linear-gradient(135deg,#F0FDF4 0%,#FFFFFF 100%);border-color:var(--green-br);}
+.j-step.now .j-card{background:linear-gradient(135deg,#EEF2FF 0%,#FFFFFF 100%);border-color:var(--mn);box-shadow:var(--shadow-mn);}
+.j-step.now .j-card::after{content:"";position:absolute;inset:-1.5px;border-radius:14px;background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);z-index:-1;opacity:0.15;animation:pulse 2.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:0.1;}50%{opacity:0.25;}}
+.j-step.next .j-card{background:linear-gradient(135deg,#FFFBEB 0%,#FFFFFF 100%);border-color:var(--amber-br);}
+.j-step.future .j-card{background:white;border-color:var(--border);opacity:0.7;}
+.j-num{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:14px;background:var(--soft);color:var(--mute);}
+.j-step.done .j-num{background:linear-gradient(135deg,var(--green) 0%,var(--green-d) 100%);color:white;box-shadow:0 4px 12px rgba(22,163,74,0.3);}
+.j-step.done .j-num::before{content:"✓";font-size:14px;}
+.j-step.done .j-num-text{display:none;}
+.j-step.now .j-num{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);color:white;box-shadow:0 4px 12px rgba(5,33,171,0.3);}
+.j-step.next .j-num{background:linear-gradient(135deg,var(--amber) 0%,var(--amber-d) 100%);color:white;}
+.j-eye{font-size:9.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--mute);margin-bottom:4px;}
+.j-step.done .j-eye{color:var(--green);}
+.j-step.now .j-eye{color:var(--mn);}
+.j-step.next .j-eye{color:var(--amber);}
+.j-title{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.25;margin-bottom:6px;letter-spacing:-0.012em;}
+.j-summary{font-size:12px;color:var(--sub);line-height:1.5;flex:1;}
+.j-detail{max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease), margin-top 0.3s var(--ease), padding-top 0.3s var(--ease);border-top:1px solid transparent;}
+.j-step.open .j-detail{max-height:300px;margin-top:14px;padding-top:14px;border-top-color:var(--border);}
+.j-detail-item{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;color:var(--ink-3);line-height:1.5;padding:4px 0;}
+.j-detail-item::before{content:"";width:4px;height:4px;background:var(--mn);border-radius:50%;margin-top:7px;flex-shrink:0;}
+.j-step.done .j-detail-item::before{background:var(--green);}
+.j-step.next .j-detail-item::before{background:var(--amber);}
+.j-expand{position:absolute;top:14px;right:14px;width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,0.7);display:flex;align-items:center;justify-content:center;color:var(--mute);font-size:11px;transition:all 0.3s var(--ease);border:1px solid var(--border);}
+.j-step:hover .j-expand{background:var(--mn);color:white;border-color:var(--mn);}
+.j-step.open .j-expand{background:var(--mn);color:white;border-color:var(--mn);transform:rotate(45deg);}
+
+.cc{background:white;border:1.5px solid var(--border);border-radius:14px;padding:0;cursor:pointer;transition:all 0.3s var(--ease);position:relative;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+.cc:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--mn-l);}
+.cc.open{box-shadow:var(--shadow-lg);border-color:var(--mn);}
+.cc-h{padding:16px 18px 14px;display:flex;align-items:flex-start;gap:12px;}
+.cc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;font-weight:700;}
+.cc-icon.hs{background:linear-gradient(135deg,var(--hs) 0%,var(--hs-d) 100%);color:white;box-shadow:0 4px 12px rgba(255,122,89,0.25);}
+.cc-icon.mn{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);color:white;box-shadow:0 4px 12px rgba(5,33,171,0.25);}
+.cc-icon.qb{background:linear-gradient(135deg,var(--qb) 0%,var(--qb-d) 100%);color:white;box-shadow:0 4px 12px rgba(44,160,28,0.25);}
+.cc-icon.sl{background:linear-gradient(135deg,var(--sl) 0%,#4A1751 100%);color:white;box-shadow:0 4px 12px rgba(97,31,105,0.25);}
+.cc-icon.cfg{background:linear-gradient(135deg,var(--amber) 0%,var(--amber-d) 100%);color:white;box-shadow:0 4px 12px rgba(217,119,6,0.25);}
+.cc-icon.q{background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);color:white;box-shadow:0 4px 12px rgba(124,58,237,0.25);}
+.cc-icon.warn{background:linear-gradient(135deg,var(--red) 0%,var(--red-d) 100%);color:white;box-shadow:0 4px 12px rgba(220,38,38,0.25);}
+.cc-icon.neutral{background:var(--soft);color:var(--ink-3);}
+.cc-body-h{flex:1;min-width:0;}
+.cc-chip{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;margin-bottom:6px;}
+.cc-chip.hs{background:var(--hs-b);color:var(--hs-d);}
+.cc-chip.mn{background:#EEF2FF;color:var(--mn-d);}
+.cc-chip.qb{background:var(--qb-b);color:var(--qb-d);}
+.cc-chip.warn{background:var(--red-b);color:var(--red-d);}
+.cc-chip.now{background:#FEF3C7;color:var(--amber-d);}
+.cc-chip.green{background:var(--green-b);color:var(--green-d);}
+.cc-title{font-size:15.5px;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-0.014em;margin-bottom:4px;}
+.cc-summary{font-size:12.5px;color:var(--sub);line-height:1.5;}
+.cc-toggle{width:28px;height:28px;border-radius:8px;background:var(--soft);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:var(--ink-3);transition:all 0.3s var(--ease);font-weight:700;}
+.cc:hover .cc-toggle{background:var(--mn);color:white;border-color:var(--mn);transform:scale(1.08);}
+.cc.open .cc-toggle{background:var(--mn);color:white;border-color:var(--mn);transform:rotate(45deg);}
+.cc-detail{max-height:0;overflow:hidden;transition:max-height 0.45s var(--ease);}
+.cc.open .cc-detail{max-height:600px;}
+.cc-detail-inner{padding:4px 18px 18px;border-top:1px dashed var(--border);margin:0 0 0 0;}
+.cc.open .cc-detail-inner{padding-top:16px;}
+.cc-d-item{display:flex;gap:11px;align-items:flex-start;padding:7px 0;}
+.cc-d-item + .cc-d-item{border-top:1px solid var(--border-s);}
+.cc-d-bullet{width:22px;height:22px;border-radius:6px;background:var(--soft);color:var(--mn);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+.cc-d-bullet.warn{background:#FEE2E2;color:var(--red-d);border-color:#FECACA;}
+.cc-d-bullet.tip{background:var(--green-b);color:var(--green-d);border-color:var(--green-br);}
+.cc-d-text{flex:1;min-width:0;}
+.cc-d-text b{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:2px;letter-spacing:-0.008em;}
+.cc-d-text span{font-size:11.5px;color:var(--sub);line-height:1.5;}
+.cc-d-text code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--soft);padding:1px 6px;border-radius:4px;color:var(--mn-d);font-weight:500;}
+
+.cc-meta{display:flex;gap:6px;padding:0 18px 14px;flex-wrap:wrap;}
+.cc.open .cc-meta{padding-bottom:0;}
+.meta-chip{font-size:10.5px;color:var(--sub);padding:3px 8px;border-radius:5px;background:var(--soft);border:1px solid var(--border-s);display:inline-flex;align-items:center;gap:5px;font-weight:500;}
+.meta-chip b{color:var(--ink);font-weight:600;}
+
+.lanes-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1;min-height:0;}
+.lane-col{display:flex;flex-direction:column;gap:0;}
+.lane-h{padding:14px 18px;border-radius:14px 14px 0 0;color:white;display:flex;align-items:center;gap:10px;margin-bottom:-1px;position:relative;}
+.lane-h.connect{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);}
+.lane-h.config{background:linear-gradient(135deg,var(--amber-d) 0%,var(--amber) 100%);}
+.lane-h.enable{background:linear-gradient(135deg,var(--green-d) 0%,var(--green) 100%);}
+.lane-h-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;}
+.lane-h-text{flex:1;}
+.lane-h-title{font-size:14.5px;font-weight:700;letter-spacing:-0.012em;}
+.lane-h-sub{font-size:11px;opacity:0.85;margin-top:1px;}
+.lane-h-count{background:rgba(255,255,255,0.18);color:white;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.lane-body{background:white;border:1px solid var(--border);border-top:none;border-radius:0 0 14px 14px;padding:10px;display:flex;flex-direction:column;gap:8px;flex:1;}
+
+.cc-mini{padding:10px 12px;border-radius:9px;background:var(--off);border:1px solid var(--border-s);cursor:pointer;transition:all 0.25s var(--ease);}
+.cc-mini:hover{background:white;border-color:var(--mn-l);box-shadow:var(--shadow-sm);transform:translateX(2px);}
+.cc-mini.open{background:white;border-color:var(--mn);box-shadow:var(--shadow-md);}
+.cc-mini-h{display:flex;align-items:center;gap:10px;}
+.cc-mini-ico{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;font-weight:700;color:white;}
+.cc-mini-ico.hs{background:linear-gradient(135deg,var(--hs) 0%,var(--hs-d) 100%);}
+.cc-mini-ico.mn{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);}
+.cc-mini-ico.qb{background:linear-gradient(135deg,var(--qb) 0%,var(--qb-d) 100%);}
+.cc-mini-ico.sl{background:linear-gradient(135deg,var(--sl) 0%,#4A1751 100%);}
+.cc-mini-ico.cfg{background:linear-gradient(135deg,var(--amber) 0%,var(--amber-d) 100%);}
+.cc-mini-ico.num{background:var(--soft);color:var(--mn);border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px;}
+.cc-mini-text{flex:1;min-width:0;}
+.cc-mini-title{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.3;letter-spacing:-0.008em;}
+.cc-mini-sub{font-size:10.5px;color:var(--sub);margin-top:1px;line-height:1.3;}
+.cc-mini-arrow{color:var(--mute);font-size:13px;transition:all 0.25s var(--ease);flex-shrink:0;}
+.cc-mini:hover .cc-mini-arrow{color:var(--mn);transform:translateX(3px);}
+.cc-mini.open .cc-mini-arrow{transform:rotate(90deg);color:var(--mn);}
+.cc-mini-detail{max-height:0;overflow:hidden;transition:max-height 0.35s var(--ease);}
+.cc-mini.open .cc-mini-detail{max-height:300px;}
+.cc-mini-detail-inner{padding:10px 4px 2px 36px;font-size:11.5px;color:var(--ink-3);line-height:1.5;}
+.cc-mini-detail-inner p{margin-bottom:6px;}
+.cc-mini-detail-inner p:last-child{margin-bottom:0;}
+.cc-mini-detail-inner b{color:var(--ink);font-weight:600;}
+.cc-mini-detail-inner code{font-family:'JetBrains Mono',monospace;font-size:10.5px;background:var(--soft);padding:1px 5px;border-radius:3px;color:var(--mn-d);}
+
+.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;}
+.dec{background:linear-gradient(180deg,#FFFBEB 0%, white 60%);border:1.5px solid var(--amber-br);border-radius:16px;padding:0;cursor:pointer;transition:all 0.35s var(--ease);position:relative;overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+.dec:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--amber);}
+.dec.open{box-shadow:var(--shadow-lg);}
+.dec-h{padding:18px 22px 16px;display:flex;gap:14px;}
+.dec-num{width:42px;height:42px;border-radius:11px;flex-shrink:0;background:linear-gradient(135deg,var(--amber) 0%,var(--amber-d) 100%);color:white;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:20px;box-shadow:0 6px 16px rgba(217,119,6,0.3);}
+.dec-content{flex:1;min-width:0;}
+.dec-eye{font-size:10px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--amber-d);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.dec-eye .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);}
+.dec-q{font-size:18px;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-0.018em;margin-bottom:8px;}
+.dec-brief{font-size:12.5px;color:var(--sub);line-height:1.55;}
+.dec-toggle{width:28px;height:28px;border-radius:8px;background:white;border:1px solid var(--amber-br);display:flex;align-items:center;justify-content:center;color:var(--amber-d);font-size:13px;transition:all 0.3s var(--ease);font-weight:700;align-self:flex-start;}
+.dec:hover .dec-toggle{background:var(--amber);color:white;border-color:var(--amber);}
+.dec.open .dec-toggle{background:var(--amber);color:white;border-color:var(--amber);transform:rotate(45deg);}
+.dec-detail{max-height:0;overflow:hidden;transition:max-height 0.5s var(--ease);}
+.dec.open .dec-detail{max-height:500px;}
+.dec-detail-inner{padding:0 22px 18px;border-top:1px dashed var(--amber-br);padding-top:16px;}
+.dec-path{padding:10px 0;}
+.dec-path + .dec-path{border-top:1px solid var(--border-s);}
+.dec-path-label{font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.dec-path-label .opt{font-family:'DM Serif Display',serif;font-size:14px;color:var(--mn);text-transform:none;letter-spacing:-0.01em;}
+.dec-path-text{font-size:12.5px;color:var(--ink-3);line-height:1.55;}
+.dec-path.rec{background:linear-gradient(135deg,#EEF2FF 0%, #F8FAFE 100%);padding:12px 14px;border-radius:9px;margin-top:8px;border:1px solid #C7D2FE;}
+.dec-path.rec .dec-path-label{color:var(--mn);}
+.dec-path.rec .dec-path-label::before{content:"★";color:var(--mn);font-size:11px;}
+.dec-path.rec .dec-path-text{color:var(--ink);font-weight:500;}
+
+.scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;}
+.scope-col{display:flex;flex-direction:column;gap:10px;}
+.scope-h{display:flex;align-items:center;gap:12px;padding:0 4px;margin-bottom:4px;}
+.scope-h-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;}
+.scope-h-ico.in{background:linear-gradient(135deg,var(--qb) 0%,var(--qb-d) 100%);box-shadow:0 4px 12px rgba(44,160,28,0.3);}
+.scope-h-ico.out{background:linear-gradient(135deg,#94A3B8 0%,#475569 100%);box-shadow:0 4px 12px rgba(71,85,105,0.25);}
+.scope-h-text h3{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.018em;line-height:1.1;}
+.scope-h-text p{font-size:12px;color:var(--sub);margin-top:2px;}
+
+.mo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1;min-height:0;}
+.mo{background:white;border-radius:16px;overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;cursor:pointer;transition:all 0.35s var(--ease);box-shadow:var(--shadow-sm);position:relative;}
+.mo:hover{transform:translateY(-4px);box-shadow:var(--shadow-xl);}
+.mo-banner{padding:20px 22px;color:white;position:relative;overflow:hidden;}
+.mo-banner.new{background:linear-gradient(135deg,#03178A 0%,#0521AB 60%, #3A56C8 100%);}
+.mo-banner.amend{background:linear-gradient(135deg,#0E5852 0%, #0F766E 60%, #14B8A6 100%);}
+.mo-banner.renew{background:linear-gradient(135deg,#4C1D95 0%, #7C3AED 60%, #A78BFA 100%);}
+.mo-banner::after{content:"";position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);border-radius:50%;}
+.mo-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;opacity:0.7;margin-bottom:6px;position:relative;z-index:1;}
+.mo-title{font-family:'DM Serif Display',serif;font-size:30px;line-height:1.05;letter-spacing:-0.02em;position:relative;z-index:1;}
+.mo-body{padding:18px 22px;flex:1;display:flex;flex-direction:column;}
+.mo-anchor{font-size:10.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--sub);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.mo-anchor b{color:var(--ink);}
+.mo-anchor::before{content:"⚓";font-size:11px;opacity:0.6;}
+.mo-flow-list{margin-bottom:14px;}
+.mo-flow-step{font-size:12px;color:var(--ink-3);line-height:1.45;padding:5px 0;display:flex;gap:8px;align-items:flex-start;}
+.mo-flow-step b{color:var(--ink);font-weight:600;}
+.mo-flow-step .s-num{width:18px;height:18px;border-radius:5px;background:var(--soft);color:var(--mn);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);margin-top:1px;}
+.mo-when{background:linear-gradient(135deg,var(--lb2) 0%, #FAFCFE 100%);border:1px solid var(--border);border-radius:10px;padding:11px 14px;margin-top:auto;}
+.mo-when b{font-size:10.5px;font-weight:700;color:var(--mn);display:block;margin-bottom:4px;letter-spacing:0.08em;text-transform:uppercase;}
+.mo-when span{font-size:12px;color:var(--body);line-height:1.5;}
+.mo-cta{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:5px 12px 5px 14px;color:white;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);}
+.mo-cta::after{content:"→";transition:transform 0.25s var(--ease);}
+.mo:hover .mo-cta::after{transform:translateX(3px);}
+
+.motion-strip{display:flex;gap:6px;margin-bottom:14px;flex-shrink:0;}
+.mc{flex:1;background:white;border:1.5px solid var(--border);border-radius:11px;padding:11px 11px 13px;cursor:pointer;transition:all 0.3s var(--ease);position:relative;overflow:hidden;min-width:0;}
+.mc:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--mn-l);}
+.mc.active{background:linear-gradient(135deg,#EEF2FF 0%, white 100%);border-color:var(--mn);box-shadow:var(--shadow-mn);transform:translateY(-3px);}
+.mc.active::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--mn) 0%,var(--mn-l) 100%);}
+.mc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.mc-num{width:24px;height:24px;border-radius:7px;background:var(--soft);color:var(--mn);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;border:1px solid var(--border);}
+.mc.active .mc-num{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);color:white;border-color:transparent;}
+.mc-sys{font-size:8.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:3px 7px;border-radius:5px;white-space:nowrap;}
+.mc-sys.hs{background:var(--hs-b);color:var(--hs-d);border:1px solid var(--hs-br);}
+.mc-sys.mn{background:#EEF2FF;color:var(--mn-d);border:1px solid #C7D2FE;}
+.mc-sys.qb{background:var(--qb-b);color:var(--qb-d);border:1px solid var(--qb-br);}
+.mc-title{font-size:13px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:5px;letter-spacing:-0.012em;}
+.mc-label{font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--mute);margin-bottom:2px;}
+.mc-value{font-size:11px;color:var(--mn);font-weight:600;line-height:1.3;}
+.mc.active .mc-value{color:var(--mn-d);}
+
+.motion-detail{background:linear-gradient(135deg,#FAFBFE 0%, white 60%, var(--lb2) 100%);border:1px solid var(--border);border-radius:14px;padding:22px 26px;display:flex;gap:28px;flex:1;min-height:0;position:relative;overflow:hidden;box-shadow:var(--shadow-md);}
+.motion-detail::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--mn) 0%, var(--mn-l) 50%, var(--lb-d) 100%);}
+.md-left{flex:0 0 300px;display:flex;flex-direction:column;}
+.md-eye{font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--mn);margin-bottom:8px;display:inline-flex;align-items:center;gap:6px;}
+.md-eye::before{content:"";width:14px;height:1.5px;background:var(--mn);}
+.md-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);line-height:1.1;margin-bottom:14px;letter-spacing:-0.018em;}
+.md-sys-pill{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;padding:6px 13px;border-radius:24px;margin-bottom:16px;align-self:flex-start;}
+.md-sys-pill.hs{background:var(--hs-b);color:var(--hs-d);border:1px solid var(--hs-br);}
+.md-sys-pill.mn{background:#EEF2FF;color:var(--mn-d);border:1px solid #C7D2FE;}
+.md-sys-pill.qb{background:var(--qb-b);color:var(--qb-d);border:1px solid var(--qb-br);}
+.md-sys-pill .sys-dot{width:8px;height:8px;border-radius:50%;}
+.md-sys-pill.hs .sys-dot{background:var(--hs);box-shadow:0 0 8px var(--hs);}
+.md-sys-pill.mn .sys-dot{background:var(--mn);box-shadow:0 0 8px var(--mn);}
+.md-sys-pill.qb .sys-dot{background:var(--qb);box-shadow:0 0 8px var(--qb);}
+.md-summary{font-size:14px;color:var(--ink-3);line-height:1.6;}
+.md-right{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;}
+.md-section-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--sub);margin-bottom:2px;}
+.md-bullet{background:white;border:1px solid var(--border-s);border-radius:10px;padding:11px 14px;display:flex;gap:11px;align-items:flex-start;transition:all 0.2s var(--ease);}
+.md-bullet:hover{border-color:var(--border-2);box-shadow:var(--shadow-sm);transform:translateX(2px);}
+.md-bullet b{font-size:13px;font-weight:600;color:var(--ink);display:block;margin-bottom:3px;letter-spacing:-0.008em;}
+.md-bullet span{font-size:12px;color:var(--sub);line-height:1.55;}
+.md-bullet .b-icon{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;flex-shrink:0;margin-top:1px;font-family:'JetBrains Mono',monospace;}
+.md-bullet .b-icon.hs{background:var(--hs-b);color:var(--hs-d);border:1px solid var(--hs-br);}
+.md-bullet .b-icon.mn{background:#EEF2FF;color:var(--mn-d);border:1px solid #C7D2FE;}
+.md-bullet .b-icon.qb{background:var(--qb-b);color:var(--qb-d);border:1px solid var(--qb-br);}
+.md-bullet .b-icon.warn{background:var(--red-b);color:var(--red-d);border:1px solid var(--red-br);}
+.md-bullet .b-icon.tip{background:var(--green-b);color:var(--green-d);border:1px solid var(--green-br);}
+.md-bullet .b-icon.next{background:var(--soft);color:var(--mn);border:1px solid var(--border);}
+
+.sys-legend{display:flex;gap:8px;margin-bottom:14px;flex-shrink:0;flex-wrap:wrap;}
+.sys-leg{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:500;padding:6px 13px;border-radius:24px;}
+.sys-leg.hs{background:var(--hs-b);color:var(--hs-d);border:1px solid var(--hs-br);}
+.sys-leg.mn{background:#EEF2FF;color:var(--mn-d);border:1px solid #C7D2FE;}
+.sys-leg.qb{background:var(--qb-b);color:var(--qb-d);border:1px solid var(--qb-br);}
+.sys-leg .ldot{width:8px;height:8px;border-radius:50%;}
+.sys-leg.hs .ldot{background:var(--hs);}
+.sys-leg.mn .ldot{background:var(--mn);}
+.sys-leg.qb .ldot{background:var(--qb);}
+.sys-leg b{color:var(--ink);font-weight:700;}
+
+.co{border-radius:10px;padding:13px 17px;font-size:13px;line-height:1.6;flex-shrink:0;display:flex;gap:11px;align-items:flex-start;}
+.co-blue{background:linear-gradient(135deg,#EEF2FF 0%, #F8FAFE 100%);border:1px solid #C7D2FE;color:var(--ink);}
+.co-blue strong{color:var(--mn);font-weight:700;}
+.co-amber{background:linear-gradient(135deg,#FEF3C7 0%, #FFFCE8 100%);border:1px solid var(--amber-br);color:var(--amber-d);}
+.co-amber strong{font-weight:700;}
+.co-green{background:linear-gradient(135deg,#DCFCE7 0%, #F0FDF4 100%);border:1px solid var(--green-br);color:var(--green-d);}
+.co-green strong{font-weight:700;}
+.co-icon{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;}
+.co-blue .co-icon{background:var(--mn);color:white;}
+.co-amber .co-icon{background:var(--amber);color:white;}
+.co-green .co-icon{background:var(--green);color:white;}
+
+.gr-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:12px;flex:1;min-height:0;}
+.gr{background:white;border:1.5px solid var(--border);border-radius:13px;padding:0;cursor:pointer;transition:all 0.3s var(--ease);position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);}
+.gr:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--red);}
+.gr.open{box-shadow:var(--shadow-lg);border-color:var(--red);}
+.gr-h{padding:14px 16px;display:flex;gap:11px;align-items:flex-start;}
+.gr-ico{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#FCA5A5 0%,var(--red) 100%);color:white;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px rgba(220,38,38,0.2);font-family:'DM Serif Display',serif;}
+.gr-text{flex:1;min-width:0;}
+.gr-title{font-size:14px;font-weight:700;color:var(--ink);line-height:1.25;letter-spacing:-0.012em;margin-bottom:4px;}
+.gr-sym{font-size:11.5px;color:var(--red-d);line-height:1.45;font-weight:500;}
+.gr-toggle{width:24px;height:24px;border-radius:6px;background:var(--red-b);color:var(--red-d);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:all 0.25s var(--ease);font-weight:700;border:1px solid var(--red-br);}
+.gr:hover .gr-toggle{background:var(--red);color:white;border-color:var(--red);}
+.gr.open .gr-toggle{background:var(--red);color:white;border-color:var(--red);transform:rotate(45deg);}
+.gr-detail{max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease);}
+.gr.open .gr-detail{max-height:300px;}
+.gr-detail-inner{padding:0 16px 14px 16px;border-top:1px dashed var(--border);padding-top:12px;font-size:12px;color:var(--ink-3);line-height:1.55;}
+.gr-detail-inner .gr-row{padding:5px 0;display:flex;gap:8px;}
+.gr-detail-inner .gr-row + .gr-row{border-top:1px solid var(--border-s);}
+.gr-detail-inner .gr-row b{display:block;font-size:9.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mute);min-width:60px;margin-top:1px;}
+.gr-detail-inner .gr-row span{flex:1;color:var(--ink-3);}
+
+.gl-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;}
+.gl{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:0;cursor:pointer;transition:all 0.3s var(--ease);overflow:hidden;display:flex;flex-direction:column;backdrop-filter:blur(10px);}
+.gl:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.2);transform:translateY(-2px);}
+.gl.open{background:rgba(255,255,255,0.08);border-color:rgba(211,238,244,0.3);}
+.gl-h{padding:16px 20px;display:flex;gap:12px;align-items:flex-start;}
+.gl-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:white;font-weight:700;}
+.gl-ico.send{background:linear-gradient(135deg,var(--mn) 0%, var(--mn-l) 100%);}
+.gl-ico.confirm{background:linear-gradient(135deg,var(--amber) 0%, var(--amber-d) 100%);}
+.gl-ico.enable{background:linear-gradient(135deg,var(--green-d) 0%, var(--green) 100%);}
+.gl-ico.live{background:linear-gradient(135deg,#7C3AED 0%, #5B21B6 100%);}
+.gl-text{flex:1;min-width:0;}
+.gl-eye{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--lb);margin-bottom:4px;opacity:0.85;}
+.gl-title{font-size:15.5px;font-weight:700;color:white;line-height:1.2;letter-spacing:-0.015em;}
+.gl-summary{font-size:12px;color:rgba(255,255,255,0.6);margin-top:5px;line-height:1.5;}
+.gl-toggle{width:26px;height:26px;border-radius:7px;background:rgba(255,255,255,0.08);color:white;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;border:1px solid rgba(255,255,255,0.12);transition:all 0.25s var(--ease);font-weight:700;}
+.gl:hover .gl-toggle{background:rgba(255,255,255,0.18);}
+.gl.open .gl-toggle{background:var(--lb);color:var(--mn);border-color:var(--lb);transform:rotate(45deg);}
+.gl-detail{max-height:0;overflow:hidden;transition:max-height 0.4s var(--ease);}
+.gl.open .gl-detail{max-height:400px;}
+.gl-detail-inner{padding:0 20px 16px;border-top:1px dashed rgba(255,255,255,0.1);padding-top:14px;}
+.gl-d-item{padding:5px 0;font-size:12px;color:rgba(255,255,255,0.75);line-height:1.5;display:flex;gap:9px;}
+.gl-d-item::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--lb);margin-top:8px;flex-shrink:0;box-shadow:0 0 6px var(--lb);}
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- SLIDE 1: COVER -->
+<div class="slide hero active" id="s1">
+  <div class="grain"></div>
+  <div class="hero-deco"></div>
+  <div class="chrome d">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">Next Steps &nbsp;·&nbsp; ENTR &nbsp;·&nbsp; May 2026</div>
+  </div>
+  <div class="hero-body">
+    <div class="hero-logos">
+      <div class="mark entr">E</div><span class="brand">ENTR</span><span class="x">×</span><div class="mark mn">M</div><span class="brand">MonetizeNow</span>
+    </div>
+    <h1 class="hero-h1">Catalog live.<br>Migration done.<br><span class="accent">Here's what's next.</span></h1>
+    <p class="hero-sub">Today we confirm catalog accuracy. From there: HubSpot, QuickBooks, configuration and enablement run in parallel. Single coordinated cutover, not a multi-week rollout.</p>
+    <div class="hero-pills">
+      <span class="hp done">Catalog Live</span>
+      <span class="hp done">Migration Complete</span>
+      <span class="hp active">Today: Accuracy Review</span>
+      <span class="hp pending">HubSpot Connection</span>
+      <span class="hp pending">QuickBooks Connection</span>
+      <span class="hp pending">Enablement</span>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <span>Prepared by MonetizeNow CX</span>
+    <span>Confidential &nbsp;·&nbsp; ENTR Implementation</span>
+  </div>
+</div>
+
+<!-- SLIDE 2: JOURNEY MAP -->
+<div class="slide light" id="s2">
+  <div class="chrome l">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">ENTR &nbsp;·&nbsp; May 2026</div>
+    <div class="pg">02 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye">The Journey</div>
+        <h2>You're Two Stages In.<br>Four More to Go.</h2>
+        <p class="sub">Click any stage to see what it involves. Most of the remaining work sits on our side. Your involvement is targeted: decisions today, content for templates, and walk-through participation.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat">2/6</div>
+        <div class="ph-stat-l">Stages Complete</div>
+      </div>
+    </div>
+    <div class="journey">
+      <div class="j-step done" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num"><span class="j-num-text">01</span></div>
+          <div class="j-eye">Stage 01 · Complete</div>
+          <div class="j-title">Catalog Setup</div>
+          <div class="j-summary">Products, offerings, rate cards configured in MN.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">All ENTR products mapped into MN catalog</div>
+            <div class="j-detail-item">Pricing tiers and rate cards built</div>
+            <div class="j-detail-item">Bundling logic + discount rules in place</div>
+            <div class="j-detail-item">Ready for spot-check on today's call</div>
+          </div>
+        </div>
+      </div>
+      <div class="j-step done" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num"><span class="j-num-text">02</span></div>
+          <div class="j-eye">Stage 02 · Complete</div>
+          <div class="j-title">Data Migration</div>
+          <div class="j-summary">Customers + active contracts loaded into MN.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">Customer master records imported</div>
+            <div class="j-detail-item">Active contracts loaded with subscriptions</div>
+            <div class="j-detail-item">Some HubSpot gaps flagged for cleanup</div>
+            <div class="j-detail-item">Validation needed on today's call</div>
+          </div>
+        </div>
+      </div>
+      <div class="j-step now" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num">03</div>
+          <div class="j-eye">Stage 03 · Today</div>
+          <div class="j-title">Accuracy Review</div>
+          <div class="j-summary">Confirm catalog + spot-check migrated data. Lock two decisions.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">Walk catalog: products, offerings, prices</div>
+            <div class="j-detail-item">Pick 5 customers, validate dates + amounts</div>
+            <div class="j-detail-item">Decide: all customers in HS, or subset?</div>
+            <div class="j-detail-item">Decide: historical Deal mapping or clean cutover?</div>
+          </div>
+        </div>
+      </div>
+      <div class="j-step next" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num">04</div>
+          <div class="j-eye">Stage 04 · This Week</div>
+          <div class="j-title">Systems Connected</div>
+          <div class="j-summary">HubSpot, QuickBooks, Slack wired in. Parallel work, days not weeks.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">HubSpot OAuth + object mapping</div>
+            <div class="j-detail-item">QB customer + invoice sync (forward only)</div>
+            <div class="j-detail-item">Slack approval routing for thresholds</div>
+            <div class="j-detail-item">Sandbox validation before prod push</div>
+          </div>
+        </div>
+      </div>
+      <div class="j-step future" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num">05</div>
+          <div class="j-eye">Stage 05 · Next Week</div>
+          <div class="j-title">Branding + Enablement</div>
+          <div class="j-summary">Quote template, conditional T&Cs, motion walk-throughs.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">ENTR logo + brand on quote template</div>
+            <div class="j-detail-item">Conditional T&C language stitched in</div>
+            <div class="j-detail-item">Walk-throughs on New Business, Amend, Renewal</div>
+            <div class="j-detail-item">Guardrails review with reps</div>
+          </div>
+        </div>
+      </div>
+      <div class="j-step future" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num">06</div>
+          <div class="j-eye">Stage 06 · Cutover</div>
+          <div class="j-title">Go-Live</div>
+          <div class="j-summary">First real quote in production, together. Single coordinated step.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">Sandbox → production push by MN</div>
+            <div class="j-detail-item">First live quote sent on the call</div>
+            <div class="j-detail-item">Verify HS + QB sync end to end</div>
+            <div class="j-detail-item">Switch to async support cadence</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="co co-green">
+      <div class="co-icon">↗</div>
+      <div><strong>The inflection point is now.</strong> Everything from here is incremental and parallelizable. No more big-bang phases. Stages 4 and 5 happen alongside each other, not sequentially.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: THREE LANES -->
+<div class="slide off" id="s3">
+  <div class="chrome o">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">ENTR &nbsp;·&nbsp; May 2026</div>
+    <div class="pg">03 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye">What's Next</div>
+        <h2>Three Lanes, Running in Parallel</h2>
+        <p class="sub">Click any item to see what's involved. Most of this is on us. The lanes don't block each other — system connections, configuration, and enablement prep advance at the same time.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat">11</div>
+        <div class="ph-stat-l">Items in Flight</div>
+      </div>
+    </div>
+    <div class="lanes-grid">
+      <div class="lane-col">
+        <div class="lane-h connect">
+          <div class="lane-h-icon">⇄</div>
+          <div class="lane-h-text"><div class="lane-h-title">System Connections</div><div class="lane-h-sub">MonetizeNow leads</div></div>
+          <span class="lane-h-count">03</span>
+        </div>
+        <div class="lane-body">
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico hs">H</div><div class="cc-mini-text"><div class="cc-mini-title">HubSpot connection</div><div class="cc-mini-sub">OAuth · Objects · Stage mapping</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Standard OAuth install. Companies, Contacts, Deals, Products sync bidirectionally. Custom fields with matching API names sync automatically.</p><p><b>Two decisions needed today:</b> are all customers in HubSpot, and do we map historical deals or start fresh? Detail on slide 4.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico qb">Q</div><div class="cc-mini-text"><div class="cc-mini-title">QuickBooks connection</div><div class="cc-mini-sub">One-way · Customers + invoices forward</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>MN posts forward. Customers created in QB on first contract. Invoices and credit memos push on billing date.</p><p><b>Historicals stay out.</b> QB already has them — re-syncing creates duplicates and reconciliation work. Detail on slide 5.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico sl">S</div><div class="cc-mini-text"><div class="cc-mini-title">Slack approval routing</div><div class="cc-mini-sub">Threshold-based · Approver list</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Discount thresholds, custom terms, or contract length deviations trigger Slack approval requests routed to the right approver.</p><p><b>ENTR confirms:</b> who approves discounts above X%, custom payment terms, multi-year deals.</p></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="lane-col">
+        <div class="lane-h config">
+          <div class="lane-h-icon">⚙</div>
+          <div class="lane-h-text"><div class="lane-h-title">Configuration</div><div class="lane-h-sub">MN configures, ENTR provides</div></div>
+          <span class="lane-h-count">04</span>
+        </div>
+        <div class="lane-body">
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">T</div><div class="cc-mini-text"><div class="cc-mini-title">Conditional T&amp;Cs</div><div class="cc-mini-sub">Region · Size · Product variants</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Different terms language by region, contract size, or product type. MN stitches the right version into each quote automatically.</p><p><b>ENTR provides:</b> the language files. We map the conditions and stitch into the template.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">L</div><div class="cc-mini-text"><div class="cc-mini-title">ENTR branding on quote</div><div class="cc-mini-sub">Logo · Colors · Footer</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Quote PDF template gets your logo, primary color, footer text, and signing block formatted to your standard.</p><p><b>ENTR sends:</b> SVG or PNG logo, hex color codes, footer text. We apply and test.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">A</div><div class="cc-mini-text"><div class="cc-mini-title">Approval rules</div><div class="cc-mini-sub">Discount tiers · Custom term flags</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Rules engine in MN routes quotes through approval based on discount, term length, payment terms, or custom fields.</p><p><b>Common pattern:</b> &lt;10% rep approves, 10–20% manager, &gt;20% leadership. Routes via Slack.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">P</div><div class="cc-mini-text"><div class="cc-mini-title">Test → Production push</div><div class="cc-mini-sub">Single coordinated step</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Once sandbox is approved, MN promotes catalog, templates, and config to production in one step. Connections re-point. No data re-load needed.</p><p><b>ENTR confirms readiness</b> on a scheduled call. We push together.</p></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="lane-col">
+        <div class="lane-h enable">
+          <div class="lane-h-icon">▶</div>
+          <div class="lane-h-text"><div class="lane-h-title">Enablement</div><div class="lane-h-sub">Walk-throughs before live</div></div>
+          <span class="lane-h-count">04</span>
+        </div>
+        <div class="lane-body">
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico num">1</div><div class="cc-mini-text"><div class="cc-mini-title">New Business motion</div><div class="cc-mini-sub">HS Deal → MN Quote → QB Invoice</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>End-to-end walk-through on a real sandbox Deal. Reps see how a new logo flows from HubSpot to MN to signature to QB invoice.</p><p><b>Detail with click cards:</b> slide 7.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico num">2</div><div class="cc-mini-text"><div class="cc-mini-title">Amendment motion</div><div class="cc-mini-sub">Mid-term changes · Delta-only billing</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>How upsells, downsells, and swaps work without breaking billing. The most common mistake is treating an upsell as new business.</p><p><b>Detail with click cards:</b> slide 8.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico num">3</div><div class="cc-mini-text"><div class="cc-mini-title">Renewal motion</div><div class="cc-mini-sub">Time-triggered · Carry + uplift</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>MN detects the renewal window, auto-creates the Deal in HubSpot, applies carry-forward and uplift. Reps confirm and send.</p><p><b>Detail with click cards:</b> slide 9.</p></div></div>
+          </div>
+          <div class="cc-mini" onclick="toggleM(this)">
+            <div class="cc-mini-h"><div class="cc-mini-ico num">✓</div><div class="cc-mini-text"><div class="cc-mini-title">Guardrails review</div><div class="cc-mini-sub">5 things to watch in first 60 days</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>The 5 places where things tend to go sideways. Wrong motion picked, wrong effective date, stale primary quote, missed renewal, QB mismatch.</p><p><b>Detail with click cards:</b> slide 10.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: HUBSPOT DECISIONS -->
+<div class="slide light" id="s4">
+  <div class="chrome l">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">ENTR &nbsp;·&nbsp; HubSpot Setup</div>
+    <div class="pg">04 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye" style="color:var(--hs-d)">HubSpot Connection</div>
+        <h2>Two Questions.<br>Then We Connect.</h2>
+        <p class="sub">OAuth and object mapping are on us. Two decisions need an ENTR answer — they shape how we map your data. Click each to expand.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat" style="color:var(--hs-d)">2</div>
+        <div class="ph-stat-l" style="color:var(--hs-d)">Decisions Today</div>
+      </div>
+    </div>
+    <div class="decision-grid">
+      <div class="dec" onclick="toggleD(this)">
+        <div class="dec-h">
+          <div class="dec-num">01</div>
+          <div class="dec-content">
+            <div class="dec-eye"><span class="dot"></span>Decision · Needed today</div>
+            <div class="dec-q">Are all your customers in HubSpot, or just some?</div>
+            <div class="dec-brief">We saw gaps in the migrated data — a handful of contracts in MN don't match a HubSpot company record cleanly. How we proceed depends on which scenario is true for ENTR.</div>
+          </div>
+          <div class="dec-toggle">+</div>
+        </div>
+        <div class="dec-detail"><div class="dec-detail-inner">
+          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path A</span> All customers should be in HubSpot</div><div class="dec-path-text">We map by external ID. Flag any MN contracts without a matching HubSpot Company. ENTR cleans up gaps in HS before we go live. Clean state, no orphans.</div></div>
+          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path B</span> Only some are in HubSpot</div><div class="dec-path-text">We map the customers that exist in HS. Remaining contracts live in MN as the source of record. Some customers won't have an associated Deal — that's expected.</div></div>
+          <div class="dec-path rec"><div class="dec-path-label">Recommendation</div><div class="dec-path-text"><b>Path A</b> if ENTR uses HubSpot as the customer system of record. <b>Path B</b> if HubSpot is sales-pipeline-only and customer service lives elsewhere. We can also do hybrid: HS for active pipeline, MN as source of record for accounts.</div></div>
+        </div></div>
+      </div>
+      <div class="dec" onclick="toggleD(this)">
+        <div class="dec-h">
+          <div class="dec-num">02</div>
+          <div class="dec-content">
+            <div class="dec-eye"><span class="dot"></span>Decision · Needed today</div>
+            <div class="dec-q">Map historical Deals to MN quotes, or start fresh?</div>
+            <div class="dec-brief">Closed-won Deals already exist in HubSpot for past business. Question is whether we retrofit MN quotes onto them, or treat HubSpot history as reference-only and start clean going forward.</div>
+          </div>
+          <div class="dec-toggle">+</div>
+        </div>
+        <div class="dec-detail"><div class="dec-detail-inner">
+          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path A</span> Map historicals to MN</div><div class="dec-path-text">We create MN Quote records linked to historical Deals. Adds weeks of mapping work. Reporting becomes "complete" but the value is mostly cosmetic — historical Deals already closed.</div></div>
+          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path B</span> Clean cutover</div><div class="dec-path-text">Historical Deals stay in HubSpot as reference. From go-live forward, every new Deal creates a new MN Quote. Reporting works either way — past closed in HS, future originating in MN.</div></div>
+          <div class="dec-path rec"><div class="dec-path-label">Recommendation</div><div class="dec-path-text"><b>Clean cutover.</b> Faster to live, less risk, no reconciliation. Historical Deal reporting is unchanged. Only your active contracts and renewals need accurate MN data — which we already migrated.</div></div>
+        </div></div>
+      </div>
+    </div>
+    <div class="co co-blue" style="margin-top:14px">
+      <div class="co-icon">⚡</div>
+      <div><strong>If you pick clean cutover:</strong> HubSpot connected and tested in sandbox within a few days of your confirmation. Production push follows once template config and approval rules are signed off.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: QB SCOPE -->
+<div class="slide off" id="s5">
+  <div class="chrome o">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">ENTR &nbsp;·&nbsp; QuickBooks Setup</div>
+    <div class="pg">05 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye" style="color:var(--qb-d)">QuickBooks Connection</div>
+        <h2>Customers + Invoices.<br>Going Forward.</h2>
+        <p class="sub">QB is your ledger. MN is the commercial truth. One-way flow: MN pushes to QB. We don't sync historicals — QB already has them. Click any item to expand.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat" style="color:var(--qb-d)">1-way</div>
+        <div class="ph-stat-l" style="color:var(--qb-d)">MN → QB</div>
+      </div>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-col">
+        <div class="scope-h"><div class="scope-h-ico in">✓</div><div class="scope-h-text"><h3>In Scope</h3><p>What syncs going forward</p></div></div>
+        <div class="cc" onclick="toggleCC(this)">
+          <div class="cc-h"><div class="cc-icon qb">⇄</div><div class="cc-body-h"><div class="cc-chip qb">Sync · One-way</div><div class="cc-title">Customer record sync</div><div class="cc-summary">When a contract closes in MN, customer is created in QB if not already there.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-detail"><div class="cc-detail-inner">
+            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Match by email or external ID</b><span>MN looks for existing QB customer first. If matched, the new invoice attaches to it. If not, customer is created.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">Q</div><div class="cc-d-text"><b>Customer fields synced</b><span>Name, email, billing address, payment terms. Custom fields can be mapped in setup.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">✓</div><div class="cc-d-text"><b>No duplicates if ENTR confirms IDs</b><span>If your QB customer external IDs match your MN customer external IDs, zero duplicate risk. We validate during connection setup.</span></div></div>
+          </div></div>
+        </div>
+        <div class="cc" onclick="toggleCC(this)">
+          <div class="cc-h"><div class="cc-icon qb">$</div><div class="cc-body-h"><div class="cc-chip qb">Auto · Per billing date</div><div class="cc-title">Invoices generated forward</div><div class="cc-summary">Every invoice MN creates posts to QB on the billing date. New biz, amendments, renewals.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-detail"><div class="cc-detail-inner">
+            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Line items, taxes, reference IDs</b><span>Each invoice carries MN Contract ID, HubSpot Deal ID, and Quote ID. Finance can audit back to the source deal.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">Q</div><div class="cc-d-text"><b>Posts to AR + income account</b><span>Mapped to your QB Chart of Accounts. Subscription, services, and tax revenue land in the right buckets.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">!</div><div class="cc-d-text"><b>Sync is one-way</b><span>Payment status, dunning, and AR collection stay in QB. MN doesn't try to mirror payment data.</span></div></div>
+          </div></div>
+        </div>
+        <div class="cc" onclick="toggleCC(this)">
+          <div class="cc-h"><div class="cc-icon qb">−</div><div class="cc-body-h"><div class="cc-chip qb">Auto · On amendment</div><div class="cc-title">Credit memos for downsells</div><div class="cc-summary">Amendment credits and renewal-related credits push to QB with reference to original invoice.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-detail"><div class="cc-detail-inner">
+            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Linked to original invoice</b><span>QB can apply the credit memo against the original invoice. Clean reconciliation, no manual journal entries.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">Q</div><div class="cc-d-text"><b>Auditable both directions</b><span>Credit memo references both the parent invoice (in QB) and the amendment event (in MN).</span></div></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="scope-col">
+        <div class="scope-h"><div class="scope-h-ico out">×</div><div class="scope-h-text"><h3>Out of Scope</h3><p>What stays separate, and why</p></div></div>
+        <div class="cc" onclick="toggleCC(this)">
+          <div class="cc-h"><div class="cc-icon neutral">⌛</div><div class="cc-body-h"><div class="cc-chip" style="background:var(--soft);color:var(--ink-3)">Not syncing</div><div class="cc-title">Historical invoices</div><div class="cc-summary">QB already has them. Re-syncing creates duplicates and reconciliation work. Not worth it.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-detail"><div class="cc-detail-inner">
+            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Why we don't backfill</b><span>Every historical invoice in MN would create a duplicate in QB. Reconciling takes more time than it saves.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">✓</div><div class="cc-d-text"><b>Reporting still works</b><span>MN has full history from migration. QB has full history from its own books. Reports run from each system's truth, no cross-system reconciliation needed.</span></div></div>
+          </div></div>
+        </div>
+        <div class="cc" onclick="toggleCC(this)">
+          <div class="cc-h"><div class="cc-icon neutral">←</div><div class="cc-body-h"><div class="cc-chip" style="background:var(--soft);color:var(--ink-3)">Not syncing</div><div class="cc-title">QB → MN reverse sync</div><div class="cc-summary">QB doesn't push back. Payment status, AR aging, and collections stay in QB.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-detail"><div class="cc-detail-inner">
+            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Each system owns its truth</b><span>MN owns contract and commercial state. QB owns financial and AR state. They don't override each other.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">i</div><div class="cc-d-text"><b>If you need payment visibility in HS/MN</b><span>Add it later via QB API or Stripe sync. Not in scope for this go-live.</span></div></div>
+          </div></div>
+        </div>
+        <div class="cc" onclick="toggleCC(this)">
+          <div class="cc-h"><div class="cc-icon neutral">📒</div><div class="cc-body-h"><div class="cc-chip" style="background:var(--soft);color:var(--ink-3)">Not syncing</div><div class="cc-title">Manual GL adjustments</div><div class="cc-summary">Finance does journal entries directly in QB. MN doesn't try to replicate accounting.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-detail"><div class="cc-detail-inner">
+            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Accounting is not commercial</b><span>Deferred revenue moves, period adjustments, reclasses — these are accounting decisions. MN sticks to commercial truth.</span></div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: MOTION OVERVIEW -->
+<div class="slide light" id="s6">
+  <div class="chrome l">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">ENTR &nbsp;·&nbsp; Sales Motions</div>
+    <div class="pg">06 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye">Enablement</div>
+        <h2>Three Motions.<br>Every Commercial Action.</h2>
+        <p class="sub">Every sales action falls into one of three motions. Same systems involved, different anchors and triggers. Each one has a dedicated walk-through next.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat">3</div>
+        <div class="ph-stat-l">Motions to Learn</div>
+      </div>
+    </div>
+    <div class="sys-legend">
+      <div class="sys-leg hs"><span class="ldot"></span><b>HubSpot</b> · Pipeline</div>
+      <div class="sys-leg mn"><span class="ldot"></span><b>MonetizeNow</b> · Pricing, Contracts, Billing</div>
+      <div class="sys-leg qb"><span class="ldot"></span><b>QuickBooks</b> · AR &amp; Accounting</div>
+    </div>
+    <div class="mo-grid">
+      <div class="mo" onclick="goTo(6)">
+        <div class="mo-cta">Walk through</div>
+        <div class="mo-banner new"><div class="mo-num">MOTION 01</div><div class="mo-title">New<br>Business</div></div>
+        <div class="mo-body">
+          <div class="mo-anchor"><b>Anchor:</b>&nbsp;HubSpot Deal</div>
+          <div class="mo-flow-list">
+            <div class="mo-flow-step"><span class="s-num">1</span><span><b>New Deal</b> in HubSpot</span></div>
+            <div class="mo-flow-step"><span class="s-num">2</span><span><b>Quote</b> built in MN</span></div>
+            <div class="mo-flow-step"><span class="s-num">3</span><span><b>Signed</b> → Contract created</span></div>
+            <div class="mo-flow-step"><span class="s-num">4</span><span><b>First Invoice</b> → QB</span></div>
+          </div>
+          <div class="mo-when"><b>When to use</b><span>Net-new logo, or net-new product purchase for existing customer. No prior contract exists for this customer/product combination.</span></div>
+        </div>
+      </div>
+      <div class="mo" onclick="goTo(7)">
+        <div class="mo-cta">Walk through</div>
+        <div class="mo-banner amend"><div class="mo-num">MOTION 02</div><div class="mo-title">Amendment</div></div>
+        <div class="mo-body">
+          <div class="mo-anchor"><b>Anchor:</b>&nbsp;Active MN Contract</div>
+          <div class="mo-flow-list">
+            <div class="mo-flow-step"><span class="s-num">1</span><span><b>Active</b> contract exists</span></div>
+            <div class="mo-flow-step"><span class="s-num">2</span><span><b>Amend Deal</b> in HubSpot</span></div>
+            <div class="mo-flow-step"><span class="s-num">3</span><span><b>Delta Quote</b> (net change only)</span></div>
+            <div class="mo-flow-step"><span class="s-num">4</span><span><b>Adj. Invoice</b> or credit → QB</span></div>
+          </div>
+          <div class="mo-when"><b>When to use</b><span>Mid-term change: upsell, downsell, swap. Customer is already under contract. Critical: starts from the contract, not a fresh deal.</span></div>
+        </div>
+      </div>
+      <div class="mo" onclick="goTo(8)">
+        <div class="mo-cta">Walk through</div>
+        <div class="mo-banner renew"><div class="mo-num">MOTION 03</div><div class="mo-title">Renewal</div></div>
+        <div class="mo-body">
+          <div class="mo-anchor"><b>Anchor:</b>&nbsp;Renewal Window in MN</div>
+          <div class="mo-flow-list">
+            <div class="mo-flow-step"><span class="s-num">1</span><span><b>Window opens</b> 90 days out</span></div>
+            <div class="mo-flow-step"><span class="s-num">2</span><span><b>Renewal Deal</b> auto-created in HS</span></div>
+            <div class="mo-flow-step"><span class="s-num">3</span><span><b>Quote</b> with carry-forward + uplift</span></div>
+            <div class="mo-flow-step"><span class="s-num">4</span><span><b>New term invoices</b> → QB</span></div>
+          </div>
+          <div class="mo-when"><b>When to use</b><span>Existing contract approaching end. Trigger is time-based, not rep-initiated. Reps confirm and send; system does the heavy lift.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: NEW BUSINESS -->
+<div class="slide off" id="s7">
+  <div class="chrome o">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">Motion 01 &nbsp;·&nbsp; New Business</div>
+    <div class="pg">07 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye">Motion 01 · New Business</div>
+        <h2>From New Deal to First Invoice</h2>
+        <p class="sub">Click any step to see how it works. Anchor: HubSpot Deal. Every new logo and net-new product purchase runs through this flow.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat">06</div>
+        <div class="ph-stat-l">Steps</div>
+      </div>
+    </div>
+    <div class="motion-strip" data-motion="new">
+      <div class="mc active" data-step="new-1"><div class="mc-top"><div class="mc-num">01</div><div class="mc-sys hs">HubSpot</div></div><div class="mc-title">New Deal</div><div class="mc-label">State</div><div class="mc-value">Qualifying</div></div>
+      <div class="mc" data-step="new-2"><div class="mc-top"><div class="mc-num">02</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Build Quote</div><div class="mc-label">Action</div><div class="mc-value">Pricing + Terms</div></div>
+      <div class="mc" data-step="new-3"><div class="mc-top"><div class="mc-num">03</div><div class="mc-sys hs">HubSpot</div></div><div class="mc-title">Send for Sign</div><div class="mc-label">Action</div><div class="mc-value">eSign Routed</div></div>
+      <div class="mc" data-step="new-4"><div class="mc-top"><div class="mc-num">04</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">New Contract</div><div class="mc-label">Output</div><div class="mc-value">Account + Subs</div></div>
+      <div class="mc" data-step="new-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">First Invoice</div><div class="mc-label">Action</div><div class="mc-value">Push to QB</div></div>
+      <div class="mc" data-step="new-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">QuickBooks</div></div><div class="mc-title">QB Truth</div><div class="mc-label">Ownership</div><div class="mc-value">AR + Ledger</div></div>
+    </div>
+    <div class="motion-detail" data-detail="new-1" style="display:flex">
+      <div class="md-left"><div class="md-eye">Step 01 of 06</div><div class="md-title">New Deal in HubSpot</div><div class="md-sys-pill hs"><span class="sys-dot"></span>HubSpot · Pipeline</div><div class="md-summary">Rep creates a new Deal, associates Company + Contact, picks products from MN's library, sets pipeline stage. This is where the motion starts.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Deal record created</b><span>Standard HubSpot Deal. Pipeline stage starts at Qualifying or Discovery, per your pipeline structure.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Company + Contacts associated</b><span>Existing company record, or new one. Primary contact and signer are associated to the Deal.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Products selected from MN catalog</b><span>Rep picks products from the MonetizeNow catalog inside HubSpot. No separate catalog to maintain.</span></div></div>
+        <div class="md-bullet"><div class="b-icon next">→</div><div><b>Ready to quote</b><span>Click "Create Quote" on the Deal to move to step 2. MN takes over from there.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="new-2" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 02 of 06</div><div class="md-title">Quote Built in MN</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · CPQ Engine</div><div class="md-summary">Quote is built in MN. All pricing logic, discount approvals, contract terms, and bundle rules execute here. Quote syncs back to the HubSpot Deal in real time.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Pricing rules applied</b><span>Tier pricing, volume discounts, regional pricing, and bundle logic all execute automatically.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Approvals routed via Slack</b><span>If discount or terms hit a threshold, approval request goes to the right approver in Slack. Approval flows back to the quote.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Contract terms locked on the quote</b><span>Billing frequency, contract length, start date, payment terms. Quote becomes the contract on signature.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Real-time sync to HubSpot</b><span>Quote record on the Deal. Deal Amount updates. Pipeline forecasting stays accurate.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="new-3" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 03 of 06</div><div class="md-title">Sent for Signature</div><div class="md-sys-pill hs"><span class="sys-dot"></span>HubSpot · eSign Trigger</div><div class="md-summary">Quote goes to the customer for signature. Quote is locked. Any changes from this point are a new version or an amendment.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>eSign packet assembled</b><span>Quote PDF + ENTR-branded T&Cs from conditional template. Sent via chosen eSign tool.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Deal stage advances</b><span>HubSpot Deal moves to Negotiation or Contract Sent. Stage mapping set during config.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Quote locked from edits</b><span>No edits allowed once sent. Reps create a new version if anything changes pre-signature.</span></div></div>
+        <div class="md-bullet"><div class="b-icon tip">⏳</div><div><b>Waiting on customer</b><span>Customer signs or declines. On signature, step 4 fires automatically.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="new-4" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 04 of 06</div><div class="md-title">Contract Created in MN</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Contract State</div><div class="md-summary">Signature triggers contract creation. Account, subscriptions, and billing schedule generated from the quote. No manual entry.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Account created or matched</b><span>First contract → MN creates Account. Existing → new contract attaches to existing Account.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Subscriptions instantiated</b><span>Every product on the quote becomes an active subscription with its own billing schedule, start date, end date.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Billing schedule generated</b><span>Full term schedule built upfront. Annual, monthly, or custom. Invoices fire on scheduled dates.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>HubSpot Deal moves to Closed Won</b><span>Amount synced, contract ID stamped on Deal, forecast attribution recorded.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="new-5" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">First Invoice Generated</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Engine</div><div class="md-summary">First invoice fires on the configured date. Full-period or prorated depending on contract start. Pushed to QuickBooks.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Invoice built from billing schedule</b><span>Line items, taxes, contract reference IDs assembled. Invoice number, dates, amounts ready.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Prorated if mid-period</b><span>If start date isn't on a billing anchor, MN prorates the first invoice automatically. Future invoices align to the anchor.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Pushed to QuickBooks</b><span>Invoice posts to QB. Customer created in QB if first time. Reference IDs preserved.</span></div></div>
+        <div class="md-bullet"><div class="b-icon next">↓</div><div><b>Step 6: QB owns from here</b><span>QB takes over for AR, payments, GL. MN doesn't intervene.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="new-6" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">QuickBooks Owns Accounting</div><div class="md-sys-pill qb"><span class="sys-dot"></span>QuickBooks · AR &amp; GL</div><div class="md-summary">QB is the ledger. AR, payments, dunning, financial reporting all happen here. MN doesn't try to replicate accounting.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Customer + invoice posted</b><span>Invoice lands in AR, income mapped per Chart of Accounts, tax codes applied.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Reference IDs stamped</b><span>HubSpot Deal ID + MN Quote ID + MN Contract ID on the invoice. Audit trail end to end.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Payment + collections in QB</b><span>Payment processing, reminders, statements all in QB. MN doesn't push reminders.</span></div></div>
+        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Motion complete</b><span>Customer live, billing on schedule, books accurate. Future invoices fire automatically per schedule.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: AMENDMENT -->
+<div class="slide light" id="s8">
+  <div class="chrome l">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">Motion 02 &nbsp;·&nbsp; Amendment</div>
+    <div class="pg">08 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye" style="color:var(--p-amend)">Motion 02 · Amendment</div>
+        <h2>Mid-Term Changes,<br>Without Breaking Billing</h2>
+        <p class="sub">Anchor: existing MN Contract, not a new Deal. MN calculates the delta and prorates. Past invoices stay clean. Only the difference gets billed or credited.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat" style="color:var(--p-amend)">06</div>
+        <div class="ph-stat-l">Steps</div>
+      </div>
+    </div>
+    <div class="motion-strip" data-motion="amend">
+      <div class="mc active" data-step="amend-1"><div class="mc-top"><div class="mc-num">01</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Active Contract</div><div class="mc-label">State</div><div class="mc-value">In-Flight</div></div>
+      <div class="mc" data-step="amend-2"><div class="mc-top"><div class="mc-num">02</div><div class="mc-sys hs">HubSpot</div></div><div class="mc-title">Amend Deal</div><div class="mc-label">Action</div><div class="mc-value">Expansion Pipeline</div></div>
+      <div class="mc" data-step="amend-3"><div class="mc-top"><div class="mc-num">03</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Delta Quote</div><div class="mc-label">Function</div><div class="mc-value">Net Change Only</div></div>
+      <div class="mc" data-step="amend-4"><div class="mc-top"><div class="mc-num">04</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Contract v2</div><div class="mc-label">Output</div><div class="mc-value">Updated In-Place</div></div>
+      <div class="mc" data-step="amend-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Adj. Invoice</div><div class="mc-label">Action</div><div class="mc-value">Charge or Credit</div></div>
+      <div class="mc" data-step="amend-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">QuickBooks</div></div><div class="mc-title">QB Posting</div><div class="mc-label">Ownership</div><div class="mc-value">Clean Audit</div></div>
+    </div>
+    <div class="motion-detail" data-detail="amend-1" style="display:flex">
+      <div class="md-left"><div class="md-eye">Step 01 of 06</div><div class="md-title">Active Contract is the Anchor</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Contract State</div><div class="md-summary">Amendments don't start from a fresh deal. They start from the existing contract. This is the most important difference from new business.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">Critical to get right</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Existing contract is the baseline</b><span>All amendment math is delta from current state. Current pricing, quantities, end date.</span></div></div>
+        <div class="md-bullet"><div class="b-icon warn">!</div><div><b>Never create "new business" Deal for upsells</b><span>The #1 amendment mistake. Treating an upsell as new business creates double billing and breaks contract continuity.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Open the contract in MN, click Amend</b><span>Rep starts from the contract record. MN handles linking the amendment Deal in HubSpot.</span></div></div>
+        <div class="md-bullet"><div class="b-icon next">→</div><div><b>Step 2: Amendment Deal in HubSpot</b><span>HubSpot tracks the amendment as expansion Deal, attached to the existing Company.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="amend-2" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 02 of 06</div><div class="md-title">Amendment Deal in HubSpot</div><div class="md-sys-pill hs"><span class="sys-dot"></span>HubSpot · Expansion Pipeline</div><div class="md-summary">Amendment creates a Deal in HubSpot tagged as Upsell, Cross-sell, or Downsell. Tracks expansion pipeline separate from new business — forecast stays clean.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Deal created on existing Company</b><span>Linked to the same Company record. Not a new account. Existing contacts carry over.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Deal Type: Existing Business — Upsell / Cross-sell / Downsell</b><span>HubSpot pipeline separates expansion from new logo. Forecast reporting stays accurate.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Forecast amount = Incremental ARR only</b><span>Deal Amount reflects net change, not total contract value. Prevents double-counting in forecast.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Linked to MN parent contract</b><span>Contract ID on the Deal. Amendment Quote references the parent contract.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="amend-3" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 03 of 06</div><div class="md-title">Delta Quote: Net Change Only</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Delta Engine</div><div class="md-summary">MN calculates what's changing — quantity added, product swapped, price adjusted. Quote shows the delta. Customer signs the change, not the whole contract.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What MN does automatically</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Calculates difference from current state</b><span>Current quantity vs new. Current price vs new. Only the delta is on the quote.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Proration to effective date</b><span>If amendment is mid-period, MN prorates from effective date to next billing anchor. Automatic.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Coterminous: end date stays</b><span>Amendment doesn't extend the contract. End date stays. Renewal still triggers on original date.</span></div></div>
+        <div class="md-bullet"><div class="b-icon warn">!</div><div><b>Effective date drives proration math</b><span>If effective date is wrong on the quote, proration is wrong. Confirm before sending.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="amend-4" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 04 of 06</div><div class="md-title">Contract v2</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Versioned</div><div class="md-summary">Signed amendment updates the contract to a new version. Subscriptions, quantities, or pricing change. Billing schedule recalculates from the effective date forward.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Contract version increments</b><span>v1 → v2. Audit trail preserved. Original terms still visible in history.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Subscription updated, not replaced</b><span>Same subscription continues with new quantity or price. Customer history stays intact.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Billing schedule re-anchored from effective date</b><span>Future invoices reflect new pricing. Past invoices stay untouched.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>HubSpot Deal closes Won</b><span>Amendment Deal closes, incremental ARR booked, pipeline updates.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="amend-5" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">Invoice Adjustments</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Delta</div><div class="md-summary">Prorated charge or credit memo for the delta. Past invoices aren't reissued. Just the difference gets billed or credited.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What gets generated</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Upsell: prorated charge invoice</b><span>Only the incremental amount, prorated from effective date. Goes out immediately or on next billing date.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Downsell: prorated credit memo</b><span>Credit for unused portion of removed scope. References original invoice for reconciliation.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Swap: credit + charge as separate line items</b><span>Old product credited, new product charged. Auditable as two transactions.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Pushed to QB with parent reference</b><span>Adjustment or credit lands in QB with full audit trail back to the amendment event.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="amend-6" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">QuickBooks: Clean Reconciliation</div><div class="md-sys-pill qb"><span class="sys-dot"></span>QuickBooks · AR &amp; GL</div><div class="md-summary">Adjustment invoice or credit memo posts to QB with reference IDs. Finance can trace every adjustment back to the amendment event. No manual journal entries.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Adjustment posts to AR</b><span>Increase or decrease in receivables, depending on direction. Reference IDs link to original invoice.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Credit memos applicable to original invoices</b><span>QB can apply the credit against the original invoice for clean reconciliation.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Original invoices stay untouched</b><span>No re-billing, no reversal of past invoices. Audit trail intact.</span></div></div>
+        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Future invoices reflect new contract</b><span>Next regular invoice uses new pricing. Amendment fully integrated into ongoing billing.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: RENEWAL -->
+<div class="slide off" id="s9">
+  <div class="chrome o">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">Motion 03 &nbsp;·&nbsp; Renewal</div>
+    <div class="pg">09 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye" style="color:var(--p-renew)">Motion 03 · Renewal</div>
+        <h2>Clean Term Reset.<br>No Gaps.</h2>
+        <p class="sub">Anchor: the renewal window. Time-based trigger, not rep-initiated. MN detects expiry, creates the pipeline in HubSpot, applies uplift, and resets the term cleanly.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat" style="color:var(--p-renew)">06</div>
+        <div class="ph-stat-l">Steps</div>
+      </div>
+    </div>
+    <div class="motion-strip" data-motion="renew">
+      <div class="mc active" data-step="renew-1"><div class="mc-top"><div class="mc-num">01</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Window Opens</div><div class="mc-label">Trigger</div><div class="mc-value">Time-Based</div></div>
+      <div class="mc" data-step="renew-2"><div class="mc-top"><div class="mc-num">02</div><div class="mc-sys hs">HubSpot</div></div><div class="mc-title">Renewal Deal</div><div class="mc-label">Purpose</div><div class="mc-value">Forecast Visibility</div></div>
+      <div class="mc" data-step="renew-3"><div class="mc-top"><div class="mc-num">03</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Renewal Quote</div><div class="mc-label">Output</div><div class="mc-value">Carry + Uplift</div></div>
+      <div class="mc" data-step="renew-4"><div class="mc-top"><div class="mc-num">04</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Renewed Contract</div><div class="mc-label">Result</div><div class="mc-value">Clean Reset</div></div>
+      <div class="mc" data-step="renew-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">New Term Invoice</div><div class="mc-label">Action</div><div class="mc-value">Push to QB</div></div>
+      <div class="mc" data-step="renew-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">QuickBooks</div></div><div class="mc-title">Continuous AR</div><div class="mc-label">Ownership</div><div class="mc-value">No Gap</div></div>
+    </div>
+    <div class="motion-detail" data-detail="renew-1" style="display:flex">
+      <div class="md-left"><div class="md-eye">Step 01 of 06</div><div class="md-title">Renewal Window Detected</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Time Trigger</div><div class="md-summary">MN watches every active contract. When the end date falls inside the renewal window (default 90 days out), the renewal motion fires automatically.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">How the trigger works</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Window is configurable</b><span>Default 90 days before contract end. ENTR can adjust per segment if needed.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Time-based, not rep-initiated</b><span>Reps don't have to remember to start renewals. System creates the pipeline automatically.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Notifications to AE + CSM</b><span>Slack or email when renewal window opens, with link to the auto-generated Deal.</span></div></div>
+        <div class="md-bullet"><div class="b-icon next">→</div><div><b>Step 2: Renewal Deal in HubSpot</b><span>Pipeline forecasting picks up the renewal automatically.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="renew-2" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 02 of 06</div><div class="md-title">Renewal Deal in HubSpot</div><div class="md-sys-pill hs"><span class="sys-dot"></span>HubSpot · Renewal Pipeline</div><div class="md-summary">MN auto-creates a Renewal Deal in HubSpot via webhook. AEs and CSMs get pipeline visibility without entering data manually.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What gets created</div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Renewal Deal record</b><span>New Deal on the existing Company. Type: Existing Business — Renewal.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Pre-populated with carry-forward values</b><span>Current contract value as starting point. Deal Amount reflects projected renewal ARR.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Pipeline stage: Renewal Forecasting</b><span>Separate from new business pipeline so forecast doesn't double-count.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Linked to MN parent contract</b><span>Renewal Deal references the parent contract ID for traceability.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="renew-3" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 03 of 06</div><div class="md-title">Renewal Quote with Uplift</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Pricing Logic</div><div class="md-summary">MN builds the renewal quote using carry-forward rules + uplift logic. Rep reviews, adjusts if needed, sends for signature.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What's on the renewal quote</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>All active products carried forward</b><span>Same products, quantities, offering tier as the expiring contract.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Uplift applied automatically</b><span>Per renewal rule. Default 5%. Rep can adjust or waive at the quote level if needed.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>New term start = old term end + 1 day</b><span>No gap, no overlap. Clean handoff between terms.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Sent for signature via existing eSign</b><span>Same flow as new business. Quote PDF + T&Cs assembled and routed.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="renew-4" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 04 of 06</div><div class="md-title">Renewed Contract — Clean Reset</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Term Anchor</div><div class="md-summary">Signature triggers a new contract version with a new term. Billing schedule for the new term generated immediately. Old term closes cleanly on its end date.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">How the reset works</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Old contract closes on end date</b><span>Final invoice of old term issues on schedule. No early closure, no gap.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>New contract starts day after old end date</b><span>Continuity preserved. Customer doesn't see service interruption.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Billing anchor moves forward</b><span>Future invoices align to new term start. Old anchor retired.</span></div></div>
+        <div class="md-bullet"><div class="b-icon hs">H</div><div><b>Renewal Deal closes Won</b><span>Renewal ARR booked. Pipeline forecast updates. CSM owns the relationship from here.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="renew-5" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">New Term Invoices</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Engine</div><div class="md-summary">First invoice of the new term issues per the new billing schedule. Uplift pricing applied. Pushed to QB on schedule.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What happens</div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>New billing schedule active</b><span>Generated from renewal quote. Reflects new term dates and uplifted pricing.</span></div></div>
+        <div class="md-bullet"><div class="b-icon mn">M</div><div><b>First new-term invoice on start date</b><span>No proration needed — start date is the billing anchor.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Pushed to QB with new contract reference</b><span>QB sees a new invoice tied to the same customer, with the new contract ID.</span></div></div>
+        <div class="md-bullet"><div class="b-icon warn">!</div><div><b>No double-billing across term boundary</b><span>Old and new term invoices never overlap. MN enforces this automatically.</span></div></div>
+      </div>
+    </div>
+    <div class="motion-detail" data-detail="renew-6" style="display:none">
+      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">QuickBooks: Continuous Billing</div><div class="md-sys-pill qb"><span class="sys-dot"></span>QuickBooks · AR &amp; GL</div><div class="md-summary">From QB's perspective, renewal is just continuation of the customer's billing. Old invoices stay. New invoices flow. AR continuity preserved.</div></div>
+      <div class="md-right">
+        <div class="md-section-label">What QB sees</div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Same customer, new invoices</b><span>Customer record unchanged. New term invoices post against the same customer.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Old-term invoices untouched</b><span>No reversal, no re-billing. Clean audit continuity across renewal boundary.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Reference IDs trace to renewal Deal</b><span>Finance can audit any new-term invoice back to the renewal event in HS + MN.</span></div></div>
+        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Motion complete</b><span>Customer renewed cleanly. ARR continuity preserved. No gaps, overlaps, or manual reconciliation.</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 10: GUARDRAILS -->
+<div class="slide light" id="s10">
+  <div class="chrome l">
+    <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">Guardrails &nbsp;·&nbsp; First 60 Days</div>
+    <div class="pg">10 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye" style="color:var(--red-d)">Guardrails</div>
+        <h2>The Five Things<br>That Tend to Go Sideways</h2>
+        <p class="sub">Click any guardrail to see the symptom, root cause, and fix. Most issues come from these five places. Reps learn them in enablement, reinforce on go-live day.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat" style="color:var(--red-d)">5</div>
+        <div class="ph-stat-l">Common Pitfalls</div>
+      </div>
+    </div>
+    <div class="gr-grid">
+      <div class="gr" onclick="toggleG(this)">
+        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">Wrong motion picked</div><div class="gr-sym">Upsell booked as new business. Customer billed twice.</div></div><div class="gr-toggle">+</div></div>
+        <div class="gr-detail"><div class="gr-detail-inner">
+          <div class="gr-row"><b>Cause</b><span>Rep created a new HubSpot Deal instead of amending the existing MN contract. Common when a rep is excited about a quick upsell and skips the contract.</span></div>
+          <div class="gr-row"><b>Fix</b><span>Always start amendments from the contract in MN, not from a new Deal. The "Amend" button on the contract creates the Deal automatically with correct linkage.</span></div>
+        </div></div>
+      </div>
+      <div class="gr" onclick="toggleG(this)">
+        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">Wrong effective date</div><div class="gr-sym">Proration math off. Customer pushes back on invoice.</div></div><div class="gr-toggle">+</div></div>
+        <div class="gr-detail"><div class="gr-detail-inner">
+          <div class="gr-row"><b>Cause</b><span>Effective date on the amendment quote left at default (today's date) instead of the actual change date negotiated with the customer.</span></div>
+          <div class="gr-row"><b>Fix</b><span>Confirm effective date on every amendment before sending for signature. MN flags it during quote build. Rep validates against the customer agreement.</span></div>
+        </div></div>
+      </div>
+      <div class="gr" onclick="toggleG(this)">
+        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">Stale primary quote</div><div class="gr-sym">HubSpot Deal amount doesn't match what was billed.</div></div><div class="gr-toggle">+</div></div>
+        <div class="gr-detail"><div class="gr-detail-inner">
+          <div class="gr-row"><b>Cause</b><span>Rep created multiple quote versions during negotiation. Closed-won on a non-primary version. Deal Amount and invoice don't reconcile.</span></div>
+          <div class="gr-row"><b>Fix</b><span>MN flags the winning quote as primary on signature. Reps verify before close-won. UI shows "primary" badge on the signed quote.</span></div>
+        </div></div>
+      </div>
+      <div class="gr" onclick="toggleG(this)">
+        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">Renewal not actioned</div><div class="gr-sym">Customer reaches contract end without a renewal sent.</div></div><div class="gr-toggle">+</div></div>
+        <div class="gr-detail"><div class="gr-detail-inner">
+          <div class="gr-row"><b>Cause</b><span>Renewal Deal sat in HubSpot. Rep didn't see the Slack notification or didn't act. Contract lapses, customer churns or gets a gap.</span></div>
+          <div class="gr-row"><b>Fix</b><span>Slack notification when window opens + 30-day reminder + 7-day escalation. Dashboard visibility in HubSpot showing renewals by stage with countdown.</span></div>
+        </div></div>
+      </div>
+      <div class="gr" onclick="toggleG(this)">
+        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">QB customer mismatch</div><div class="gr-sym">Invoice in MN doesn't land in QB cleanly.</div></div><div class="gr-toggle">+</div></div>
+        <div class="gr-detail"><div class="gr-detail-inner">
+          <div class="gr-row"><b>Cause</b><span>Customer email or external ID doesn't match between MN and QB. Either a new QB customer record gets created (duplicate) or invoice fails to post.</span></div>
+          <div class="gr-row"><b>Fix</b><span>Customer ID mapping verified during QB connection setup. MN flags mismatches before pushing invoice. Reconciliation report runs weekly.</span></div>
+        </div></div>
+      </div>
+      <div class="gr" style="background:linear-gradient(135deg,#EEF2FF 0%, #F8FAFE 100%);border-color:#C7D2FE;cursor:default" onclick="event.stopPropagation()">
+        <div class="gr-h"><div class="gr-ico" style="background:linear-gradient(135deg,var(--mn) 0%, var(--mn-l) 100%);box-shadow:0 4px 10px rgba(5,33,171,0.2)">★</div><div class="gr-text"><div class="gr-title" style="color:var(--mn-d)">The rule of thumb</div><div class="gr-sym" style="color:var(--ink-3);font-weight:400">If it's a pricing or contract issue, fix it in MN. If it's pipeline, fix it in HubSpot. If it's ledger, fix it in QB. Each system owns its own truth — don't try to fix one in another.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: GO-LIVE -->
+<div class="slide dark" id="s11">
+  <div class="grain"></div>
+  <div class="chrome d">
+    <div class="logo-row"><div class="mark entr">E</div><span class="brand">ENTR</span><span class="x">×</span><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
+    <div class="tag-r">Path to Go-Live</div>
+    <div class="pg">11 / 11</div>
+  </div>
+  <div class="body">
+    <div class="ph">
+      <div class="ph-left">
+        <div class="ph-eye">Go-Live Path</div>
+        <h2 style="color:white">What's Left.<br><span style="color:var(--lb);font-style:italic">Sequenced.</span></h2>
+        <p class="sub">Today confirms catalog. From there, HubSpot + QuickBooks in parallel, configuration alongside, enablement walk-throughs before reps touch production. Single coordinated cutover.</p>
+      </div>
+      <div class="ph-right">
+        <div class="ph-stat" style="color:white">~2</div>
+        <div class="ph-stat-l">Weeks to Live</div>
+      </div>
+    </div>
+    <div class="gl-grid">
+      <div class="gl" onclick="toggleGL(this)">
+        <div class="gl-h"><div class="gl-ico send">→</div><div class="gl-text"><div class="gl-eye">MonetizeNow ships</div><div class="gl-title">From our side</div><div class="gl-summary">Connections, config, template work — most of the work sits here.</div></div><div class="gl-toggle">+</div></div>
+        <div class="gl-detail"><div class="gl-detail-inner">
+          <div class="gl-d-item">HubSpot OAuth + object mapping configured in sandbox</div>
+          <div class="gl-d-item">QB connection scoped and configured (customers + forward invoices)</div>
+          <div class="gl-d-item">Slack approval routing wired to your approver list</div>
+          <div class="gl-d-item">Conditional T&C template stitched into quote output</div>
+          <div class="gl-d-item">ENTR branding applied to quote template</div>
+          <div class="gl-d-item">Test → production push, single coordinated step</div>
+        </div></div>
+      </div>
+      <div class="gl" onclick="toggleGL(this)">
+        <div class="gl-h"><div class="gl-ico confirm">✓</div><div class="gl-text"><div class="gl-eye">ENTR confirms</div><div class="gl-title">From your side</div><div class="gl-summary">Decisions, content for templates, approver list. Most can be sent over async.</div></div><div class="gl-toggle">+</div></div>
+        <div class="gl-detail"><div class="gl-detail-inner">
+          <div class="gl-d-item">Catalog accuracy sign-off after today's review</div>
+          <div class="gl-d-item">Decision on HubSpot scope (all customers vs subset)</div>
+          <div class="gl-d-item">Decision on historical Deal mapping (recommend clean cutover)</div>
+          <div class="gl-d-item">T&C language files for conditional template</div>
+          <div class="gl-d-item">ENTR logo file + brand color codes for quote template</div>
+          <div class="gl-d-item">Approver list and discount thresholds for Slack routing</div>
+        </div></div>
+      </div>
+      <div class="gl" onclick="toggleGL(this)">
+        <div class="gl-h"><div class="gl-ico enable">▶</div><div class="gl-text"><div class="gl-eye">Before go-live</div><div class="gl-title">Enablement walk-throughs</div><div class="gl-summary">One session per motion. Reps see it on a real sandbox Deal.</div></div><div class="gl-toggle">+</div></div>
+        <div class="gl-detail"><div class="gl-detail-inner">
+          <div class="gl-d-item">New Business: live demo on a real sandbox Deal</div>
+          <div class="gl-d-item">Amendment: walk an upsell scenario end to end</div>
+          <div class="gl-d-item">Renewal: review auto-generated renewal pipeline</div>
+          <div class="gl-d-item">Guardrails review: the 5 things to watch in first 60 days</div>
+        </div></div>
+      </div>
+      <div class="gl" onclick="toggleGL(this)">
+        <div class="gl-h"><div class="gl-ico live">●</div><div class="gl-text"><div class="gl-eye">Go-live day</div><div class="gl-title">Together on the call</div><div class="gl-summary">First real quote in production. Both teams watching it flow end to end.</div></div><div class="gl-toggle">+</div></div>
+        <div class="gl-detail"><div class="gl-detail-inner">
+          <div class="gl-d-item">First real new business quote sent through MN</div>
+          <div class="gl-d-item">Verify HubSpot Deal updates correctly</div>
+          <div class="gl-d-item">Verify quote PDF + T&Cs render correctly</div>
+          <div class="gl-d-item">Confirm Slack approval routes if discount triggers</div>
+          <div class="gl-d-item">Cutover sign-off, switch to async support cadence</div>
+        </div></div>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:12px;color:rgba(255,255,255,0.5)">Between sessions: ping CX in Slack or email. No need to wait for the next scheduled call.</div>
+      <div style="font-size:10.5px;color:rgba(255,255,255,0.28);letter-spacing:0.06em;font-family:'JetBrains Mono',monospace">ENTR × MonetizeNow &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; May 2026</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div id="nav">
+  <button class="nav-btn" id="btn-prev" onclick="go(-1)" disabled>←</button>
+  <div class="nav-dots" id="dots"></div>
+  <span id="slide-counter">01 / 11</span>
+  <button class="nav-btn" id="btn-next" onclick="go(1)">→</button>
+</div>
+<div id="hint">← →  ·  click any card to expand</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+const counter=document.getElementById('slide-counter');
+const btnPrev=document.getElementById('btn-prev');
+const btnNext=document.getElementById('btn-next');
+let current=0,transitioning=false;
+
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='nav-dot'+(i===0?' active':'');
+  d.onclick=()=>goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function updateNav(){
+  document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
+  counter.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+  btnPrev.disabled=current===0;
+  btnNext.disabled=current===slides.length-1;
+}
+
+function goTo(idx){
+  if(transitioning||idx===current||idx<0||idx>=slides.length)return;
+  transitioning=true;
+  const prev=slides[current],next=slides[idx];
+  const fwd=idx>current;
+  next.style.transition='none';
+  next.style.transform=fwd?'translateX(40px) scale(0.99)':'translateX(-40px) scale(0.99)';
+  next.style.opacity='0';
+  next.style.pointerEvents='none';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    next.style.transition='';
+    next.style.transform='translateX(0) scale(1)';
+    next.style.opacity='1';
+    next.style.pointerEvents='all';
+    next.classList.add('active');
+    prev.style.transition='opacity 0.45s cubic-bezier(.16,1,.3,1), transform 0.45s cubic-bezier(.16,1,.3,1)';
+    prev.style.transform=fwd?'translateX(-40px) scale(0.99)':'translateX(40px) scale(0.99)';
+    prev.style.opacity='0';
+    prev.style.pointerEvents='none';
+    current=idx;
+    updateNav();
+    setTimeout(()=>{
+      prev.classList.remove('active');
+      prev.style.transform=fwd?'translateX(40px) scale(0.99)':'translateX(-40px) scale(0.99)';
+      transitioning=false;
+    },470);
+  }));
+}
+
+function go(dir){goTo(current+dir);}
+
+function toggleJ(el){
+  const wasOpen=el.classList.contains('open');
+  el.parentElement.querySelectorAll('.j-step.open').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+function toggleM(el){
+  const parent=el.parentElement;
+  const wasOpen=el.classList.contains('open');
+  parent.querySelectorAll('.cc-mini.open').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+function toggleD(el){
+  const wasOpen=el.classList.contains('open');
+  el.parentElement.querySelectorAll('.dec.open').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+function toggleCC(el){
+  const parent=el.parentElement;
+  const wasOpen=el.classList.contains('open');
+  parent.querySelectorAll('.cc.open').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+function toggleG(el){
+  const wasOpen=el.classList.contains('open');
+  el.parentElement.querySelectorAll('.gr.open').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+function toggleGL(el){
+  const wasOpen=el.classList.contains('open');
+  el.parentElement.querySelectorAll('.gl.open').forEach(s=>s.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+
+document.querySelectorAll('.motion-strip').forEach(strip=>{
+  const cards=strip.querySelectorAll('.mc');
+  const motion=strip.dataset.motion;
+  const slide=strip.closest('.slide');
+  const details=slide.querySelectorAll('.motion-detail[data-detail^="'+motion+'-"]');
+  cards.forEach(card=>{
+    card.addEventListener('click',()=>{
+      const stepId=card.dataset.step;
+      cards.forEach(c=>c.classList.remove('active'));
+      card.classList.add('active');
+      details.forEach(d=>{
+        d.style.display=(d.dataset.detail===stepId)?'flex':'none';
+      });
+    });
+  });
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();go(1);}
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();go(-1);}
+});
+
+let touchX=null;
+document.addEventListener('touchstart',e=>{touchX=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(touchX===null)return;
+  const dx=e.changedTouches[0].clientX-touchX;
+  if(Math.abs(dx)>60&&!e.target.closest('.mc, .cc, .gr, .dec, .gl, .j-step, .cc-mini, .mo'))go(dx<0?1:-1);
+  touchX=null;
+},{passive:true});
+
+updateNav();
+</script>
+</body>
+</html>
