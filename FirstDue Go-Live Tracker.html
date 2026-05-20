@@ -7,21 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --mn-blue:#0521AB;--mn-lb:#D3EEF4;--bk:#0a0a0a;--wh:#fff;
-  --bg:#f3f6fa;--card:#fff;--bdr:#e4e9f0;
-  --red:#dc2626;--amber:#d97706;--green:#059669;--purple:#7c3aed;
-  --r:12px;
-}
+:root{--mn-blue:#0521AB;--mn-lb:#D3EEF4;--bk:#0a0a0a;--wh:#fff;--bg:#f3f6fa;--card:#fff;--bdr:#e4e9f0;--red:#dc2626;--amber:#d97706;--green:#059669;--purple:#7c3aed;--r:12px}
 html{scroll-behavior:smooth}
 body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--bk);-webkit-font-smoothing:antialiased}
-
-.top{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.88);backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--bdr);
-  padding:10px 28px;display:flex;align-items:center;justify-content:space-between;
-}
+.top{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--bdr);padding:10px 28px;display:flex;align-items:center;justify-content:space-between}
 .top-l{display:flex;align-items:center;gap:10px}
 .mn-m{width:26px;height:26px;background:var(--mn-blue);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px}
 .top-t{font-size:12px;font-weight:500;color:#64748b;letter-spacing:.03em}
@@ -31,7 +20,6 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 .pl-r{background:#fef2f2;color:var(--red)}.pl-r i{background:var(--red)}
 .pl-a{background:#fffbeb;color:var(--amber)}.pl-a i{background:var(--amber)}
 .pl-g{background:#ecfdf5;color:var(--green)}.pl-g i{background:var(--green)}
-
 .hero{background:var(--mn-blue);padding:36px 32px 32px;position:relative;overflow:hidden}
 .hero::after{content:'';position:absolute;top:-60%;right:-8%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(211,238,244,.1),transparent 70%)}
 .hero-in{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
@@ -43,28 +31,22 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 .hero h1 em{font-style:normal;color:var(--mn-lb)}
 .hero-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;font-weight:400}
 .hero-nums{display:flex;gap:24px;flex-wrap:wrap}
-.hn{text-align:center}
-.hn-v{font-size:24px;font-weight:900;color:#fff}
-.hn-l{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
-
+.hn{text-align:center}.hn-v{font-size:24px;font-weight:900;color:#fff}.hn-l{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
 .lanes{max-width:1320px;margin:28px auto 0;padding:0 28px 48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
 @media(max-width:1000px){.lanes{grid-template-columns:1fr 1fr}}
 @media(max-width:660px){.lanes{grid-template-columns:1fr}}
-
 .lane-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:0 2px}
-.lane-dot{width:8px;height:8px;border-radius:50%}
-.lane-dot.now{background:var(--red)}
-.lane-dot.par{background:var(--mn-blue)}
-.lane-dot.lat{background:#94a3b8}
+.lane-dot{width:8px;height:8px;border-radius:50%}.lane-dot.now{background:var(--red)}.lane-dot.par{background:var(--mn-blue)}.lane-dot.lat{background:#94a3b8}
 .lane-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--bk)}
 .lane-ct{font-size:10px;font-weight:600;color:#94a3b8;margin-left:auto;background:#f1f5f9;border-radius:10px;padding:2px 8px}
-
-.c{
-  background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);
-  margin-bottom:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;
-  cursor:pointer;user-select:none;
-}
+.c{border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;cursor:pointer;user-select:none}
 .c:hover{box-shadow:0 2px 12px rgba(5,33,171,.07);border-color:#cbd5e1}
+.c-blue{background:#f8fbff;border-left:3px solid #60a5fa}
+.c-amber{background:#fffdf5;border-left:3px solid #fbbf24}
+.c-green{background:#f6fef9;border-left:3px solid #34d399}
+.c-purple{background:#faf5ff;border-left:3px solid #a78bfa}
+.c-red{background:#fef7f7;border-left:3px solid var(--red)}
+.c-gray{background:#f8fafc;border-left:3px solid #cbd5e1}
 .c-top{padding:14px 16px 12px;display:flex;flex-direction:column;gap:8px}
 .c-row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .c-name{font-size:13px;font-weight:700;color:var(--bk);line-height:1.35;flex:1}
@@ -72,45 +54,27 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 .c.open .c-chev{transform:rotate(90deg)}
 .c-row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .c-tag{font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
-.t-cfg{background:#eff6ff;color:var(--mn-blue)}
-.t-prd{background:#faf5ff;color:var(--purple)}
-.t-dat{background:#fefce8;color:var(--amber)}
-.t-int{background:#f0fdf4;color:var(--green)}
-.t-sup{background:#f1f5f9;color:#475569}
-.t-prc{background:#fef2f2;color:var(--red)}
+.t-cfg{background:#eff6ff;color:var(--mn-blue)}.t-prd{background:#faf5ff;color:var(--purple)}.t-dat{background:#fefce8;color:var(--amber)}.t-int{background:#f0fdf4;color:var(--green)}.t-sup{background:#f1f5f9;color:#475569}.t-prc{background:#fef2f2;color:var(--red)}.t-hi{background:#fef2f2;color:var(--red);font-weight:800}
 .c-st{font-size:9px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:10px;margin-left:auto;white-space:nowrap}
-.s-input{background:#eff6ff;color:var(--mn-blue)}
-.s-wt{background:#fffbeb;color:var(--amber)}
-.s-ip{background:#eff6ff;color:var(--mn-blue)}
-.s-ok{background:#ecfdf5;color:var(--green)}
-.s-nw{background:#f1f5f9;color:#64748b}
-.s-rdy{background:#f0fdf4;color:var(--green)}
-
+.s-input{background:#dbeafe;color:#1e40af}.s-wt{background:#fef3c7;color:#92400e}.s-ip{background:#ede9fe;color:#6d28d9}.s-ok{background:#d1fae5;color:#065f46}.s-nw{background:#f1f5f9;color:#64748b}.s-rdy{background:#d1fae5;color:#065f46}.s-urg{background:#fee2e2;color:#991b1b}
 .c-own{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
-.own{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:600;color:#64748b;background:#f8fafc;border:1px solid #eef1f5;border-radius:4px;padding:1px 6px}
-.own b{width:14px;height:14px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:7px;color:#fff;font-weight:800}
-.own b.fd{background:#1e293b}.own b.mn{background:var(--mn-blue)}.own b.en{background:var(--purple)}
-
+.own{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:500;color:#94a3b8;background:transparent;border:none;padding:0 2px}
+.own b{width:12px;height:12px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:6px;color:#fff;font-weight:800;opacity:.65}
+.own b.fd{background:#475569}.own b.mn{background:var(--mn-blue)}.own b.en{background:var(--purple)}
 .c-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
 .c.open .c-body{max-height:1200px}
 .c-body-in{padding:0 16px 16px;border-top:1px solid var(--bdr);padding-top:14px}
-.cb-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:5px;margin-top:12px}
-.cb-l:first-child{margin-top:0}
-.cb-t{font-size:12px;color:#334155;line-height:1.65}
-.cb-t strong{color:var(--bk)}
-.cb-t code{background:#f1f5f9;padding:0 4px;border-radius:3px;font-size:10px;font-family:'SF Mono',Menlo,monospace;color:var(--mn-blue)}
+.cb-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:5px;margin-top:12px}.cb-l:first-child{margin-top:0}
+.cb-t{font-size:12px;color:#334155;line-height:1.65}.cb-t strong{color:var(--bk)}.cb-t code{background:#f1f5f9;padding:0 4px;border-radius:3px;font-size:10px;font-family:'SF Mono',Menlo,monospace;color:var(--mn-blue)}
 .cb-steps{list-style:none;counter-reset:s;margin-top:4px}
 .cb-steps li{counter-increment:s;padding-left:22px;position:relative;font-size:12px;color:#334155;line-height:1.6;margin-bottom:6px}
 .cb-steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--mn-blue);color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .cb-ref{color:var(--mn-blue);font-weight:600;text-decoration:none;font-size:11px;border-bottom:1px dashed rgba(5,33,171,.3)}
-
 .foot{max-width:1320px;margin:0 auto;padding:0 28px 40px}
 .foot-card{background:var(--bk);border-radius:var(--r);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 @media(max-width:800px){.foot-card{grid-template-columns:1fr}}
 .fc-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:6px}
-.fc-v{font-size:12px;line-height:1.6;color:rgba(255,255,255,.8)}
-.fc-v strong{color:#fff}
-
+.fc-v{font-size:12px;line-height:1.6;color:rgba(255,255,255,.8)}.fc-v strong{color:#fff}
 .attr{text-align:center;padding:16px;font-size:10px;color:#94a3b8;letter-spacing:.04em}
 </style>
 </head>
@@ -119,7 +83,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <nav class="top">
   <div class="top-l"><div class="mn-m">M</div><span class="top-t">FirstDue × MonetizeNow · Post Go-Live Tracker</span></div>
   <div class="pills">
-    <span class="pl pl-r"><i></i>4 In Progress</span>
+    <span class="pl pl-r"><i></i>5 In Progress</span>
     <span class="pl pl-a"><i></i>4 Awaiting Info</span>
     <span class="pl pl-g"><i></i>2 Resolved</span>
   </div>
@@ -134,7 +98,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     </div>
     <div class="hero-nums">
       <div class="hn"><div class="hn-v">~1.9K</div><div class="hn-l">Migration Cleanup</div></div>
-      <div class="hn"><div class="hn-v">4</div><div class="hn-l">Product Enhancements</div></div>
+      <div class="hn"><div class="hn-v">6</div><div class="hn-l">Product Enhancements</div></div>
       <div class="hn"><div class="hn-v">3</div><div class="hn-l">SFDC Sync Items</div></div>
       <div class="hn"><div class="hn-v">Jul 1</div><div class="hn-l">Ben → Mary Handoff</div></div>
     </div>
@@ -143,21 +107,15 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 
 <div class="lanes">
 
-<!-- ── LANE 1: ACTIVE ── -->
+<!-- ═══ LANE 1: ACTIVE ═══ -->
 <div class="lane">
 <div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">Active · This Week</span><span class="lane-ct">5</span></div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">~1,900 Migrated Quotes · Sync Cleanup</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-dat">Data</span><span class="c-tag t-int">SFDC</span>
-      <span class="c-st s-input">Needs FD Input</span>
-    </div>
-    <div class="c-own">
-      <span class="own"><b class="fd">B</b>Ben · quote list + ARR values</span>
-      <span class="own"><b class="mn">K</b>Krishna · backend fix</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-int">SFDC</span><span class="c-st s-input">Needs FD Input</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · quote list</span><span class="own"><b class="mn">K</b>Krishna · backend fix</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
@@ -165,121 +123,112 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Source</div>
     <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=2570" target="_blank">May 11 call ↗</a></div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps">
-      <li><strong>FirstDue provides</strong> list of affected quotes with target ARR values</li>
-      <li><strong>MN runs backend script</strong> to toggle boolean and stamp ARR</li>
-      <li><strong>Both teams validate</strong> no double-count risk if historic contracts import later</li>
-    </ol>
+    <ol class="cb-steps"><li><strong>FirstDue provides</strong> list of affected quotes with target ARR values</li><li><strong>MN runs backend script</strong> to toggle boolean and stamp ARR</li><li><strong>Both teams validate</strong> no double-count risk if historic contracts import later</li></ol>
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-green" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">SFDC Quote Sync · Missing OTF / PS Lines</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-int">SFDC</span>
-      <span style="font-size:9px;color:#94a3b8;font-weight:600">#4704</span>
-      <span class="c-st s-ok">Fix Applied</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4704" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4704</a><span class="c-st s-ok">Fix Applied</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · verify redrive</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What Happened</div>
     <div class="cb-t">12 line items in MN, only 10 synced to SFDC. An offering hadn't synced to Product2 catalog. MN resynced catalog and redrove all failed items.</div>
     <div class="cb-l">Follow-Up</div>
-    <ol class="cb-steps">
-      <li><strong>Verify redrive caught all gaps</strong> (Ben comparing MN Metabase vs SFDC)</li>
-      <li><strong>Confirm new offerings auto-sync</strong> so this doesn't recur</li>
-    </ol>
+    <ol class="cb-steps"><li><strong>Verify redrive caught all gaps</strong> (Ben comparing MN Metabase vs SFDC)</li><li><strong>Confirm new offerings auto-sync</strong> so this doesn't recur</li></ol>
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">CAD Currency · Rep Seeing USD Catalog</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-cfg">Config</span>
-      <span style="font-size:9px;color:#94a3b8;font-weight:600">#4621</span>
-      <span class="c-st s-wt">Diagnosing</span>
-    </div>
-    <div class="c-own">
-      <span class="own"><b class="mn">K</b>Krishna · diagnose</span>
-      <span class="own"><b class="fd">B</b>Ben · account details</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-cfg">Config</span><a href="https://app.usepylon.com/issues?issueNumber=4621" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4621</a><span class="c-st s-wt">Diagnosing</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · diagnose</span><span class="own"><b class="fd">B</b>Ben · account details</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
     <div class="cb-t">Rep wants to quote in CAD but catalog shows USD. Likely config: multi-currency enabled? CAD rate card exists? Account currency field set correctly?</div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps">
-      <li><strong>FirstDue shares</strong> specific account + quote</li>
-      <li><strong>MN checks</strong> tenant multi-currency settings + catalog</li>
-      <li><strong>Resolve</strong> config or flag if new rate card needed</li>
-    </ol>
+    <ol class="cb-steps"><li><strong>FirstDue shares</strong> specific account + quote</li><li><strong>MN checks</strong> tenant multi-currency settings + catalog</li><li><strong>Resolve</strong> config or flag if new rate card needed</li></ol>
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Amendment Opps · Missing Contract Link in SFDC</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-int">SFDC</span>
-      <span style="font-size:9px;color:#94a3b8;font-weight:600">#4666</span>
-      <span class="c-st s-ip">Investigating</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4666</a><span class="c-st s-wt">Investigating</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · investigate</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
     <div class="cb-t">Amendment opps sync to SFDC but don't link back to parent contract. Breaks reporting and traceability. Likely a field mapping gap in connector config.</div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps">
-      <li><strong>MN pulls examples</strong> from Pylon #4666</li>
-      <li><strong>Check field mapping</strong> for contract reference on amendment opps</li>
-      <li><strong>Fix mapping</strong> or escalate to eng if connector issue</li>
-    </ol>
+    <ol class="cb-steps"><li><strong>MN pulls examples</strong> from <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank">Pylon #4666</a></li><li><strong>Check field mapping</strong> for contract reference on amendment opps</li><li><strong>Fix mapping</strong> or escalate to eng if connector issue</li></ol>
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Amendment Process · End Date Shifting</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-sup">Support</span>
-      <span style="font-size:9px;color:#94a3b8;font-weight:600">#4692</span>
-      <span class="c-st s-input">Needs FD Input</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-sup">Support</span><a href="https://app.usepylon.com/issues?issueNumber=4692" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4692</a><span class="c-st s-input">Needs FD Input</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · awaiting details</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
     <div class="cb-t">An amendment appears to shift contract end date. Amendments should be coterminous. Most common cause: incorrect end date set on amendment quote itself.</div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps">
-      <li><strong>FirstDue shares</strong> specific contract + amendment quote</li>
-      <li><strong>MN checks</strong> quote end date and coterminous settings</li>
-    </ol>
+    <ol class="cb-steps"><li><strong>FirstDue shares</strong> specific contract + amendment quote</li><li><strong>MN checks</strong> quote end date and coterminous settings</li></ol>
+  </div></div>
+</div>
+</div>
+
+<!-- ═══ LANE 2: PRODUCT ═══ -->
+<div class="lane">
+<div class="lane-hdr"><span class="lane-dot par"></span><span class="lane-title">Product Enhancements</span><span class="lane-ct">6</span></div>
+
+<div class="c c-red" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Quote Template Editor · Output Controls</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-hi">High Priority</span><span class="c-st s-urg">Timeline Needed</span></div>
+    <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · escalated</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Problem</div>
+    <div class="cb-t">Single tenant-wide template is too restrictive. Reps need per-quote control over what shows on output (line-item pricing, quantity, discount details). Today, a custom template overrides all quote-level toggles, removing flexibility entirely. Ben had to download PDFs and use Claude to manually add line items for an RFP. If unresolved, team will fall back to SFDC quote template editor.</div>
+    <div class="cb-l">Source</div>
+    <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=4842" target="_blank">May 11 call ↗</a> + May 20 escalation from Josh</div>
+    <div class="cb-l">What's Needed</div>
+    <ol class="cb-steps"><li><strong>Tenant-level admin controls</strong> that lock certain settings (e.g., never show line-item pricing) while exposing others to reps</li><li><strong>Per-quote output settings</strong> so reps can toggle show/hide for pricing, quantity, discount details</li><li><strong>Multiple template support</strong> per tenant for different use cases</li></ol>
+    <div class="cb-l">Urgency</div>
+    <div class="cb-t"><strong>Josh requested timeline before Monday.</strong> Daily operational pain for reps. Without it, FirstDue evaluates SFDC native templates as workaround.</div>
   </div></div>
 </div>
 
+<div class="c c-red" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Formula-Based Pricing Engine</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-hi">High Priority</span><span class="c-st s-urg">Timeline Needed</span></div>
+    <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · escalated</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Problem</div>
+    <div class="cb-t">FirstDue's entire catalog is formula-driven: 4 input variables (call volume, personnel, safes, asset sum) determine all pricing. Tier-based pricing approximates formula logic but doesn't fully replicate it. This was a key reason DealHub was attractive before switching to MN, and remains a gap.</div>
+    <div class="cb-l">Source</div>
+    <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=1297" target="_blank">May 11 call ↗</a> + <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=1859" target="_blank">Pylon #1859</a> (Sep 2025) + May 20 escalation from Josh</div>
+    <div class="cb-l">What's Needed</div>
+    <ol class="cb-steps"><li><strong>Native formula support</strong> where product price = f(input variables) instead of static tier lookup</li><li><strong>Variable inheritance</strong> so rep enters call volume once, all dependent products calculate automatically</li><li><strong>Interim:</strong> call volume automation (below) is a bridge, not a full replacement</li></ol>
+    <div class="cb-l">Urgency</div>
+    <div class="cb-t"><strong>Josh requested timeline before Monday.</strong> Open since Sep 2025. Sandeep and Austin started scoping Oct 2025, design hasn't shipped. FirstDue's pricing overhaul in ~6 months increases dependency.</div>
+  </div></div>
 </div>
 
-<!-- ── LANE 2: PRODUCT ── -->
-<div class="lane">
-<div class="lane-hdr"><span class="lane-dot par"></span><span class="lane-title">Product Enhancements</span><span class="lane-ct">4</span></div>
-
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Automate Call Volume Entry</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-prd">Product</span>
-      <span class="c-tag t-cfg">Config</span>
-      <span class="c-st s-input">Needs FD Input</span>
-    </div>
-    <div class="c-own">
-      <span class="own"><b class="fd">B</b>Ben · product mapping</span>
-      <span class="own"><b class="en">E</b>Eng · build</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-cfg">Config</span><span class="c-st s-input">Needs FD Input</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · product mapping</span><span class="own"><b class="en">E</b>Eng · build</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
@@ -287,21 +236,14 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Agreed Solution</div>
     <div class="cb-t">Map SFDC opp field → MN custom quote field. Products auto-inherit quantity from that field. Rep edits one place, all recalc. Changes sync back to SFDC. <a class="cb-ref" href="https://docs.google.com/document/d/1RCLrkEbOtjgSKZ4dhD_QcGPj1o3rlve5LVZeEOXd3zU/edit" target="_blank">Requirements doc ↗</a></div>
     <div class="cb-l">To Start</div>
-    <ol class="cb-steps">
-      <li><strong>FirstDue provides</strong> product-to-variable mapping (which products inherit from which of 4 fields)</li>
-      <li><strong>MN creates</strong> custom quote fields + Opp→Quote mapping</li>
-      <li><strong>Test on sandbox</strong>, push to prod</li>
-    </ol>
+    <ol class="cb-steps"><li><strong>FirstDue provides</strong> product-to-variable mapping (which products inherit from which of 4 fields)</li><li><strong>MN creates</strong> custom quote fields + Opp→Quote mapping</li><li><strong>Test on sandbox</strong>, push to prod</li></ol>
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-green" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">"Force Save" Button on Quote</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-prd">Product</span>
-      <span class="c-st s-rdy">Ready to Build</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-rdy">Ready to Build</span></div>
     <div class="c-own"><span class="own"><b class="en">E</b>Eng · build + ship</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
@@ -312,13 +254,10 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-purple" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Centralize Renewal Uplift to Quote Header</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-prd">Product</span>
-      <span class="c-st s-ip">3–4 Weeks</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-ip">3–4 Weeks</span></div>
     <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope + build</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
@@ -329,13 +268,10 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-purple" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Target ARR / Discount by ARR</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-prd">Product</span>
-      <span class="c-st s-ip">&lt; 3 Weeks</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-ip">&lt; 3 Weeks</span></div>
     <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope + build</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
@@ -345,20 +281,16 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-t"><strong>1.</strong> "Target ARR" field: rep enters annualized value, system calcs prorated amount. <strong>2.</strong> Hover tooltip on prorated amounts showing annualized value. Related: ARR/OTF split on output (requirements in progress).</div>
   </div></div>
 </div>
-
 </div>
 
-<!-- ── LANE 3: TRACKED ── -->
+<!-- ═══ LANE 3: TRACKED ═══ -->
 <div class="lane">
 <div class="lane-hdr"><span class="lane-dot lat"></span><span class="lane-title">Tracked · Not Urgent</span><span class="lane-ct">3</span></div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Quote Template · Remove Renewal Section</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-cfg">Config</span>
-      <span class="c-st s-wt">Ties to Uplift Work</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-cfg">Config</span><span class="c-st s-wt">Ties to Uplift Work</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · after uplift ships</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
@@ -367,33 +299,23 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-gray" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Renewal Issue · Needs Clarification</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-sup">Clarify</span>
-      <span class="c-st s-nw">Pending Details</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-sup">Clarify</span><span class="c-st s-nw">Pending Details</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · discuss on next call</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What We Know</div>
-    <div class="cb-t">Ben mentioned a renewal issue toward end of May 13 sync. Details weren't fully captured. May overlap with Pylon #4692 (amendment date change). Will clarify on next Wednesday recurring.</div>
+    <div class="cb-t">Ben mentioned a renewal issue toward end of May 13 sync. Details weren't fully captured. May overlap with <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4692" target="_blank">Pylon #4692</a> (amendment date change). Will clarify on next Wednesday recurring.</div>
   </div></div>
 </div>
 
-<div class="c" onclick="this.classList.toggle('open')">
+<div class="c c-gray" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Legacy → Standard Offering Conversion</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-dat">Data</span>
-      <span class="c-tag t-prc">Process</span>
-      <span class="c-st s-nw">Future Planning</span>
-    </div>
-    <div class="c-own">
-      <span class="own"><b class="fd">B</b>Ben / Josh · timing</span>
-      <span class="own"><b class="mn">S</b>Sandeep · tooling</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-prc">Process</span><span class="c-st s-nw">Future Planning</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben / Josh · timing</span><span class="own"><b class="mn">S</b>Sandeep · tooling</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Context</div>
@@ -402,12 +324,10 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-t">Natural conversion point is when FirstDue's pricing overhaul lands (~6 months). MN is building AI migration tooling (4–5 month horizon) that could make this self-serve.</div>
   </div></div>
 </div>
-
 </div>
 
 </div>
 
-<!-- ── FOOTER ── -->
 <div class="foot">
   <div class="foot-card">
     <div>
@@ -416,7 +336,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     </div>
     <div>
       <div class="fc-l">MN Moving Independently</div>
-      <div class="fc-v"><strong>Force Save button</strong> ships without any dependency. <strong>Uplift + Target ARR</strong> in sprint planning. Redrive verification and amendment link investigation underway.</div>
+      <div class="fc-v"><strong>Force Save button</strong> ships without any dependency. <strong>Uplift + Target ARR</strong> in sprint planning. <strong>Template Editor + Formula Pricing</strong> timelines to Josh before Monday. Redrive verification and amendment link investigation underway.</div>
     </div>
     <div>
       <div class="fc-l">Transition Planning</div>
@@ -426,6 +346,5 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 </div>
 
 <div class="attr">FirstDue × MonetizeNow · Confidential · May 20, 2026</div>
-
 </body>
 </html>
