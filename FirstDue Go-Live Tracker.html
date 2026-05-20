@@ -123,7 +123,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Source</div>
     <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=2570" target="_blank">May 11 call ↗</a></div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps"><li><strong>FirstDue provides</strong> list of affected quotes with target ARR values</li><li><strong>MN runs backend script</strong> to toggle boolean and stamp ARR</li><li><strong>Both teams validate</strong> no double-count risk if historic contracts import later</li></ol>
+    <ol class="cb-steps"><li><strong>FirstDue provides</strong> list of affected quotes with target ARR values</li><li><strong>MonetizeNow runs backend update</strong> to toggle boolean and stamp ARR</li><li><strong>Both teams validate</strong> no double-count risk if historic contracts import later</li></ol>
   </div></div>
 </div>
 
@@ -131,13 +131,13 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   <div class="c-top">
     <div class="c-row1"><span class="c-name">SFDC Quote Sync · Missing OTF / PS Lines</span><span class="c-chev">›</span></div>
     <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4704" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4704</a><span class="c-st s-ok">Fix Applied</span></div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · verify redrive</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · verify sync results</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What Happened</div>
-    <div class="cb-t">12 line items in MN, only 10 synced to SFDC. An offering hadn't synced to Product2 catalog. MN resynced catalog and redrove all failed items.</div>
+    <div class="cb-t">12 line items in MN, only 10 synced to SFDC. An offering hadn't synced to Product2 catalog. MonetizeNow resynced catalog and redrove all failed items.</div>
     <div class="cb-l">Follow-Up</div>
-    <ol class="cb-steps"><li><strong>Verify redrive caught all gaps</strong> (Ben comparing MN Metabase vs SFDC)</li><li><strong>Confirm new offerings auto-sync</strong> so this doesn't recur</li></ol>
+    <ol class="cb-steps"><li><strong>Verify sync fix caught all gaps</strong> (comparing MonetizeNow reports vs SFDC)</li><li><strong>Confirm new offerings auto-sync</strong> so this doesn't recur</li></ol>
   </div></div>
 </div>
 
@@ -151,7 +151,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Problem</div>
     <div class="cb-t">Rep wants to quote in CAD but catalog shows USD. Likely config: multi-currency enabled? CAD rate card exists? Account currency field set correctly?</div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps"><li><strong>FirstDue shares</strong> specific account + quote</li><li><strong>MN checks</strong> tenant multi-currency settings + catalog</li><li><strong>Resolve</strong> config or flag if new rate card needed</li></ol>
+    <ol class="cb-steps"><li><strong>FirstDue shares</strong> specific account + quote</li><li><strong>MonetizeNow checks</strong> tenant multi-currency settings + catalog</li><li><strong>Resolve</strong> config or flag if new rate card needed</li></ol>
   </div></div>
 </div>
 
@@ -165,7 +165,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Problem</div>
     <div class="cb-t">Amendment opps sync to SFDC but don't link back to parent contract. Breaks reporting and traceability. Likely a field mapping gap in connector config.</div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps"><li><strong>MN pulls examples</strong> from <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank">Pylon #4666</a></li><li><strong>Check field mapping</strong> for contract reference on amendment opps</li><li><strong>Fix mapping</strong> or escalate to eng if connector issue</li></ol>
+    <ol class="cb-steps"><li><strong>MonetizeNow reviews</strong> <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank">Ticket #4666</a></li><li><strong>Check field mapping</strong> for contract reference on amendment opps</li><li><strong>Fix mapping</strong> or raise to engineering if connector issue</li></ol>
   </div></div>
 </div>
 
@@ -179,7 +179,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Problem</div>
     <div class="cb-t">An amendment appears to shift contract end date. Amendments should be coterminous. Most common cause: incorrect end date set on amendment quote itself.</div>
     <div class="cb-l">To Resolve</div>
-    <ol class="cb-steps"><li><strong>FirstDue shares</strong> specific contract + amendment quote</li><li><strong>MN checks</strong> quote end date and coterminous settings</li></ol>
+    <ol class="cb-steps"><li><strong>FirstDue shares</strong> specific contract + amendment quote</li><li><strong>MonetizeNow checks</strong> quote end date and coterminous settings</li></ol>
   </div></div>
 </div>
 </div>
@@ -192,13 +192,13 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Quote Template Editor · Output Controls</span><span class="c-chev">›</span></div>
     <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-hi">High Priority</span><span class="c-st s-urg">Timeline Needed</span></div>
-    <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · escalated</span></div>
+    <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · requested</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
     <div class="cb-t">Single tenant-wide template is too restrictive. Reps need per-quote control over what shows on output (line-item pricing, quantity, discount details). Today, a custom template overrides all quote-level toggles, removing flexibility entirely. Ben had to download PDFs and use Claude to manually add line items for an RFP. If unresolved, team will fall back to SFDC quote template editor.</div>
     <div class="cb-l">Source</div>
-    <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=4842" target="_blank">May 11 call ↗</a> + May 20 escalation from Josh</div>
+    <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=4842" target="_blank">May 11 call ↗</a> + May 20 call with Josh</div>
     <div class="cb-l">What's Needed</div>
     <ol class="cb-steps"><li><strong>Tenant-level admin controls</strong> that lock certain settings (e.g., never show line-item pricing) while exposing others to reps</li><li><strong>Per-quote output settings</strong> so reps can toggle show/hide for pricing, quantity, discount details</li><li><strong>Multiple template support</strong> per tenant for different use cases</li></ol>
     <div class="cb-l">Urgency</div>
@@ -210,13 +210,13 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Formula-Based Pricing Engine</span><span class="c-chev">›</span></div>
     <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-hi">High Priority</span><span class="c-st s-urg">Timeline Needed</span></div>
-    <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · escalated</span></div>
+    <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · requested</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Problem</div>
     <div class="cb-t">FirstDue's entire catalog is formula-driven: 4 input variables (call volume, personnel, safes, asset sum) determine all pricing. Tier-based pricing approximates formula logic but doesn't fully replicate it. This was a key reason DealHub was attractive before switching to MN, and remains a gap.</div>
     <div class="cb-l">Source</div>
-    <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=1297" target="_blank">May 11 call ↗</a> + <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=1859" target="_blank">Pylon #1859</a> (Sep 2025) + May 20 escalation from Josh</div>
+    <div class="cb-t"><a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=1297" target="_blank">May 11 call ↗</a> + <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=1859" target="_blank">Ticket #1859</a> (Sep 2025) + May 20 call with Josh</div>
     <div class="cb-l">What's Needed</div>
     <ol class="cb-steps"><li><strong>Native formula support</strong> where product price = f(input variables) instead of static tier lookup</li><li><strong>Variable inheritance</strong> so rep enters call volume once, all dependent products calculate automatically</li><li><strong>Interim:</strong> call volume automation (below) is a bridge, not a full replacement</li></ol>
     <div class="cb-l">Urgency</div>
@@ -236,7 +236,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Agreed Solution</div>
     <div class="cb-t">Map SFDC opp field → MN custom quote field. Products auto-inherit quantity from that field. Rep edits one place, all recalc. Changes sync back to SFDC. <a class="cb-ref" href="https://docs.google.com/document/d/1RCLrkEbOtjgSKZ4dhD_QcGPj1o3rlve5LVZeEOXd3zU/edit" target="_blank">Requirements doc ↗</a></div>
     <div class="cb-l">To Start</div>
-    <ol class="cb-steps"><li><strong>FirstDue provides</strong> product-to-variable mapping (which products inherit from which of 4 fields)</li><li><strong>MN creates</strong> custom quote fields + Opp→Quote mapping</li><li><strong>Test on sandbox</strong>, push to prod</li></ol>
+    <ol class="cb-steps"><li><strong>FirstDue provides</strong> product-to-variable mapping (which products inherit from which of 4 fields)</li><li><strong>MonetizeNow creates</strong> custom quote fields + Opp→Quote mapping</li><li><strong>Test on sandbox</strong>, push to prod</li></ol>
   </div></div>
 </div>
 
@@ -307,7 +307,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What We Know</div>
-    <div class="cb-t">Ben mentioned a renewal issue toward end of May 13 sync. Details weren't fully captured. May overlap with <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4692" target="_blank">Pylon #4692</a> (amendment date change). Will clarify on next Wednesday recurring.</div>
+    <div class="cb-t">Ben mentioned a renewal issue toward end of May 13 sync. Details weren't fully captured. May overlap with <a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4692" target="_blank">Ticket #4692</a> (amendment date change). Will clarify on next Wednesday recurring.</div>
   </div></div>
 </div>
 
@@ -336,11 +336,11 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     </div>
     <div>
       <div class="fc-l">MN Moving Independently</div>
-      <div class="fc-v"><strong>Force Save button</strong> ships without any dependency. <strong>Uplift + Target ARR</strong> in sprint planning. <strong>Template Editor + Formula Pricing</strong> timelines to Josh before Monday. Redrive verification and amendment link investigation underway.</div>
+      <div class="fc-v"><strong>Force Save button</strong> ships without any dependency. <strong>Uplift + Target ARR</strong> in development planning. <strong>Template Editor + Formula Pricing</strong> timelines shared before Monday. Sync verification and amendment link investigation underway.</div>
     </div>
     <div>
       <div class="fc-l">Transition Planning</div>
-      <div class="fc-v"><strong>Ben → Mary handoff targeting Jul 1.</strong> All vendor comms stay through Ben until then. Mary is observing and ramping internally. Regular cadence will transfer to Mary once she's ready.</div>
+      <div class="fc-v"><strong>Ben → Mary handoff targeting Jul 1.</strong> All communications stay through Ben until then. Mary is observing and ramping internally. Regular cadence will transfer to Mary once she's ready.</div>
     </div>
   </div>
 </div>
