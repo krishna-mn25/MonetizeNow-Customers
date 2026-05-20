@@ -427,21 +427,22 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
   <div class="hero-deco"></div>
   <div class="chrome d">
     <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
-    <div class="tag-r">Next Steps &nbsp;·&nbsp; ENTR &nbsp;·&nbsp; May 2026</div>
+    <div class="tag-r">Status Update &nbsp;·&nbsp; ENTR &nbsp;·&nbsp; May 20, 2026</div>
   </div>
   <div class="hero-body">
     <div class="hero-logos">
       <div class="mark entr">E</div><span class="brand">ENTR</span><span class="x">×</span><div class="mark mn">M</div><span class="brand">MonetizeNow</span>
     </div>
-    <h1 class="hero-h1">Catalog live.<br>Migration done.<br><span class="accent">Here's what's next.</span></h1>
-    <p class="hero-sub">Today we confirm catalog accuracy. From there: HubSpot, QuickBooks, configuration and enablement run in parallel. Single coordinated cutover, not a multi-week rollout.</p>
+    <h1 class="hero-h1">Catalog confirmed.<br>HubSpot connected.<br><span class="accent">Stripe today, enablement Friday.</span></h1>
+    <p class="hero-sub">HubSpot and Slack live. Catalog reviewed and accurate. Today wires Stripe and drafts the QBO checklist for your accountants. Friday lands enablement and Product Catalog walkthrough.</p>
     <div class="hero-pills">
       <span class="hp done">Catalog Live</span>
-      <span class="hp done">Migration Complete</span>
-      <span class="hp active">Today: Accuracy Review</span>
-      <span class="hp pending">HubSpot Connection</span>
-      <span class="hp pending">QuickBooks Connection</span>
-      <span class="hp pending">Enablement</span>
+      <span class="hp done">Migration Done</span>
+      <span class="hp done">Accuracy Reviewed</span>
+      <span class="hp done">HubSpot Connected</span>
+      <span class="hp done">Slack Connected</span>
+      <span class="hp active">Today: Stripe + QBO Plan</span>
+      <span class="hp pending">Friday: Enablement</span>
     </div>
   </div>
   <div class="hero-foot">
@@ -461,11 +462,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
     <div class="ph">
       <div class="ph-left">
         <div class="ph-eye">The Journey</div>
-        <h2>You're Two Stages In.<br>Four More to Go.</h2>
-        <p class="sub">Click any stage to see what it involves. Most of the remaining work sits on our side. Your involvement is targeted: decisions today, content for templates, and walk-through participation.</p>
+        <h2>You're Three Stages In.<br>Three More to Go.</h2>
+        <p class="sub">Catalog confirmed, HubSpot and Slack connected. Today wires Stripe and scopes QBO with your accountants. Friday lands enablement plus Product Catalog walkthrough. Then go-live.</p>
       </div>
       <div class="ph-right">
-        <div class="ph-stat">2/6</div>
+        <div class="ph-stat">3/6</div>
         <div class="ph-stat-l">Stages Complete</div>
       </div>
     </div>
@@ -502,19 +503,35 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
           </div>
         </div>
       </div>
+      <div class="j-step done" onclick="toggleJ(this)">
+        <div class="j-conn"></div>
+        <div class="j-card">
+          <div class="j-expand">+</div>
+          <div class="j-num"><span class="j-num-text">03</span></div>
+          <div class="j-eye">Stage 03 · Complete</div>
+          <div class="j-title">Accuracy Review</div>
+          <div class="j-summary">Monday catalog walk done. Decision 1 locked. Decision 2 reverts today.</div>
+          <div class="j-detail">
+            <div class="j-detail-item">Catalog walked, migrated data spot-checked</div>
+            <div class="j-detail-item">Path A locked: all customers in HubSpot</div>
+            <div class="j-detail-item">Historical mapping decision reverts today</div>
+            <div class="j-detail-item">Krishna mirrored Drive PDFs into MN; matches Drive</div>
+          </div>
+        </div>
+      </div>
       <div class="j-step now" onclick="toggleJ(this)">
         <div class="j-conn"></div>
         <div class="j-card">
           <div class="j-expand">+</div>
-          <div class="j-num">03</div>
-          <div class="j-eye">Stage 03 · Today</div>
-          <div class="j-title">Accuracy Review</div>
-          <div class="j-summary">Confirm catalog + spot-check migrated data. Lock two decisions.</div>
+          <div class="j-num">04</div>
+          <div class="j-eye">Stage 04 · Today</div>
+          <div class="j-title">Systems Connected</div>
+          <div class="j-summary">HubSpot and Slack done. Today: Stripe wire-up and QBO checklist for accountants.</div>
           <div class="j-detail">
-            <div class="j-detail-item">Walk catalog: products, offerings, prices</div>
-            <div class="j-detail-item">Pick 5 customers, validate dates + amounts</div>
-            <div class="j-detail-item">Decide: all customers in HS, or subset?</div>
-            <div class="j-detail-item">Decide: historical Deal mapping or clean cutover?</div>
+            <div class="j-detail-item">HubSpot connection confirmed by Chelsea</div>
+            <div class="j-detail-item">Slack live, peer approval pattern (Chelsea ↔ Kristin)</div>
+            <div class="j-detail-item">Stripe wire-up on today's call with Gentry</div>
+            <div class="j-detail-item">QBO: connect after data verification, via accountants</div>
           </div>
         </div>
       </div>
@@ -522,31 +539,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
         <div class="j-conn"></div>
         <div class="j-card">
           <div class="j-expand">+</div>
-          <div class="j-num">04</div>
-          <div class="j-eye">Stage 04 · This Week</div>
-          <div class="j-title">Systems Connected</div>
-          <div class="j-summary">HubSpot, QuickBooks, Slack wired in. Parallel work, days not weeks.</div>
-          <div class="j-detail">
-            <div class="j-detail-item">HubSpot OAuth + object mapping</div>
-            <div class="j-detail-item">QB customer + invoice sync (forward only)</div>
-            <div class="j-detail-item">Slack approval routing for thresholds</div>
-            <div class="j-detail-item">Sandbox validation before prod push</div>
-          </div>
-        </div>
-      </div>
-      <div class="j-step future" onclick="toggleJ(this)">
-        <div class="j-conn"></div>
-        <div class="j-card">
-          <div class="j-expand">+</div>
           <div class="j-num">05</div>
-          <div class="j-eye">Stage 05 · Next Week</div>
-          <div class="j-title">Branding + Enablement</div>
-          <div class="j-summary">Quote template, conditional T&Cs, motion walk-throughs.</div>
+          <div class="j-eye">Stage 05 · Friday May 22</div>
+          <div class="j-title">Enablement + Catalog</div>
+          <div class="j-summary">2:30 PM CT. Product Catalog walk, motion walkthroughs, conditional T&amp;Cs, guardrails.</div>
           <div class="j-detail">
-            <div class="j-detail-item">ENTR logo + brand on quote template</div>
-            <div class="j-detail-item">Conditional T&C language stitched in</div>
-            <div class="j-detail-item">Walk-throughs on New Business, Amend, Renewal</div>
-            <div class="j-detail-item">Guardrails review with reps</div>
+            <div class="j-detail-item">Product Catalog review in Live (Chelsea owns)</div>
+            <div class="j-detail-item">Standard + Enterprise T&amp;C stitched per quote</div>
+            <div class="j-detail-item">Walkthroughs: New Business, Amend, Renewal</div>
+            <div class="j-detail-item">Guardrails review with Chelsea and Kristin</div>
           </div>
         </div>
       </div>
@@ -555,21 +556,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
         <div class="j-card">
           <div class="j-expand">+</div>
           <div class="j-num">06</div>
-          <div class="j-eye">Stage 06 · Cutover</div>
+          <div class="j-eye">Stage 06 · After Enablement</div>
           <div class="j-title">Go-Live</div>
-          <div class="j-summary">First real quote in production, together. Single coordinated step.</div>
+          <div class="j-summary">First live quote in production. Stripe billing active. QBO follows once accountants ready.</div>
           <div class="j-detail">
             <div class="j-detail-item">Sandbox → production push by MN</div>
             <div class="j-detail-item">First live quote sent on the call</div>
-            <div class="j-detail-item">Verify HS + QB sync end to end</div>
-            <div class="j-detail-item">Switch to async support cadence</div>
+            <div class="j-detail-item">Verify HubSpot + Stripe end to end</div>
+            <div class="j-detail-item">QBO connection scheduled with accountants</div>
           </div>
         </div>
       </div>
     </div>
     <div class="co co-green">
       <div class="co-icon">↗</div>
-      <div><strong>The inflection point is now.</strong> Everything from here is incremental and parallelizable. No more big-bang phases. Stages 4 and 5 happen alongside each other, not sequentially.</div>
+      <div><strong>Momentum is real.</strong> HubSpot live, Slack live, catalog mirrored from Drive PDFs. Stripe wires up today. Friday lands enablement plus Catalog walkthrough. QBO follows on the accountants' timeline.</div>
     </div>
   </div>
 </div>
@@ -586,7 +587,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="ph-left">
         <div class="ph-eye">What's Next</div>
         <h2>Three Lanes, Running in Parallel</h2>
-        <p class="sub">Click any item to see what's involved. Most of this is on us. The lanes don't block each other — system connections, configuration, and enablement prep advance at the same time.</p>
+        <p class="sub">Click any item to see status. HubSpot and Slack connected. Stripe wires today. Configuration mostly carried from Test. Enablement Friday at 2:30 PM CT.</p>
       </div>
       <div class="ph-right">
         <div class="ph-stat">11</div>
@@ -597,21 +598,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="lane-col">
         <div class="lane-h connect">
           <div class="lane-h-icon">⇄</div>
-          <div class="lane-h-text"><div class="lane-h-title">System Connections</div><div class="lane-h-sub">MonetizeNow leads</div></div>
+          <div class="lane-h-text"><div class="lane-h-title">System Connections</div><div class="lane-h-sub">HubSpot ✓ · Slack ✓ · Stripe today</div></div>
           <span class="lane-h-count">03</span>
         </div>
         <div class="lane-body">
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico hs">H</div><div class="cc-mini-text"><div class="cc-mini-title">HubSpot connection</div><div class="cc-mini-sub">OAuth · Objects · Stage mapping</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Standard OAuth install. Companies, Contacts, Deals, Products sync bidirectionally. Custom fields with matching API names sync automatically.</p><p><b>Two decisions needed today:</b> are all customers in HubSpot, and do we map historical deals or start fresh? Detail on slide 4.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico hs">H</div><div class="cc-mini-text"><div class="cc-mini-title">HubSpot connection</div><div class="cc-mini-sub" style="color:var(--green-d);font-weight:600">✓ Connected · Mapping verified</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Chelsea completed the connection. Krishna verified mapping; will flag any remaining gaps before go-live.</p><p><b>Open:</b> Decision 2 on slide 4 — historical Deal mapping. ENTR reverts today. Updated lean: <b>Path A</b> (map historicals) for HubSpot data completeness.</p></div></div>
           </div>
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico qb">Q</div><div class="cc-mini-text"><div class="cc-mini-title">QuickBooks connection</div><div class="cc-mini-sub">One-way · Customers + invoices forward</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>MN posts forward. Customers created in QB on first contract. Invoices and credit memos push on billing date.</p><p><b>Historicals stay out.</b> QB already has them — re-syncing creates duplicates and reconciliation work. Detail on slide 5.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico" style="background:linear-gradient(135deg,#635BFF 0%,#4338CA 100%);color:white">$</div><div class="cc-mini-text"><div class="cc-mini-title">Stripe + QuickBooks</div><div class="cc-mini-sub">Stripe today · QBO via accountants after data check</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>ENTR uses Stripe for invoicing and AR. Third-party accountants own QBO and pull data from Stripe today. MN pushes customers + invoices forward to Stripe.</p><p><b>QBO is sequenced.</b> Per Krishna: don't connect QBO yet — verify migrated data first. Accountants grant admin access after data check, then it's a simple push. Detail on slide 5.</p></div></div>
           </div>
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico sl">S</div><div class="cc-mini-text"><div class="cc-mini-title">Slack approval routing</div><div class="cc-mini-sub">Threshold-based · Approver list</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Discount thresholds, custom terms, or contract length deviations trigger Slack approval requests routed to the right approver.</p><p><b>ENTR confirms:</b> who approves discounts above X%, custom payment terms, multi-year deals.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico sl">S</div><div class="cc-mini-text"><div class="cc-mini-title">Slack approval routing</div><div class="cc-mini-sub" style="color:var(--green-d);font-weight:600">✓ Connected · Peer approval pattern</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Slack live. Loom walkthroughs shared: adding MN to Slack view, and how approvals look in action.</p><p><b>Approval pattern (per Chelsea):</b> Chelsea and Kristin are the only sellers. Optional peer approval — Chelsea approves Kristin's deals, vice versa. Light touch, no escalation tiers.</p></div></div>
           </div>
         </div>
       </div>
@@ -623,33 +624,33 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
         </div>
         <div class="lane-body">
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico cfg">T</div><div class="cc-mini-text"><div class="cc-mini-title">Conditional T&amp;Cs</div><div class="cc-mini-sub">Region · Size · Product variants</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Different terms language by region, contract size, or product type. MN stitches the right version into each quote automatically.</p><p><b>ENTR provides:</b> the language files. We map the conditions and stitch into the template.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">T</div><div class="cc-mini-text"><div class="cc-mini-title">Conditional T&amp;Cs</div><div class="cc-mini-sub">Standard + Enterprise overrides</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p><b>Standard T&amp;Cs:</b> entrtechnologies.com/terms-conditions. Stitched into every standard quote automatically.</p><p><b>Enterprise accounts:</b> Replace standard with a custom PDF per customer. Rep selects the custom PDF at quote time; MN swaps it in.</p></div></div>
           </div>
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico cfg">L</div><div class="cc-mini-text"><div class="cc-mini-title">ENTR branding on quote</div><div class="cc-mini-sub">Logo · Colors · Footer</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Quote PDF template gets your logo, primary color, footer text, and signing block formatted to your standard.</p><p><b>ENTR sends:</b> SVG or PNG logo, hex color codes, footer text. We apply and test.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">L</div><div class="cc-mini-text"><div class="cc-mini-title">ENTR branding on quote</div><div class="cc-mini-sub" style="color:var(--green-d);font-weight:600">✓ Logo uploaded · Final pass Friday</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Logo uploaded via Settings → Edit Entity. UI bug noted: Save button no-op'd on first click, but the change did save on navigate. Filed for engineering.</p><p><b>Friday:</b> Verify logo, colors, and footer render on a real quote PDF. Adjust before go-live if needed.</p></div></div>
           </div>
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico cfg">A</div><div class="cc-mini-text"><div class="cc-mini-title">Approval rules</div><div class="cc-mini-sub">Discount tiers · Custom term flags</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Rules engine in MN routes quotes through approval based on discount, term length, payment terms, or custom fields.</p><p><b>Common pattern:</b> &lt;10% rep approves, 10–20% manager, &gt;20% leadership. Routes via Slack.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">A</div><div class="cc-mini-text"><div class="cc-mini-title">Approval rules</div><div class="cc-mini-sub">Peer approval · Chelsea ↔ Kristin</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p><b>Sales team:</b> Chelsea and Kristin only. No discount-tier escalation needed for now.</p><p><b>Pattern:</b> Optional peer approval. Chelsea approves Kristin's deals, Kristin approves Chelsea's. Either can self-send when peer review isn't needed (light touch, easy to expand later).</p></div></div>
           </div>
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico cfg">P</div><div class="cc-mini-text"><div class="cc-mini-title">Test → Production push</div><div class="cc-mini-sub">Single coordinated step</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Once sandbox is approved, MN promotes catalog, templates, and config to production in one step. Connections re-point. No data re-load needed.</p><p><b>ENTR confirms readiness</b> on a scheduled call. We push together.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico cfg">P</div><div class="cc-mini-text"><div class="cc-mini-title">Test → Production push</div><div class="cc-mini-sub">Carry over Test config except Catalog</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>Per Chelsea: carry over everything updated in Test, except Product Catalog. The Product Catalog in Live is already good; Chelsea makes updates directly in Live going forward.</p><p><b>Sequence:</b> Today → wire Stripe, lock QBO checklist. Friday → Catalog walk + enablement. Then production push.</p></div></div>
           </div>
         </div>
       </div>
       <div class="lane-col">
         <div class="lane-h enable">
           <div class="lane-h-icon">▶</div>
-          <div class="lane-h-text"><div class="lane-h-title">Enablement</div><div class="lane-h-sub">Walk-throughs before live</div></div>
+          <div class="lane-h-text"><div class="lane-h-title">Enablement</div><div class="lane-h-sub">Friday May 22 · 2:30 PM CT</div></div>
           <span class="lane-h-count">04</span>
         </div>
         <div class="lane-body">
           <div class="cc-mini" onclick="toggleM(this)">
-            <div class="cc-mini-h"><div class="cc-mini-ico num">1</div><div class="cc-mini-text"><div class="cc-mini-title">New Business motion</div><div class="cc-mini-sub">HS Deal → MN Quote → QB Invoice</div></div><span class="cc-mini-arrow">›</span></div>
-            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>End-to-end walk-through on a real sandbox Deal. Reps see how a new logo flows from HubSpot to MN to signature to QB invoice.</p><p><b>Detail with click cards:</b> slide 7.</p></div></div>
+            <div class="cc-mini-h"><div class="cc-mini-ico num">1</div><div class="cc-mini-text"><div class="cc-mini-title">New Business motion</div><div class="cc-mini-sub">HS Deal → MN Quote → Stripe Invoice</div></div><span class="cc-mini-arrow">›</span></div>
+            <div class="cc-mini-detail"><div class="cc-mini-detail-inner"><p>End-to-end walk-through on a real sandbox Deal. Reps see how a new logo flows from HubSpot to MN to signature to Stripe invoice.</p><p><b>Detail with click cards:</b> slide 7.</p></div></div>
           </div>
           <div class="cc-mini" onclick="toggleM(this)">
             <div class="cc-mini-h"><div class="cc-mini-ico num">2</div><div class="cc-mini-text"><div class="cc-mini-title">Amendment motion</div><div class="cc-mini-sub">Mid-term changes · Delta-only billing</div></div><span class="cc-mini-arrow">›</span></div>
@@ -680,51 +681,51 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
     <div class="ph">
       <div class="ph-left">
         <div class="ph-eye" style="color:var(--hs-d)">HubSpot Connection</div>
-        <h2>Two Questions.<br>Then We Connect.</h2>
-        <p class="sub">OAuth and object mapping are on us. Two decisions need an ENTR answer — they shape how we map your data. Click each to expand.</p>
+        <h2>One Locked.<br>One In Flight.</h2>
+        <p class="sub">Decision 1 confirmed Monday: Path A, all customers in HubSpot. Decision 2 reverts today after ENTR's internal discussion. Krishna's updated lean: Path A for HubSpot data completeness.</p>
       </div>
       <div class="ph-right">
-        <div class="ph-stat" style="color:var(--hs-d)">2</div>
-        <div class="ph-stat-l" style="color:var(--hs-d)">Decisions Today</div>
+        <div class="ph-stat" style="color:var(--hs-d)">1/2</div>
+        <div class="ph-stat-l" style="color:var(--hs-d)">Confirmed</div>
       </div>
     </div>
     <div class="decision-grid">
-      <div class="dec" onclick="toggleD(this)">
+      <div class="dec" style="background:linear-gradient(180deg,#F0FDF4 0%, white 60%);border-color:var(--green-br)" onclick="toggleD(this)">
         <div class="dec-h">
-          <div class="dec-num">01</div>
+          <div class="dec-num" style="background:linear-gradient(135deg,var(--green) 0%,var(--green-d) 100%);box-shadow:0 6px 16px rgba(22,163,74,0.3)">✓</div>
           <div class="dec-content">
-            <div class="dec-eye"><span class="dot"></span>Decision · Needed today</div>
+            <div class="dec-eye" style="color:var(--green-d)"><span class="dot" style="background:var(--green);box-shadow:0 0 8px var(--green)"></span>Decision · Confirmed Monday</div>
             <div class="dec-q">Are all your customers in HubSpot, or just some?</div>
-            <div class="dec-brief">We saw gaps in the migrated data — a handful of contracts in MN don't match a HubSpot company record cleanly. How we proceed depends on which scenario is true for ENTR.</div>
+            <div class="dec-brief"><b>Path A locked.</b> All customers should be in HubSpot. MN maps by external ID and flags any contracts without a matching Company so ENTR can clean up before go-live.</div>
           </div>
-          <div class="dec-toggle">+</div>
+          <div class="dec-toggle" style="background:white;border-color:var(--green-br);color:var(--green-d)">✓</div>
         </div>
         <div class="dec-detail"><div class="dec-detail-inner">
           <div class="dec-path"><div class="dec-path-label"><span class="opt">Path A</span> All customers should be in HubSpot</div><div class="dec-path-text">We map by external ID. Flag any MN contracts without a matching HubSpot Company. ENTR cleans up gaps in HS before we go live. Clean state, no orphans.</div></div>
           <div class="dec-path"><div class="dec-path-label"><span class="opt">Path B</span> Only some are in HubSpot</div><div class="dec-path-text">We map the customers that exist in HS. Remaining contracts live in MN as the source of record. Some customers won't have an associated Deal — that's expected.</div></div>
-          <div class="dec-path rec"><div class="dec-path-label">Recommendation</div><div class="dec-path-text"><b>Path A</b> if ENTR uses HubSpot as the customer system of record. <b>Path B</b> if HubSpot is sales-pipeline-only and customer service lives elsewhere. We can also do hybrid: HS for active pipeline, MN as source of record for accounts.</div></div>
+          <div class="dec-path rec" style="background:linear-gradient(135deg,#DCFCE7 0%, #F0FDF4 100%);border-color:var(--green-br)"><div class="dec-path-label" style="color:var(--green-d)">Confirmed Monday</div><div class="dec-path-text"><b>Path A locked.</b> Chelsea confirmed all customers will live in HubSpot. MN flags gaps for cleanup; clean state by go-live.</div></div>
         </div></div>
       </div>
       <div class="dec" onclick="toggleD(this)">
         <div class="dec-h">
           <div class="dec-num">02</div>
           <div class="dec-content">
-            <div class="dec-eye"><span class="dot"></span>Decision · Needed today</div>
+            <div class="dec-eye"><span class="dot"></span>Decision · ENTR reverts today</div>
             <div class="dec-q">Map historical Deals to MN quotes, or start fresh?</div>
-            <div class="dec-brief">Closed-won Deals already exist in HubSpot for past business. Question is whether we retrofit MN quotes onto them, or treat HubSpot history as reference-only and start clean going forward.</div>
+            <div class="dec-brief">ENTR is discussing internally and reverts today. Krishna's clarified note: reporting accuracy is consistent across both paths; what differs is data completeness in HubSpot.</div>
           </div>
           <div class="dec-toggle">+</div>
         </div>
         <div class="dec-detail"><div class="dec-detail-inner">
-          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path A</span> Map historicals to MN</div><div class="dec-path-text">We create MN Quote records linked to historical Deals. Adds weeks of mapping work. Reporting becomes "complete" but the value is mostly cosmetic — historical Deals already closed.</div></div>
-          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path B</span> Clean cutover</div><div class="dec-path-text">Historical Deals stay in HubSpot as reference. From go-live forward, every new Deal creates a new MN Quote. Reporting works either way — past closed in HS, future originating in MN.</div></div>
-          <div class="dec-path rec"><div class="dec-path-label">Recommendation</div><div class="dec-path-text"><b>Clean cutover.</b> Faster to live, less risk, no reconciliation. Historical Deal reporting is unchanged. Only your active contracts and renewals need accurate MN data — which we already migrated.</div></div>
+          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path A</span> Map historicals to MN</div><div class="dec-path-text">We create MN Quote records linked to historical Deals. Consolidates data within MN and syncs back to HS so HubSpot's view matches MN. Best for HS data completeness.</div></div>
+          <div class="dec-path"><div class="dec-path-label"><span class="opt">Path B</span> Clean cutover</div><div class="dec-path-text">Historical Deals stay in HubSpot as reference. From go-live forward, every new Deal creates a new MN Quote. Past HubSpot data isn't reconciled against MN.</div></div>
+          <div class="dec-path rec"><div class="dec-path-label">Updated recommendation</div><div class="dec-path-text"><b>Path A — Map historicals.</b> Data size is manageable for ENTR. Gives HubSpot a complete picture matching MN. Reporting accuracy is identical to Path B; only HS data completeness differs.</div></div>
         </div></div>
       </div>
     </div>
     <div class="co co-blue" style="margin-top:14px">
       <div class="co-icon">⚡</div>
-      <div><strong>If you pick clean cutover:</strong> HubSpot connected and tested in sandbox within a few days of your confirmation. Production push follows once template config and approval rules are signed off.</div>
+      <div><strong>HubSpot is already connected.</strong> Confirm Decision 2 today and the data architecture is locked. Production push follows Friday's enablement and Catalog walk.</div>
     </div>
   </div>
 </div>
@@ -733,68 +734,69 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
 <div class="slide off" id="s5">
   <div class="chrome o">
     <div class="logo-row"><div class="mark mn">M</div><span class="brand">MonetizeNow</span></div>
-    <div class="tag-r">ENTR &nbsp;·&nbsp; QuickBooks Setup</div>
+    <div class="tag-r">ENTR &nbsp;·&nbsp; Stripe + QuickBooks</div>
     <div class="pg">05 / 11</div>
   </div>
   <div class="body">
     <div class="ph">
       <div class="ph-left">
-        <div class="ph-eye" style="color:var(--qb-d)">QuickBooks Connection</div>
-        <h2>Customers + Invoices.<br>Going Forward.</h2>
-        <p class="sub">QB is your ledger. MN is the commercial truth. One-way flow: MN pushes to QB. We don't sync historicals — QB already has them. Click any item to expand.</p>
+        <div class="ph-eye" style="color:var(--qb-d)">Billing Architecture</div>
+        <h2>Stripe is Active.<br>QBO Sequences Next.</h2>
+        <p class="sub">ENTR uses Stripe for invoicing and AR. Third-party accountants own QBO and pull from Stripe today. MN → Stripe wires up today; QBO connects after data verification once accountants grant admin.</p>
       </div>
       <div class="ph-right">
-        <div class="ph-stat" style="color:var(--qb-d)">1-way</div>
-        <div class="ph-stat-l" style="color:var(--qb-d)">MN → QB</div>
+        <div class="ph-stat" style="color:var(--qb-d)">2</div>
+        <div class="ph-stat-l" style="color:var(--qb-d)">Systems · Sequenced</div>
       </div>
     </div>
     <div class="scope-grid">
       <div class="scope-col">
-        <div class="scope-h"><div class="scope-h-ico in">✓</div><div class="scope-h-text"><h3>In Scope</h3><p>What syncs going forward</p></div></div>
+        <div class="scope-h"><div class="scope-h-ico" style="background:linear-gradient(135deg,#635BFF 0%,#4338CA 100%);box-shadow:0 4px 12px rgba(99,91,255,0.3)">S</div><div class="scope-h-text"><h3>Stripe · Active</h3><p>What syncs today</p></div></div>
         <div class="cc" onclick="toggleCC(this)">
-          <div class="cc-h"><div class="cc-icon qb">⇄</div><div class="cc-body-h"><div class="cc-chip qb">Sync · One-way</div><div class="cc-title">Customer record sync</div><div class="cc-summary">When a contract closes in MN, customer is created in QB if not already there.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-h"><div class="cc-icon" style="background:linear-gradient(135deg,#635BFF 0%,#4338CA 100%);color:white;box-shadow:0 4px 12px rgba(99,91,255,0.25)">⇄</div><div class="cc-body-h"><div class="cc-chip" style="background:#EEF2FF;color:#4338CA">Sync · One-way</div><div class="cc-title">Customer record sync to Stripe</div><div class="cc-summary">When a contract closes in MN, customer is created in Stripe if not already there.</div></div><div class="cc-toggle">+</div></div>
           <div class="cc-detail"><div class="cc-detail-inner">
-            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Match by email or external ID</b><span>MN looks for existing QB customer first. If matched, the new invoice attaches to it. If not, customer is created.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet">Q</div><div class="cc-d-text"><b>Customer fields synced</b><span>Name, email, billing address, payment terms. Custom fields can be mapped in setup.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet tip">✓</div><div class="cc-d-text"><b>No duplicates if ENTR confirms IDs</b><span>If your QB customer external IDs match your MN customer external IDs, zero duplicate risk. We validate during connection setup.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Match by email or external ID</b><span>MN looks for existing Stripe customer first. If matched, the new invoice attaches to it. If not, customer is created.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">S</div><div class="cc-d-text"><b>Customer fields synced</b><span>Name, email, billing address, payment terms. Custom fields can be mapped during connection setup.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">✓</div><div class="cc-d-text"><b>Stripe export reviewed</b><span>Chelsea shared the Stripe export (Apr 2024 to today). Some "Customer Name" values reflect primary contact rather than company. MN matches on email to avoid drift.</span></div></div>
           </div></div>
         </div>
         <div class="cc" onclick="toggleCC(this)">
-          <div class="cc-h"><div class="cc-icon qb">$</div><div class="cc-body-h"><div class="cc-chip qb">Auto · Per billing date</div><div class="cc-title">Invoices generated forward</div><div class="cc-summary">Every invoice MN creates posts to QB on the billing date. New biz, amendments, renewals.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-h"><div class="cc-icon" style="background:linear-gradient(135deg,#635BFF 0%,#4338CA 100%);color:white;box-shadow:0 4px 12px rgba(99,91,255,0.25)">$</div><div class="cc-body-h"><div class="cc-chip" style="background:#EEF2FF;color:#4338CA">Auto · Per billing date</div><div class="cc-title">Invoices generated forward to Stripe</div><div class="cc-summary">Every MN invoice posts to Stripe on billing date. New business, amendments, renewals.</div></div><div class="cc-toggle">+</div></div>
           <div class="cc-detail"><div class="cc-detail-inner">
             <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Line items, taxes, reference IDs</b><span>Each invoice carries MN Contract ID, HubSpot Deal ID, and Quote ID. Finance can audit back to the source deal.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet">Q</div><div class="cc-d-text"><b>Posts to AR + income account</b><span>Mapped to your QB Chart of Accounts. Subscription, services, and tax revenue land in the right buckets.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet tip">!</div><div class="cc-d-text"><b>Sync is one-way</b><span>Payment status, dunning, and AR collection stay in QB. MN doesn't try to mirror payment data.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">S</div><div class="cc-d-text"><b>Stripe handles AR + payments</b><span>Stripe runs charges, dunning, and payment status. MN doesn't mirror payment data.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">i</div><div class="cc-d-text"><b>Historical Stripe data untouched</b><span>MN doesn't re-push historicals; Stripe already has Apr 2024 onward. Churned accounts in export have no contract PDFs — expected, not blocking.</span></div></div>
           </div></div>
         </div>
         <div class="cc" onclick="toggleCC(this)">
-          <div class="cc-h"><div class="cc-icon qb">−</div><div class="cc-body-h"><div class="cc-chip qb">Auto · On amendment</div><div class="cc-title">Credit memos for downsells</div><div class="cc-summary">Amendment credits and renewal-related credits push to QB with reference to original invoice.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-h"><div class="cc-icon" style="background:linear-gradient(135deg,#635BFF 0%,#4338CA 100%);color:white;box-shadow:0 4px 12px rgba(99,91,255,0.25)">−</div><div class="cc-body-h"><div class="cc-chip" style="background:#EEF2FF;color:#4338CA">Auto · On amendment</div><div class="cc-title">Credit memos for downsells via Stripe</div><div class="cc-summary">Amendment credits and refunds processed in Stripe with reference to original invoice.</div></div><div class="cc-toggle">+</div></div>
           <div class="cc-detail"><div class="cc-detail-inner">
-            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Linked to original invoice</b><span>QB can apply the credit memo against the original invoice. Clean reconciliation, no manual journal entries.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet">Q</div><div class="cc-d-text"><b>Auditable both directions</b><span>Credit memo references both the parent invoice (in QB) and the amendment event (in MN).</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">M</div><div class="cc-d-text"><b>Linked to original Stripe invoice</b><span>Stripe can apply the credit against the original invoice. Clean reconciliation, no manual journal entries.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">S</div><div class="cc-d-text"><b>Auditable both directions</b><span>Credit memo references both the parent Stripe invoice and the amendment event in MN.</span></div></div>
           </div></div>
         </div>
       </div>
       <div class="scope-col">
-        <div class="scope-h"><div class="scope-h-ico out">×</div><div class="scope-h-text"><h3>Out of Scope</h3><p>What stays separate, and why</p></div></div>
+        <div class="scope-h"><div class="scope-h-ico" style="background:linear-gradient(135deg,var(--amber) 0%,var(--amber-d) 100%);box-shadow:0 4px 12px rgba(217,119,6,0.3)">⏳</div><div class="scope-h-text"><h3>QuickBooks · Sequenced</h3><p>Connects via accountants after data check</p></div></div>
         <div class="cc" onclick="toggleCC(this)">
-          <div class="cc-h"><div class="cc-icon neutral">⌛</div><div class="cc-body-h"><div class="cc-chip" style="background:var(--soft);color:var(--ink-3)">Not syncing</div><div class="cc-title">Historical invoices</div><div class="cc-summary">QB already has them. Re-syncing creates duplicates and reconciliation work. Not worth it.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-h"><div class="cc-icon qb">⏳</div><div class="cc-body-h"><div class="cc-chip" style="background:#FEF3C7;color:var(--amber-d)">Pending data check</div><div class="cc-title">QBO connects after data verification</div><div class="cc-summary">Per Krishna: don't connect QBO yet. Verify migrated data first; connect via accountants once cleared.</div></div><div class="cc-toggle">+</div></div>
           <div class="cc-detail"><div class="cc-detail-inner">
-            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Why we don't backfill</b><span>Every historical invoice in MN would create a duplicate in QB. Reconciling takes more time than it saves.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet tip">✓</div><div class="cc-d-text"><b>Reporting still works</b><span>MN has full history from migration. QB has full history from its own books. Reports run from each system's truth, no cross-system reconciliation needed.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Sequence</b><span>Verify migrated MN data is accurate → request admin access from Gentry's accountants → connect QBO. Simple push from accountants once granted.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">i</div><div class="cc-d-text"><b>Today's scope</b><span>Wednesday call (with Gentry) wires Stripe and drafts the QBO connection checklist. Accountants action it once they're back.</span></div></div>
           </div></div>
         </div>
         <div class="cc" onclick="toggleCC(this)">
-          <div class="cc-h"><div class="cc-icon neutral">←</div><div class="cc-body-h"><div class="cc-chip" style="background:var(--soft);color:var(--ink-3)">Not syncing</div><div class="cc-title">QB → MN reverse sync</div><div class="cc-summary">QB doesn't push back. Payment status, AR aging, and collections stay in QB.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-h"><div class="cc-icon qb">👥</div><div class="cc-body-h"><div class="cc-chip" style="background:#FEF3C7;color:var(--amber-d)">Via third-party</div><div class="cc-title">Admin access via accountants</div><div class="cc-summary">Gentry's third-party accountants manage QBO. They grant admin to MN once data verification clears.</div></div><div class="cc-toggle">+</div></div>
           <div class="cc-detail"><div class="cc-detail-inner">
-            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Each system owns its truth</b><span>MN owns contract and commercial state. QB owns financial and AR state. They don't override each other.</span></div></div>
-            <div class="cc-d-item"><div class="cc-d-bullet tip">i</div><div class="cc-d-text"><b>If you need payment visibility in HS/MN</b><span>Add it later via QB API or Stripe sync. Not in scope for this go-live.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Accountants out until today</b><span>Out of office through Tuesday; back Wednesday. Gentry confirming whether they can join today's call.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">i</div><div class="cc-d-text"><b>Checklist for them</b><span>MN drafts a written checklist (admin role, scopes, sandbox vs prod). Accountants action it without needing a full kickoff call.</span></div></div>
           </div></div>
         </div>
         <div class="cc" onclick="toggleCC(this)">
-          <div class="cc-h"><div class="cc-icon neutral">📒</div><div class="cc-body-h"><div class="cc-chip" style="background:var(--soft);color:var(--ink-3)">Not syncing</div><div class="cc-title">Manual GL adjustments</div><div class="cc-summary">Finance does journal entries directly in QB. MN doesn't try to replicate accounting.</div></div><div class="cc-toggle">+</div></div>
+          <div class="cc-h"><div class="cc-icon qb">↻</div><div class="cc-body-h"><div class="cc-chip" style="background:#FEF3C7;color:var(--amber-d)">Existing flow</div><div class="cc-title">Stripe → QBO already pulled</div><div class="cc-summary">Accountants pull from Stripe into QBO today. MN → QBO adds direct visibility going forward.</div></div><div class="cc-toggle">+</div></div>
           <div class="cc-detail"><div class="cc-detail-inner">
-            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>Accounting is not commercial</b><span>Deferred revenue moves, period adjustments, reclasses — these are accounting decisions. MN sticks to commercial truth.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet">!</div><div class="cc-d-text"><b>No historical resync</b><span>MN won't push historicals. QBO already has them via the accountants' Stripe pull. Zero duplication risk.</span></div></div>
+            <div class="cc-d-item"><div class="cc-d-bullet tip">✓</div><div class="cc-d-text"><b>Accountants keep their workflow</b><span>MN → QBO becomes the new source for go-forward customers + invoices. Accountants' reconciliation stays intact.</span></div></div>
           </div></div>
         </div>
       </div>
@@ -824,7 +826,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
     <div class="sys-legend">
       <div class="sys-leg hs"><span class="ldot"></span><b>HubSpot</b> · Pipeline</div>
       <div class="sys-leg mn"><span class="ldot"></span><b>MonetizeNow</b> · Pricing, Contracts, Billing</div>
-      <div class="sys-leg qb"><span class="ldot"></span><b>QuickBooks</b> · AR &amp; Accounting</div>
+      <div class="sys-leg qb"><span class="ldot"></span><b>Stripe + QBO</b> · AR &amp; Accounting</div>
     </div>
     <div class="mo-grid">
       <div class="mo" onclick="goTo(6)">
@@ -836,7 +838,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
             <div class="mo-flow-step"><span class="s-num">1</span><span><b>New Deal</b> in HubSpot</span></div>
             <div class="mo-flow-step"><span class="s-num">2</span><span><b>Quote</b> built in MN</span></div>
             <div class="mo-flow-step"><span class="s-num">3</span><span><b>Signed</b> → Contract created</span></div>
-            <div class="mo-flow-step"><span class="s-num">4</span><span><b>First Invoice</b> → QB</span></div>
+            <div class="mo-flow-step"><span class="s-num">4</span><span><b>First Invoice</b> → Stripe</span></div>
           </div>
           <div class="mo-when"><b>When to use</b><span>Net-new logo, or net-new product purchase for existing customer. No prior contract exists for this customer/product combination.</span></div>
         </div>
@@ -850,7 +852,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
             <div class="mo-flow-step"><span class="s-num">1</span><span><b>Active</b> contract exists</span></div>
             <div class="mo-flow-step"><span class="s-num">2</span><span><b>Amend Deal</b> in HubSpot</span></div>
             <div class="mo-flow-step"><span class="s-num">3</span><span><b>Delta Quote</b> (net change only)</span></div>
-            <div class="mo-flow-step"><span class="s-num">4</span><span><b>Adj. Invoice</b> or credit → QB</span></div>
+            <div class="mo-flow-step"><span class="s-num">4</span><span><b>Adj. Invoice</b> or credit → Stripe</span></div>
           </div>
           <div class="mo-when"><b>When to use</b><span>Mid-term change: upsell, downsell, swap. Customer is already under contract. Critical: starts from the contract, not a fresh deal.</span></div>
         </div>
@@ -864,7 +866,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
             <div class="mo-flow-step"><span class="s-num">1</span><span><b>Window opens</b> 90 days out</span></div>
             <div class="mo-flow-step"><span class="s-num">2</span><span><b>Renewal Deal</b> auto-created in HS</span></div>
             <div class="mo-flow-step"><span class="s-num">3</span><span><b>Quote</b> with carry-forward + uplift</span></div>
-            <div class="mo-flow-step"><span class="s-num">4</span><span><b>New term invoices</b> → QB</span></div>
+            <div class="mo-flow-step"><span class="s-num">4</span><span><b>New term invoices</b> → Stripe</span></div>
           </div>
           <div class="mo-when"><b>When to use</b><span>Existing contract approaching end. Trigger is time-based, not rep-initiated. Reps confirm and send; system does the heavy lift.</span></div>
         </div>
@@ -897,8 +899,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="mc" data-step="new-2"><div class="mc-top"><div class="mc-num">02</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Build Quote</div><div class="mc-label">Action</div><div class="mc-value">Pricing + Terms</div></div>
       <div class="mc" data-step="new-3"><div class="mc-top"><div class="mc-num">03</div><div class="mc-sys hs">HubSpot</div></div><div class="mc-title">Send for Sign</div><div class="mc-label">Action</div><div class="mc-value">eSign Routed</div></div>
       <div class="mc" data-step="new-4"><div class="mc-top"><div class="mc-num">04</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">New Contract</div><div class="mc-label">Output</div><div class="mc-value">Account + Subs</div></div>
-      <div class="mc" data-step="new-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">First Invoice</div><div class="mc-label">Action</div><div class="mc-value">Push to QB</div></div>
-      <div class="mc" data-step="new-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">QuickBooks</div></div><div class="mc-title">QB Truth</div><div class="mc-label">Ownership</div><div class="mc-value">AR + Ledger</div></div>
+      <div class="mc" data-step="new-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">First Invoice</div><div class="mc-label">Action</div><div class="mc-value">Push to Stripe</div></div>
+      <div class="mc" data-step="new-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">Stripe + QBO</div></div><div class="mc-title">Billing Active</div><div class="mc-label">Ownership</div><div class="mc-value">Stripe · QBO follows</div></div>
     </div>
     <div class="motion-detail" data-detail="new-1" style="display:flex">
       <div class="md-left"><div class="md-eye">Step 01 of 06</div><div class="md-title">New Deal in HubSpot</div><div class="md-sys-pill hs"><span class="sys-dot"></span>HubSpot · Pipeline</div><div class="md-summary">Rep creates a new Deal, associates Company + Contact, picks products from MN's library, sets pipeline stage. This is where the motion starts.</div></div>
@@ -941,23 +943,23 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       </div>
     </div>
     <div class="motion-detail" data-detail="new-5" style="display:none">
-      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">First Invoice Generated</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Engine</div><div class="md-summary">First invoice fires on the configured date. Full-period or prorated depending on contract start. Pushed to QuickBooks.</div></div>
+      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">First Invoice Generated</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Engine</div><div class="md-summary">First invoice fires on the configured date. Full-period or prorated depending on contract start. Pushed to Stripe.</div></div>
       <div class="md-right">
         <div class="md-section-label">What happens</div>
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Invoice built from billing schedule</b><span>Line items, taxes, contract reference IDs assembled. Invoice number, dates, amounts ready.</span></div></div>
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Prorated if mid-period</b><span>If start date isn't on a billing anchor, MN prorates the first invoice automatically. Future invoices align to the anchor.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Pushed to QuickBooks</b><span>Invoice posts to QB. Customer created in QB if first time. Reference IDs preserved.</span></div></div>
-        <div class="md-bullet"><div class="b-icon next">↓</div><div><b>Step 6: QB owns from here</b><span>QB takes over for AR, payments, GL. MN doesn't intervene.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Pushed to Stripe</b><span>Invoice posts to Stripe. Customer created in Stripe if first time. HubSpot Deal + MN Contract/Quote IDs preserved.</span></div></div>
+        <div class="md-bullet"><div class="b-icon next">↓</div><div><b>Step 6: Stripe owns AR · QBO follows</b><span>Stripe runs payments and AR. Accountants pull into QBO today; MN → QBO connects later.</span></div></div>
       </div>
     </div>
     <div class="motion-detail" data-detail="new-6" style="display:none">
-      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">QuickBooks Owns Accounting</div><div class="md-sys-pill qb"><span class="sys-dot"></span>QuickBooks · AR &amp; GL</div><div class="md-summary">QB is the ledger. AR, payments, dunning, financial reporting all happen here. MN doesn't try to replicate accounting.</div></div>
+      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">Stripe Active · QBO Sequenced</div><div class="md-sys-pill qb"><span class="sys-dot"></span>Stripe + QBO · AR &amp; GL</div><div class="md-summary">Stripe runs AR, payments, and dunning from day one. QBO connects via your third-party accountants after data verification, then pulls the same reference IDs through.</div></div>
       <div class="md-right">
         <div class="md-section-label">What happens</div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Customer + invoice posted</b><span>Invoice lands in AR, income mapped per Chart of Accounts, tax codes applied.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Reference IDs stamped</b><span>HubSpot Deal ID + MN Quote ID + MN Contract ID on the invoice. Audit trail end to end.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Payment + collections in QB</b><span>Payment processing, reminders, statements all in QB. MN doesn't push reminders.</span></div></div>
-        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Motion complete</b><span>Customer live, billing on schedule, books accurate. Future invoices fire automatically per schedule.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Customer + invoice posted to Stripe</b><span>Lives in Stripe's AR + payments engine. Tax codes applied via your Stripe config.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Reference IDs stamped</b><span>HubSpot Deal ID + MN Quote ID + MN Contract ID on every Stripe invoice. Audit trail end to end.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>QBO via accountants</b><span>Accountants pull Stripe into QBO today. MN → QBO direct connection wires up after data verification clears.</span></div></div>
+        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Motion complete</b><span>Customer live, billing on schedule. Future invoices fire automatically per schedule.</span></div></div>
       </div>
     </div>
   </div>
@@ -988,7 +990,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="mc" data-step="amend-3"><div class="mc-top"><div class="mc-num">03</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Delta Quote</div><div class="mc-label">Function</div><div class="mc-value">Net Change Only</div></div>
       <div class="mc" data-step="amend-4"><div class="mc-top"><div class="mc-num">04</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Contract v2</div><div class="mc-label">Output</div><div class="mc-value">Updated In-Place</div></div>
       <div class="mc" data-step="amend-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Adj. Invoice</div><div class="mc-label">Action</div><div class="mc-value">Charge or Credit</div></div>
-      <div class="mc" data-step="amend-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">QuickBooks</div></div><div class="mc-title">QB Posting</div><div class="mc-label">Ownership</div><div class="mc-value">Clean Audit</div></div>
+      <div class="mc" data-step="amend-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">Stripe + QBO</div></div><div class="mc-title">Billing Posting</div><div class="mc-label">Ownership</div><div class="mc-value">Clean Audit</div></div>
     </div>
     <div class="motion-detail" data-detail="amend-1" style="display:flex">
       <div class="md-left"><div class="md-eye">Step 01 of 06</div><div class="md-title">Active Contract is the Anchor</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Contract State</div><div class="md-summary">Amendments don't start from a fresh deal. They start from the existing contract. This is the most important difference from new business.</div></div>
@@ -1037,16 +1039,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Upsell: prorated charge invoice</b><span>Only the incremental amount, prorated from effective date. Goes out immediately or on next billing date.</span></div></div>
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Downsell: prorated credit memo</b><span>Credit for unused portion of removed scope. References original invoice for reconciliation.</span></div></div>
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>Swap: credit + charge as separate line items</b><span>Old product credited, new product charged. Auditable as two transactions.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Pushed to QB with parent reference</b><span>Adjustment or credit lands in QB with full audit trail back to the amendment event.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Pushed to Stripe with parent reference</b><span>Adjustment or credit lands in Stripe with full audit trail back to the amendment event.</span></div></div>
       </div>
     </div>
     <div class="motion-detail" data-detail="amend-6" style="display:none">
-      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">QuickBooks: Clean Reconciliation</div><div class="md-sys-pill qb"><span class="sys-dot"></span>QuickBooks · AR &amp; GL</div><div class="md-summary">Adjustment invoice or credit memo posts to QB with reference IDs. Finance can trace every adjustment back to the amendment event. No manual journal entries.</div></div>
+      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">Stripe: Clean Reconciliation</div><div class="md-sys-pill qb"><span class="sys-dot"></span>Stripe + QBO · AR &amp; GL</div><div class="md-summary">Adjustment invoice or credit memo posts to Stripe with reference IDs. Finance can trace every adjustment back to the amendment event. Accountants reconcile in QBO; MN → QBO direct connection follows after data verification.</div></div>
       <div class="md-right">
         <div class="md-section-label">What happens</div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Adjustment posts to AR</b><span>Increase or decrease in receivables, depending on direction. Reference IDs link to original invoice.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Credit memos applicable to original invoices</b><span>QB can apply the credit against the original invoice for clean reconciliation.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Original invoices stay untouched</b><span>No re-billing, no reversal of past invoices. Audit trail intact.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Adjustment posts to Stripe AR</b><span>Increase or decrease in receivables, depending on direction. Reference IDs link to original Stripe invoice.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Credit memos applicable to original invoices</b><span>Stripe can apply the credit against the original invoice for clean reconciliation.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Original invoices stay untouched</b><span>No re-billing, no reversal of past invoices. Audit trail intact in Stripe.</span></div></div>
         <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Future invoices reflect new contract</b><span>Next regular invoice uses new pricing. Amendment fully integrated into ongoing billing.</span></div></div>
       </div>
     </div>
@@ -1077,8 +1079,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="mc" data-step="renew-2"><div class="mc-top"><div class="mc-num">02</div><div class="mc-sys hs">HubSpot</div></div><div class="mc-title">Renewal Deal</div><div class="mc-label">Purpose</div><div class="mc-value">Forecast Visibility</div></div>
       <div class="mc" data-step="renew-3"><div class="mc-top"><div class="mc-num">03</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Renewal Quote</div><div class="mc-label">Output</div><div class="mc-value">Carry + Uplift</div></div>
       <div class="mc" data-step="renew-4"><div class="mc-top"><div class="mc-num">04</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">Renewed Contract</div><div class="mc-label">Result</div><div class="mc-value">Clean Reset</div></div>
-      <div class="mc" data-step="renew-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">New Term Invoice</div><div class="mc-label">Action</div><div class="mc-value">Push to QB</div></div>
-      <div class="mc" data-step="renew-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">QuickBooks</div></div><div class="mc-title">Continuous AR</div><div class="mc-label">Ownership</div><div class="mc-value">No Gap</div></div>
+      <div class="mc" data-step="renew-5"><div class="mc-top"><div class="mc-num">05</div><div class="mc-sys mn">MonetizeNow</div></div><div class="mc-title">New Term Invoice</div><div class="mc-label">Action</div><div class="mc-value">Push to Stripe</div></div>
+      <div class="mc" data-step="renew-6"><div class="mc-top"><div class="mc-num">06</div><div class="mc-sys qb">Stripe + QBO</div></div><div class="mc-title">Continuous AR</div><div class="mc-label">Ownership</div><div class="mc-value">No Gap</div></div>
     </div>
     <div class="motion-detail" data-detail="renew-1" style="display:flex">
       <div class="md-left"><div class="md-eye">Step 01 of 06</div><div class="md-title">Renewal Window Detected</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Time Trigger</div><div class="md-summary">MN watches every active contract. When the end date falls inside the renewal window (default 90 days out), the renewal motion fires automatically.</div></div>
@@ -1121,23 +1123,23 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       </div>
     </div>
     <div class="motion-detail" data-detail="renew-5" style="display:none">
-      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">New Term Invoices</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Engine</div><div class="md-summary">First invoice of the new term issues per the new billing schedule. Uplift pricing applied. Pushed to QB on schedule.</div></div>
+      <div class="md-left"><div class="md-eye">Step 05 of 06</div><div class="md-title">New Term Invoices</div><div class="md-sys-pill mn"><span class="sys-dot"></span>MonetizeNow · Billing Engine</div><div class="md-summary">First invoice of the new term issues per the new billing schedule. Uplift pricing applied. Pushed to Stripe on schedule.</div></div>
       <div class="md-right">
         <div class="md-section-label">What happens</div>
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>New billing schedule active</b><span>Generated from renewal quote. Reflects new term dates and uplifted pricing.</span></div></div>
         <div class="md-bullet"><div class="b-icon mn">M</div><div><b>First new-term invoice on start date</b><span>No proration needed — start date is the billing anchor.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Pushed to QB with new contract reference</b><span>QB sees a new invoice tied to the same customer, with the new contract ID.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Pushed to Stripe with new contract reference</b><span>Stripe sees a new invoice tied to the same customer, with the new contract ID.</span></div></div>
         <div class="md-bullet"><div class="b-icon warn">!</div><div><b>No double-billing across term boundary</b><span>Old and new term invoices never overlap. MN enforces this automatically.</span></div></div>
       </div>
     </div>
     <div class="motion-detail" data-detail="renew-6" style="display:none">
-      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">QuickBooks: Continuous Billing</div><div class="md-sys-pill qb"><span class="sys-dot"></span>QuickBooks · AR &amp; GL</div><div class="md-summary">From QB's perspective, renewal is just continuation of the customer's billing. Old invoices stay. New invoices flow. AR continuity preserved.</div></div>
+      <div class="md-left"><div class="md-eye">Step 06 of 06</div><div class="md-title">Stripe: Continuous Billing</div><div class="md-sys-pill qb"><span class="sys-dot"></span>Stripe + QBO · AR &amp; GL</div><div class="md-summary">From Stripe's perspective, renewal is just continuation of the customer's billing. Old invoices stay. New invoices flow. AR continuity preserved. Accountants pull into QBO on their usual cadence.</div></div>
       <div class="md-right">
-        <div class="md-section-label">What QB sees</div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Same customer, new invoices</b><span>Customer record unchanged. New term invoices post against the same customer.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Old-term invoices untouched</b><span>No reversal, no re-billing. Clean audit continuity across renewal boundary.</span></div></div>
-        <div class="md-bullet"><div class="b-icon qb">Q</div><div><b>Reference IDs trace to renewal Deal</b><span>Finance can audit any new-term invoice back to the renewal event in HS + MN.</span></div></div>
-        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Motion complete</b><span>Customer renewed cleanly. ARR continuity preserved. No gaps, overlaps, or manual reconciliation.</span></div></div>
+        <div class="md-section-label">What Stripe sees</div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Same customer, new invoices</b><span>Customer record unchanged. New term invoices post against the same Stripe customer.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Old-term invoices untouched</b><span>No reversal, no re-billing. Clean audit continuity across renewal boundary.</span></div></div>
+        <div class="md-bullet"><div class="b-icon qb">S</div><div><b>Reference IDs trace to renewal Deal</b><span>Finance can audit any new-term invoice back to the renewal event in HS + MN.</span></div></div>
+        <div class="md-bullet"><div class="b-icon tip">✓</div><div><b>Motion complete</b><span>Customer renewed cleanly. ARR continuity preserved. QBO direct sync follows after accountants connect MN.</span></div></div>
       </div>
     </div>
   </div>
@@ -1192,14 +1194,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
         </div></div>
       </div>
       <div class="gr" onclick="toggleG(this)">
-        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">QB customer mismatch</div><div class="gr-sym">Invoice in MN doesn't land in QB cleanly.</div></div><div class="gr-toggle">+</div></div>
+        <div class="gr-h"><div class="gr-ico">!</div><div class="gr-text"><div class="gr-title">Stripe customer mismatch</div><div class="gr-sym">MN invoice doesn't land in Stripe cleanly.</div></div><div class="gr-toggle">+</div></div>
         <div class="gr-detail"><div class="gr-detail-inner">
-          <div class="gr-row"><b>Cause</b><span>Customer email or external ID doesn't match between MN and QB. Either a new QB customer record gets created (duplicate) or invoice fails to post.</span></div>
-          <div class="gr-row"><b>Fix</b><span>Customer ID mapping verified during QB connection setup. MN flags mismatches before pushing invoice. Reconciliation report runs weekly.</span></div>
+          <div class="gr-row"><b>Cause</b><span>Customer email or external ID doesn't match between MN and Stripe. Either a new Stripe customer record gets created (duplicate) or invoice fails to post.</span></div>
+          <div class="gr-row"><b>Fix</b><span>Customer ID mapping verified during Stripe connection setup. MN flags mismatches before pushing invoice. Note: Stripe export sometimes lists primary contact as Customer Name — MN matches on email to avoid this.</span></div>
         </div></div>
       </div>
       <div class="gr" style="background:linear-gradient(135deg,#EEF2FF 0%, #F8FAFE 100%);border-color:#C7D2FE;cursor:default" onclick="event.stopPropagation()">
-        <div class="gr-h"><div class="gr-ico" style="background:linear-gradient(135deg,var(--mn) 0%, var(--mn-l) 100%);box-shadow:0 4px 10px rgba(5,33,171,0.2)">★</div><div class="gr-text"><div class="gr-title" style="color:var(--mn-d)">The rule of thumb</div><div class="gr-sym" style="color:var(--ink-3);font-weight:400">If it's a pricing or contract issue, fix it in MN. If it's pipeline, fix it in HubSpot. If it's ledger, fix it in QB. Each system owns its own truth — don't try to fix one in another.</div></div></div>
+        <div class="gr-h"><div class="gr-ico" style="background:linear-gradient(135deg,var(--mn) 0%, var(--mn-l) 100%);box-shadow:0 4px 10px rgba(5,33,171,0.2)">★</div><div class="gr-text"><div class="gr-title" style="color:var(--mn-d)">The rule of thumb</div><div class="gr-sym" style="color:var(--ink-3);font-weight:400">If it's a pricing or contract issue, fix it in MN. If it's pipeline, fix it in HubSpot. If it's invoicing or AR, fix it in Stripe. If it's accounting, talk to your QBO accountants. Each system owns its own truth.</div></div></div>
       </div>
     </div>
   </div>
@@ -1218,7 +1220,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="ph-left">
         <div class="ph-eye">Go-Live Path</div>
         <h2 style="color:white">What's Left.<br><span style="color:var(--lb);font-style:italic">Sequenced.</span></h2>
-        <p class="sub">Today confirms catalog. From there, HubSpot + QuickBooks in parallel, configuration alongside, enablement walk-throughs before reps touch production. Single coordinated cutover.</p>
+        <p class="sub">HubSpot and Slack connected. Today: Stripe wires up and QBO checklist drafted for accountants. Friday: Product Catalog walk and enablement. Then go-live.</p>
       </div>
       <div class="ph-right">
         <div class="ph-stat" style="color:white">~2</div>
@@ -1229,28 +1231,31 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
       <div class="gl" onclick="toggleGL(this)">
         <div class="gl-h"><div class="gl-ico send">→</div><div class="gl-text"><div class="gl-eye">MonetizeNow ships</div><div class="gl-title">From our side</div><div class="gl-summary">Connections, config, template work — most of the work sits here.</div></div><div class="gl-toggle">+</div></div>
         <div class="gl-detail"><div class="gl-detail-inner">
-          <div class="gl-d-item">HubSpot OAuth + object mapping configured in sandbox</div>
-          <div class="gl-d-item">QB connection scoped and configured (customers + forward invoices)</div>
-          <div class="gl-d-item">Slack approval routing wired to your approver list</div>
-          <div class="gl-d-item">Conditional T&C template stitched into quote output</div>
-          <div class="gl-d-item">ENTR branding applied to quote template</div>
+          <div class="gl-d-item">HubSpot OAuth + object mapping configured ✓</div>
+          <div class="gl-d-item">Slack connection live ✓ · Loom walkthroughs shared</div>
+          <div class="gl-d-item">Stripe wire-up today (with Gentry)</div>
+          <div class="gl-d-item">QBO connection checklist drafted for accountants</div>
+          <div class="gl-d-item">Conditional T&amp;C template stitched (standard + enterprise overrides)</div>
+          <div class="gl-d-item">ENTR branding applied · final pass Friday</div>
           <div class="gl-d-item">Test → production push, single coordinated step</div>
         </div></div>
       </div>
       <div class="gl" onclick="toggleGL(this)">
         <div class="gl-h"><div class="gl-ico confirm">✓</div><div class="gl-text"><div class="gl-eye">ENTR confirms</div><div class="gl-title">From your side</div><div class="gl-summary">Decisions, content for templates, approver list. Most can be sent over async.</div></div><div class="gl-toggle">+</div></div>
         <div class="gl-detail"><div class="gl-detail-inner">
-          <div class="gl-d-item">Catalog accuracy sign-off after today's review</div>
-          <div class="gl-d-item">Decision on HubSpot scope (all customers vs subset)</div>
-          <div class="gl-d-item">Decision on historical Deal mapping (recommend clean cutover)</div>
-          <div class="gl-d-item">T&C language files for conditional template</div>
-          <div class="gl-d-item">ENTR logo file + brand color codes for quote template</div>
-          <div class="gl-d-item">Approver list and discount thresholds for Slack routing</div>
+          <div class="gl-d-item">Catalog accuracy sign-off ✓ (Monday)</div>
+          <div class="gl-d-item">HubSpot scope ✓ Path A confirmed (all customers in HS)</div>
+          <div class="gl-d-item">Historical Deal mapping · ENTR reverts today (Krishna lean: Path A)</div>
+          <div class="gl-d-item">T&amp;C language ✓ standard + custom PDF for enterprise</div>
+          <div class="gl-d-item">ENTR logo ✓ uploaded (Save UI bug noted, saved on navigate)</div>
+          <div class="gl-d-item">Approval pattern ✓ Chelsea ↔ Kristin peer review</div>
+          <div class="gl-d-item">Accountants to grant QBO admin access after data verification</div>
         </div></div>
       </div>
       <div class="gl" onclick="toggleGL(this)">
-        <div class="gl-h"><div class="gl-ico enable">▶</div><div class="gl-text"><div class="gl-eye">Before go-live</div><div class="gl-title">Enablement walk-throughs</div><div class="gl-summary">One session per motion. Reps see it on a real sandbox Deal.</div></div><div class="gl-toggle">+</div></div>
+        <div class="gl-h"><div class="gl-ico enable">▶</div><div class="gl-text"><div class="gl-eye">Friday May 22 · 2:30 PM CT</div><div class="gl-title">Enablement + Catalog walk</div><div class="gl-summary">Product Catalog walk plus one walkthrough per motion. Reps see it on a real sandbox Deal.</div></div><div class="gl-toggle">+</div></div>
         <div class="gl-detail"><div class="gl-detail-inner">
+          <div class="gl-d-item">Product Catalog review in Live (Chelsea owns ongoing updates)</div>
           <div class="gl-d-item">New Business: live demo on a real sandbox Deal</div>
           <div class="gl-d-item">Amendment: walk an upsell scenario end to end</div>
           <div class="gl-d-item">Renewal: review auto-generated renewal pipeline</div>
@@ -1262,15 +1267,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:#020817;font-family:
         <div class="gl-detail"><div class="gl-detail-inner">
           <div class="gl-d-item">First real new business quote sent through MN</div>
           <div class="gl-d-item">Verify HubSpot Deal updates correctly</div>
-          <div class="gl-d-item">Verify quote PDF + T&Cs render correctly</div>
-          <div class="gl-d-item">Confirm Slack approval routes if discount triggers</div>
-          <div class="gl-d-item">Cutover sign-off, switch to async support cadence</div>
+          <div class="gl-d-item">Verify quote PDF + T&amp;Cs render correctly</div>
+          <div class="gl-d-item">Confirm Slack peer-approval routes if triggered</div>
+          <div class="gl-d-item">Verify Stripe receives invoice with correct reference IDs</div>
+          <div class="gl-d-item">Cutover sign-off; QBO direct connection scheduled with accountants</div>
         </div></div>
       </div>
     </div>
     <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;">
       <div style="font-size:12px;color:rgba(255,255,255,0.5)">Between sessions: ping CX in Slack or email. No need to wait for the next scheduled call.</div>
-      <div style="font-size:10.5px;color:rgba(255,255,255,0.28);letter-spacing:0.06em;font-family:'JetBrains Mono',monospace">ENTR × MonetizeNow &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; May 2026</div>
+      <div style="font-size:10.5px;color:rgba(255,255,255,0.28);letter-spacing:0.06em;font-family:'JetBrains Mono',monospace">ENTR × MonetizeNow &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; Updated May 20, 2026</div>
     </div>
   </div>
 </div>
