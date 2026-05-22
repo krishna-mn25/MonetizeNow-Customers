@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENTR × MonetizeNow · Operating Runbook</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  /* MN brand */
+  --mn:#0521AB; --mn-d:#03178A; --mn-l:#3A56C8; --mn-xl:#7C9BFF;
+  --lb:#D3EEF4; --lb-d:#A8DDE8; --lb2:#F0FAFD;
+  /* System colors */
+  --hs:#FF7A59; --hs-b:#FFF1ED; --hs-br:#FFD4C5; --hs-d:#E55B3D;
+  --qb:#2CA01C; --qb-b:#E8F8E5; --qb-br:#B5E2AB; --qb-d:#1F7715;
+  --st:#635BFF; --st-b:#EFEEFF; --st-br:#C7C2FF; --st-d:#4F46E5;
+  /* Ink */
+  --ink:#0A1428; --ink-2:#1A2540; --ink-3:#2D3B5C;
+  --body:#3A4866; --sub:#6B7A99; --mute:#94A3B8;
+  --border:#E4EAF5; --border-2:#D0DCF0; --border-s:#EEF2F8;
+  --bg:#FFFFFF; --off:#FAFBFE; --soft:#F4F7FC;
+  /* Semantic */
+  --green:#16A34A; --green-d:#15803D; --green-b:#DCFCE7; --green-br:#86EFAC;
+  --amber:#D97706; --amber-d:#B45309; --amber-b:#FEF3C7; --amber-br:#FCD34D;
+  --red:#DC2626; --red-d:#991B1B; --red-b:#FEE2E2; --red-br:#FECACA;
+  /* Motion */
+  --p-new:#0521AB; --p-amend:#0F766E; --p-renew:#7C3AED;
+
+  --shadow-sm:0 1px 2px rgba(10,20,40,0.04), 0 1px 3px rgba(10,20,40,0.06);
+  --shadow-md:0 4px 12px rgba(10,20,40,0.06), 0 2px 6px rgba(10,20,40,0.04);
+  --shadow-lg:0 12px 32px rgba(10,20,40,0.08), 0 4px 12px rgba(10,20,40,0.05);
+  --shadow-xl:0 24px 64px rgba(10,20,40,0.12), 0 12px 24px rgba(10,20,40,0.06);
+  --shadow-mn:0 12px 32px rgba(5,33,171,0.18), 0 4px 12px rgba(5,33,171,0.1);
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-out:cubic-bezier(.4,0,.2,1);
+}
+
+html,body{
+  width:100%; min-height:100%;
+  background:var(--off);
+  font-family:'DM Sans','Inter',system-ui,sans-serif;
+  color:var(--body);
+  letter-spacing:-0.003em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+#runbook{position:relative; min-height:100vh;}
+
+/* ============ TOP CHROME (sticky) ============ */
+.topbar{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,0.85); backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  padding:14px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.topbar-left{display:flex; align-items:center; gap:14px; min-width:0;}
+.mark{width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; letter-spacing:-0.04em; flex-shrink:0; position:relative; overflow:hidden;}
+.mark.mn{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%); color:white; box-shadow:0 4px 12px rgba(5,33,171,0.25);}
+.mark.entr{background:linear-gradient(135deg,#0A1428 0%,#2D3B5C 100%); color:white; box-shadow:0 4px 12px rgba(10,20,40,0.25);}
+.mark.entr::after{content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 0%, transparent 50%);}
+.brand-stack{display:flex; flex-direction:column; min-width:0;}
+.brand-stack .brand-line{font-size:13.5px; font-weight:700; color:var(--ink); letter-spacing:-0.015em; line-height:1.15;}
+.brand-stack .brand-line .x{color:var(--mute); font-weight:400; margin:0 5px;}
+.brand-stack .brand-sub{font-size:11px; color:var(--sub); font-weight:500; line-height:1.2; margin-top:2px;}
+
+.crumb{display:flex; align-items:center; gap:10px; font-size:12px; color:var(--sub); font-weight:500;}
+.crumb a{color:var(--mn); text-decoration:none; cursor:pointer; font-weight:600; display:inline-flex; align-items:center; gap:6px;}
+.crumb a:hover{text-decoration:underline;}
+.crumb-sep{color:var(--mute);}
+.crumb-cur{color:var(--ink); font-weight:600;}
+
+.topbar-right{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+.meta-pill{font-size:10.5px; font-weight:600; padding:5px 11px; border-radius:6px; background:var(--soft); color:var(--sub); letter-spacing:0.04em; font-family:'JetBrains Mono',monospace; border:1px solid var(--border-s);}
+.meta-pill.live{background:#F0FDF4; color:var(--green-d); border-color:var(--green-br);}
+.meta-pill.live::before{content:"●"; margin-right:5px; color:var(--green); animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+/* ============ VIEW SYSTEM ============ */
+.view{display:none;}
+.view.active{display:block;}
+
+/* ============ HUB ============ */
+.hero{
+  position:relative; padding:60px 40px 48px;
+  background:
+    radial-gradient(ellipse at 75% 0%, rgba(5,33,171,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 100%, rgba(124,58,237,0.12) 0%, transparent 50%),
+    linear-gradient(180deg,#020817 0%,#0A1428 100%);
+  color:white;
+  overflow:hidden;
+}
+.hero-deco{position:absolute; top:0; right:-100px; width:520px; height:520px; opacity:0.5; pointer-events:none;
+  background:conic-gradient(from 90deg at 50% 50%, rgba(124,155,255,0) 0deg, rgba(124,155,255,0.18) 90deg, rgba(211,238,244,0.22) 180deg, rgba(124,155,255,0.18) 270deg, rgba(124,155,255,0) 360deg);
+  border-radius:50%; filter:blur(70px); animation:spin 45s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+.hero-inner{position:relative; z-index:2; max-width:1280px; margin:0 auto;}
+.hero-eye{display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--lb); margin-bottom:22px; padding:6px 14px; border:1px solid rgba(211,238,244,0.25); border-radius:30px; background:rgba(211,238,244,0.08); backdrop-filter:blur(8px);}
+.hero-eye::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--lb); box-shadow:0 0 10px var(--lb);}
+
+.hero h1{font-family:'DM Serif Display',serif; font-size:56px; font-weight:400; line-height:1.04; letter-spacing:-0.024em; color:white; max-width:880px; margin-bottom:18px;}
+.hero h1 em{color:var(--lb); font-style:italic;}
+.hero h1 .accent{background:linear-gradient(120deg,#7C9BFF 0%,#D3EEF4 50%,#7C9BFF 100%); background-clip:text; -webkit-background-clip:text; color:transparent; font-style:italic;}
+.hero-lede{font-size:16px; color:rgba(255,255,255,0.68); line-height:1.62; max-width:720px; margin-bottom:30px; font-weight:400;}
+.hero-stack{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:8px;}
+.stack-chip{display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; padding:7px 14px; border-radius:24px; backdrop-filter:blur(8px); color:white;}
+.stack-chip .sd{width:7px; height:7px; border-radius:50%;}
+.stack-chip.hs{background:rgba(255,122,89,0.16); border:1px solid rgba(255,212,197,0.35);} .stack-chip.hs .sd{background:var(--hs); box-shadow:0 0 8px var(--hs);}
+.stack-chip.mn{background:rgba(124,155,255,0.18); border:1px solid rgba(211,238,244,0.35);} .stack-chip.mn .sd{background:var(--lb); box-shadow:0 0 8px var(--lb);}
+.stack-chip.st{background:rgba(99,91,255,0.18); border:1px solid rgba(199,194,255,0.35);} .stack-chip.st .sd{background:#A5A0FF; box-shadow:0 0 8px #A5A0FF;}
+.stack-chip.qb{background:rgba(44,160,28,0.16); border:1px solid rgba(181,226,171,0.35);} .stack-chip.qb .sd{background:#86EFAC; box-shadow:0 0 8px #86EFAC;}
+.stack-arrow{color:rgba(255,255,255,0.3); font-size:14px;}
+
+/* hub body */
+.hub-body{max-width:1280px; margin:0 auto; padding:40px;}
+
+.hub-section-label{font-size:11px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--mn); margin-bottom:14px; display:inline-flex; align-items:center; gap:10px;}
+.hub-section-label::before{content:""; width:18px; height:1.5px; background:var(--mn);}
+.hub-section-h{font-family:'DM Serif Display',serif; font-size:32px; color:var(--ink); letter-spacing:-0.02em; margin-bottom:10px; line-height:1.1;}
+.hub-section-lede{font-size:14.5px; color:var(--sub); line-height:1.6; max-width:680px; margin-bottom:28px;}
+
+.hub-block{margin-bottom:48px;}
+.hub-block:last-child{margin-bottom:0;}
+
+.card-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.card-grid.two{grid-template-columns:repeat(2,1fr);}
+@media (max-width:1100px){.card-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:720px){.card-grid,.card-grid.two{grid-template-columns:1fr;}}
+
+.sec-card{
+  background:white; border:1.5px solid var(--border); border-radius:14px;
+  padding:20px 22px 22px; cursor:pointer; transition:all 0.3s var(--ease);
+  display:flex; flex-direction:column; position:relative; overflow:hidden;
+  box-shadow:var(--shadow-sm); min-height:188px;
+}
+.sec-card:hover{transform:translateY(-4px); border-color:var(--mn); box-shadow:var(--shadow-lg);}
+.sec-card::before{content:""; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--mn) 0%, var(--mn-l) 100%); transform:scaleX(0); transform-origin:left; transition:transform 0.35s var(--ease);}
+.sec-card:hover::before{transform:scaleX(1);}
+
+.sec-card .sc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; margin-bottom:14px;}
+.sec-card .sc-num{font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:var(--mute); letter-spacing:0.08em;}
+.sec-card .sc-ico{width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:var(--soft); border:1px solid var(--border); color:var(--mn); transition:all 0.3s var(--ease);}
+.sec-card:hover .sc-ico{background:linear-gradient(135deg,var(--mn) 0%, var(--mn-l) 100%); color:white; border-color:transparent; box-shadow:0 6px 16px rgba(5,33,171,0.25);}
+.sec-card .sc-ico svg{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8;}
+.sec-card .sc-title{font-size:15.5px; font-weight:700; color:var(--ink); letter-spacing:-0.015em; line-height:1.25; margin-bottom:8px;}
+.sec-card .sc-desc{font-size:12.5px; color:var(--sub); line-height:1.55; flex:1; margin-bottom:14px;}
+.sec-card .sc-foot{display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border-s);}
+.sec-card .sc-tags{display:flex; gap:5px; flex-wrap:wrap;}
+.sc-tag{font-size:9px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; padding:3px 7px; border-radius:5px;}
+.sc-tag.hs{background:var(--hs-b); color:var(--hs-d); border:1px solid var(--hs-br);}
+.sc-tag.mn{background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;}
+.sc-tag.st{background:var(--st-b); color:var(--st-d); border:1px solid var(--st-br);}
+.sc-tag.qb{background:var(--qb-b); color:var(--qb-d); border:1px solid var(--qb-br);}
+.sc-tag.ops{background:var(--soft); color:var(--sub); border:1px solid var(--border);}
+.sec-card .sc-arrow{font-size:14px; color:var(--mute); transition:all 0.25s var(--ease);}
+.sec-card:hover .sc-arrow{color:var(--mn); transform:translateX(4px);}
+
+/* ============ SECTION VIEWS ============ */
+.section{max-width:1280px; margin:0 auto; padding:32px 40px 80px;}
+.sec-head{margin-bottom:28px;}
+.sec-eye{font-size:11px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--mn); margin-bottom:10px; display:inline-flex; align-items:center; gap:10px;}
+.sec-eye::before{content:""; width:18px; height:1.5px; background:var(--mn);}
+.sec-h{font-family:'DM Serif Display',serif; font-size:44px; color:var(--ink); letter-spacing:-0.022em; line-height:1.05; margin-bottom:14px;}
+.sec-lede{font-size:15px; color:var(--sub); line-height:1.6; max-width:760px;}
+
+/* ============ CALLOUTS ============ */
+.co{border-radius:10px; padding:13px 16px; font-size:13px; line-height:1.6; margin-bottom:16px; display:flex; gap:11px; align-items:flex-start;}
+.co .co-ico{font-size:14px; flex-shrink:0; margin-top:1px;}
+.co strong{font-weight:700;}
+.co-blue{background:#EEF2FF; border-left:3px solid var(--mn); color:var(--ink-2);}
+.co-blue strong{color:var(--mn-d);}
+.co-amber{background:var(--amber-b); border-left:3px solid var(--amber); color:var(--amber-d);}
+.co-amber strong{color:var(--amber-d);}
+.co-green{background:var(--green-b); border-left:3px solid var(--green); color:var(--green-d);}
+.co-green strong{color:var(--green-d);}
+.co-red{background:var(--red-b); border-left:3px solid var(--red); color:var(--red-d);}
+.co-red strong{color:var(--red-d);}
+.co-gray{background:var(--soft); border-left:3px solid var(--mute); color:var(--ink-3);}
+
+/* ============ TABLES ============ */
+.tbl-wrap{border:1px solid var(--border); border-radius:12px; overflow:hidden; background:white; box-shadow:var(--shadow-sm); margin-bottom:16px;}
+table{width:100%; border-collapse:collapse;}
+table thead th{background:linear-gradient(180deg, #FAFBFE 0%, var(--soft) 100%); padding:11px 16px; font-size:11px; font-weight:700; text-align:left; color:var(--ink); letter-spacing:0.07em; text-transform:uppercase; border-bottom:1.5px solid var(--border);}
+table tbody td{padding:11px 16px; border-bottom:1px solid var(--border-s); font-size:13px; color:var(--ink-3); vertical-align:top; line-height:1.5;}
+table tbody tr:last-child td{border-bottom:none;}
+table tbody tr:nth-child(even) td{background:#FBFCFE;}
+table tbody td strong{color:var(--ink); font-weight:600;}
+table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--soft); padding:2px 6px; border-radius:4px; color:var(--mn-d); border:1px solid var(--border-s);}
+
+/* ============ BADGES / CHIPS / TAGS ============ */
+.sys-pill{display:inline-flex; align-items:center; gap:7px; font-size:11.5px; font-weight:600; padding:5px 12px; border-radius:24px; line-height:1; white-space:nowrap;}
+.sys-pill .sd{width:7px; height:7px; border-radius:50%;}
+.sys-pill.hs{background:var(--hs-b); color:var(--hs-d); border:1px solid var(--hs-br);} .sys-pill.hs .sd{background:var(--hs);}
+.sys-pill.mn{background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;} .sys-pill.mn .sd{background:var(--mn);}
+.sys-pill.st{background:var(--st-b); color:var(--st-d); border:1px solid var(--st-br);} .sys-pill.st .sd{background:#635BFF;}
+.sys-pill.qb{background:var(--qb-b); color:var(--qb-d); border:1px solid var(--qb-br);} .sys-pill.qb .sd{background:var(--qb);}
+
+.chip{display:inline-flex; align-items:center; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 8px; border-radius:5px; white-space:nowrap;}
+.chip.hs{background:var(--hs-b); color:var(--hs-d); border:1px solid var(--hs-br);}
+.chip.mn{background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;}
+.chip.st{background:var(--st-b); color:var(--st-d); border:1px solid var(--st-br);}
+.chip.qb{background:var(--qb-b); color:var(--qb-d); border:1px solid var(--qb-br);}
+.chip.ok{background:var(--green-b); color:var(--green-d); border:1px solid var(--green-br);}
+.chip.warn{background:var(--amber-b); color:var(--amber-d); border:1px solid var(--amber-br);}
+.chip.risk{background:var(--red-b); color:var(--red-d); border:1px solid var(--red-br);}
+.chip.gray{background:var(--soft); color:var(--sub); border:1px solid var(--border);}
+.chip.action{background:#F5F3FF; color:#5B21B6; border:1px solid #DDD6FE;}
+.chip.auto{background:#E0F2FE; color:#075985; border:1px solid #BAE6FD;}
+.chip.human{background:#FEF3C7; color:var(--amber-d); border:1px solid var(--amber-br);}
+
+/* ============ SECTION LABELS ============ */
+.section-label{font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--sub); margin-bottom:10px; display:inline-flex; align-items:center; gap:8px;}
+.section-label::before{content:""; width:12px; height:1.5px; background:var(--sub);}
+
+/* ============ GRID HELPERS ============ */
+.g2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.g3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.g4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+.g-2-1{display:grid; grid-template-columns:2fr 1fr; gap:18px;}
+.g-1-2{display:grid; grid-template-columns:1fr 2fr; gap:18px;}
+.row{display:flex; gap:14px;}
+.row > *{flex:1;}
+.mb12{margin-bottom:12px;} .mb16{margin-bottom:16px;} .mb20{margin-bottom:20px;} .mb24{margin-bottom:24px;} .mb32{margin-bottom:32px;}
+.mt16{margin-top:16px;} .mt24{margin-top:24px;}
+
+/* ============ PANELS / CARDS ============ */
+.panel{background:white; border:1px solid var(--border); border-radius:12px; padding:20px 22px; box-shadow:var(--shadow-sm);}
+.panel.soft{background:var(--soft); border-color:var(--border-s);}
+.panel.tint{background:linear-gradient(135deg, #EEF2FF 0%, white 70%); border-color:#C7D2FE;}
+
+.panel-title{font-size:15px; font-weight:700; color:var(--ink); letter-spacing:-0.012em; margin-bottom:6px;}
+.panel-sub{font-size:12.5px; color:var(--sub); line-height:1.55; margin-bottom:14px;}
+
+/* ============ LISTS ============ */
+.ul{list-style:none; padding:0;}
+.ul li{display:flex; gap:11px; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--border-s); font-size:13px; color:var(--ink-3); line-height:1.5;}
+.ul li:last-child{border-bottom:none;}
+.ul li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--mn); margin-top:9px; flex-shrink:0;}
+.ul li strong{color:var(--ink); font-weight:600;}
+
+.ul-rich li{display:block;}
+.ul-rich li::before{display:none;}
+.ul-rich li .l-title{display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:600; color:var(--ink); margin-bottom:3px; line-height:1.3;}
+.ul-rich li .l-title::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--mn); flex-shrink:0;}
+.ul-rich li .l-body{font-size:12.5px; color:var(--sub); line-height:1.55; margin-left:14px;}
+
+/* ============ OBJECT / SYSTEM FLOW ============ */
+.flow-stack{display:flex; align-items:stretch; gap:0; margin-bottom:18px;}
+.fs-node{flex:1; background:white; border:1.5px solid var(--border); border-radius:12px; padding:16px 14px; text-align:left; position:relative; display:flex; flex-direction:column; min-width:0;}
+.fs-node.hs{border-color:var(--hs-br); background:linear-gradient(180deg, var(--hs-b) 0%, white 60%);}
+.fs-node.mn{border-color:#C7D2FE; background:linear-gradient(180deg, #EEF2FF 0%, white 60%);}
+.fs-node.st{border-color:var(--st-br); background:linear-gradient(180deg, var(--st-b) 0%, white 60%);}
+.fs-node.qb{border-color:var(--qb-br); background:linear-gradient(180deg, var(--qb-b) 0%, white 60%);}
+.fs-conn{flex:0 0 22px; display:flex; align-items:center; justify-content:center; color:var(--mute); font-size:16px;}
+.fs-conn .conn-lbl{position:absolute; top:-8px; background:white; padding:1px 6px; font-size:8.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--mute); border-radius:4px; border:1px solid var(--border-s);}
+.fs-conn-wrap{position:relative; flex:0 0 36px; display:flex; align-items:center; justify-content:center;}
+.fs-head{display:flex; align-items:center; gap:8px; margin-bottom:10px;}
+.fs-head .fs-mark{width:22px; height:22px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color:white;}
+.fs-head .fs-mark.hs{background:linear-gradient(135deg,var(--hs) 0%,var(--hs-d) 100%);}
+.fs-head .fs-mark.mn{background:linear-gradient(135deg,var(--mn) 0%,var(--mn-l) 100%);}
+.fs-head .fs-mark.st{background:linear-gradient(135deg,#635BFF 0%,#4F46E5 100%);}
+.fs-head .fs-mark.qb{background:linear-gradient(135deg,var(--qb) 0%,var(--qb-d) 100%);}
+.fs-name{font-size:13px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;}
+.fs-role{font-size:9.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;}
+.fs-node.hs .fs-role{color:var(--hs-d);}
+.fs-node.mn .fs-role{color:var(--mn-d);}
+.fs-node.st .fs-role{color:var(--st-d);}
+.fs-node.qb .fs-role{color:var(--qb-d);}
+.fs-list{list-style:none; padding:0;}
+.fs-list li{font-size:11.5px; color:var(--ink-3); line-height:1.45; padding:3px 0; display:flex; gap:7px; align-items:flex-start;}
+.fs-list li::before{content:""; width:4px; height:4px; border-radius:50%; background:var(--sub); margin-top:7px; flex-shrink:0;}
+
+/* ============ STEP STRIP (numbered motion flow) ============ */
+.steps{display:flex; gap:8px; margin-bottom:18px; overflow-x:auto; padding-bottom:4px;}
+.step{flex:1; min-width:140px; background:white; border:1px solid var(--border); border-radius:11px; padding:14px 14px 12px; position:relative; box-shadow:var(--shadow-sm);}
+.step-num{font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:var(--mute); letter-spacing:0.1em; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;}
+.step-num .sys-dot{display:inline-flex; align-items:center; gap:5px; font-size:8.5px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; padding:2px 6px; border-radius:4px;}
+.step-num .sys-dot.hs{background:var(--hs-b); color:var(--hs-d);}
+.step-num .sys-dot.mn{background:#EEF2FF; color:var(--mn-d);}
+.step-num .sys-dot.st{background:var(--st-b); color:var(--st-d);}
+.step-num .sys-dot.qb{background:var(--qb-b); color:var(--qb-d);}
+.step-t{font-size:13.5px; font-weight:700; color:var(--ink); letter-spacing:-0.012em; margin-bottom:4px; line-height:1.25;}
+.step-d{font-size:11.5px; color:var(--sub); line-height:1.5;}
+.step-act{margin-top:8px; padding-top:8px; border-top:1px dashed var(--border-2); font-size:10.5px; color:var(--ink-2); display:flex; align-items:center; gap:6px;}
+.step-act b{font-weight:700; color:var(--mn-d);}
+
+/* ============ FIELD MAP ============ */
+.field-row{display:grid; grid-template-columns:1fr 28px 1fr; gap:10px; align-items:center; padding:9px 0; border-bottom:1px solid var(--border-s); font-size:12.5px;}
+.field-row:last-child{border-bottom:none;}
+.field-row .f-left, .field-row .f-right{display:flex; align-items:center; gap:8px; min-width:0;}
+.field-row .f-arrow{text-align:center; color:var(--mute); font-size:14px;}
+.field-row code{font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--soft); padding:3px 7px; border-radius:5px; color:var(--ink-2); border:1px solid var(--border-s); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.field-row code.mn{color:var(--mn-d); background:#EEF2FF; border-color:#C7D2FE;}
+.field-row code.hs{color:var(--hs-d); background:var(--hs-b); border-color:var(--hs-br);}
+
+/* ============ DECISION TREE ============ */
+.dt{display:flex; flex-direction:column; align-items:center; gap:12px; padding:20px 0;}
+.dt-start{padding:10px 18px; background:linear-gradient(135deg, var(--mn) 0%, var(--mn-l) 100%); color:white; font-size:13px; font-weight:700; border-radius:30px; box-shadow:var(--shadow-mn); letter-spacing:0.04em;}
+.dt-q{background:white; border:2px solid var(--border-2); border-radius:14px; padding:14px 22px; font-size:14px; font-weight:600; color:var(--ink); display:flex; align-items:center; gap:10px; box-shadow:var(--shadow-sm); position:relative;}
+.dt-q::before{content:"?"; width:24px; height:24px; border-radius:50%; background:var(--mn); color:white; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;}
+.dt-arms{display:flex; gap:36px; align-items:flex-start; position:relative;}
+.dt-arm{display:flex; flex-direction:column; align-items:center; gap:10px; min-width:200px;}
+.dt-branch{font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:4px 12px; border-radius:6px;}
+.dt-branch.yes{background:var(--green-b); color:var(--green-d); border:1px solid var(--green-br);}
+.dt-branch.no{background:var(--red-b); color:var(--red-d); border:1px solid var(--red-br);}
+.dt-result{background:white; border:2px solid; border-radius:14px; padding:14px 18px; text-align:center; box-shadow:var(--shadow-md); width:100%;}
+.dt-result.new{border-color:var(--mn);}
+.dt-result.amend{border-color:var(--p-amend);}
+.dt-result.renew{border-color:var(--p-renew);}
+.dt-result .dt-r-eye{font-size:9.5px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; margin-bottom:4px;}
+.dt-result.new .dt-r-eye{color:var(--mn);}
+.dt-result.amend .dt-r-eye{color:var(--p-amend);}
+.dt-result.renew .dt-r-eye{color:var(--p-renew);}
+.dt-result .dt-r-t{font-family:'DM Serif Display',serif; font-size:20px; color:var(--ink); line-height:1.1; margin-bottom:4px;}
+.dt-result .dt-r-d{font-size:11.5px; color:var(--sub); line-height:1.4;}
+.dt-line{width:2px; height:14px; background:var(--border-2);}
+
+/* ============ ROLE MATRIX ============ */
+.role-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:14px;}
+.role-card{background:white; border:1px solid var(--border); border-radius:12px; padding:18px 20px; box-shadow:var(--shadow-sm);}
+.role-card .rh{display:flex; align-items:center; gap:11px; margin-bottom:12px;}
+.role-card .r-ico{width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-weight:800; font-family:'JetBrains Mono',monospace; font-size:14px; color:white;}
+.role-card .r-ico.cpq{background:linear-gradient(135deg, var(--mn) 0%, var(--mn-l) 100%);}
+.role-card .r-ico.bill{background:linear-gradient(135deg, var(--p-amend) 0%, #14B8A6 100%);}
+.role-card .r-ico.tech{background:linear-gradient(135deg, #4B5563 0%, #1F2937 100%);}
+.role-card .r-ico.spon{background:linear-gradient(135deg, var(--p-renew) 0%, #A78BFA 100%);}
+.role-card .r-name{font-size:15px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;}
+.role-card .r-who{font-size:11px; color:var(--sub); font-weight:500; margin-top:2px;}
+.role-card .r-section{font-size:9.5px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--sub); margin:12px 0 6px;}
+.role-card .r-list{list-style:none;}
+.role-card .r-list li{font-size:12px; color:var(--ink-3); line-height:1.5; padding:3px 0; display:flex; gap:7px; align-items:flex-start;}
+.role-card .r-list li::before{content:""; width:4px; height:4px; background:var(--mn); border-radius:50%; margin-top:7px; flex-shrink:0;}
+
+/* ============ GLOSSARY ============ */
+.gloss{display:grid; grid-template-columns:repeat(2, 1fr); gap:14px;}
+.g-card{background:white; border:1px solid var(--border); border-radius:11px; padding:16px 18px; box-shadow:var(--shadow-sm);}
+.g-card .g-term{display:flex; align-items:center; gap:9px; margin-bottom:5px;}
+.g-card .g-term .g-name{font-family:'DM Serif Display',serif; font-size:19px; color:var(--ink); letter-spacing:-0.018em; line-height:1;}
+.g-card .g-term .g-type{font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:2px 7px; border-radius:4px;}
+.g-card .g-d{font-size:12.5px; color:var(--ink-3); line-height:1.55; margin-bottom:8px;}
+.g-card .g-meta{font-size:11px; color:var(--sub); padding-top:8px; border-top:1px dashed var(--border-s); display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+.g-card .g-meta b{color:var(--ink); font-weight:600;}
+
+/* ============ PITFALL ============ */
+.pit{background:#FEF8F8; border:1px solid var(--red-br); border-radius:12px; padding:16px 18px; margin-bottom:12px; box-shadow:var(--shadow-sm);}
+.pit-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px;}
+.pit-title{font-size:14.5px; font-weight:700; color:var(--red-d); letter-spacing:-0.012em; display:flex; align-items:center; gap:9px;}
+.pit-title::before{content:"!"; width:22px; height:22px; border-radius:6px; background:var(--red); color:white; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;}
+.pit-body{font-size:12.5px; color:var(--ink-3); line-height:1.55;}
+.pit-body .pb-row{display:flex; gap:10px; padding:6px 0;}
+.pit-body .pb-row .pb-lbl{font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--sub); flex-shrink:0; width:80px; padding-top:1px;}
+.pit-fix{background:var(--green-b); border:1px solid var(--green-br); border-radius:8px; padding:10px 13px; margin-top:10px; font-size:12.5px; color:var(--green-d); line-height:1.55;}
+.pit-fix b{display:block; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px; color:var(--green-d);}
+
+/* ============ MODE TOGGLE (for QBO today vs future) ============ */
+.mode-tabs{display:flex; gap:6px; background:var(--soft); border:1px solid var(--border); padding:5px; border-radius:11px; margin-bottom:16px; max-width:fit-content;}
+.mode-tab{padding:8px 16px; border-radius:7px; font-size:12.5px; font-weight:600; color:var(--sub); cursor:pointer; transition:all 0.25s var(--ease); border:none; background:transparent; font-family:inherit;}
+.mode-tab.active{background:white; color:var(--ink); box-shadow:var(--shadow-sm);}
+.mode-content{display:none;}
+.mode-content.active{display:block;}
+
+/* ============ BACK BUTTON ============ */
+.back-btn{display:inline-flex; align-items:center; gap:6px; padding:7px 12px 7px 9px; font-size:12px; font-weight:600; color:var(--sub); background:white; border:1px solid var(--border); border-radius:8px; cursor:pointer; font-family:inherit; transition:all 0.2s var(--ease);}
+.back-btn:hover{color:var(--mn); border-color:var(--mn-l); transform:translateX(-2px);}
+.back-btn::before{content:"←"; font-size:13px;}
+
+/* ============ FOOTER ============ */
+.foot{padding:32px 40px; background:var(--ink); color:rgba(255,255,255,0.55); font-size:11.5px; text-align:center; letter-spacing:0.04em;}
+.foot a{color:var(--lb); text-decoration:none;}
+
+/* ============ TOC SIDEBAR (within section) ============ */
+.toc{position:sticky; top:80px; background:white; border:1px solid var(--border); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow-sm);}
+.toc-h{font-size:10px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; color:var(--sub); margin-bottom:10px;}
+.toc-l{list-style:none;}
+.toc-l li{padding:5px 0; border-bottom:1px solid var(--border-s);}
+.toc-l li:last-child{border-bottom:none;}
+.toc-l a{font-size:12px; color:var(--ink-3); text-decoration:none; line-height:1.4; display:block; cursor:pointer; transition:color 0.2s;}
+.toc-l a:hover{color:var(--mn);}
+
+/* ============ KV PAIRS ============ */
+.kv{display:grid; grid-template-columns:140px 1fr; gap:10px 16px; padding:14px 0; border-bottom:1px solid var(--border-s);}
+.kv:last-child{border-bottom:none;}
+.kv .k{font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--sub); padding-top:2px;}
+.kv .v{font-size:13px; color:var(--ink-2); line-height:1.55;}
+.kv .v code{font-family:'JetBrains Mono',monospace; font-size:11.5px; background:var(--soft); padding:2px 6px; border-radius:4px; color:var(--mn-d); border:1px solid var(--border-s);}
+
+/* ============ HUB INTRO STRIP ============ */
+.intro-strip{display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-top:30px; padding:18px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; backdrop-filter:blur(8px);}
+.is-stat{text-align:left;}
+.is-n{font-family:'DM Serif Display',serif; font-size:28px; color:white; line-height:1; margin-bottom:4px; letter-spacing:-0.018em;}
+.is-l{font-size:10.5px; color:rgba(255,255,255,0.55); letter-spacing:0.08em; text-transform:uppercase; font-weight:600;}
+
+/* truncate */
+.truncate{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+</style>
+</head>
+<body>
+<div id="runbook">
+
+<!-- ============================================== -->
+<!-- ============ STICKY TOPBAR =================== -->
+<!-- ============================================== -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div style="display:flex; align-items:center; gap:9px;">
+      <div class="mark entr">E</div>
+      <span style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.02em;">ENTR</span>
+    </div>
+    <span style="color:var(--mute); font-size:14px;">×</span>
+    <div style="display:flex; align-items:center; gap:9px;">
+      <div class="mark mn">M</div>
+      <span style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.02em;">MonetizeNow</span>
+    </div>
+    <div class="crumb" style="margin-left:18px;" id="crumb">
+      <span class="crumb-cur">Operating Runbook</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="meta-pill">v1.0 · May 2026</span>
+    <span class="meta-pill live">Production</span>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- ============ HUB (LANDING) =================== -->
+<!-- ============================================== -->
+<div class="view active" id="view-hub">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-deco"></div>
+    <div class="hero-inner">
+      <div class="hero-eye">ENTR Operating Runbook · Internal &amp; Customer Reference</div>
+      <h1>How quote-to-cash<br>actually runs on <em>MonetizeNow.</em></h1>
+      <p class="hero-lede">
+        Working reference for ENTR's revenue stack. What lives in HubSpot, what lives in MonetizeNow, what happens in Stripe behind the scenes, and how Finance reads invoice and payment data from MN reports for QuickBooks. Every motion, every handoff, every field that matters.
+      </p>
+      <div class="hero-stack">
+        <span class="stack-chip hs"><span class="sd"></span>HubSpot · CRM</span>
+        <span class="stack-arrow">→</span>
+        <span class="stack-chip mn"><span class="sd"></span>MonetizeNow · CPQ + Billing + Source of Truth</span>
+        <span class="stack-arrow">→</span>
+        <span class="stack-chip st"><span class="sd"></span>Stripe · Payments (background)</span>
+        <span class="stack-arrow">→</span>
+        <span class="stack-chip qb"><span class="sd"></span>QuickBooks · Books</span>
+      </div>
+      <div class="intro-strip">
+        <div class="is-stat"><div class="is-n">3</div><div class="is-l">Sales Motions</div></div>
+        <div class="is-stat"><div class="is-n">4</div><div class="is-l">Connected Systems</div></div>
+        <div class="is-stat"><div class="is-n">12</div><div class="is-l">Reference Sections</div></div>
+        <div class="is-stat"><div class="is-n">1</div><div class="is-l">Source of Truth (MN)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUB CARD GRID -->
+  <div class="hub-body">
+
+    <!-- BLOCK 1: ARCHITECTURE -->
+    <div class="hub-block">
+      <div class="hub-section-label">Part 1 · Foundations</div>
+      <h2 class="hub-section-h">How the stack is wired</h2>
+      <p class="hub-section-lede">Where each system sits, what it owns, and how data moves between them. Useful for orientation or when a number needs to be traced to its source.</p>
+      <div class="card-grid">
+
+        <div class="sec-card" onclick="goView('ownership')">
+          <div class="sc-top">
+            <span class="sc-num">01</span>
+            <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/><path d="M9 21V14h6v7"/></svg></div>
+          </div>
+          <div class="sc-title">System Ownership Model</div>
+          <div class="sc-desc">HubSpot, MonetizeNow, Stripe, QuickBooks. What each one is responsible for, and what they are explicitly not responsible for. The single most important page in this document.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag hs">HS</span><span class="sc-tag mn">MN</span><span class="sc-tag st">Stripe</span><span class="sc-tag qb">QBO</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('sync')">
+          <div class="sc-top">
+            <span class="sc-num">02</span>
+            <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></div>
+          </div>
+          <div class="sc-title">Data Flow &amp; Sync Directionality</div>
+          <div class="sc-desc">Which integrations are bi-directional, which are one-way, what fires in real time, and what runs on a schedule. The map for tracing where any record actually originated.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag ops">Bi-Sync</span><span class="sc-tag ops">One-Way</span><span class="sc-tag ops">Real-time</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('glossary')">
+          <div class="sc-top">
+            <span class="sc-num">03</span>
+            <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+          </div>
+          <div class="sc-title">Object Model &amp; Glossary</div>
+          <div class="sc-desc">Account, Contact, Product, Offering, Rate, Quote, Contract, Subscription, Invoice. What each one means in MN, what it maps to in HubSpot, and where it lives.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag mn">12 Objects</span><span class="sc-tag ops">Reference</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 2: SALES MOTIONS -->
+    <div class="hub-block">
+      <div class="hub-section-label">Part 2 · The Three Sales Motions</div>
+      <h2 class="hub-section-h">Every deal is one of three motions</h2>
+      <p class="hub-section-lede">New Business, Amendment, or Renewal. Each starts in a different place, calculates pricing differently, and produces a different kind of invoice.</p>
+      <div class="card-grid">
+
+        <div class="sec-card" onclick="goView('new-business')">
+          <div class="sc-top">
+            <span class="sc-num">04</span>
+            <div class="sc-ico" style="background:linear-gradient(135deg, #03178A 0%, #3A56C8 100%); color:white; border-color:transparent;"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div>
+          </div>
+          <div class="sc-title">New Business</div>
+          <div class="sc-desc">A new logo or a new product line for an existing customer with no prior contract context. Opportunity opens, quote builds, contract closes, billing schedule starts. The cleanest motion.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag hs">Opp Origin</span><span class="sc-tag mn">Full Term</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('amendment')">
+          <div class="sc-top">
+            <span class="sc-num">05</span>
+            <div class="sc-ico" style="background:linear-gradient(135deg, #0E5852 0%, #14B8A6 100%); color:white; border-color:transparent;"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+          </div>
+          <div class="sc-title">Amendment</div>
+          <div class="sc-desc">A change to an active contract mid-term. More seats, an added product, a downgrade, a swap. The quote is a delta, the invoice is a proration, and the anchor is the existing contract, not the opportunity.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag mn">Contract Anchor</span><span class="sc-tag mn">Delta Only</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('renewal')">
+          <div class="sc-top">
+            <span class="sc-num">06</span>
+            <div class="sc-ico" style="background:linear-gradient(135deg, #4C1D95 0%, #A78BFA 100%); color:white; border-color:transparent;"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg></div>
+          </div>
+          <div class="sc-title">Renewal</div>
+          <div class="sc-desc">Term extension at end of contract. Carry-forward of active products, apply uplift, start new term the day the old one ends. The clean-reset motion, time-driven not need-driven.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag mn">End-of-Term</span><span class="sc-tag mn">Uplift Logic</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 3: INTEGRATIONS -->
+    <div class="hub-block">
+      <div class="hub-section-label">Part 3 · The Integrations</div>
+      <h2 class="hub-section-h">How MN talks to everything else</h2>
+      <p class="hub-section-lede">HubSpot field mapping, how Stripe runs in the background, and how QuickBooks fits today (via MN reports) plus what would change if ENTR ever connects MN to QBO directly.</p>
+      <div class="card-grid">
+
+        <div class="sec-card" onclick="goView('hubspot')">
+          <div class="sc-top">
+            <span class="sc-num">07</span>
+            <div class="sc-ico" style="background:linear-gradient(135deg, var(--hs) 0%, var(--hs-d) 100%); color:white; border-color:transparent;"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2M19.07 4.93l-2.12 2.12M7.05 16.95l-2.12 2.12M19.07 19.07l-2.12-2.12M7.05 7.05L4.93 4.93"/></svg></div>
+          </div>
+          <div class="sc-title">HubSpot ↔ MN Field Mapping</div>
+          <div class="sc-desc">The exact entity-by-entity, field-by-field mapping. Company to Account, Deal to Quote and Contract, Line Items to Quote Items. Every custom <code style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:1px 5px; background:var(--soft); border-radius:3px;">monetize_*</code> property and which group it sits under.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag hs">HubSpot</span><span class="sc-tag mn">MN</span><span class="sc-tag ops">Bi-Sync</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('stripe')">
+          <div class="sc-top">
+            <span class="sc-num">08</span>
+            <div class="sc-ico" style="background:linear-gradient(135deg, #635BFF 0%, #4F46E5 100%); color:white; border-color:transparent;"><svg viewBox="0 0 24 24"><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 5c0 1.66 4 3 9 3s9-1.34 9-3-4-3-9-3-9 1.34-9 3z"/></svg></div>
+          </div>
+          <div class="sc-title">Stripe in the Background</div>
+          <div class="sc-desc">How MN drives charges, retries, refunds, and credits through Stripe without anyone manually touching Stripe dashboard. Why MN is still the source of truth even though Stripe holds the money rail.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag st">Stripe</span><span class="sc-tag mn">MN Driven</span><span class="sc-tag ops">Hands-off</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('qbo')">
+          <div class="sc-top">
+            <span class="sc-num">09</span>
+            <div class="sc-ico" style="background:linear-gradient(135deg, var(--qb) 0%, var(--qb-d) 100%); color:white; border-color:transparent;"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+          </div>
+          <div class="sc-title">QuickBooks · Today vs Future</div>
+          <div class="sc-desc">Today, no QBO integration. Finance pulls invoice, payment, and revenue data from MN reports and continues working in QBO separately. If ENTR ever decides to push MN invoices into QBO, here is what gets connected and what to decide first.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag qb">QBO</span><span class="sc-tag ops">Today</span><span class="sc-tag ops">Future</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 4: OPERATIONS -->
+    <div class="hub-block">
+      <div class="hub-section-label">Part 4 · Operating the Stack</div>
+      <h2 class="hub-section-h">Day-to-day, week-to-week</h2>
+      <p class="hub-section-lede">Decision tree for picking right motion, what to do when something goes wrong, who owns what after go-live.</p>
+      <div class="card-grid">
+
+        <div class="sec-card" onclick="goView('decision')">
+          <div class="sc-top">
+            <span class="sc-num">10</span>
+            <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M6 3v18"/><path d="M18 3v18"/><path d="M6 8h12M6 16h12"/></svg></div>
+          </div>
+          <div class="sc-title">Decision Tree · Which Motion?</div>
+          <div class="sc-desc">A rep asks "do I make a new quote or amend the existing one?" Four questions, three outcomes.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag ops">Decision Aid</span><span class="sc-tag ops">Reps</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('troubleshoot')">
+          <div class="sc-top">
+            <span class="sc-num">11</span>
+            <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          </div>
+          <div class="sc-title">Common Failure Modes</div>
+          <div class="sc-desc">The recurring ways things drift. Wrong primary quote, double-billing on amendments, gap or overlap on renewals, missing reference IDs in QBO. Symptom, cause, fix.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag ops">Troubleshooting</span><span class="sc-tag ops">9 Cases</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+        <div class="sec-card" onclick="goView('roles')">
+          <div class="sc-top">
+            <span class="sc-num">12</span>
+            <div class="sc-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          </div>
+          <div class="sc-title">Admin Roles &amp; Ownership</div>
+          <div class="sc-desc">Who owns the catalog, who owns billing config, who owns the integrations, and what each one is checking quarterly. Light touch. One person can hold more than one role.</div>
+          <div class="sc-foot">
+            <div class="sc-tags"><span class="sc-tag ops">RACI</span><span class="sc-tag ops">Post Go-Live</span></div>
+            <span class="sc-arrow">→</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HUB FOOTER -->
+  <div class="foot">
+    ENTR × MonetizeNow &nbsp;·&nbsp; Operating Runbook v1.0 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Maintained by MonetizeNow CX &nbsp;·&nbsp; Questions: <a href="#">Hello@monetizenow.com</a>
+  </div>
+
+</div>
+
+<!-- ============================================== -->
+<!-- ============ SECTION 01: OWNERSHIP =========== -->
+<!-- ============================================== -->
+<div class="view" id="view-ownership">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 1 · Section 01</div>
+      <h1 class="sec-h">System Ownership Model</h1>
+      <p class="sec-lede">Four systems, one source of truth. HubSpot, MonetizeNow, Stripe, QuickBooks. This page covers what each one is responsible for, what it isn't, and where MN sits in the middle.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>How to read this page.</strong> HubSpot owns pipeline intent. MonetizeNow owns commercial truth. Stripe is the payment rail. QuickBooks is the ledger. Anything that affects what was sold, what is owed, or what should be billed goes into MonetizeNow first.</div>
+    </div>
+
+    <!-- 4-system grid -->
+    <div class="g4" style="margin-bottom:24px;">
+
+      <div class="panel" style="padding:0; overflow:hidden;">
+        <div style="background:linear-gradient(135deg,var(--hs) 0%,var(--hs-d) 100%); padding:16px 18px; color:white;">
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:8px;">
+            <div class="fs-mark hs">H</div>
+            <span style="font-size:14px; font-weight:700; letter-spacing:-0.015em;">HubSpot</span>
+          </div>
+          <div style="font-size:10.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; opacity:0.85;">Pipeline Intent</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div class="section-label" style="margin-bottom:8px;">Owns</div>
+          <ul class="fs-list mb16">
+            <li>Opportunity lifecycle and deal stages</li>
+            <li>Account and contact records</li>
+            <li>Sales rep activity and forecast</li>
+            <li>Customer-facing rep workflow (where reps actually live)</li>
+          </ul>
+          <div class="section-label" style="margin-bottom:8px;">Does not own</div>
+          <ul class="fs-list" style="margin-bottom:14px;">
+            <li>Pricing or quote configuration</li>
+            <li>Billing dates or schedules</li>
+            <li>Contract state (active, amended, renewed)</li>
+          </ul>
+          <div style="padding:10px 12px; background:var(--hs-b); border-radius:8px; border:1px solid var(--hs-br); font-size:11.5px; color:var(--hs-d); font-style:italic; line-height:1.5;">"Is this deal real, and what stage is it in?"</div>
+        </div>
+      </div>
+
+      <div class="panel" style="padding:0; overflow:hidden; border-color:var(--mn); box-shadow:var(--shadow-mn);">
+        <div style="background:linear-gradient(135deg,var(--mn-d) 0%,var(--mn-l) 100%); padding:16px 18px; color:white; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:-30px; right:-30px; width:120px; height:120px; background:radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 70%); border-radius:50%;"></div>
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:8px; position:relative;">
+            <div class="fs-mark mn">M</div>
+            <span style="font-size:14px; font-weight:700; letter-spacing:-0.015em;">MonetizeNow</span>
+          </div>
+          <div style="font-size:10.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; opacity:0.85; position:relative;">Commercial Source of Truth</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div class="section-label" style="margin-bottom:8px;">Owns</div>
+          <ul class="fs-list mb16">
+            <li>Product catalog, offerings, rate cards</li>
+            <li>Quote configuration, approvals, discounts</li>
+            <li>Contract state, amendments, renewals</li>
+            <li>Invoice generation, billing schedules, proration</li>
+            <li>Subscription state and rating</li>
+            <li>Payment orchestration (instructions to Stripe)</li>
+            <li>Revenue data: ARR, MRR, contract value, billed amounts</li>
+          </ul>
+          <div class="section-label" style="margin-bottom:8px;">Does not own</div>
+          <ul class="fs-list" style="margin-bottom:14px;">
+            <li>Pipeline forecast (that lives in HubSpot)</li>
+            <li>GL posting or revenue recognition entries (QBO)</li>
+            <li>Money movement itself (Stripe)</li>
+          </ul>
+          <div style="padding:10px 12px; background:#EEF2FF; border-radius:8px; border:1px solid #C7D2FE; font-size:11.5px; color:var(--mn-d); font-style:italic; line-height:1.5;">"What exactly did we sell, what does the customer owe, and when?"</div>
+        </div>
+      </div>
+
+      <div class="panel" style="padding:0; overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#635BFF 0%,#4F46E5 100%); padding:16px 18px; color:white;">
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:8px;">
+            <div class="fs-mark st">S</div>
+            <span style="font-size:14px; font-weight:700; letter-spacing:-0.015em;">Stripe</span>
+          </div>
+          <div style="font-size:10.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; opacity:0.85;">Payment Rail</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div class="section-label" style="margin-bottom:8px;">Owns</div>
+          <ul class="fs-list mb16">
+            <li>Card processing and ACH</li>
+            <li>Payment method storage (tokens)</li>
+            <li>Charge attempts, declines, retries (per MN instruction)</li>
+            <li>Refund execution and chargeback handling</li>
+          </ul>
+          <div class="section-label" style="margin-bottom:8px;">Does not own</div>
+          <ul class="fs-list" style="margin-bottom:14px;">
+            <li>Invoice generation or billing logic</li>
+            <li>Customer record of truth</li>
+            <li>What to retry, when to retry, or how many times</li>
+          </ul>
+          <div style="padding:10px 12px; background:var(--st-b); border-radius:8px; border:1px solid var(--st-br); font-size:11.5px; color:var(--st-d); font-style:italic; line-height:1.5;">"Move the money exactly as MN told me to."</div>
+        </div>
+      </div>
+
+      <div class="panel" style="padding:0; overflow:hidden;">
+        <div style="background:linear-gradient(135deg,var(--qb) 0%,var(--qb-d) 100%); padding:16px 18px; color:white;">
+          <div style="display:flex; align-items:center; gap:9px; margin-bottom:8px;">
+            <div class="fs-mark qb">Q</div>
+            <span style="font-size:14px; font-weight:700; letter-spacing:-0.015em;">QuickBooks</span>
+          </div>
+          <div style="font-size:10.5px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; opacity:0.85;">Accounting Ledger</div>
+        </div>
+        <div style="padding:16px 18px;">
+          <div class="section-label" style="margin-bottom:8px;">Owns</div>
+          <ul class="fs-list mb16">
+            <li>General ledger and chart of accounts</li>
+            <li>Revenue recognition entries</li>
+            <li>Financial statements: P&amp;L, balance sheet</li>
+            <li>Tax filing and reporting</li>
+            <li>Bank reconciliation</li>
+          </ul>
+          <div class="section-label" style="margin-bottom:8px;">Does not own (today)</div>
+          <ul class="fs-list" style="margin-bottom:14px;">
+            <li>Invoice generation (MN does it)</li>
+            <li>Customer billing relationship</li>
+            <li>Payment collection workflow</li>
+          </ul>
+          <div style="padding:10px 12px; background:var(--qb-b); border-radius:8px; border:1px solid var(--qb-br); font-size:11.5px; color:var(--qb-d); font-style:italic; line-height:1.5;">"How do we close the books on this revenue?"</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Why MN is SoT explainer -->
+    <div class="panel mb20">
+      <div class="panel-title">Why MonetizeNow is the source of truth, not HubSpot or Stripe</div>
+      <div class="panel-sub">A reasonable question. customer-facing record exists in HubSpot. The money lives in Stripe. So why does MN get to be authoritative?</div>
+      <div class="g3">
+        <div style="background:var(--soft); border-radius:9px; padding:13px 15px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">HubSpot tells you a deal exists</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">It does not know what was actually agreed to. rep can change Deal Amount with a typo. The pricing logic lives elsewhere.</div>
+        </div>
+        <div style="background:var(--soft); border-radius:9px; padding:13px 15px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Stripe tells you money moved</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">It does not know what the charge was for, what the term is, what the renewal looks like, or how to prorate the next change. Stripe is a rail, not a record.</div>
+        </div>
+        <div style="background:#EEF2FF; border:1px solid #C7D2FE; border-radius:9px; padding:13px 15px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">MN ties everything together</div>
+          <div style="font-size:12.5px; color:var(--mn-d); line-height:1.55;">It carries the contract, the schedule, the proration rules, and the reference back to both HubSpot Deal and Stripe charge. Audit trail starts and ends here.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Golden rule callout -->
+    <div class="co co-amber">
+      <span class="co-ico">▲</span>
+      <div><strong>Fixing data:</strong> pricing, dates, or contract terms wrong, fix in MonetizeNow. Pipeline stage wrong, fix in HubSpot. Revenue recognition or journal entry wrong, fix in QuickBooks. Edits in the wrong system create drift that surfaces at the next close.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 02: DATA FLOW =========== -->
+<!-- ============================================== -->
+<div class="view" id="view-sync">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 1 · Section 02</div>
+      <h1 class="sec-h">Data Flow &amp; Sync Directionality</h1>
+      <p class="sec-lede">Two integrations active today, with QuickBooks as a read-only consumer of MN reports rather than a connected system. HubSpot is bi-directional, real-time on key objects. Stripe is bi-directional and event-driven, where MN sends instructions and Stripe sends back events. QuickBooks data flows via downloadable MN reports that Finance uses for journal entries and reconciliation.</p>
+    </div>
+
+    <!-- visual flow -->
+    <div class="flow-stack">
+      <div class="fs-node hs">
+        <div class="fs-head"><div class="fs-mark hs">H</div><div class="fs-name">HubSpot</div></div>
+        <div class="fs-role">Pipeline · CRM</div>
+        <ul class="fs-list">
+          <li>Companies, Contacts</li>
+          <li>Deals, Line Items</li>
+          <li>Products catalog (mirrored from MN)</li>
+        </ul>
+      </div>
+      <div class="fs-conn-wrap">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <div style="font-size:8.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn); padding:2px 6px; background:#EEF2FF; border-radius:4px; border:1px solid #C7D2FE;">Bi-Sync</div>
+          <span style="font-size:18px; color:var(--mn);">⇄</span>
+          <div style="font-size:9px; color:var(--mute); text-align:center; line-height:1.3;">Real-time<br>on key objects</div>
+        </div>
+      </div>
+      <div class="fs-node mn" style="border-width:2px; box-shadow:var(--shadow-mn);">
+        <div class="fs-head"><div class="fs-mark mn">M</div><div class="fs-name">MonetizeNow</div></div>
+        <div class="fs-role">Source of Truth</div>
+        <ul class="fs-list">
+          <li>Catalog · Quote · Contract</li>
+          <li>Subscription · Invoice</li>
+          <li>Payment orchestration</li>
+          <li>Billing schedules</li>
+        </ul>
+      </div>
+      <div class="fs-conn-wrap">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <div style="font-size:8.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--st-d); padding:2px 6px; background:var(--st-b); border-radius:4px; border:1px solid var(--st-br);">Drive + Listen</div>
+          <span style="font-size:18px; color:var(--st-d);">⇄</span>
+          <div style="font-size:9px; color:var(--mute); text-align:center; line-height:1.3;">API +<br>Webhooks</div>
+        </div>
+      </div>
+      <div class="fs-node st">
+        <div class="fs-head"><div class="fs-mark st">S</div><div class="fs-name">Stripe</div></div>
+        <div class="fs-role">Payment Rail</div>
+        <ul class="fs-list">
+          <li>Customers (mirrored)</li>
+          <li>Payment methods</li>
+          <li>Charges · Refunds</li>
+          <li>Webhook events back to MN</li>
+        </ul>
+      </div>
+      <div class="fs-conn-wrap">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <div style="font-size:8.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--qb-d); padding:2px 6px; background:var(--qb-b); border-radius:4px; border:1px solid var(--qb-br);">Reports</div>
+          <span style="font-size:18px; color:var(--qb-d);">→</span>
+          <div style="font-size:9px; color:var(--mute); text-align:center; line-height:1.3;">Finance pulls<br>from MN</div>
+        </div>
+      </div>
+      <div class="fs-node qb">
+        <div class="fs-head"><div class="fs-mark qb">Q</div><div class="fs-name">QuickBooks</div></div>
+        <div class="fs-role">Books</div>
+        <ul class="fs-list">
+          <li>GL · Chart of accounts</li>
+          <li>Manual entries from MN reports</li>
+          <li>Bank reconciliation</li>
+          <li>Period close · Tax</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sync detail tables -->
+    <div class="g2 mb20">
+      <div>
+        <div class="section-label">HubSpot ↔ MonetizeNow</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Object</th><th>Direction</th><th>Timing</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Company / Account</strong></td><td>Bi-directional</td><td>Real-time</td></tr>
+              <tr><td><strong>Contact</strong></td><td>Bi-directional</td><td>Real-time</td></tr>
+              <tr><td><strong>Deal (Opp/Quote/Contract context)</strong></td><td>Bi-directional</td><td>Real-time on status change</td></tr>
+              <tr><td><strong>Line Items (Quote Items)</strong></td><td>MN → HubSpot</td><td>On quote save / process</td></tr>
+              <tr><td><strong>Product catalog</strong></td><td>MN → HubSpot</td><td>On publish / change</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">MonetizeNow → QuickBooks (today: report-based, not integrated)</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Object</th><th>How Finance accesses it</th><th>Cadence</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Invoice register</strong></td><td>Invoice Register report in MN, downloaded as CSV</td><td>Monthly (close)</td></tr>
+              <tr><td><strong>Line item detail</strong></td><td>Invoice Line Item Detail report, includes GL codes</td><td>Monthly (close)</td></tr>
+              <tr><td><strong>Payments</strong></td><td>Payment Journal report</td><td>Monthly (close)</td></tr>
+              <tr><td><strong>Credits and refunds</strong></td><td>Credit Note &amp; Refund Register</td><td>Monthly (close)</td></tr>
+              <tr><td><strong>Monthly roll-up</strong></td><td>Monthly Revenue &amp; Collections Summary</td><td>Monthly (close)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="g2 mb20">
+      <div>
+        <div class="section-label">MonetizeNow ↔ Stripe</div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Action</th><th>Initiator</th><th>Pattern</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Create customer</strong></td><td>MN</td><td>API call on first invoice</td></tr>
+              <tr><td><strong>Attach payment method</strong></td><td>MN (via hosted page)</td><td>Token returned, stored</td></tr>
+              <tr><td><strong>Charge / capture</strong></td><td>MN</td><td>API call per invoice due</td></tr>
+              <tr><td><strong>Retry on decline</strong></td><td>MN orchestrates</td><td>Smart retry schedule</td></tr>
+              <tr><td><strong>Refund</strong></td><td>MN</td><td>API call after credit memo</td></tr>
+              <tr><td><strong>Charge events</strong></td><td>Stripe</td><td>Webhook → MN updates state</td></tr>
+              <tr><td><strong>Dispute / chargeback</strong></td><td>Stripe</td><td>Webhook → MN flags invoice</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">What does not sync back</div>
+        <div class="panel" style="background:#FFFBEB; border-color:var(--amber-br);">
+          <ul class="ul" style="margin:0;">
+            <li><strong>QBO → MN</strong>, nothing. QBO and MN are not connected today, so manual changes in either system stay there.</li>
+            <li><strong>QBO → HubSpot</strong>, nothing. Paid-status in HubSpot reads from MN.</li>
+            <li><strong>HubSpot → MN (pricing)</strong> Deal Amount edits in HubSpot do not change MN Quote. Pricing always edits in MN.</li>
+            <li><strong>HubSpot → MN (dates)</strong> Contract Start/End in HubSpot is a display-only mirror. Date changes happen in MN.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>Tracing a record.</strong> When numbers don't line up between two systems, follow the arrows. A Deal Amount that disagrees with what was billed: check Primary Quote flag in HubSpot, then check Contract in MN. A QBO journal entry that disagrees with MN: pull the matching report from MN for that period and re-tie. Manual posting drift is the usual culprit.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 03: GLOSSARY ============ -->
+<!-- ============================================== -->
+<div class="view" id="view-glossary">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 1 · Section 03</div>
+      <h1 class="sec-h">Object Model &amp; Glossary</h1>
+      <p class="sec-lede">Twelve objects that show up in every conversation about MN. What each one is, what it maps to in HubSpot, and how they relate.</p>
+    </div>
+
+    <!-- Object hierarchy visual -->
+    <div class="panel mb20">
+      <div class="panel-title">The hierarchy at a glance</div>
+      <div class="panel-sub">Catalog objects live at the top. Customer-facing objects live in the middle. Money objects live at the bottom. Everything links back upward through reference IDs.</div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+
+        <div>
+          <div class="section-label" style="margin-bottom:8px;">Catalog Layer · Configuration</div>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <div style="padding:8px 14px; background:#EEF2FF; border:1.5px solid #C7D2FE; border-radius:9px; font-size:12.5px; font-weight:700; color:var(--mn-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--mn); border-radius:50%;"></span>Product</div>
+            <span style="color:var(--mute); font-size:14px;">⟶ rolled into ⟶</span>
+            <div style="padding:8px 14px; background:#EEF2FF; border:1.5px solid #C7D2FE; border-radius:9px; font-size:12.5px; font-weight:700; color:var(--mn-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--mn); border-radius:50%;"></span>Offering</div>
+            <span style="color:var(--mute); font-size:14px;">+ priced by ⟶</span>
+            <div style="padding:8px 14px; background:#EEF2FF; border:1.5px solid #C7D2FE; border-radius:9px; font-size:12.5px; font-weight:700; color:var(--mn-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--mn); border-radius:50%;"></span>Rate (Rate Card)</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label" style="margin-bottom:8px;">Customer Layer · Who we sell to</div>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <div style="padding:8px 14px; background:var(--hs-b); border:1.5px solid var(--hs-br); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--hs-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--hs); border-radius:50%;"></span>Account</div>
+            <span style="color:var(--mute); font-size:14px;">has many ⟶</span>
+            <div style="padding:8px 14px; background:var(--hs-b); border:1.5px solid var(--hs-br); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--hs-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--hs); border-radius:50%;"></span>Contact</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label" style="margin-bottom:8px;">Commercial Layer · The deal lifecycle</div>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <div style="padding:8px 14px; background:var(--soft); border:1.5px solid var(--border); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--sub); border-radius:50%;"></span>Opportunity</div>
+            <span style="color:var(--mute); font-size:14px;">⟶</span>
+            <div style="padding:8px 14px; background:var(--soft); border:1.5px solid var(--border); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--sub); border-radius:50%;"></span>Quote</div>
+            <span style="color:var(--mute); font-size:14px;">contains ⟶</span>
+            <div style="padding:8px 14px; background:var(--soft); border:1.5px solid var(--border); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--sub); border-radius:50%;"></span>Quote Items</div>
+            <span style="color:var(--mute); font-size:14px;">when signed ⟶</span>
+            <div style="padding:8px 14px; background:#EEF2FF; border:1.5px solid #C7D2FE; border-radius:9px; font-size:12.5px; font-weight:700; color:var(--mn-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--mn); border-radius:50%;"></span>Contract</div>
+            <span style="color:var(--mute); font-size:14px;">creates ⟶</span>
+            <div style="padding:8px 14px; background:#EEF2FF; border:1.5px solid #C7D2FE; border-radius:9px; font-size:12.5px; font-weight:700; color:var(--mn-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--mn); border-radius:50%;"></span>Subscription</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label" style="margin-bottom:8px;">Money Layer · What actually gets billed and paid</div>
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <div style="padding:8px 14px; background:var(--qb-b); border:1.5px solid var(--qb-br); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--qb-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--qb); border-radius:50%;"></span>Invoice</div>
+            <span style="color:var(--mute); font-size:14px;">paid by ⟶</span>
+            <div style="padding:8px 14px; background:var(--st-b); border:1.5px solid var(--st-br); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--st-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:#635BFF; border-radius:50%;"></span>Payment</div>
+            <span style="color:var(--mute); font-size:14px;">or reversed by ⟶</span>
+            <div style="padding:8px 14px; background:var(--qb-b); border:1.5px solid var(--qb-br); border-radius:9px; font-size:12.5px; font-weight:700; color:var(--qb-d); display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; background:var(--qb); border-radius:50%;"></span>Credit Memo</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Glossary grid -->
+    <div class="gloss">
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Account</span><span class="g-type" style="background:var(--hs-b); color:var(--hs-d); border:1px solid var(--hs-br);">Customer</span></div>
+        <div class="g-d">The company you sell to. One Account per customer entity, even if they have multiple contracts or subsidiaries.</div>
+        <div class="g-meta"><span><b>In HubSpot:</b> Company</span> · <span><b>In MN:</b> Account</span> · <span><b>Sync:</b> bi-directional</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Contact</span><span class="g-type" style="background:var(--hs-b); color:var(--hs-d); border:1px solid var(--hs-br);">Customer</span></div>
+        <div class="g-d">A person at an Account. Signer, billing contact, technical contact. Roles assigned per quote or per contract.</div>
+        <div class="g-meta"><span><b>In HubSpot:</b> Contact</span> · <span><b>In MN:</b> Contact</span> · <span><b>Sync:</b> bi-directional</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Product</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Catalog</span></div>
+        <div class="g-d">A billable thing. Could be a subscription seat, a usage meter, a one-time service. The smallest commercial unit. Has a type (subscription, one-time, usage) and a billing pattern.</div>
+        <div class="g-meta"><span><b>In MN:</b> Product</span> · <span><b>In HubSpot:</b> Product (mirrored)</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Offering</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Catalog</span></div>
+        <div class="g-d">A package of Products sold together. Maps to a customer-visible tier or bundle. Each Offering has a list of Required and Optional Products.</div>
+        <div class="g-meta"><span><b>In MN:</b> Offering</span> · <span><b>Example:</b> "Pro Plan" or "Enterprise Tier"</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Rate (Rate Card)</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Catalog</span></div>
+        <div class="g-d">The price applied to an Offering. Includes per-unit pricing, tiered pricing, volume breaks, currency, and billing frequency. One Offering can have multiple Rates (e.g. monthly vs annual).</div>
+        <div class="g-meta"><span><b>In MN:</b> Rate</span> · <span><b>Billing freq:</b> monthly, quarterly, annual</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Opportunity</span><span class="g-type" style="background:var(--soft); color:var(--sub); border:1px solid var(--border);">Pipeline</span></div>
+        <div class="g-d">The deal in pipeline. Lives in HubSpot. Carries the rep, the close date, the forecast amount, and the deal stage. The container that holds one or more Quotes.</div>
+        <div class="g-meta"><span><b>In HubSpot:</b> Deal (with quote_type populated)</span> · <span><b>In MN:</b> Opportunity</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Quote</span><span class="g-type" style="background:var(--soft); color:var(--sub); border:1px solid var(--border);">Commercial</span></div>
+        <div class="g-d">The proposed commercial agreement. Configurable: products, quantities, discounts, terms. Sent to the customer for signature. Multiple Quotes can exist per Opportunity; only one is Primary.</div>
+        <div class="g-meta"><span><b>In MN:</b> Quote</span> · <span><b>Statuses:</b> Draft, Sent, Signed, Processed</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Quote Item</span><span class="g-type" style="background:var(--soft); color:var(--sub); border:1px solid var(--border);">Commercial</span></div>
+        <div class="g-d">A single line on a Quote. One Product, one quantity, one price (after discount). Maps to a HubSpot Line Item. ARR and MRR are calculated at this level.</div>
+        <div class="g-meta"><span><b>In MN:</b> Quote Item</span> · <span><b>In HubSpot:</b> Line Item</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Contract</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Active</span></div>
+        <div class="g-d">A signed Quote, now in force. Has a start date, an end date, an end action (auto-renew, manual renewal, expire). Source of truth for what the customer is paying for and when. Amendments and renewals attach here.</div>
+        <div class="g-meta"><span><b>In MN:</b> Contract</span> · <span><b>End actions:</b> renew, expire, evergreen</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Subscription</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Active</span></div>
+        <div class="g-d">A live, billable line under a Contract. One Subscription per Product on Contract. Tracks current quantity, current price, next billing date. Where amendments actually take effect.</div>
+        <div class="g-meta"><span><b>In MN:</b> Subscription</span> · <span><b>Lifetime:</b> Contract start to end</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Invoice</span><span class="g-type" style="background:var(--qb-b); color:var(--qb-d); border:1px solid var(--qb-br);">Money</span></div>
+        <div class="g-d">A bill to a customer. Generated by MN per the billing schedule, charged through Stripe for collection. Visible to Finance in MN reports for journal entry into QBO. Carries reference IDs back to Contract and Quote.</div>
+        <div class="g-meta"><span><b>In MN:</b> Invoice</span> · <span><b>In QBO:</b> manual journal entry from MN reports</span> · <span><b>Statuses:</b> Draft, Posted, Paid, Void</span></div>
+      </div>
+
+      <div class="g-card">
+        <div class="g-term"><span class="g-name">Credit Memo</span><span class="g-type" style="background:var(--qb-b); color:var(--qb-d); border:1px solid var(--qb-br);">Money</span></div>
+        <div class="g-d">A reversal or adjustment against an Invoice. Generated by MN on downgrade, cancellation, or correction. Reflected in Finance reports for QBO posting. Stripe refund follows if the original payment had already cleared.</div>
+        <div class="g-meta"><span><b>In MN:</b> Credit Memo</span> · <span><b>In QBO:</b> via reports for journal entry</span></div>
+      </div>
+
+    </div>
+
+    <div class="co co-gray mt24">
+      <span class="co-ico">○</span>
+      <div>Quote Item and Line Item are the same object viewed from different sides. ARR lives on Quote Item in MN and syncs to HubSpot Line Item as <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; background:white; padding:2px 6px; border-radius:4px; color:var(--mn-d); border:1px solid var(--border);">monetize_quoteitem_arr</code>. Same number, two homes.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- ============ SECTION 04: NEW BUSINESS ======== -->
+<!-- ============================================== -->
+<div class="view" id="view-new-business">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 2 · Section 04 · Motion 1 of 3</div>
+      <h1 class="sec-h">New Business Motion</h1>
+      <p class="sec-lede">From a fresh opportunity to a paid first invoice. No prior context, no existing contract to honor. Every value is set from scratch and every downstream record is created at signature.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>How that chain works.</strong> An Opportunity anchors a Quote. A Quote anchors a Contract. A Contract anchors Subscriptions. Subscriptions generate Invoices. Invoices charge through Stripe and surface in Finance reports for QBO posting. Reference IDs flow through every link, which is how an invoice three months from now can be traced back to a specific Quote.</div>
+    </div>
+
+    <!-- End-to-end flow strip -->
+    <div class="section-label">End-to-End Flow · 8 stages</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><span>01</span><span class="sys-dot hs">HS</span></div>
+        <div class="step-t">Opportunity created</div>
+        <div class="step-d">Rep opens a Deal in HubSpot. Account, contact, close date, deal stage. Forecast lives here.</div>
+        <div class="step-act"><b>Owner:</b><span>Rep</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>02</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Create Quote</div>
+        <div class="step-d">Rep clicks "Create Quote" from Deal. MN opens a new Quote linked back to Opportunity ID.</div>
+        <div class="step-act"><b>Trigger:</b><span>Real-time sync</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>03</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Configure pricing</div>
+        <div class="step-d">Pick Offering, add Products, set quantities. Discounts go through approval if over threshold. Quote Items are sized.</div>
+        <div class="step-act"><b>Owner:</b><span>Rep · Approver</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>04</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Send for signature</div>
+        <div class="step-d">eSign via MN Quote Share. Pricing locks. Status flips to Sent. HubSpot Deal updates to Negotiation.</div>
+        <div class="step-act"><b>Trigger:</b><span>Quote → eSign</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>05</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Signed → Contract</div>
+        <div class="step-d">Customer signs. Quote processes. Contract created with start date, end date, term, end action. Subscriptions activate.</div>
+        <div class="step-act"><b>Trigger:</b><span>Auto on processing</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>06</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Invoice generated</div>
+        <div class="step-d">First invoice posts per billing schedule. Could be immediate (annual upfront) or first cycle (monthly). Carries Contract ID, Quote ID.</div>
+        <div class="step-act"><b>Trigger:</b><span>Schedule run</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>07</span><span class="sys-dot st">STR</span></div>
+        <div class="step-t">Payment charged</div>
+        <div class="step-d">MN tells Stripe to charge stored payment method. Stripe processes, webhooks success back to MN. Payment record created.</div>
+        <div class="step-act"><b>Trigger:</b><span>MN → Stripe API</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>08</span><span class="sys-dot qb">QBO</span></div>
+        <div class="step-t">Available for QBO posting</div>
+        <div class="step-d">Invoice and payment show up in Finance reports in MN. Finance posts a summary entry to QBO at close based on the period total.</div>
+        <div class="step-act"><b>Trigger:</b><span>Monthly close</span></div>
+      </div>
+    </div>
+
+    <!-- Detailed action sequence -->
+    <div class="g-1-2 mb20">
+      <div>
+        <div class="section-label">What runs automatically</div>
+        <div class="panel">
+          <ul class="ul" style="margin:0;">
+            <li><strong>HubSpot Deal Amount update</strong> populates from Quote ARR or TCV on every status change.</li>
+            <li><strong>Quote status → Deal stage</strong> Draft maps to Qualification, Sent maps to Negotiation, Processed maps to Closed Won.</li>
+            <li><strong>Contract creation</strong> fires on signature, no manual step.</li>
+            <li><strong>Subscription activation</strong> one Subscription per Quote Item, all activated at Contract start.</li>
+            <li><strong>Invoice schedule</strong> built from billing frequency on the Rate. Runs nightly or immediately depending on configuration.</li>
+            <li><strong>Stripe charge</strong> fires on invoice post if Auto-Charge is on for the customer.</li>
+            <li><strong>MN reports</strong>, populate automatically as invoices post. Finance pulls them at close to drive QBO entries.</li>
+            <li><strong>HubSpot Contract ID stamp</strong> written back to Deal so CS and AM can see the active state.</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">What needs a human</div>
+        <div class="panel" style="background:#FFFBEB; border-color:var(--amber-br);">
+          <ul class="ul" style="margin:0;">
+            <li><strong>Configure Quote</strong> pick the Offering, add Products, set quantities. Reps do this.</li>
+            <li><strong>Approve a discount</strong> if over the threshold, a manager approves in MN.</li>
+            <li><strong>Mark winning Quote as Primary</strong> if multiple Quotes were created, rep must flag the one that was actually signed.</li>
+            <li><strong>Send Quote for signature</strong> explicit action, not automatic.</li>
+            <li><strong>Process the signed Quote</strong> review and click Process. Locks pricing and creates Contract.</li>
+            <li><strong>Confirm payment method on file</strong> for first-time customers, customer adds a card via a hosted page before the first charge.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key field flow -->
+    <div class="section-label">Key fields that anchor that chain</div>
+    <div class="tbl-wrap mb20">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Field</th><th>From → To</th><th>Why it matters</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Opportunity linkage</strong></td><td><code>opportunity.id</code> → <code>monetize_opportunity_id</code></td><td>MN → HS Deal</td><td>Without this, Quote is orphaned from pipeline. Forecast goes blank.</td></tr>
+          <tr><td><strong>Pipeline visibility</strong></td><td><code>quote.amount</code> → <code>amount</code> / <code>hs_closed_amount</code></td><td>MN → HS Deal</td><td>Drives Deal Amount field. What the rep sees in their forecast comes from here.</td></tr>
+          <tr><td><strong>Commercial values</strong></td><td><code>quote.arr</code> → <code>monetize_quote_arr</code><br><code>quote.mrr</code> → <code>monetize_quote_mrr</code></td><td>MN → HS Deal</td><td>The actual recurring values. Used for commission and reporting.</td></tr>
+          <tr><td><strong>Contract reference</strong></td><td><code>contract.id</code> → <code>monetize_contract_id</code><br><code>contract.startDate</code> / <code>endDate</code> → <code>monetize_contract_start_date</code> / <code>_end_date</code></td><td>MN → HS Deal</td><td>CS and AM use these to see the live state without leaving HubSpot.</td></tr>
+          <tr><td><strong>Quote items</strong></td><td><code>quoteitem.*</code> → HS Line Item</td><td>MN → HS Line Item</td><td>Enables product-level forecasting in HubSpot. Each line carries its own MRR and ARR.</td></tr>
+          <tr><td><strong>Finance traceability</strong></td><td>Invoice carries Quote ID + Contract ID</td><td>Visible in MN reports</td><td>Finance traces any QBO journal entry back to original Quote and Contract via MN report fields.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- One-line takeaway -->
+    <div class="panel tint" style="text-align:center; padding:32px 24px;">
+      <div style="font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:var(--mn); margin-bottom:14px;">One-Line Takeaway</div>
+      <div style="font-family:'DM Serif Display',serif; font-size:32px; line-height:1.15; color:var(--ink); letter-spacing:-0.02em; max-width:760px; margin:0 auto;">
+        New Business creates <span style="color:var(--mn); font-style:italic;">contractual truth from scratch.</span> HubSpot tracks intent. MN creates and bills against a record. Stripe moves money. QBO closes books from MN reports.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 05: AMENDMENT =========== -->
+<!-- ============================================== -->
+<div class="view" id="view-amendment">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 2 · Section 05 · Motion 2 of 3</div>
+      <h1 class="sec-h">Amendment Motion</h1>
+      <p class="sec-lede">A change to an active contract before its term ends. More seats, a new product line, a downgrade, a quantity swap. Quote calculates a delta against the existing contract, invoice is a proration, contract updates in place.</p>
+    </div>
+
+    <div class="co co-amber">
+      <span class="co-ico">▲</span>
+      <div><strong>Most common error.</strong> Building an amendment as a brand-new quote instead of amending the existing contract. A second contract runs in parallel and the customer gets billed twice. Amendments start from active Contract in MN.</div>
+    </div>
+
+    <!-- Amendment vs New Business -->
+    <div class="section-label">Amendment vs New Business</div>
+    <div class="tbl-wrap mb20">
+      <table>
+        <thead><tr><th>Dimension</th><th>New Business</th><th>Amendment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Starting point</strong></td><td>A new Opportunity in HubSpot. No prior commercial context.</td><td>An active Contract in MN. Existing terms and billing dates already in motion.</td></tr>
+          <tr><td><strong>Quote purpose</strong></td><td>Define the full commercial agreement from scratch.</td><td>Define only what is changing. Adds, removes, quantity shifts.</td></tr>
+          <tr><td><strong>Billing impact</strong></td><td>Sets the initial billing schedule. New anchor date.</td><td>Proration calculated from Effective Date against the existing anchor.</td></tr>
+          <tr><td><strong>Forecast in HubSpot</strong></td><td>Full TCV / ARR.</td><td>Incremental ARR only. Otherwise pipeline is double-counted.</td></tr>
+          <tr><td><strong>Contract result</strong></td><td>New Contract record created.</td><td>Existing Contract updated. New version, same Contract ID.</td></tr>
+          <tr><td><strong>Trigger</strong></td><td>New deal in pipeline.</td><td>Customer need mid-term.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Step flow -->
+    <div class="section-label">End-to-End Flow · 7 stages</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><span>01</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Find the active Contract</div>
+        <div class="step-d">Pull up Contract in MN. Check status is Active. Confirm it is right one (some customers have multiple).</div>
+        <div class="step-act"><b>Owner:</b><span>Rep / AM</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>02</span><span class="sys-dot hs">HS</span></div>
+        <div class="step-t">Open Expansion Deal</div>
+        <div class="step-d">A separate Deal in HubSpot for pipeline tracking. Type = Expansion or Upsell, depending on naming convention.</div>
+        <div class="step-act"><b>Owner:</b><span>Rep</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>03</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Amend Contract</div>
+        <div class="step-d">From Contract, click Amend. MN opens a new Quote pre-populated with current Subscriptions. Make changes here.</div>
+        <div class="step-act"><b>Trigger:</b><span>Contract → Amend</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>04</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Set Effective Date</div>
+        <div class="step-d">Defaults to today. Adjust if the change should backdate or future-date. This drives proration. Most-overlooked field.</div>
+        <div class="step-act"><b>Critical field</b></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>05</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Quote shows delta</div>
+        <div class="step-d">Total reflects net change, not new total. Incremental ARR shown. Approval if discount thresholds hit. Send for signature.</div>
+        <div class="step-act"><b>Forecast:</b><span>Delta only</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>06</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Process → Contract v2</div>
+        <div class="step-d">Customer signs. MN updates Contract in place. Subscriptions modified. Same Contract ID, new latest_quote_id.</div>
+        <div class="step-act"><b>Trigger:</b><span>Auto on process</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>07</span><span class="sys-dot qb">QBO</span></div>
+        <div class="step-t">Prorated invoice / credit</div>
+        <div class="step-d">Adjustment invoice fires for the delta only. Could be a charge for an upgrade or credit memo for a downgrade. Visible in MN reports with reference IDs back to original invoice.</div>
+        <div class="step-act"><b>Type:</b><span>Adjustment</span></div>
+      </div>
+    </div>
+
+    <!-- Proration explainer -->
+    <div class="g2 mb20">
+      <div class="panel">
+        <div class="panel-title">How proration actually works</div>
+        <div class="panel-sub">MN calculates from Effective Date through the next billing anchor. Example, on annual upfront billing:</div>
+        <div style="background:var(--soft); border-radius:8px; padding:14px; font-size:12.5px; color:var(--ink-2); line-height:1.65;">
+          Contract runs Jan 1 to Dec 31. Customer adds 10 seats on July 1. Annual seat price is $1,200.<br>
+          <br>
+          <strong>Prorated charge</strong> = $1,200 × 10 seats × (184 / 365 days) = <strong>$6,049</strong>.<br>
+          <br>
+          Invoice fires within the next billing cycle. Reference IDs point back to the amendment Quote, the original Contract, and the original Invoice for that period.
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Key fields that change on amendment</div>
+        <div class="kv"><div class="k">Anchor</div><div class="v">Contract ID stays the same. <code>monetize_latest_quote_id</code> updates to point to the amendment Quote.</div></div>
+        <div class="kv"><div class="k">Pipeline</div><div class="v"><code>monetize_deal_type</code> = "amendment" or "upsell" on the new HubSpot Deal.</div></div>
+        <div class="kv"><div class="k">Forecast</div><div class="v">Deal Amount = Incremental ARR, not Total ARR. Forecast does not double-count.</div></div>
+        <div class="kv"><div class="k">Effective Date</div><div class="v">Drives proration math. Set this carefully. Editing it after signature requires a new amendment.</div></div>
+        <div class="kv"><div class="k">Billing</div><div class="v">Adjustment invoice carries original Invoice reference for reconciliation against QBO postings.</div></div>
+      </div>
+    </div>
+
+    <!-- One-line takeaway -->
+    <div class="panel tint" style="text-align:center; padding:32px 24px; background:linear-gradient(135deg, #ECFDF5 0%, white 70%); border-color:#86EFAC;">
+      <div style="font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:var(--p-amend); margin-bottom:14px;">One-Line Takeaway</div>
+      <div style="font-family:'DM Serif Display',serif; font-size:32px; line-height:1.15; color:var(--ink); letter-spacing:-0.02em; max-width:760px; margin:0 auto;">
+        Amendments start from the <span style="color:var(--p-amend); font-style:italic;">Contract, not Opportunity.</span> MN calculates the delta, applies proration, keeps billing continuous.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 06: RENEWAL ============ -->
+<!-- ============================================== -->
+<div class="view" id="view-renewal">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 2 · Section 06 · Motion 3 of 3</div>
+      <h1 class="sec-h">Renewal Motion</h1>
+      <p class="sec-lede">Term extension at end of contract. Carry forward active products, apply uplift, start a new term the day the old one ends. Triggered by date rather than by customer need.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>Continuity.</strong> End date of an old Contract becomes the start date of a new one. MN auto-anchors this when a renewal processes cleanly. Late or manual processing is where gaps and overlaps come from.</div>
+    </div>
+
+    <!-- Renewal vs Amendment -->
+    <div class="section-label">Renewal vs Amendment</div>
+    <div class="tbl-wrap mb20">
+      <table>
+        <thead><tr><th>Dimension</th><th>Renewal</th><th>Amendment</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Trigger</strong></td><td>Contract end date approaching. Time-driven.</td><td>Customer need mid-term. Demand-driven.</td></tr>
+          <tr><td><strong>Goal</strong></td><td>Secure the next term. Maintain continuity.</td><td>Modify scope of current term immediately.</td></tr>
+          <tr><td><strong>Pricing basis</strong></td><td>Ending quantity, carry-forward, plus uplift if defined.</td><td>Delta against current state. Proration applied.</td></tr>
+          <tr><td><strong>Contract result</strong></td><td>New Contract for new term. Old one closed.</td><td>Same Contract, updated in place.</td></tr>
+          <tr><td><strong>Billing impact</strong></td><td>New term invoice. New anchor.</td><td>Adjustment invoice for the delta.</td></tr>
+          <tr><td><strong>Most common error</strong></td><td>Gap or overlap between terms.</td><td>Wrong Effective Date breaks proration.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Step flow -->
+    <div class="section-label">End-to-End Flow · 7 stages</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><span>01</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Renewal window opens</div>
+        <div class="step-d">90 days from Contract end (configurable). MN flags Contract. Optional alert to AM or CS.</div>
+        <div class="step-act"><b>Trigger:</b><span>Date-driven</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>02</span><span class="sys-dot hs">HS</span></div>
+        <div class="step-t">Renewal Deal created</div>
+        <div class="step-d">Auto-created Deal in HubSpot tied to Renewal Quote. Pipeline visibility for the AM. Type = Renewal.</div>
+        <div class="step-act"><b>Trigger:</b><span>Auto on Contract</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>03</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Renewal Quote builds</div>
+        <div class="step-d">MN pre-populates with current Subscriptions. Applies uplift % from policy. AM reviews and adjusts if needed.</div>
+        <div class="step-act"><b>Owner:</b><span>AM</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>04</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Send for signature</div>
+        <div class="step-d">eSign via MN Quote Share. Customer reviews. New term length and pricing made explicit.</div>
+        <div class="step-act"><b>Owner:</b><span>AM</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>05</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Process → New Contract</div>
+        <div class="step-d">Signed Renewal Quote processes. New Contract created. Old Contract closes cleanly on its end date.</div>
+        <div class="step-act"><b>Trigger:</b><span>Auto on process</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>06</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">New term invoice</div>
+        <div class="step-d">First invoice of new term fires per the new billing schedule. References new Contract.</div>
+        <div class="step-act"><b>Trigger:</b><span>Billing schedule</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>07</span><span class="sys-dot st">STR</span></div>
+        <div class="step-t">Auto-charge + Finance reports</div>
+        <div class="step-d">Stripe charges per stored method. New term invoice and payment appear in Finance reports for QBO journal entry.</div>
+        <div class="step-act"><b>Trigger:</b><span>Standard pipeline</span></div>
+      </div>
+    </div>
+
+    <!-- Uplift detail -->
+    <div class="g2 mb20">
+      <div class="panel">
+        <div class="panel-title">How uplift works</div>
+        <div class="panel-sub">Configured at the policy level, applied automatically on Renewal Quote creation. ENTR's default is set in MN under Renewal Logic.</div>
+        <div style="background:var(--soft); border-radius:8px; padding:14px; font-size:12.5px; color:var(--ink-2); line-height:1.65;">
+          <strong>Default uplift:</strong> 5% on the carry-forward Subscription pricing.<br>
+          <strong>Override:</strong> AM can waive or adjust on Renewal Quote before sending.<br>
+          <strong>Applied to:</strong> per-unit rate × current quantity. New optional products added at the renewal use the current rate card, not uplifted.<br>
+          <br>
+          <em>Why uplift is easier to waive than add:</em> if policy is 0% and the AM wants to ask for 5%, that becomes a negotiation. If the policy is 5% and the AM wants to waive it, that's a goodwill gesture.
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">What carries forward (and what doesn't)</div>
+        <div class="kv"><div class="k">Carry forward</div><div class="v">Active Subscriptions, their current quantities, Account and Contact roles.</div></div>
+        <div class="kv"><div class="k">Recalculated</div><div class="v">Per-unit price (with uplift). Total Contract Value. New billing anchor based on renewal start date.</div></div>
+        <div class="kv"><div class="k">Reset</div><div class="v">Contract ID is new. Billing schedule is rebuilt. Term length resets to whatever the renewal Quote specifies.</div></div>
+        <div class="kv"><div class="k">Does not carry</div><div class="v">One-time products (implementation, training). These do not renew. Add explicitly if needed again.</div></div>
+        <div class="kv"><div class="k">Optional add-ons</div><div class="v">Removed if not on the renewal Quote. AM must include explicitly to retain.</div></div>
+      </div>
+    </div>
+
+    <!-- One-line takeaway -->
+    <div class="panel tint" style="text-align:center; padding:32px 24px; background:linear-gradient(135deg, #F5F3FF 0%, white 70%); border-color:#C4B5FD;">
+      <div style="font-size:11px; font-weight:800; letter-spacing:0.16em; text-transform:uppercase; color:var(--p-renew); margin-bottom:14px;">One-Line Takeaway</div>
+      <div style="font-family:'DM Serif Display',serif; font-size:32px; line-height:1.15; color:var(--ink); letter-spacing:-0.02em; max-width:760px; margin:0 auto;">
+        Renewals <span style="color:var(--p-renew); font-style:italic;">extend the contract forward.</span> MN resets the term cleanly so billing continues without gaps or overlaps.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- ============ SECTION 07: HUBSPOT MAP ========= -->
+<!-- ============================================== -->
+<div class="view" id="view-hubspot">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 3 · Section 07</div>
+      <h1 class="sec-h">HubSpot ↔ MonetizeNow Field Mapping</h1>
+      <p class="sec-lede">Five entity types, dozens of fields. Every custom MN property in HubSpot is namespaced <code style="font-family:'JetBrains Mono',monospace; font-size:12px; padding:2px 7px; background:var(--soft); border-radius:5px; color:var(--mn-d); border:1px solid var(--border);">monetize_*</code> and grouped under a property group also prefixed <code style="font-family:'JetBrains Mono',monospace; font-size:12px; padding:2px 7px; background:var(--soft); border-radius:5px; color:var(--mn-d); border:1px solid var(--border);">monetize_</code>. The mapping below is what's live today.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>Auto-mapping logic.</strong> MN automatically syncs custom fields when API names match across systems. No manual mapping table needed for custom fields. The tables below cover the standard ENTR-MN mapping that ships with the integration.</div>
+    </div>
+
+    <!-- Property groups overview -->
+    <div class="panel mb20">
+      <div class="panel-title">Property groups in HubSpot</div>
+      <div class="panel-sub">All MN-managed properties live under these groups. Find them in HubSpot under Settings → Properties → filter by group name.</div>
+      <div class="g3">
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_account_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Company. Holds <code style="font-family:'JetBrains Mono',monospace; font-size:10.5px;">account_id</code>.</div>
+        </div>
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_contact_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Contact. Holds <code style="font-family:'JetBrains Mono',monospace; font-size:10.5px;">contact_id</code>.</div>
+        </div>
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_deal_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Deal. Opportunity link + quote type.</div>
+        </div>
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_quote_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Deal. Quote ID, status, ARR, MRR, dates.</div>
+        </div>
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_contract_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Deal. Contract ID, status, end action, latest quote.</div>
+        </div>
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_quoteitem_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Line Item. Quote Item ID, offering ID, MRR, ARR.</div>
+        </div>
+        <div style="background:var(--soft); border:1px solid var(--border); border-radius:8px; padding:12px 14px;">
+          <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--mn-d); font-weight:600;">monetize_product_data</code>
+          <div style="font-size:11.5px; color:var(--sub); margin-top:6px; line-height:1.5;">On Product. Product, Offering, Rate, Price IDs.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account / Company -->
+    <div class="section-label">Account ↔ Company</div>
+    <div class="panel mb16" style="padding:18px 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:10px;"><span class="sys-pill mn"><span class="sd"></span>MN Account</span><span style="color:var(--mute);">⇄</span><span class="sys-pill hs"><span class="sd"></span>HubSpot Company</span></div>
+        <span class="chip ok">Bi-directional</span>
+      </div>
+      <div class="field-row"><div class="f-left"><code class="mn">accountName</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">name</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">account.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_account_id</code></div></div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section-label">Contact ↔ Contact</div>
+    <div class="panel mb16" style="padding:18px 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:10px;"><span class="sys-pill mn"><span class="sd"></span>MN Contact</span><span style="color:var(--mute);">⇄</span><span class="sys-pill hs"><span class="sd"></span>HubSpot Contact</span></div>
+        <span class="chip ok">Bi-directional</span>
+      </div>
+      <div class="field-row"><div class="f-left"><code class="mn">email</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">email</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">fullName</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">firstname</code> + <code class="hs">lastname</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">phone</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">phone</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">title</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">jobtitle</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">address.line1 + line2</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">address</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">state</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">state</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">country</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">country</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">postalCode</code></div><div class="f-arrow">⇄</div><div class="f-right"><code class="hs">zip</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">contact.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_contact_id</code></div></div>
+    </div>
+
+    <!-- Opportunity / Quote / Contract → Deal -->
+    <div class="section-label">Opportunity + Quote + Contract → Deal (the big one)</div>
+    <div class="panel mb16" style="padding:18px 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:10px;"><span class="sys-pill mn"><span class="sd"></span>Opp + Quote + Contract</span><span style="color:var(--mute);">⇄</span><span class="sys-pill hs"><span class="sd"></span>HubSpot Deal</span></div>
+        <span class="chip ok">Bi-directional</span>
+        <span class="chip gray">Primary Quote assumed</span>
+      </div>
+      <div style="background:var(--soft); border-radius:7px; padding:10px 14px; font-size:11.5px; color:var(--sub); line-height:1.5; margin-bottom:10px;">
+        A HubSpot Deal is the container for all three MN concepts. Pipeline visibility, commercial detail, and active state all collapse to one Deal record via property groups.
+      </div>
+      <div class="field-row"><div class="f-left"><code class="mn">opportunity.name</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">dealname</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">opportunity.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_opportunity_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.amount</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">amount</code> · <code class="hs">hs_closed_amount</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.arr</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quote_arr</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.mrr</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quote_mrr</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quote_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.status</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quote_status</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.type</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_deal_type</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.contractStartDate</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_contract_start_date</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quote.contractEndDate</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_contract_end_date</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">contract.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_contract_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">contract.status</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_contract_status</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">contract.endAction</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_contract_end_action</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">contract.latestQuoteId</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_latest_quote_id</code></div></div>
+    </div>
+
+    <!-- Quote Item -->
+    <div class="section-label">Quote Item / Quote Offering → Line Item</div>
+    <div class="panel mb16" style="padding:18px 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:10px;"><span class="sys-pill mn"><span class="sd"></span>MN Quote Item</span><span style="color:var(--mute);">→</span><span class="sys-pill hs"><span class="sd"></span>HubSpot Line Item</span></div>
+        <span class="chip warn">MN → HS only</span>
+      </div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.productName</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">name</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.description</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">description</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.quantity</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">quantity</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.amount</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quoteitem_amount</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.revenue.arr</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quoteitem_arr</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.revenue.mrr</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quoteitem_mrr</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteoffering.startDate</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">hs_recurring_billing_start_date</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteoffering.endDate</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">hs_recurring_billing_end_date</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteitem.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quoteitem_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">quoteoffering.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_quoteoffering_id</code></div></div>
+    </div>
+
+    <!-- Product / Offering / Rate -->
+    <div class="section-label">Product + Offering + Rate → Product</div>
+    <div class="panel mb20" style="padding:18px 22px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="display:flex; align-items:center; gap:10px;"><span class="sys-pill mn"><span class="sd"></span>Product + Offering + Rate</span><span style="color:var(--mute);">→</span><span class="sys-pill hs"><span class="sd"></span>HubSpot Product</span></div>
+        <span class="chip warn">MN → HS only · catalog mirror</span>
+      </div>
+      <div class="field-row"><div class="f-left"><code class="mn">product/offering/rate.name</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">name</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">product.description</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">description</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">product.sku</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">hs_sku</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">rate.billingFrequency</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">hs_recurring_billing_period</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">rate.usageBillingFrequency</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_usage_billing_frequency</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">product.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_product_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">offering.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_offering_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">rate.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_rate_id</code></div></div>
+      <div class="field-row"><div class="f-left"><code class="mn">price.id</code></div><div class="f-arrow">→</div><div class="f-right"><code class="hs">monetize_price_id</code></div></div>
+    </div>
+
+    <div class="co co-amber">
+      <span class="co-ico">▲</span>
+      <div><strong>What you should never do.</strong> Edit a <code style="font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:2px 7px; background:var(--amber-b); border-radius:4px; color:var(--amber-d); border:1px solid var(--amber-br);">monetize_*</code> property directly in HubSpot. These are managed by the integration. Any value typed in manually will either be overwritten on the next sync or cause a sync conflict. If a value is wrong, fix it in MN.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 08: STRIPE ============== -->
+<!-- ============================================== -->
+<div class="view" id="view-stripe">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 3 · Section 08</div>
+      <h1 class="sec-h">Stripe in the Background</h1>
+      <p class="sec-lede">MN orchestrates every payment, retry, refund, and credit through Stripe via API. ENTR staff do not touch Stripe dashboard for billing operations. Stripe holds the payment rail; MN decides what runs on it.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>How this works.</strong> MN tells Stripe what to do, when to do it, and how many times to retry on failure. Stripe sends back what actually happened. Stripe data exists for compliance and audit. Every billing decision originates in MN.</div>
+    </div>
+
+    <!-- What MN does in Stripe -->
+    <div class="g2 mb20">
+      <div class="panel">
+        <div class="panel-title">What MN does in Stripe (without you lifting a finger)</div>
+        <div class="panel-sub">Standard operations that run on their own:</div>
+        <ul class="ul-rich" style="margin:0;">
+          <li>
+            <div class="l-title">Creates a Customer on first invoice</div>
+            <div class="l-body">When MN posts first invoice for an account, it creates the corresponding Stripe Customer record, attaches metadata that includes MN Account ID, and stores any payment method the customer added via the hosted page.</div>
+          </li>
+          <li>
+            <div class="l-title">Charges per invoice when invoice posts</div>
+            <div class="l-body">MN calls Stripe with the amount, currency, customer ID, and reference (MN Invoice ID). Stripe attempts the charge against stored payment method.</div>
+          </li>
+          <li>
+            <div class="l-title">Retries failed charges on a smart schedule</div>
+            <div class="l-body">If first attempt declines, MN orchestrates retries based on the failure reason. Soft declines retry within hours. Hard declines pause and trigger a dunning email to the billing contact.</div>
+          </li>
+          <li>
+            <div class="l-title">Issues refunds against original charges</div>
+            <div class="l-body">When MN issues a Credit Memo that needs cash back, MN calls Stripe with the original charge ID. Refund executes. Stripe webhooks success, MN updates the Credit Memo to Refunded.</div>
+          </li>
+          <li>
+            <div class="l-title">Listens for chargebacks and disputes</div>
+            <div class="l-body">If a customer disputes a charge, Stripe sends a webhook. MN flags the original Invoice, alerts Finance, and pauses any further automatic actions on that Invoice until resolved.</div>
+          </li>
+          <li>
+            <div class="l-title">Updates payment method when customer rotates a card</div>
+            <div class="l-body">Stripe's account updater service notifies MN of card changes. Tokens swap automatically. Future charges use the updated method without ENTR or the customer doing anything.</div>
+          </li>
+        </ul>
+      </div>
+      <div class="panel" style="background:#FFFBEB; border-color:var(--amber-br);">
+        <div class="panel-title" style="color:var(--amber-d);">What you should not do in Stripe</div>
+        <div class="panel-sub">Doing any of these creates drift between Stripe and MN. MN will not know the action happened, so MN will not update the customer or the books.</div>
+        <ul class="ul-rich" style="margin:0;">
+          <li>
+            <div class="l-title">Issue a refund directly in Stripe dashboard</div>
+            <div class="l-body">Stripe will process it, but MN will not know. The Invoice in MN still shows Paid, so Finance reports do not capture the credit, and QBO postings will be off. Always issue refunds via a Credit Memo in MN.</div>
+          </li>
+          <li>
+            <div class="l-title">Manually create a Customer or charge in Stripe</div>
+            <div class="l-body">Stripe will accept it, but the charge has no Invoice ID and no Contract reference. It will not appear in Finance reports. Untraceable revenue.</div>
+          </li>
+          <li>
+            <div class="l-title">Edit a Customer's metadata in Stripe</div>
+            <div class="l-body">MN's Account ID reference will get overwritten. Future sync attempts may fail to match.</div>
+          </li>
+          <li>
+            <div class="l-title">Cancel a Subscription in Stripe (if one exists)</div>
+            <div class="l-body">ENTR does not use Stripe's native subscription product. MN owns subscription state. Stripe only sees individual charges. If a subscription record exists in Stripe at all, it was likely a test artifact.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Why MN is still SoT -->
+    <div class="panel mb20">
+      <div class="panel-title">Why MN is still the source of truth even though Stripe holds the money rail</div>
+      <div class="g3 mt16">
+        <div style="background:var(--soft); border-radius:9px; padding:13px 15px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Context belongs to the invoice</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">A Stripe charge of $4,000 means nothing without knowing it was the Q3 portion of a 12-month subscription for Pro tier with 40 seats. That context lives on Invoice in MN.</div>
+        </div>
+        <div style="background:var(--soft); border-radius:9px; padding:13px 15px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">MN decides what to charge and when</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Stripe does not know about proration, uplift, or contract terms. It just executes what MN tells it. If MN is wrong, Stripe is faithfully wrong.</div>
+        </div>
+        <div style="background:#EEF2FF; border:1px solid #C7D2FE; border-radius:9px; padding:13px 15px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Audit trail is one-to-one</div>
+          <div style="font-size:12.5px; color:var(--mn-d); line-height:1.55;">Every Stripe charge is tagged with MN Invoice ID. Every MN Invoice records Stripe Charge ID. You can walk that chain in either direction.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sequence -->
+    <div class="section-label">Payment sequence · invoice → cash collected</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num"><span>01</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Invoice posts</div>
+        <div class="step-d">Billing schedule fires. Invoice generated in MN with line items, amount due, due date.</div>
+        <div class="step-act"><b>Trigger:</b><span>Schedule</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>02</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Auto-charge check</div>
+        <div class="step-d">MN checks if customer has Auto-Charge enabled and a valid payment method. If yes, proceed. If no, send invoice email.</div>
+        <div class="step-act"><b>Check:</b><span>Config flag</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>03</span><span class="sys-dot st">STR</span></div>
+        <div class="step-t">Charge attempt</div>
+        <div class="step-d">MN calls Stripe with amount, currency, payment method token, metadata (Invoice ID, Contract ID).</div>
+        <div class="step-act"><b>Call:</b><span>API</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>04</span><span class="sys-dot st">STR</span></div>
+        <div class="step-t">Stripe processes</div>
+        <div class="step-d">Card network call, fraud check, settlement initiated.</div>
+        <div class="step-act"><b>Latency:</b><span>~1s typical</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>05</span><span class="sys-dot st">STR</span></div>
+        <div class="step-t">Webhook back to MN</div>
+        <div class="step-d">Stripe sends success or failure event to MN webhook endpoint.</div>
+        <div class="step-act"><b>Event:</b><span>charge.succeeded / failed</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>06</span><span class="sys-dot mn">MN</span></div>
+        <div class="step-t">Update invoice state</div>
+        <div class="step-d">On success: Invoice → Paid, Payment record created, Stripe Charge ID stamped. On failure: retry scheduled.</div>
+        <div class="step-act"><b>State:</b><span>Auto-update</span></div>
+      </div>
+      <div class="step">
+        <div class="step-num"><span>07</span><span class="sys-dot qb">QBO</span></div>
+        <div class="step-t">Payment in Finance reports</div>
+        <div class="step-d">Paid Invoice and Payment record appear in MN Finance reports. AR view updates. Finance posts to QBO at close.</div>
+        <div class="step-act"><b>Trigger:</b><span>Real-time in MN</span></div>
+      </div>
+    </div>
+
+    <!-- Dunning -->
+    <div class="g2 mb20">
+      <div class="panel">
+        <div class="panel-title">Dunning sequence when charges fail</div>
+        <div class="panel-sub">Configured per ENTR policy in MN. Standard pattern shown.</div>
+        <div class="tbl-wrap" style="margin:0;">
+          <table>
+            <thead><tr><th>Attempt</th><th>When</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Invoice due date</td><td>Charge attempt</td></tr>
+              <tr><td>2</td><td>+3 days</td><td>Retry charge · soft email</td></tr>
+              <tr><td>3</td><td>+7 days</td><td>Retry charge · firm email + AM CC</td></tr>
+              <tr><td>4</td><td>+14 days</td><td>Final retry · Finance alert</td></tr>
+              <tr><td>End</td><td>+21 days</td><td>Manual intervention by Finance / AM</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Reference IDs that tie it all together</div>
+        <ul class="ul" style="margin:0;">
+          <li><strong>Stripe Customer ID</strong> stored on MN Account. Lets you jump from MN to Stripe dashboard.</li>
+          <li><strong>Stripe Payment Method ID</strong> stored on MN Customer record. Used on every charge.</li>
+          <li><strong>Stripe Charge ID</strong> stored on MN Payment record. Lets you find the exact Stripe event for any invoice.</li>
+          <li><strong>MN Invoice ID</strong> stored in Stripe charge metadata. Lets you trace a Stripe charge back to MN.</li>
+          <li><strong>MN Account ID</strong> stored in Stripe customer metadata. Lets you trace Stripe customers back to MN.</li>
+          <li><strong>Stripe Refund ID</strong> stored on MN Credit Memo when refund executed.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="co co-green">
+      <span class="co-ico">●</span>
+      <div><strong>Day-to-day at ENTR.</strong> No one needs to log into Stripe. Finance audits any charge by clicking from an MN Invoice. Customer Success reads dunning state from MN. Stripe dashboard is for occasional inspection.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 09: QBO ================= -->
+<!-- ============================================== -->
+<div class="view" id="view-qbo">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 3 · Section 09</div>
+      <h1 class="sec-h">QuickBooks · Today vs Future</h1>
+      <p class="sec-lede">Today, ENTR does not invoice from QuickBooks. There is no live integration between MN and QBO. Finance pulls invoice, payment, credit, and revenue data from MN reports and continues working in QBO as they always have. A QBO connection only becomes relevant if ENTR decides to post MN invoices into QBO at some point. Both states are covered below.</p>
+    </div>
+
+    <!-- Mode toggle -->
+    <div class="mode-tabs" id="qbo-tabs">
+      <button class="mode-tab active" onclick="setQboMode('today')">Today · No QBO integration</button>
+      <button class="mode-tab" onclick="setQboMode('future')">Future · If ENTR connects QBO</button>
+    </div>
+
+    <!-- TODAY mode -->
+    <div class="mode-content active" id="qbo-today">
+
+      <div class="co co-blue">
+        <span class="co-ico">◆</span>
+        <div><strong>Today's setup.</strong> MN holds all invoice, payment, credit, and revenue data. Finance accesses that data through MN reports. QBO runs as ENTR's accounting system separately, with no data flowing between the two. Nothing is being pushed, synced, or mapped.</div>
+      </div>
+
+      <!-- Reality of what's connected -->
+      <div class="g2 mb20">
+        <div class="panel">
+          <div class="panel-title">What lives in MN</div>
+          <ul class="ul" style="margin:0;">
+            <li>Invoices, with line items, tax, discounts, totals, and status</li>
+            <li>Payments, by date, method, and applied invoice</li>
+            <li>Credit memos and refunds</li>
+            <li>Customer balances and AR aging</li>
+            <li>Revenue and collections totals by month, by product, by customer</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">What Finance does in QBO</div>
+          <ul class="ul" style="margin:0;">
+            <li>Whatever they did before. GL, financial statements, bank reconciliation, tax filing</li>
+            <li>Manual entries based on MN report data when needed</li>
+            <li>Period close based on figures pulled from MN reports</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- The reports dashboard -->
+      <div class="section-label">MN Reports dashboard for QBO usage</div>
+      <div class="panel mb20" style="padding:22px 24px;">
+        <div class="panel-title">Finance reads everything from here</div>
+        <div class="panel-sub">A reporting dashboard configured in MN under Reporting → QuickBooks Reports. Five reports cover what Finance needs to close the books and reconcile cash without leaving MN.</div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+
+          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:14px 16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--qb) 0%, var(--qb-d) 100%); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; font-family:'JetBrains Mono',monospace;">1</div>
+                <div>
+                  <div style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;">Invoice Register</div>
+                  <div style="font-size:11.5px; color:var(--sub); margin-top:2px;">Every posted invoice with customer, dates, amounts, status, balance due</div>
+                </div>
+              </div>
+              <span class="chip qb">Header-level</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--ink-3); line-height:1.5; padding-left:40px;">
+              Invoice #, Customer, Currency, Invoice Date, Due Date, Paid Date, Accounting Date, Service Period, Subtotal, Discount, Tax, Total, Paid, Credits Applied, Balance Due, Status, Net Terms, PO #, Type, Bill-To Contact, Legal Entity, Invoice Link, MN Invoice ID, Contract ID. Excludes drafts and test accounts. Sorted by bill date descending.
+            </div>
+          </div>
+
+          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:14px 16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--qb) 0%, var(--qb-d) 100%); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; font-family:'JetBrains Mono',monospace;">2</div>
+                <div>
+                  <div style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;">Invoice Line Item Detail</div>
+                  <div style="font-size:11.5px; color:var(--sub); margin-top:2px;">Line-level breakout with product, SKU, GL codes, service period, proration</div>
+                </div>
+              </div>
+              <span class="chip qb">Line-level</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--ink-3); line-height:1.5; padding-left:40px;">
+              Invoice #, Customer, Invoice Date, Accounting Date, Line #, Offering, Product, Product Type, SKU, GL Code (Product), GL Code (Offering), Description, Qty, Price Model, List Amount, Discount, Net Amount, Tax, Total, Credits Applied, Service Period Start/End, Proration Factor, Recurring flag, Currency, Status, Rate Plan, Line Item ID, Invoice ID. Pairs with Invoice Register for full GL coding visibility.
+            </div>
+          </div>
+
+          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:14px 16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--qb) 0%, var(--qb-d) 100%); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; font-family:'JetBrains Mono',monospace;">3</div>
+                <div>
+                  <div style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;">Payment Journal</div>
+                  <div style="font-size:11.5px; color:var(--sub); margin-top:2px;">Every payment received, with method, date, and applied invoice</div>
+                </div>
+              </div>
+              <span class="chip qb">Cash in</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--ink-3); line-height:1.5; padding-left:40px;">
+              Used for bank reconciliation and cash posting in QBO. Payment method, payment date, amount, currency, applied invoice number, customer, processor reference.
+            </div>
+          </div>
+
+          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:14px 16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--qb) 0%, var(--qb-d) 100%); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; font-family:'JetBrains Mono',monospace;">4</div>
+                <div>
+                  <div style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;">Credit Note &amp; Refund Register</div>
+                  <div style="font-size:11.5px; color:var(--sub); margin-top:2px;">All credits issued and refunds processed, with original invoice references</div>
+                </div>
+              </div>
+              <span class="chip qb">Adjustments</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--ink-3); line-height:1.5; padding-left:40px;">
+              Use for tracking AR adjustments and revenue reversals. Credit number, customer, original invoice, amount, reason, refund status, processor refund reference if applicable.
+            </div>
+          </div>
+
+          <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:14px 16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, var(--qb) 0%, var(--qb-d) 100%); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; font-family:'JetBrains Mono',monospace;">5</div>
+                <div>
+                  <div style="font-size:14px; font-weight:700; color:var(--ink); letter-spacing:-0.012em;">Monthly Revenue &amp; Collections Summary</div>
+                  <div style="font-size:11.5px; color:var(--sub); margin-top:2px;">Roll-up of billed and collected revenue by month, for period close</div>
+                </div>
+              </div>
+              <span class="chip qb">Period close</span>
+            </div>
+            <div style="font-size:11.5px; color:var(--ink-3); line-height:1.5; padding-left:40px;">
+              Monthly totals: invoiced, collected, outstanding, credited, written off. Cuts by legal entity. Drives the figures Finance posts as summary journal entries in QBO during close.
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:16px; padding:12px 14px; background:var(--qb-b); border:1px solid var(--qb-br); border-radius:8px; font-size:12px; color:var(--qb-d); line-height:1.55;">
+          <strong>Where these live:</strong> MN platform, under <em>Reporting → QuickBooks Reports</em>. Each report is downloadable as CSV. Finance pulls what they need on close cadence (typically monthly). Direct links available from inside MN.
+        </div>
+      </div>
+
+      <!-- Period close workflow -->
+      <div class="panel mb20">
+        <div class="panel-title">Period close workflow at ENTR today</div>
+        <div class="panel-sub">No automated push. Manual but lightweight, three steps.</div>
+        <div class="g3 mt16">
+          <div style="background:var(--soft); border-radius:9px; padding:14px;">
+            <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--qb-d); margin-bottom:8px;">Step 1 · Pull</div>
+            <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Finance pulls Invoice Register, Payment Journal, Credit Register, and Monthly Summary from MN reports. Filters by period.</div>
+          </div>
+          <div style="background:var(--soft); border-radius:9px; padding:14px;">
+            <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--qb-d); margin-bottom:8px;">Step 2 · Reconcile</div>
+            <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Match MN totals against bank deposits and processor settlement. Tie out cash receipts to payments applied.</div>
+          </div>
+          <div style="background:var(--soft); border-radius:9px; padding:14px;">
+            <div style="font-size:11px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--qb-d); margin-bottom:8px;">Step 3 · Post</div>
+            <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Book summary journal entries in QBO. Revenue by GL code from the Line Item Detail report. Cash to AR clearing. Close period.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="co co-gray">
+        <span class="co-ico">○</span>
+        <div>Nothing here requires a QBO integration. MN reports are the interface between billing operations and accounting. If reporting needs evolve (new cuts, additional fields, different cadence), the reports themselves can change without touching either system's plumbing.</div>
+      </div>
+
+    </div>
+
+    <!-- FUTURE mode -->
+    <div class="mode-content" id="qbo-future">
+
+      <div class="co co-amber">
+        <span class="co-ico">○</span>
+        <div><strong>Not active today.</strong> If ENTR decides to push MN invoices directly into QBO at some point, that's when integration work begins. Until then, this section is reference for what would change and what would stay the same.</div>
+      </div>
+
+      <!-- What an active integration would do -->
+      <div class="panel mb20">
+        <div class="panel-title">What gets connected if ENTR turns on QBO integration</div>
+        <div class="panel-sub">A live API connection between MN and QBO. MN posts invoices, customers, payments, and credits into QBO as they happen. QBO becomes the system of record for AR, MN stays the system of record for everything upstream.</div>
+
+        <div class="section-label" style="margin-top:18px;">What pushes from MN to QBO</div>
+        <div class="tbl-wrap" style="margin-top:8px;">
+          <table>
+            <thead><tr><th>MN Object</th><th>Creates in QBO</th><th>Timing</th><th>Carries</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Account, on first invoice</strong></td><td>Customer record</td><td>Auto, before invoice push</td><td>Name, billing address, tax info</td></tr>
+              <tr><td><strong>Invoice, posted</strong></td><td>Invoice</td><td>Scheduled push</td><td>Line items, amount, due date, MN Invoice ID and Contract ID as reference fields</td></tr>
+              <tr><td><strong>Payment, from Stripe</strong></td><td>Receive Payment, applied to invoice</td><td>Auto on Stripe webhook</td><td>Amount, date, Stripe Charge ID</td></tr>
+              <tr><td><strong>Credit Memo</strong></td><td>Credit Memo</td><td>On issue in MN</td><td>Reference to original invoice</td></tr>
+              <tr><td><strong>Refund</strong></td><td>Refund Receipt applied to Credit Memo</td><td>Auto on refund confirmation</td><td>Refund amount, Stripe Refund ID</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Decisions to make if turning it on -->
+      <div class="g2 mb20">
+        <div class="panel">
+          <div class="panel-title">Things to decide if turning it on</div>
+          <ul class="ul" style="margin:0;">
+            <li><strong>Customer mapping rule.</strong> How a new MN Account becomes a QBO Customer. Match by name, by email, by external ID. Avoids duplicate customer records when an account already exists in QBO.</li>
+            <li><strong>GL code mapping.</strong> Which MN Product or Offering maps to which QBO income account. The GL Code fields already in Invoice Line Item Detail report give a head start.</li>
+            <li><strong>Tax handling.</strong> Whether tax calculates in MN and posts as line items, or whether QBO's tax engine takes over.</li>
+            <li><strong>Push cadence.</strong> Real-time on invoice post, or batched nightly.</li>
+            <li><strong>Customer balance source.</strong> Once invoices are in QBO, AR aging can come from either system. Pick one as the source of truth to avoid drift.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <div class="panel-title">What does not change</div>
+          <ul class="ul" style="margin:0;">
+            <li>Contract lifecycle stays in MN. New business, amendment, renewal motions are unaffected.</li>
+            <li>Subscription state, proration math, billing schedules stay in MN.</li>
+            <li>HubSpot integration is unchanged. Reps and AMs keep working the same way.</li>
+            <li>Stripe stays as the payment rail. MN keeps orchestrating it.</li>
+            <li>Reporting on ARR, MRR, contract value still comes from MN.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Why a team would turn this on -->
+      <div class="panel" style="background:linear-gradient(135deg, var(--qb-b) 0%, white 70%); border-color:var(--qb-br);">
+        <div class="panel-title">Reasons a team eventually turns this on</div>
+        <ul class="ul" style="margin:0;">
+          <li>Volume grows past what manual journal entries handle cleanly during close</li>
+          <li>Audit requirements ask for invoice-level data inside the accounting system</li>
+          <li>Tax complexity makes QBO's tax engine (or a connected provider) the cleaner home for tax math</li>
+          <li>Finance team wants AR aging and dispute resolution to happen inside QBO rather than across two tools</li>
+        </ul>
+      </div>
+
+      <div class="co co-blue mt16">
+        <span class="co-ico">◆</span>
+        <div>No need to turn this on. ENTR's current workflow with MN reports works at present volume. If volume or audit requirements change, this section becomes a starting point for the conversation.</div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ SECTION 10: DECISION TREE ====== -->
+<!-- ============================================== -->
+<div class="view" id="view-decision">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 4 · Section 10</div>
+      <h1 class="sec-h">Decision Tree · Which Motion?</h1>
+      <p class="sec-lede">A rep, AM, or CSM has a customer change to make. Is it a New Business deal, an Amendment to an active contract, or a Renewal of an expiring one? Four questions, three outcomes.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>Why motion matters.</strong> Motion determines the starting record, the math, the invoice type, and where value lands in forecast. Picking the wrong one is the most common source of billing errors and pipeline noise.</div>
+    </div>
+
+    <!-- The decision tree -->
+    <div class="panel mb20" style="padding:32px 24px;">
+      <div class="dt">
+
+        <div class="dt-start">START HERE</div>
+        <div class="dt-line"></div>
+
+        <div class="dt-q">Does a Contract already exist for this customer?</div>
+
+        <div class="dt-arms">
+
+          <!-- NO branch -->
+          <div class="dt-arm">
+            <div class="dt-branch no">No</div>
+            <div class="dt-line"></div>
+            <div class="dt-result new">
+              <div class="dt-r-eye">Motion 1</div>
+              <div class="dt-r-t">New Business</div>
+              <div class="dt-r-d">Start from a fresh Opportunity in HubSpot. Build full Quote in MN from scratch. Contract created on signature.</div>
+            </div>
+          </div>
+
+          <!-- YES branch -->
+          <div class="dt-arm">
+            <div class="dt-branch yes">Yes</div>
+            <div class="dt-line"></div>
+
+            <div class="dt-q">Is Contract currently active (mid-term)?</div>
+
+            <div class="dt-arms" style="margin-top:8px;">
+
+              <!-- mid-term YES → Amendment -->
+              <div class="dt-arm">
+                <div class="dt-branch yes">Yes · Mid-Term</div>
+                <div class="dt-line"></div>
+                <div class="dt-result amend">
+                  <div class="dt-r-eye">Motion 2</div>
+                  <div class="dt-r-t">Amendment</div>
+                  <div class="dt-r-d">Open from active Contract in MN. Add, remove, or change Subscriptions. Proration calculated from Effective Date.</div>
+                </div>
+              </div>
+
+              <!-- mid-term NO → next question -->
+              <div class="dt-arm">
+                <div class="dt-branch no">No · At End-of-Term</div>
+                <div class="dt-line"></div>
+
+                <div class="dt-q">Is the customer extending the contract?</div>
+
+                <div class="dt-arms" style="margin-top:8px;">
+
+                  <div class="dt-arm">
+                    <div class="dt-branch yes">Yes</div>
+                    <div class="dt-line"></div>
+                    <div class="dt-result renew">
+                      <div class="dt-r-eye">Motion 3</div>
+                      <div class="dt-r-t">Renewal</div>
+                      <div class="dt-r-d">Carry forward active Subscriptions. Apply uplift. New Contract starts the day the old one ends.</div>
+                    </div>
+                  </div>
+
+                  <div class="dt-arm">
+                    <div class="dt-branch no">No</div>
+                    <div class="dt-line"></div>
+                    <div class="dt-result" style="border-color:var(--mute); border-style:dashed;">
+                      <div class="dt-r-eye" style="color:var(--sub);">Off-Path</div>
+                      <div class="dt-r-t" style="font-family:'DM Serif Display',serif;">Churn or Expiry</div>
+                      <div class="dt-r-d">Contract closes on its end date. No new motion. CS handles offboarding workflow. Final invoice and reconciliation in MN.</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Edge cases -->
+    <div class="g2 mb20">
+      <div class="panel">
+        <div class="panel-title">Edge cases worth knowing</div>
+        <ul class="ul-rich" style="margin:0;">
+          <li>
+            <div class="l-title">Customer has multiple active Contracts</div>
+            <div class="l-body">A change applies to a specific Contract. Open Contract you intend to amend. Do not assume most recent is correct.</div>
+          </li>
+          <li>
+            <div class="l-title">"They want to add a new product line that's totally separate"</div>
+            <div class="l-body">Still an Amendment if it sits inside the existing Contract term. Only a New Business deal if it's a separately-termed agreement with its own dates.</div>
+          </li>
+          <li>
+            <div class="l-title">Customer wants to swap one product for another mid-term</div>
+            <div class="l-body">Amendment with a downgrade line (remove product A) and an upgrade line (add product B) on the same Quote. Single transaction, single proration.</div>
+          </li>
+          <li>
+            <div class="l-title">Renewal is early (customer wants to extend before the window opens)</div>
+            <div class="l-body">Still a Renewal. AM can manually start the renewal flow. MN respects the existing end date as the new start date unless explicitly overridden.</div>
+          </li>
+          <li>
+            <div class="l-title">Customer wants to renew with completely different terms</div>
+            <div class="l-body">Still a Renewal. Carry-forward is the default, but every line on Renewal Quote is editable before signature. Big changes work fine here.</div>
+          </li>
+          <li>
+            <div class="l-title">Billing-only correction (typo in address, wrong PO number)</div>
+            <div class="l-body">Not any of the three motions. Edit Invoice directly in MN if not yet sent, or issue a Credit Memo and re-invoice if already sent.</div>
+          </li>
+        </ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Quick reference card</div>
+        <div class="kv"><div class="k">New Business</div><div class="v">No prior Contract. Fresh Opp → Quote → Contract.<br><span style="color:var(--mn-d); font-weight:600;">Origin: HubSpot Opportunity.</span></div></div>
+        <div class="kv"><div class="k">Amendment</div><div class="v">Active Contract exists. Mid-term change.<br><span style="color:var(--p-amend); font-weight:600;">Origin: MN Contract → Amend.</span></div></div>
+        <div class="kv"><div class="k">Renewal</div><div class="v">Contract approaching or at end date. Extend forward.<br><span style="color:var(--p-renew); font-weight:600;">Origin: MN Renewal Quote (auto or manual).</span></div></div>
+        <div class="kv"><div class="k">When in doubt</div><div class="v">Ask: "Is the customer changing what they already have, or buying something net new?" If changing, it's an Amendment. If buying net new, it's New Business. If extending the same thing forward, it's a Renewal.</div></div>
+      </div>
+    </div>
+
+    <div class="co co-amber">
+      <span class="co-ico">▲</span>
+      <div><strong>The single most expensive error.</strong> Treating an Amendment as a New Business deal because building a fresh quote feels faster. Result: a parallel Contract, double-billing for the customer, double-counted forecast, and two AR balances for the same revenue. Active Contract + customer change = Amendment.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 11: TROUBLESHOOTING ===== -->
+<!-- ============================================== -->
+<div class="view" id="view-troubleshoot">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 4 · Section 11</div>
+      <h1 class="sec-h">Common Failure Modes</h1>
+      <p class="sec-lede">Recurring ways data drifts across systems. Each case lists symptom, root cause, impact, and fix. Grouped by motion, with a cross-system set at the end.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>Reading the cases.</strong> Skim for the symptom. Each fix is written so an operator can resolve without escalating, or escalate with the right context if admin intervention is needed.</div>
+    </div>
+
+    <!-- New Business pitfalls -->
+    <div class="section-label" style="margin-top:8px;">New Business · 3 cases</div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Wrong Primary Quote</div>
+        <span class="chip risk">High Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Rep created three Quotes during negotiation. Customer signed Quote C. But Quote A is still marked Primary. Deal Amount in HubSpot reflects Quote A's number, not what was actually sold.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Primary flag was set early and never updated when the deal moved to a different Quote. HubSpot reports against Primary Quote; Contract reflects the signed Quote.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Forecast and Contract disagree. Commission report likely uses Primary Quote and underpays or overpays the rep. Pipeline numbers look off.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Mark winning Quote as Primary in MN before processing. MN auto-updates Deal Amount on the change. As a habit, reps should flip Primary as soon as a Quote is sent for signature, not after signing.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Line Items Not Syncing to HubSpot</div>
+        <span class="chip warn">Medium Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Deal Amount in HubSpot looks right, but the Line Items section is empty or shows wrong product splits. Product-level forecasting reports return nothing.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>"Sync Line Items to Deal" flag was disabled in MN configuration, or specific Products in catalog have sync turned off.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>No product-level visibility in HubSpot. Reports that depend on Line Items return blank. Commissions calculated on product splits go wrong.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Verify catalog-level sync flag in MN. Check affected Products for individual sync settings. Re-process Quote to push Line Items retroactively. Confirm in HubSpot Deal that Line Items appear.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Post-Signature Edits Change the Numbers</div>
+        <span class="chip warn">Medium Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Finance billed $50,000, but Sales Commission report says $45,000 for the same deal. Both pulled from MN.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Quote was edited in MN after the signature snapshot was taken. Commission snapshot froze at one number, billing reflects the edit.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Rep argues commission. Finance argues invoicing. Both are right, both are looking at different versions of the truth.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Quotes lock on signature by default. If a post-signature change is needed, it must go through Amendment, not Quote edit. Re-train reps and admins. If Quote was edited in error, escalate to a CPQ Admin to restore from the signature snapshot.
+      </div>
+    </div>
+
+    <!-- Amendment pitfalls -->
+    <div class="section-label" style="margin-top:24px;">Amendment · 3 cases</div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Double Billing After Amendment</div>
+        <span class="chip risk">High Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Customer is billed for the new add-on AND for the original full contract again the following month. Customer flags it. Painful escalation.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>The change was processed as a new Quote (New Business motion) instead of as an Amendment to the active Contract. Two parallel Contracts now exist for the same customer.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Customer trust hit. Refund required for the duplicate. Books need correction across MN and QBO. AR is wrong.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Close the duplicate Contract in MN with the same start date as today (so no charges accrue). Issue Credit Memos for any duplicate Invoices already posted. Process refunds through MN, which routes to Stripe. Always launch amendments from active Contract.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Incorrect Proration on a Mid-Cycle Change</div>
+        <span class="chip risk">High Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Customer added 10 seats on the 15th of the month. Got billed for the full month instead of the partial days remaining.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Effective Date on Amendment Quote was set to the start of the billing period instead of the actual change date.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Customer overpays. Reputation impact. Manual credit memo required to make whole.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Issue a Credit Memo in MN for the difference between actual and prorated. Set Effective Date carefully on future amendments. MN calculates proration accurately from whatever Effective Date is set; the failure is operator input, not platform.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Delta vs Total Forecast Confusion</div>
+        <span class="chip warn">Medium Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Pipeline report shows $1.2M for an Expansion Deal that's actually a $20K upsell. Forecast roll-up is dramatically inflated.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>HubSpot Deal Amount mapped to MN's Total ARR (full contract value) instead of Incremental ARR (just the upsell delta).</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Sales leaders think pipeline is bigger than it is. Quota attainment looks wrong. Renewal pipeline double-counted on top of Amendment pipeline.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Update field mapping in MN configuration so Amendment-type Deals map to Incremental ARR. New Business Deals continue to map to Total ARR. Validate that <code>monetize_deal_type</code> is correctly set on each Deal.
+      </div>
+    </div>
+
+    <!-- Renewal pitfalls -->
+    <div class="section-label" style="margin-top:24px;">Renewal · 3 cases</div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Gap Between Contract Terms</div>
+        <span class="chip risk">High Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Customer has three days of unbilled service between Contract A ending and Contract B starting. Or worse: service was cut off briefly before being restored.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Renewal was processed late. Start date of new Contract was entered manually and didn't anchor to the previous end date.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Lost revenue for the gap days. Possible service interruption. Customer questions accuracy of the whole agreement.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Set Renewal Window Alert at 90 days out (default in MN). On Renewal Quote creation, MN auto-anchors the new start date to the previous end date. If processed late, manually back-date the start to the day after Contract A ended. Don't leave it on default-today.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Overlapping Billing Across Renewals</div>
+        <span class="chip risk">High Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Customer is billed twice for January. Old Contract still active, new Contract already started.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Old Contract was not closed cleanly when the renewal processed. Manual date entry created an overlap window.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Customer overbilled. Refund needed. Books need cleanup across both MN and QBO.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Process Renewal Quote through MN's standard flow, which auto-closes the prior Contract on its end date. If overlap already happened: void the duplicate Invoice in MN, issue Credit Memo, refund through MN. Audit Contract pair to confirm clean boundaries.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Uplift Missing or Wrong</div>
+        <span class="chip warn">Medium Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Renewal Quote shows the same per-unit prices as the prior term. The expected 5% uplift is nowhere. Or the uplift is applied twice.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Renewal pricing was overridden manually before sending. Or the renewal policy in MN doesn't have the uplift configured for relevant Offering.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Lost revenue across the renewal book. Or customer pushback on an unintentional double uplift.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Verify Renewal Logic settings in MN: default uplift %, which Offerings it applies to. If pricing was manually overridden, AM should re-build Quote from carry-forward and only override after deliberate review.
+      </div>
+    </div>
+
+    <!-- Cross-system -->
+    <div class="section-label" style="margin-top:24px;">Cross-System · payment and books</div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">Stripe-Only Refund Causes QBO Drift</div>
+        <span class="chip warn">Medium Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>Stripe shows a $500 refund issued last week. MN Invoice still shows Paid. QBO shows nothing about the refund. Bank reconciliation breaks.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Someone refunded directly from Stripe dashboard instead of issuing a Credit Memo in MN. MN never received the event in a form that updates Invoice.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Books out of sync. Customer-facing AR balance wrong. Audit risk. Finance has to manually adjust both MN and QBO.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Manually issue a Credit Memo in MN for the same amount, with a note referencing the original Stripe refund. This corrects MN and triggers a QBO push to balance the books. Going forward: refund only via Credit Memo in MN, never directly in Stripe.
+      </div>
+    </div>
+
+    <div class="pit">
+      <div class="pit-head">
+        <div class="pit-title">QBO Postings Drift From MN Reports</div>
+        <span class="chip warn">Medium Impact</span>
+      </div>
+      <div class="pit-body">
+        <div class="pb-row"><div class="pb-lbl">Symptom</div><div>QBO month-end revenue total disagrees with the Monthly Revenue &amp; Collections Summary in MN. Variance is small but recurring.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Root cause</div><div>Common patterns: a manual QBO entry made before MN report was pulled, a refund issued in Stripe directly that bypassed MN, or a credit memo issued in MN after close.</div></div>
+        <div class="pb-row"><div class="pb-lbl">Impact</div><div>Reconciliation takes longer at close. AR aging in QBO drifts from reality in MN over time.</div></div>
+      </div>
+      <div class="pit-fix">
+        <b>Fix</b>
+        Use MN reports as the authoritative figure for any period. Lock the workflow so refunds and credits originate in MN. If a Stripe-only refund slipped through, issue a matching Credit Memo in MN to bring reports back in line, then re-post in QBO.
+      </div>
+    </div>
+
+    <div class="co co-green mt24">
+      <span class="co-ico">●</span>
+      <div><strong>For any drift across systems.</strong> Fix at source. Pricing or dates wrong, fix in MN. Pipeline stage wrong, fix in HubSpot. Ledger entry wrong, fix in QBO. Edits downstream while the source is still wrong create two sources of truth and twice the eventual cleanup.</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================== -->
+<!-- ============ SECTION 12: ROLES =============== -->
+<!-- ============================================== -->
+<div class="view" id="view-roles">
+  <div class="section">
+    <button class="back-btn" onclick="goView('hub')">Back to Runbook</button>
+    <div class="sec-head" style="margin-top:18px;">
+      <div class="sec-eye">Part 4 · Section 12</div>
+      <h1 class="sec-h">Admin Roles &amp; Ownership</h1>
+      <p class="sec-lede">Who owns what after go-live. One person can hold more than one role. At ENTR's stage, this typically lands on one RevOps owner and one Finance owner, with IT involved for integration health.</p>
+    </div>
+
+    <div class="co co-blue">
+      <span class="co-ico">◆</span>
+      <div><strong>Light-touch coverage.</strong> Not a full RACI. Enough clarity that when something needs attention, it's obvious who to escalate to. Unfilled roles and overlapping ownership both show up as billing or reporting problems within a quarter.</div>
+    </div>
+
+    <!-- 4 roles -->
+    <div class="role-grid mb20">
+
+      <div class="role-card">
+        <div class="rh">
+          <div class="r-ico cpq">C</div>
+          <div>
+            <div class="r-name">CPQ Admin</div>
+            <div class="r-who">Typically RevOps · one person</div>
+          </div>
+        </div>
+        <div class="r-section">Owns</div>
+        <ul class="r-list">
+          <li>Product catalog: Products, Offerings, Rate cards</li>
+          <li>Quote configuration rules and approval thresholds</li>
+          <li>Discount policy and guardrails</li>
+          <li>Quote and Deal field mapping to HubSpot</li>
+          <li>Sales workflow inside MN</li>
+        </ul>
+        <div class="r-section">Checks regularly</div>
+        <ul class="r-list">
+          <li>New products added cleanly to the catalog</li>
+          <li>Deprecated offerings retired</li>
+          <li>Approval thresholds match current pricing policy</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="rh">
+          <div class="r-ico bill">B</div>
+          <div>
+            <div class="r-name">Billing / Finance Admin</div>
+            <div class="r-who">Typically Finance · one person</div>
+          </div>
+        </div>
+        <div class="r-section">Owns</div>
+        <ul class="r-list">
+          <li>Billing schedules and invoice cadence</li>
+          <li>Invoice templates and customer-facing branding</li>
+          <li>Stripe integration health (charge success rate, dunning)</li>
+          <li>QBO posting workflow: which MN reports get pulled, mapping to GL accounts</li>
+          <li>Credit Memo and refund workflow</li>
+          <li>Tax configuration and jurisdictional setup</li>
+        </ul>
+        <div class="r-section">Checks regularly</div>
+        <ul class="r-list">
+          <li>Dunning queue: failed payments needing intervention</li>
+          <li>QBO posting reconciliation against MN reports per period</li>
+          <li>Period close: MN reports pulled, QBO entries posted, books locked</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="rh">
+          <div class="r-ico tech">T</div>
+          <div>
+            <div class="r-name">Technical Admin</div>
+            <div class="r-who">Typically IT · part-time</div>
+          </div>
+        </div>
+        <div class="r-section">Owns</div>
+        <ul class="r-list">
+          <li>Integration credentials: HubSpot, Stripe, QBO, eSign</li>
+          <li>Webhook endpoint health and event processing</li>
+          <li>SSO and user provisioning into MN</li>
+          <li>API access for any custom integrations</li>
+          <li>Permission roles and access reviews</li>
+        </ul>
+        <div class="r-section">Checks regularly</div>
+        <ul class="r-list">
+          <li>Integration tokens valid and not approaching expiry</li>
+          <li>Webhook delivery success rate</li>
+          <li>Quarterly access review: deprovision leavers</li>
+        </ul>
+      </div>
+
+      <div class="role-card">
+        <div class="rh">
+          <div class="r-ico spon">E</div>
+          <div>
+            <div class="r-name">Executive Sponsor</div>
+            <div class="r-who">Typically Finance or RevOps leader</div>
+          </div>
+        </div>
+        <div class="r-section">Owns</div>
+        <ul class="r-list">
+          <li>Sign-off on pricing policy changes</li>
+          <li>Approval of new discount tiers or special terms</li>
+          <li>Cross-functional unblocking when something requires Sales + Finance + Legal alignment</li>
+          <li>Quarterly review of revenue ops health</li>
+        </ul>
+        <div class="r-section">Checks regularly</div>
+        <ul class="r-list">
+          <li>Renewal pipeline coverage 60-90 days out</li>
+          <li>Deal type mapping integrity (avoiding forecast double-count)</li>
+          <li>Customer escalations that span systems</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- What breaks without ownership -->
+    <div class="panel mb20" style="background:#FFFBEB; border-color:var(--amber-br);">
+      <div class="panel-title" style="color:var(--amber-d);">What breaks if a role is unfilled</div>
+      <div class="panel-sub">Not hypothetical. These are the recurring patterns when ownership lapses.</div>
+      <div class="g2">
+        <div>
+          <ul class="ul" style="margin:0;">
+            <li><strong>No CPQ Admin</strong> catalog drifts from how Sales actually sells. Reps build workarounds in Quote notes. Approval rules become irrelevant. Discount discipline erodes.</li>
+            <li><strong>No Billing Admin</strong> failed payments stack up. Dunning emails don't go out. Books slip behind real activity. Reconciliation backlog grows.</li>
+          </ul>
+        </div>
+        <div>
+          <ul class="ul" style="margin:0;">
+            <li><strong>No Technical Admin</strong> integration tokens expire silently. Webhooks fail and no one notices for weeks. Permission drift creates audit findings.</li>
+            <li><strong>No Executive Sponsor</strong> cross-functional issues stall. Discount overrides happen ad hoc. Pricing policy becomes whatever the loudest deal review demands.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Realistic coverage -->
+    <div class="panel">
+      <div class="panel-title">Realistic coverage at ENTR's stage</div>
+      <div class="panel-sub">A dedicated hire per role is not required. Most companies of similar shape combine roles like this:</div>
+      <div class="g3">
+        <div style="background:var(--soft); border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Minimum</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">One person from RevOps covers CPQ Admin + Executive Sponsor proxy. One person from Finance covers Billing Admin. IT covers Technical Admin part-time.</div>
+        </div>
+        <div style="background:var(--soft); border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Typical</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Dedicated CPQ Admin in RevOps. Dedicated Billing Admin in Finance. IT covers Technical. CFO or VP RevOps is Exec Sponsor.</div>
+        </div>
+        <div style="background:#EEF2FF; border:1px solid #C7D2FE; border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Mature</div>
+          <div style="font-size:12.5px; color:var(--mn-d); line-height:1.55;">Separate CPQ Admin and Billing Operations roles. Dedicated Technical Admin. Cross-functional revenue ops council that meets monthly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="co co-gray mt24">
+      <span class="co-ico">○</span>
+      <div>Detailed task lists, time commitments, skills required, and quarterly checklists live in a separate Admin Roles &amp; Responsibilities reference maintained by MonetizeNow CX. Available on request.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer outside the hub (for non-hub views) -->
+<div class="foot">
+  ENTR × MonetizeNow &nbsp;·&nbsp; Operating Runbook v1.0 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Maintained by MonetizeNow CX
+</div>
+
+</div><!-- /#runbook -->
+
+<script>
+// ============================================================
+// Navigation: hub + drill-downs
+// ============================================================
+
+const CRUMB_MAP = {
+  'hub':          { label: 'Operating Runbook',                   parent: null },
+  'ownership':    { label: 'System Ownership',                    parent: 'Foundations' },
+  'sync':         { label: 'Data Flow & Sync',                    parent: 'Foundations' },
+  'glossary':     { label: 'Object Model & Glossary',             parent: 'Foundations' },
+  'new-business': { label: 'New Business Motion',                 parent: 'Motions' },
+  'amendment':    { label: 'Amendment Motion',                    parent: 'Motions' },
+  'renewal':      { label: 'Renewal Motion',                      parent: 'Motions' },
+  'hubspot':      { label: 'HubSpot ↔ MN Field Mapping',          parent: 'Integrations' },
+  'stripe':       { label: 'Stripe in the Background',            parent: 'Integrations' },
+  'qbo':          { label: 'QuickBooks · Today vs Future',        parent: 'Integrations' },
+  'decision':     { label: 'Decision Tree',                       parent: 'Operations' },
+  'troubleshoot': { label: 'Common Failure Modes',                parent: 'Operations' },
+  'roles':        { label: 'Admin Roles & Ownership',             parent: 'Operations' }
+};
+
+function goView(id) {
+  // Hide all views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  // Show target
+  const target = document.getElementById('view-' + id);
+  if (target) {
+    target.classList.add('active');
+  }
+  // Update breadcrumb
+  const crumb = document.getElementById('crumb');
+  if (crumb) {
+    const meta = CRUMB_MAP[id];
+    if (id === 'hub' || !meta.parent) {
+      crumb.innerHTML = '<span class="crumb-cur">' + meta.label + '</span>';
+    } else {
+      crumb.innerHTML =
+        '<a onclick="goView(\'hub\')">Runbook</a>' +
+        '<span class="crumb-sep">·</span>' +
+        '<span style="color:var(--sub);">' + meta.parent + '</span>' +
+        '<span class="crumb-sep">·</span>' +
+        '<span class="crumb-cur">' + meta.label + '</span>';
+    }
+  }
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+// QBO mode toggle (today vs future)
+function setQboMode(mode) {
+  document.querySelectorAll('#qbo-tabs .mode-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('#qbo-today, #qbo-future').forEach(c => c.classList.remove('active'));
+  document.getElementById('qbo-' + mode).classList.add('active');
+}
+
+// Optional: handle hash navigation (deep links)
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && CRUMB_MAP[hash]) goView(hash);
+});
+if (window.location.hash) {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && CRUMB_MAP[hash]) goView(hash);
+}
+</script>
+</body>
+</html>
