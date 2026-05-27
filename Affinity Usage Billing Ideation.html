@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affinity × MonetizeNow · Usage Billing Solution Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --mn:#0521AB;--mn-lb:#D3EEF4;--bk:#0a0a0a;--wh:#fff;
+  --bg:#f3f6fa;--card:#fff;--bdr:#e4e9f0;
+  --red:#dc2626;--amber:#d97706;--green:#059669;--purple:#7c3aed;--teal:#0d9488;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--bk);-webkit-font-smoothing:antialiased;line-height:1.5}
+
+.top{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--bdr);padding:10px 28px;display:flex;align-items:center;gap:10px}
+.mn-m{width:26px;height:26px;background:var(--mn);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px}
+.top-t{font-size:12px;font-weight:500;color:#64748b;letter-spacing:.03em}
+
+.hero{background:var(--mn);padding:40px 32px 36px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-60%;right:-8%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(211,238,244,.1),transparent 70%)}
+.hero-in{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:4px 12px;margin-bottom:14px}
+.hero-badge span{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.hero h1{font-size:clamp(24px,3.5vw,34px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px}
+.hero h1 em{font-style:normal;color:var(--mn-lb)}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;max-width:700px}
+
+.wrap{max-width:1100px;margin:0 auto;padding:28px 28px 48px}
+
+.sec{margin-bottom:36px}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sec-num{width:28px;height:28px;border-radius:50%;background:var(--mn);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-title{font-size:15px;font-weight:800;color:var(--bk)}
+.sec-line{flex:1;height:1px;background:var(--bdr)}
+
+.flow{display:flex;gap:0;align-items:stretch;margin-bottom:20px;overflow-x:auto;padding-bottom:4px}
+.flow-node{background:var(--card);border:1.5px solid var(--bdr);border-radius:10px;padding:16px 18px;min-width:175px;flex:1;position:relative;transition:border-color .2s}
+.flow-node:hover{border-color:#94a3b8}
+.flow-node.aff{border-top:3px solid var(--amber)}
+.flow-node.mn{border-top:3px solid var(--mn)}
+.flow-node.decision{border-top:3px solid var(--red);background:#fffbfb}
+.flow-arrow{display:flex;align-items:center;justify-content:center;width:32px;flex-shrink:0;color:#cbd5e1;font-size:22px;font-weight:300}
+.fn-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.fn-label.l-aff{color:var(--amber)}
+.fn-label.l-mn{color:var(--mn)}
+.fn-label.l-dec{color:var(--red)}
+.fn-title{font-size:13px;font-weight:700;color:var(--bk);line-height:1.3;margin-bottom:4px}
+.fn-detail{font-size:10px;color:#64748b;line-height:1.5}
+.fn-tag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 6px;border-radius:3px;margin-top:6px}
+.tg-ready{background:#ecfdf5;color:var(--green)}
+.tg-discuss{background:#fffbeb;color:var(--amber)}
+.tg-gap{background:#fef2f2;color:var(--red)}
+.tg-exists{background:#eff6ff;color:var(--mn)}
+
+.pkg-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
+@media(max-width:800px){.pkg-row{grid-template-columns:1fr}}
+.pkg{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:16px 18px;position:relative}
+.pkg-tier{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:4px}
+.pkg-price{font-size:22px;font-weight:900;color:var(--bk);margin-bottom:2px}
+.pkg-price span{font-size:11px;font-weight:500;color:#94a3b8}
+.pkg-inc{font-size:10px;color:#64748b;line-height:1.6;margin-top:8px;border-top:1px solid #f1f5f9;padding-top:8px}
+.pkg-inc strong{color:var(--bk)}
+
+.dec-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:800px){.dec-grid{grid-template-columns:1fr}}
+.dec{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;cursor:pointer;user-select:none;transition:box-shadow .2s}
+.dec:hover{box-shadow:0 2px 12px rgba(5,33,171,.07)}
+.dec-top{padding:14px 16px 12px}
+.dec-q{font-size:13px;font-weight:700;color:var(--bk);line-height:1.35;margin-bottom:6px}
+.dec-why{font-size:11px;color:#64748b;line-height:1.5}
+.dec-opts{padding:0 16px 14px;display:flex;flex-direction:column;gap:6px}
+.dec-opt{background:#f8fafc;border:1px solid #eef1f5;border-radius:6px;padding:8px 12px}
+.dec-opt-label{font-size:10px;font-weight:700;color:var(--mn);margin-bottom:2px}
+.dec-opt-text{font-size:10px;color:#475569;line-height:1.5}
+.dec-chev{color:#b0b8c4;font-size:14px;transition:transform .2s;float:right;margin-top:2px}
+.dec.open .dec-chev{transform:rotate(90deg)}
+.dec-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.dec.open .dec-body{max-height:800px}
+.dec-body-in{padding:0 16px 14px;border-top:1px solid var(--bdr);padding-top:12px}
+.db-t{font-size:11px;color:#334155;line-height:1.65}
+.db-t strong{color:var(--bk)}
+.db-warn{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px 10px;margin-top:8px;font-size:10px;color:#92400e;line-height:1.5}
+.db-ok{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:8px 10px;margin-top:8px;font-size:10px;color:#065f46;line-height:1.5}
+
+.callout{border-radius:var(--r);padding:18px 20px;margin:16px 0}
+.callout.blue{background:#eff6ff;border:1px solid rgba(5,33,171,.15)}
+.callout.amber{background:#fffbeb;border:1px solid #fde68a}
+.callout.red{background:#fef2f2;border:1px solid #fecaca}
+.callout-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.callout.blue .callout-title{color:var(--mn)}
+.callout.amber .callout-title{color:var(--amber)}
+.callout.red .callout-title{color:var(--red)}
+.callout-body{font-size:12px;color:#334155;line-height:1.65}
+.callout-body strong{color:var(--bk)}
+
+.cap-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+@media(max-width:800px){.cap-strip{grid-template-columns:1fr 1fr}}
+.cap{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:12px 14px;text-align:center}
+.cap-icon{font-size:18px;margin-bottom:4px}
+.cap-name{font-size:10px;font-weight:700;color:var(--bk);margin-bottom:2px}
+.cap-status{font-size:9px;font-weight:600}
+.cap.yes .cap-status{color:var(--green)}
+.cap.disc .cap-status{color:var(--amber)}
+.cap.no .cap-status{color:var(--red)}
+
+.obj-map{width:100%;border-collapse:collapse;font-size:11px;margin:12px 0}
+.obj-map th{text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;padding:6px 10px;border-bottom:2px solid var(--bdr)}
+.obj-map td{padding:8px 10px;border-bottom:1px solid #f1f5f9;color:#334155;line-height:1.5;vertical-align:top}
+.obj-map .aff{font-weight:600;color:var(--bk)}
+.obj-map .mn-map{color:var(--mn);font-weight:600}
+
+.foot{max-width:1100px;margin:0 auto;padding:0 28px 40px}
+.foot-card{background:var(--bk);border-radius:var(--r);padding:24px 28px;color:#fff}
+.foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.foot-grid{grid-template-columns:1fr}}
+.fc-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:6px}
+.fc-v{font-size:12px;line-height:1.6;color:rgba(255,255,255,.8)}
+.fc-v strong{color:#fff}
+
+.attr{text-align:center;padding:16px;font-size:10px;color:#94a3b8;letter-spacing:.04em}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="mn-m">M</div>
+  <span class="top-t">Affinity × MonetizeNow · Usage Billing Solution Map</span>
+</nav>
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-badge"><span>Solution Architecture · Discussion Draft</span></div>
+    <h1>Your consumption model. <em>Mapped to MN.</em></h1>
+    <p class="hero-sub">We broke down your pricing architecture and mapped platform fees, included allotments, overage, and add-on bundles to how each piece works in MonetizeNow. Below is what's ready, what needs a design decision from your team, and one known gap we'll work around.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+<!-- ═══════ 1. YOUR MODEL ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">1</span>
+  <span class="sec-title">Your Pricing Model As We Understand It</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="pkg-row">
+  <div class="pkg">
+    <div class="pkg-tier">Mid-Market · Package A</div>
+    <div class="pkg-price">$25K <span>/year platform</span></div>
+    <div class="pkg-inc">
+      <strong>Included:</strong> 100K API calls/mo<br>
+      Agentic workflows ($500/mo cap)<br>
+      Overage: $1.50/1K calls · $10/task
+    </div>
+  </div>
+  <div class="pkg">
+    <div class="pkg-tier">Mid-Market · Package B</div>
+    <div class="pkg-price">$55K <span>/year platform</span></div>
+    <div class="pkg-inc">
+      <strong>Included:</strong> 250K API calls/mo<br>
+      Agentic workflows ($1K/mo cap)<br>
+      Overage: $1.50/1K calls · $10/task
+    </div>
+  </div>
+  <div class="pkg">
+    <div class="pkg-tier">Mid-Market · Package C</div>
+    <div class="pkg-price">$80K <span>/year platform</span></div>
+    <div class="pkg-inc">
+      <strong>Included:</strong> 500K API calls/mo<br>
+      Agentic workflows ($2K/mo cap)<br>
+      Overage: $1.50/1K calls · $10/task
+    </div>
+  </div>
+</div>
+
+<div class="callout blue">
+  <div class="callout-title">What we're solving for</div>
+  <div class="callout-body">
+    Three billing motions running on every deal: an annual platform subscription (in advance), monthly consumption charges (in arrears), and a guaranteed minimum spend floor covering both AI Calls and Agentic Tasks. Plus optional pre-paid bundles at discounted unit rates. Each maps to a distinct MN product type.
+  </div>
+</div>
+</div>
+
+<!-- ═══════ 2. HOW IT MAPS ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">2</span>
+  <span class="sec-title">How Each Piece Maps to MN</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="flow">
+  <div class="flow-node aff">
+    <div class="fn-label l-aff">Affinity</div>
+    <div class="fn-title">Platform Fee</div>
+    <div class="fn-detail">Pkg A/B/C<br>$25K–$120K/yr</div>
+    <span class="fn-tag tg-exists">Already in MN</span>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">MN Product</div>
+    <div class="fn-title">Subscription Offering</div>
+    <div class="fn-detail">Annual fee, billed in advance. Already modeled on current contracts. No change needed.</div>
+    <span class="fn-tag tg-ready">✓ Exists</span>
+  </div>
+  <div class="flow-arrow" style="width:20px"></div>
+  <div class="flow-node aff">
+    <div class="fn-label l-aff">Affinity</div>
+    <div class="fn-title">AI Calls + Tasks</div>
+    <div class="fn-detail">2 usage metrics<br>Overage rates</div>
+    <span class="fn-tag tg-ready">MN Ready</span>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">MN Product</div>
+    <div class="fn-title">2× Usage Offerings</div>
+    <div class="fn-detail">Per 1K calls ($1.50) + per task ($10). Monthly arrears billing.</div>
+    <span class="fn-tag tg-ready">✓ Supported</span>
+  </div>
+</div>
+
+<div class="flow" style="margin-top:12px">
+  <div class="flow-node aff">
+    <div class="fn-label l-aff">Affinity</div>
+    <div class="fn-title">Included Allotment</div>
+    <div class="fn-detail">"250K calls/mo included"<br>Minimum spend floor</div>
+    <span class="fn-tag tg-discuss">Design Decision</span>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">MN Product</div>
+    <div class="fn-title">Min Commit Offering</div>
+    <div class="fn-detail">One offering, scoped to both usage products. Dollar-denominated commitment.</div>
+    <span class="fn-tag tg-ready">✓ Supported</span>
+  </div>
+  <div class="flow-arrow" style="width:20px"></div>
+  <div class="flow-node aff">
+    <div class="fn-label l-aff">Affinity</div>
+    <div class="fn-title">Add-on Bundles</div>
+    <div class="fn-detail">Work / Build / Operate<br>Discounted unit rates</div>
+    <span class="fn-tag tg-discuss">Design Decision</span>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">MN Product</div>
+    <div class="fn-title">Pre-paid Credits</div>
+    <div class="fn-detail">Drawdown against usage. Standard overage rate kicks in when depleted.</div>
+    <span class="fn-tag tg-discuss">Confirm Mechanic</span>
+  </div>
+</div>
+
+<div class="callout blue" style="margin-top:18px">
+  <div class="callout-title">On the docs constraint you flagged</div>
+  <div class="callout-body">
+    You're right that docs say <strong>"a quote can contain at most one offering that includes a minimum commit product."</strong> Good news: that's exactly the behavior you need. One Min Commit offering, scoped to <em>both</em> AI Calls and Agentic Tasks. MN evaluates <strong>total in-scope charges</strong> against your committed dollar amount. Doesn't matter that it's two different metrics. It checks total consumption spend against the floor. One offering, two metrics, one commitment. Works out of the box.
+  </div>
+</div>
+
+</div>
+
+<!-- ═══════ 3. QUOTE STRUCTURE ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">3</span>
+  <span class="sec-title">What a Quote Looks Like in MN</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="flow">
+  <div class="flow-node mn" style="flex:1.2">
+    <div class="fn-label l-mn">Offering 1 · Subscription</div>
+    <div class="fn-title">Platform License</div>
+    <div class="fn-detail">Package B, $55K/yr<br>Annual advance billing<br>Already modeled, no change</div>
+  </div>
+  <div class="flow-arrow">+</div>
+  <div class="flow-node mn" style="flex:1">
+    <div class="fn-label l-mn">Offering 2 · Usage</div>
+    <div class="fn-title">AI API Calls</div>
+    <div class="fn-detail">Rate: $1.50/1K calls<br>Monthly arrears</div>
+  </div>
+  <div class="flow-arrow">+</div>
+  <div class="flow-node mn" style="flex:1">
+    <div class="fn-label l-mn">Offering 3 · Usage</div>
+    <div class="fn-title">Agentic Tasks</div>
+    <div class="fn-detail">Rate: $10/task<br>Monthly arrears</div>
+  </div>
+  <div class="flow-arrow">+</div>
+  <div class="flow-node decision" style="flex:1.2">
+    <div class="fn-label l-dec">Offering 4 · Min Commit</div>
+    <div class="fn-title">Consumption Floor</div>
+    <div class="fn-detail">Scoped to Offerings 2+3<br>Qty = $ commitment<br><strong>Advance or arrears?</strong></div>
+  </div>
+</div>
+
+<div class="callout amber" style="margin-top:14px">
+  <div class="callout-title">Allotment translation</div>
+  <div class="callout-body">
+    Your packages express included usage in <strong>units</strong> ("250K calls/mo included"). MN min commits are <strong>dollar-denominated</strong>. So Package B's 250K calls + workflow cap needs to translate to a dollar number. Example: 250K calls × $1.50/1K = $375 in call value. Is the commitment that math, or does your pricing team set an independent number? We can make customer-facing output show units while billing runs on dollars under the hood. Just need to know which way you want it.
+  </div>
+</div>
+</div>
+
+<!-- ═══════ 4. BILLING FLOW ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">4</span>
+  <span class="sec-title">How a Billing Cycle Runs</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="flow">
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">Contract Execution</div>
+    <div class="fn-title">Platform invoice fires</div>
+    <div class="fn-detail">Annual subscription invoiced right away. If min commit is advance, commitment also invoices here.</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node aff">
+    <div class="fn-label l-aff">During Period</div>
+    <div class="fn-title">Usage data flows in</div>
+    <div class="fn-detail">Your eng pushes call counts + task counts via API (or CSV in Phase 1). Must land before nightly run.</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">End of Period</div>
+    <div class="fn-title">Nightly billing run</div>
+    <div class="fn-detail">MN calculates usage charges, evaluates min commit, generates arrears invoice with usage + shortfall or overage.</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">Invoice</div>
+    <div class="fn-title">Customer pays</div>
+    <div class="fn-detail">Greater of actual usage or committed amount. Tax on usage + subscription only, not on min commit fee.</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+  <div class="callout blue" style="margin:0">
+    <div class="callout-title">Arrears mode (simpler)</div>
+    <div class="callout-body">One invoice at period end. Usage lines + shortfall fee if under commitment. Customer used $400 against $625 floor → $400 usage + $225 shortfall = $625 total. Single invoice, single reconciliation point.</div>
+  </div>
+  <div class="callout amber" style="margin:0">
+    <div class="callout-title">Advance mode (cash flow)</div>
+    <div class="callout-body">Invoice at period start for full commitment ($625). End-of-period invoice shows usage lines + negative adjustment to avoid double-billing. Two invoices per period, but upfront cash recognition.</div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════ 5. USAGE DATA PIPELINE ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">5</span>
+  <span class="sec-title">Getting Usage Data Into MN</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="flow">
+  <div class="flow-node aff">
+    <div class="fn-label l-aff">Affinity Systems</div>
+    <div class="fn-title">Metering Pipeline</div>
+    <div class="fn-detail">Tracks AI call counts + task counts per customer per period</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node decision">
+    <div class="fn-label l-dec">Bridge</div>
+    <div class="fn-title">Customer → Subscription ID</div>
+    <div class="fn-detail">Your internal ID needs to resolve to an MN subscription. Single biggest integration question.</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn">
+    <div class="fn-label l-mn">Phase 1 · CSV</div>
+    <div class="fn-title">Upload to MN</div>
+    <div class="fn-detail">Manual upload. Good for validation. Won't scale past first few months.</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node mn" style="border-top-color:var(--green)">
+    <div class="fn-label" style="color:var(--green)">End-State · API</div>
+    <div class="fn-title">MN Usage Records API</div>
+    <div class="fn-detail">REST POST per subscription. Idempotent. Daily or end-of-period push. Automated.</div>
+  </div>
+</div>
+
+<div class="callout amber" style="margin-top:14px">
+  <div class="callout-title">Subscription mapping</div>
+  <div class="callout-body">
+    Every usage record needs an MN subscription ID. Your metering system tracks by your own internal customer ID. Bridging those two is where integration effort lives. <strong>Recommended approach:</strong> store your internal customer ID as a custom field on MN Account. Your pipeline does a direct lookup, no dependency on SFDC sync health. <strong>Question for your eng:</strong> what identifier does your metering system use per customer today?
+  </div>
+</div>
+</div>
+
+<!-- ═══════ 6. DECISIONS ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">6</span>
+  <span class="sec-title">Five Decisions That Shape Everything</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="dec-grid">
+
+<div class="dec" onclick="this.classList.toggle('open')">
+  <div class="dec-top">
+    <div class="dec-q"><span class="dec-chev">›</span> Min Commit: Advance or Arrears?</div>
+    <div class="dec-why">Controls invoice timing, cash collection, and how many invoices per period.</div>
+  </div>
+  <div class="dec-body"><div class="dec-body-in">
+    <div class="dec-opts">
+      <div class="dec-opt">
+        <div class="dec-opt-label">Advance</div>
+        <div class="dec-opt-text">Commitment invoiced upfront. Matches "included allotment" framing. Cash in hand sooner. Two invoices per period (advance + usage reconciliation).</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">Arrears</div>
+        <div class="dec-opt-text">One invoice at period end. Simpler ops, single reconciliation. Usage + shortfall on same invoice. Easier for finance to audit. No upfront cash.</div>
+      </div>
+    </div>
+    <div class="db-t"><strong>Our lean:</strong> arrears is cleaner for a first rollout. You can switch to advance later once billing is running. But if your finance team wants upfront cash recognition, advance is the right call.</div>
+  </div></div>
+</div>
+
+<div class="dec" onclick="this.classList.toggle('open')">
+  <div class="dec-top">
+    <div class="dec-q"><span class="dec-chev">›</span> How Do Included Allotments Convert to Dollars?</div>
+    <div class="dec-why">MN min commits are dollar-denominated. Your tiers express allotments in units.</div>
+  </div>
+  <div class="dec-body"><div class="dec-body-in">
+    <div class="dec-opts">
+      <div class="dec-opt">
+        <div class="dec-opt-label">Math from overage rates</div>
+        <div class="dec-opt-text">250K calls × $1.50/1K = $375. Workflows capped at $1K/mo. Total floor = $1,375/mo. Straightforward, transparent.</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">Custom dollar amount</div>
+        <div class="dec-opt-text">Pricing team sets an independent commitment number that doesn't have to tie to overage math. More flexibility, less transparency.</div>
+      </div>
+    </div>
+    <div class="db-t">Also affects display. If you want quotes to say "250K calls included" instead of "$375 commitment," that's a template customization. Billing mechanic stays dollar-based under the hood either way.</div>
+  </div></div>
+</div>
+
+<div class="dec" onclick="this.classList.toggle('open')">
+  <div class="dec-top">
+    <div class="dec-q"><span class="dec-chev">›</span> Add-on Bundles: Same Contract or Separate?</div>
+    <div class="dec-why">Determines whether bundles are quote-time, amendment, or standalone.</div>
+  </div>
+  <div class="dec-body"><div class="dec-body-in">
+    <div class="dec-opts">
+      <div class="dec-opt">
+        <div class="dec-opt-label">On same quote</div>
+        <div class="dec-opt-text">5th offering (Pre-paid Credits) on initial quote. Clean, single contract. Customer can't add mid-term without an amendment.</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">Mid-term via amendment</div>
+        <div class="dec-opt-text">Customer starts without a bundle. Upgrades when they see overage building. More flexible buying motion.</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">Separate contract</div>
+        <div class="dec-opt-text">Bundle on its own contract. Clean separation but two billing schedules, split reporting, renewal dates may diverge. Creates operational debt.</div>
+      </div>
+    </div>
+    <div class="db-t"><strong>Key question:</strong> do customers buy bundles at contract start, or do they upgrade mid-term when overage builds? If mid-term is common, amendment is the right path. Separate contract compounds fast.</div>
+  </div></div>
+</div>
+
+<div class="dec" onclick="this.classList.toggle('open')">
+  <div class="dec-top">
+    <div class="dec-q"><span class="dec-chev">›</span> What Identifier Does Your Metering System Use?</div>
+    <div class="dec-why">Determines subscription mapping approach for your eng team.</div>
+  </div>
+  <div class="dec-body"><div class="dec-body-in">
+    <div class="dec-opts">
+      <div class="dec-opt">
+        <div class="dec-opt-label">If internal customer ID</div>
+        <div class="dec-opt-text">Store it as a custom field on MN Account. Your pipeline looks up MN subscription directly. No SFDC dependency. Recommended.</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">If SFDC Account ID</div>
+        <div class="dec-opt-text">Bridge through SFDC → MN Account → Contract → Subscription. Works but adds a dependency on SFDC sync reliability.</div>
+      </div>
+    </div>
+    <div class="db-t">This is for your eng team, not your business team. But it shapes how much integration work they're signing up for. Simpler identifier chain = fewer failure points.</div>
+  </div></div>
+</div>
+
+<div class="dec" onclick="this.classList.toggle('open')">
+  <div class="dec-top">
+    <div class="dec-q"><span class="dec-chev">›</span> Migration: Amend at Renewal or Phased?</div>
+    <div class="dec-why">Determines how existing subscription-only customers get usage added.</div>
+  </div>
+  <div class="dec-body"><div class="dec-body-in">
+    <div class="dec-opts">
+      <div class="dec-opt">
+        <div class="dec-opt-label">Amend at renewal</div>
+        <div class="dec-opt-text">When a customer renews, add usage offerings to renewal quote. Single contract, coterminous terms, clean ARR. Simplest path.</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">Mid-term amendment</div>
+        <div class="dec-opt-text">For customers who want usage before renewal. Test proration behavior on sandbox first. Works but more complex quoting.</div>
+      </div>
+    </div>
+    <div class="db-t"><strong>Depends on timeline.</strong> How many customers are getting usage products, and how fast? Natural renewal cadence = case-by-case, much simpler. All-at-once = we need a migration plan.</div>
+  </div></div>
+</div>
+
+<div class="dec" onclick="this.classList.toggle('open')">
+  <div class="dec-top">
+    <div class="dec-q"><span class="dec-chev">›</span> Do Customers Need Real-Time Usage Visibility?</div>
+    <div class="dec-why">Determines whether MN's Customer Portal covers it or your team builds it.</div>
+  </div>
+  <div class="dec-body"><div class="dec-body-in">
+    <div class="dec-opts">
+      <div class="dec-opt">
+        <div class="dec-opt-label">Invoice-time only</div>
+        <div class="dec-opt-text">Customers see usage on monthly invoice. No portal work needed. Works for low-consumption accounts.</div>
+      </div>
+      <div class="dec-opt">
+        <div class="dec-opt-label">Real-time dashboard</div>
+        <div class="dec-opt-text">Credit balance, consumption rate, projected overage. We need to verify if MN's Customer Portal supports this natively, and if not, your team builds it.</div>
+      </div>
+    </div>
+    <div class="db-t">For PE/VC firms on $50K+/yr platforms, consumption transparency matters. Doesn't block billing rollout but should be on the roadmap. <strong>Do you already have an internal usage dashboard you show customers today?</strong></div>
+  </div></div>
+</div>
+
+</div>
+</div>
+
+<!-- ═══════ 7. GAP ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">7</span>
+  <span class="sec-title">One Known Gap + How We Handle It</span>
+  <span class="sec-line"></span>
+</div>
+
+<div class="callout red">
+  <div class="callout-title">Credit & Rebill not available for usage tenants</div>
+  <div class="callout-body">
+    If a usage invoice goes out with wrong data, there's no automated void-and-reissue today. Known product limitation. <strong>Interim:</strong> issue a Credit Note against the incorrect invoice, correct usage data, generate corrected invoice on next billing run, reconcile. <strong>Mitigation:</strong> build a pre-bill validation step so errors are caught before invoices go out, not after. We'll get a roadmap timeline from product on when this ships natively.
+  </div>
+</div>
+
+<div class="cap-strip">
+  <div class="cap yes"><div class="cap-icon">✓</div><div class="cap-name">Usage Products</div><div class="cap-status">Fully supported</div></div>
+  <div class="cap yes"><div class="cap-icon">✓</div><div class="cap-name">Min Commit</div><div class="cap-status">Fully supported</div></div>
+  <div class="cap yes"><div class="cap-icon">✓</div><div class="cap-name">Pre-paid Credits</div><div class="cap-status">Fully supported</div></div>
+  <div class="cap yes"><div class="cap-icon">✓</div><div class="cap-name">Usage API</div><div class="cap-status">Fully supported</div></div>
+  <div class="cap yes"><div class="cap-icon">✓</div><div class="cap-name">Avalara Tax</div><div class="cap-status">Standard flow</div></div>
+  <div class="cap yes"><div class="cap-icon">✓</div><div class="cap-name">CSV Upload</div><div class="cap-status">Bridge available</div></div>
+  <div class="cap disc"><div class="cap-icon">◐</div><div class="cap-name">Portal Visibility</div><div class="cap-status">Verify scope</div></div>
+  <div class="cap no"><div class="cap-icon">✗</div><div class="cap-name">Credit & Rebill</div><div class="cap-status">Not yet for usage</div></div>
+</div>
+</div>
+
+<!-- ═══════ 8. TAX ═══════ -->
+<div class="sec">
+<div class="sec-hdr">
+  <span class="sec-num">8</span>
+  <span class="sec-title">Tax Behavior</span>
+  <span class="sec-line"></span>
+</div>
+
+<table class="obj-map">
+  <thead><tr><th>Product Type</th><th>Taxed via Avalara?</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td class="aff">Platform Subscription</td><td class="mn-map">Yes</td><td>Already configured. No change.</td></tr>
+    <tr><td class="aff">AI API Calls (usage)</td><td class="mn-map">Yes</td><td>Standard Avalara flow. Needs tax code on new product.</td></tr>
+    <tr><td class="aff">Agentic Tasks (usage)</td><td class="mn-map">Yes</td><td>Standard Avalara flow. Needs tax code on new product.</td></tr>
+    <tr><td class="aff">Min Commit Fee (shortfall)</td><td class="mn-map">No, by design</td><td>Confirmed from MN docs. Billing mechanic, not a taxable product. No config to change this.</td></tr>
+    <tr><td class="aff">Pre-paid Credits</td><td class="mn-map">Yes</td><td>Standard Avalara flow. Tax code needed.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout blue" style="margin-top:12px">
+  <div class="callout-title">One action for your tax team</div>
+  <div class="callout-body">
+    New usage products and pre-paid credits need <strong>Avalara AvaTax product tax codes</strong> assigned in MN catalog. SaaS API call metering may have different tax treatment than platform subscriptions in certain jurisdictions. Worth confirming with your tax team before go-live.
+  </div>
+</div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="foot">
+  <div class="foot-card">
+    <div class="foot-grid">
+      <div>
+        <div class="fc-l">What we need from this call</div>
+        <div class="fc-v">Alignment on the five design decisions above. Once those are locked, we build catalog in sandbox and you're testing end-to-end within a week. <strong>Offering structure + min commit mode is the piece everything else depends on.</strong></div>
+      </div>
+      <div>
+        <div class="fc-l">What we'll confirm after</div>
+        <div class="fc-v"><strong>Nightly billing run UTC time</strong> for your tenant. <strong>CSV column spec</strong> for Phase 1. <strong>Mid-period rate change behavior</strong> on usage products. <strong>Pre-paid credit depletion mechanic.</strong> <strong>Credit & Rebill roadmap.</strong> We'll have answers within 48 hours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="attr">Affinity × MonetizeNow · Solution Architecture · Discussion Draft · May 2026</div>
+
+</body>
+</html>
