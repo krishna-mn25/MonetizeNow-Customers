@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xage × HubSpot — Root Cause Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --mn:#0521AB; --mn-l:#D3EEF4; --bk:#000; --wh:#fff;
+  --red:#dc2626; --amber:#f59e0b; --green:#059669; --purple:#7c3aed;
+  --card:#fff; --bdr:#e2e8f0; --bg:#f1f5f9; --r:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:#1e293b;line-height:1.6}
+.hero{background:linear-gradient(135deg,var(--mn) 0%,#0a3fd4 100%);color:var(--wh);padding:48px 40px 36px}
+.hero h1{font-size:28px;font-weight:900;letter-spacing:-.5px}
+.hero .sub{font-size:14px;font-weight:300;opacity:.85;margin-top:6px;max-width:700px}
+.hero .alert{background:rgba(220,38,38,.25);border:1px solid rgba(255,100,100,.4);border-radius:8px;padding:14px 18px;margin-top:20px;font-size:13px;font-weight:500;line-height:1.5}
+.hero .alert strong{color:#fca5a5}
+.meta{display:flex;gap:32px;margin-top:18px;font-size:11px;font-weight:400;opacity:.7}
+.meta span::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:middle}
+
+.container{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
+
+/* Section headers */
+.sec{margin-top:36px}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.sec-num{width:28px;height:28px;border-radius:50%;background:var(--mn);color:var(--wh);font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-title{font-size:18px;font-weight:700;color:var(--bk)}
+.sec-sub{font-size:12px;color:#64748b;margin-left:auto}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:12px;overflow:hidden;cursor:pointer;transition:box-shadow .2s}
+.card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.card.open .card-body{display:block}
+.card.open .chev{transform:rotate(90deg)}
+.card-top{padding:16px 20px;display:flex;align-items:center;gap:12px}
+.card-top .chev{font-size:10px;color:#94a3b8;transition:transform .2s;flex-shrink:0}
+.card-name{font-size:14px;font-weight:600;flex:1}
+.tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px}
+.t-crit{background:#fef2f2;color:var(--red)} .t-high{background:#fffbeb;color:#92400e}
+.t-med{background:#eff6ff;color:#1e40af} .t-low{background:#f0fdf4;color:#166534}
+.t-fixed{background:#ecfdf5;color:var(--green)} .t-hs{background:#fff7ed;color:#c2410c}
+.t-mn{background:#eef2ff;color:var(--mn)} .t-proc{background:#faf5ff;color:var(--purple)}
+.st{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:4px}
+.s-esc{background:var(--red);color:var(--wh)} .s-open{background:#fbbf24;color:#000}
+.s-fixed{background:var(--green);color:var(--wh)} .s-wip{background:#3b82f6;color:var(--wh)}
+.card-body{display:none;padding:0 20px 18px;font-size:13px}
+.cb-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mn);margin-top:14px;margin-bottom:4px}
+.cb-t{color:#334155;line-height:1.65}
+.cb-t a{color:var(--mn);text-decoration:underline}
+.cb-quote{background:#f8fafc;border-left:3px solid var(--red);padding:10px 14px;margin:8px 0;font-style:italic;font-size:12px;color:#475569}
+.cb-code{background:#f1f5f9;border:1px solid var(--bdr);border-radius:6px;padding:10px 14px;font-family:'SF Mono',Menlo,monospace;font-size:11px;margin:8px 0;white-space:pre-wrap;color:#334155}
+.cb-warn{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:10px 14px;margin:8px 0;font-size:12px;color:#92400e;line-height:1.5}
+.cb-ok{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:6px;padding:10px 14px;margin:8px 0;font-size:12px;color:#065f46;line-height:1.5}
+.cb-gap{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:10px 14px;margin:8px 0;font-size:12px;color:#991b1b;line-height:1.5}
+
+/* Pattern diagram */
+.pattern-box{background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);border-radius:var(--r);padding:24px;margin:16px 0;color:#e2e8f0}
+.pattern-box h3{color:var(--wh);font-size:15px;margin-bottom:14px}
+.flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:8px 0}
+.flow .step{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:500;color:#cbd5e1}
+.flow .step.bad{background:rgba(220,38,38,.25);border-color:rgba(220,38,38,.4);color:#fca5a5}
+.flow .step.good{background:rgba(5,150,105,.2);border-color:rgba(5,150,105,.4);color:#6ee7b7}
+.flow .arrow{color:#475569;font-size:10px}
+
+/* Timeline */
+.tl{position:relative;padding-left:24px;margin:14px 0}
+.tl::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--bdr)}
+.tl-item{position:relative;margin-bottom:12px;font-size:12px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--mn);background:var(--wh)}
+.tl-item.crit::before{background:var(--red);border-color:var(--red)}
+.tl-item.fix::before{background:var(--green);border-color:var(--green)}
+.tl-date{font-size:10px;font-weight:700;color:#64748b}
+.tl-text{color:#334155;line-height:1.5}
+
+/* Summary grid */
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:16px 0}
+.sum-card{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:16px;border-top:3px solid var(--mn)}
+.sum-card.hot{border-top-color:var(--red)} .sum-card.warm{border-top-color:var(--amber)}
+.sum-card .sc-num{font-size:24px;font-weight:900;color:var(--bk)}
+.sum-card .sc-label{font-size:11px;color:#64748b;margin-top:2px}
+
+@media(max-width:700px){
+  .hero{padding:32px 20px 28px} .hero h1{font-size:22px}
+  .meta{flex-wrap:wrap;gap:12px}
+  .card-top{flex-wrap:wrap} .flow{font-size:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Xage × HubSpot — Complete Root Cause Analysis</h1>
+  <div class="sub">Every issue mapped, patterns drawn, root causes identified. From 92 Pylon tickets, 5 Fathom call recordings, Slack threads, and HubSpot connector codebase analysis.</div>
+  <div class="alert">
+    <strong>Escalation Status:</strong> Heather Schanz stated on May 27: "I am back to feeling like MN is a lost cause." Urgent meeting booked May 29 3PM ET with Perry + Krishna. This is not a single issue — it's compounding failures that have eroded trust over 5+ months.
+  </div>
+  <div class="meta">
+    <span>Date: May 29, 2026</span>
+    <span>Primary Contact: Heather Schanz (RevOps)</span>
+    <span>HubSpot Consultant: Ryan at SimpleStrat</span>
+    <span>MN SA: Kevin Titus</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ==================== SUMMARY ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">0</div>
+    <div class="sec-title">40,000-Foot View</div>
+  </div>
+  <div class="sum-grid">
+    <div class="sum-card hot"><div class="sc-num">1</div><div class="sc-label">Structural Root Cause — Line Item Truncation</div></div>
+    <div class="sum-card hot"><div class="sc-num">3</div><div class="sc-label">Compounding Failures from that root cause</div></div>
+    <div class="sum-card warm"><div class="sc-num">1</div><div class="sc-label">Separate Issue (Auto-Renewal) — Now Resolved</div></div>
+    <div class="sum-card"><div class="sc-num">~8</div><div class="sc-label">Other HS-adjacent issues (partner, template, etc.)</div></div>
+  </div>
+
+  <div class="pattern-box">
+    <h3>The Causal Chain — Read This First</h3>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:14px">Every Xage HubSpot issue traces back to one architectural decision and one sequencing mistake. They are not 10 separate problems — they are 2 root causes creating 10 symptoms.</p>
+
+    <p style="font-size:11px;font-weight:700;color:#fbbf24;margin-bottom:6px">ROOT CAUSE 1: Line Item Truncation (Architectural)</p>
+    <div class="flow">
+      <span class="step">MN quote has real qty, unit price, billing freq</span>
+      <span class="arrow">→</span>
+      <span class="step bad">HS connector forces qty=1, price=total blob</span>
+      <span class="arrow">→</span>
+      <span class="step">Xage hires SimpleStrat to build HS workflow</span>
+      <span class="arrow">→</span>
+      <span class="step">Workflow reads monetize_quoteitem_* custom props</span>
+      <span class="arrow">→</span>
+      <span class="step good">Corrects native HS line items ✓</span>
+    </div>
+
+    <p style="font-size:11px;font-weight:700;color:#fbbf24;margin-top:16px;margin-bottom:6px">ROOT CAUSE 2: Re-Sync After Correction (Sequencing)</p>
+    <div class="flow">
+      <span class="step">Xage closes deal as Closed Won in HS</span>
+      <span class="arrow">→</span>
+      <span class="step">SimpleStrat workflow fires, corrects line items</span>
+      <span class="arrow">→</span>
+      <span class="step bad">Heather then processes quote in MN</span>
+      <span class="arrow">→</span>
+      <span class="step bad">MN fires Quote.Processed webhook → full resync</span>
+      <span class="arrow">→</span>
+      <span class="step bad">Overwrites corrected values with truncated blob again</span>
+    </div>
+
+    <p style="font-size:11px;font-weight:700;color:#fbbf24;margin-top:16px;margin-bottom:6px">COMPOUNDING: The Workflow's Fix Creates a New Vulnerability</p>
+    <div class="flow">
+      <span class="step">SimpleStrat workflow deletes MN's line items</span>
+      <span class="arrow">→</span>
+      <span class="step">Recreates them with correct values</span>
+      <span class="arrow">→</span>
+      <span class="step bad">But strips monetize_quoteitem_id + monetize_quoteoffering_id</span>
+      <span class="arrow">→</span>
+      <span class="step bad">Next MN sync can't find existing items → creates DUPLICATES</span>
+    </div>
+
+    <p style="font-size:12px;color:#e2e8f0;margin-top:18px;font-weight:500">So: MN sends bad data → Xage builds workaround → workaround conflicts with MN's re-sync behavior → workaround breaks MN's dedup keys → duplicates appear → trust collapses.</p>
+  </div>
+</div>
+
+<!-- ==================== ISSUE 1: LINE ITEM TRUNCATION ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">1</div>
+    <div class="sec-title">Line Item Truncation — The Structural Root</div>
+    <div class="sec-sub">This is WHY everything else exists</div>
+  </div>
+
+  <div class="card open" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">What MN Actually Sends to HubSpot (Codebase Confirmed)</span>
+      <span class="tag t-mn">Connector Code</span>
+      <span class="tag t-crit">Structural</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">The Code (HubSpotSyncService.kt / package.kt)</div>
+      <div class="cb-code">// package.kt:778–798 — CrmSyncType.HubSpot.LineItem.transform()
+// Comment from source code:
+// "Due to HubSpot preventing us from overriding the native pricing fields
+//  (they are calculated fields), we work around this by always setting the
+//  quantity to 1 and the price to the total price of the line item."
+
+unitPrice = quoteItem.amount   // → HS native "price" = total blob
+quantity  = 1.0                // → hardcoded, always</div>
+
+      <div class="cb-l">What This Means</div>
+      <div class="cb-t">HubSpot's native line item fields are <code>calculated</code>: <code>amount = quantity × price</code>. You can't override <code>amount</code> directly. So MN forces qty=1 and price=total so that HubSpot's own math produces the right deal-level rollup.</div>
+
+      <div class="cb-l">What IS Preserved (Custom Properties)</div>
+      <div class="cb-t">The real values survive in <code>monetize_quoteitem_*</code> custom properties on the line item: <code>monetize_quoteitem_quantity</code> (real qty), <code>monetize_quoteitem_unit_price</code>, <code>monetize_quoteitem_unit_price_after_discount</code>, <code>monetize_quoteitem_amount</code>, <code>monetize_quoteitem_amount_without_discount</code>, plus ARR/MRR, discount %, product type, etc.</div>
+
+      <div class="cb-l">What Is NOT Preserved Anywhere</div>
+      <div class="cb-gap"><strong>Billing frequency / term cadence.</strong> There is no native billing-period field on the HS line item at all. MN only writes <code>hs_recurring_billing_start_date</code> and <code>hs_recurring_billing_end_date</code> + the lump price. The billing cadence (annual, quarterly, bi-annual, 34-month — whatever the MN rate says) is not represented. The constrained enum (monthly/quarterly/per_six_months/annually) only exists on the <strong>Product</strong> object, not the line item.</div>
+
+      <div class="cb-l">Why Xage Cares</div>
+      <div class="cb-t">Xage's sales ops and board reporting run on HubSpot. A line item showing "1 × $150,000" instead of "100 licenses × $1,500/yr" makes their deal data opaque. They need per-unit economics, real quantities, and billing terms visible natively for forecasting, commissions, and pipeline hygiene. The custom properties exist but aren't surfaced in HubSpot's standard deal views or reports without custom work.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ISSUE 2: THE SIMPLESTRAT WORKFLOW ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">2</div>
+    <div class="sec-title">The SimpleStrat Workflow — The Workaround That Creates New Problems</div>
+    <div class="sec-sub">Pylon #4645, #4498, Fathom May 11</div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">What the Workflow Does</span>
+      <span class="tag t-hs">HubSpot</span>
+      <span class="tag t-high">High</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">The Bridge</div>
+      <div class="cb-t">Xage hired SimpleStrat (Ryan) to build a custom-coded HubSpot workflow that runs when a deal reaches certain conditions. The workflow reads the accurate values from MN's custom properties (<code>monetize_quoteitem_quantity</code>, <code>monetize_quoteitem_unit_price</code>, etc.) and writes them into the native HubSpot line item fields so that reports/views show real data.</div>
+
+      <div class="cb-l">The Fatal Flaw</div>
+      <div class="cb-gap">The workflow appears to <strong>delete the original MN-synced line item</strong> and <strong>recreate it</strong> with correct native values. But in doing so, it strips the <code>monetize_quoteitem_id</code> and <code>monetize_quoteoffering_id</code> fields. These are MN's <strong>deduplication keys</strong>. Without them, the next time MN syncs (for any reason), it sees no existing line item with a matching quote item ID and creates a brand new one → <strong>duplicate line items appear on the deal</strong>.</div>
+
+      <div class="cb-l">Confirmed by Engineering</div>
+      <div class="cb-quote">Huy Ngo (MN Eng, May 14): "Yes, if the fields that we depend on have their values removed, we can't deduplicate so we end up creating more line items."</div>
+
+      <div class="cb-l">The Trap</div>
+      <div class="cb-t">The workflow is simultaneously essential and destructive. Without it, Xage has meaningless line items. With it, they lose MN's sync integrity. There's no middle ground with the current approach.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">The Sequencing Conflict (May 11 SimpleStrat Call Root Cause)</span>
+      <span class="tag t-proc">Process</span>
+      <span class="st s-esc">Escalated</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">Xage's Business Process</div>
+      <div class="cb-t">Most MN customers: Process quote → Close deal. <strong>Xage does the reverse:</strong> Close deal as Won → then process quote in MN. This is because their internal review (PO vs. sales order form) requires deal closure in HubSpot first.</div>
+
+      <div class="cb-l">What the Code Actually Does (Verified)</div>
+      <div class="cb-t">Contrary to what Kevin told Heather ("we don't sync back after Processed"), the codebase shows: <strong>the connector imposes NO post-processed lock.</strong> Every <code>Quote.Update</code> and <code>Quote.Processed</code> webhook triggers a full deal + line-item reconciliation. The PROCESSED check in the code is <strong>additive</strong> (writes PDF, contract props), not a gate. So when Heather processes the quote after Closed Won, MN fires a webhook, the connector runs <code>syncQuoteOfferings()</code>, and it overwrites whatever the SimpleStrat workflow just fixed.</div>
+
+      <div class="cb-l">The May 11 Agreed Fix</div>
+      <div class="cb-t">On the 3-way call (Krishna, Ryan, Heather), the group agreed: trigger the SimpleStrat workflow <strong>after</strong> the quote reaches "Processed" status in MN, not after "Closed Won." Since MN's last sync fires on the Processed event, the workflow running after that becomes the final authority. This was tested on the Orange Cyber Defense Norway deal ($5,377) and confirmed to work.</div>
+
+      <div class="cb-warn"><strong>Blocker identified on May 11:</strong> Xage has a required co-signer step in MN between Accepted → Processed. This prevents API automation of the Processed status, forcing Heather to manually move each quote. Krishna committed to prioritizing removing the co-signer requirement. <strong>Status: Unknown — needs verification before tomorrow's call.</strong></div>
+
+      <div class="cb-l">Why This Fix is Fragile</div>
+      <div class="cb-gap">Even with correct sequencing, any subsequent MN event that triggers a quote webhook (expiration, amendment, any update) will re-sync and overwrite again. The May 26 call confirmed exactly this: a <strong>quote expiration</strong> triggered a re-sync and created duplicate line items on an already-closed deal. The sequencing fix only works if MN never touches the deal again after the workflow runs. That's not guaranteed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ISSUE 3: SPECIFIC INCIDENT CHAIN ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">3</div>
+    <div class="sec-title">Incident Timeline — The Escalation Arc</div>
+    <div class="sec-sub">How frustration compounded</div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">5-Month Escalation Timeline</span>
+      <span class="tag t-crit">Pattern</span>
+    </div>
+    <div class="card-body">
+      <div class="tl">
+        <div class="tl-item"><div class="tl-date">Jan 20 · #3418</div><div class="tl-text"><strong>HubSpot not syncing.</strong> First formal flag. Put on hold.</div></div>
+        <div class="tl-item"><div class="tl-date">Feb 13 · #3701</div><div class="tl-text"><strong>Product Library sync confusion.</strong> Heather found MN docs claiming catalog sync exists — Kevin confirmed it doesn't, docs were wrong. Trust dent #1.</div></div>
+        <div class="tl-item"><div class="tl-date">Feb 18 · #3749</div><div class="tl-text"><strong>Primary partner selection in HS.</strong> Partner deal workflow gaps surfacing. On hold.</div></div>
+        <div class="tl-item"><div class="tl-date">Apr 20 · #4380</div><div class="tl-text"><strong>Deal-to-quote sync failure.</strong> Quote created from deal didn't sync back.</div></div>
+        <div class="tl-item crit"><div class="tl-date">Apr 28 · #4498</div><div class="tl-text"><strong>THE KEY ISSUE: Re-sync after Closed Won.</strong> Quote re-synced on Mar 26 and Apr 13 even though deal was closed on Mar 17. Heather: "This is effecting our reporting." Kevin initially told her "we don't sync after Processed" — <strong>which was incorrect per the codebase.</strong></div></div>
+        <div class="tl-item"><div class="tl-date">May 6 · #4557</div><div class="tl-text"><strong>Quote-deal sync failure + POC link request.</strong> Heather wanted POC linked but NOT synced. Kevin missed the nuance and triggered a resync. Heather: "I really wish you had looked at what I said completely before taking action."</div></div>
+        <div class="tl-item"><div class="tl-date">May 7 · Fathom</div><div class="tl-text"><strong>Call: sync overwrite identified.</strong> Agreement to bring SimpleStrat into the conversation.</div></div>
+        <div class="tl-item fix"><div class="tl-date">May 11 · Fathom (3-way call)</div><div class="tl-text"><strong>Root cause identified.</strong> Sequence fix agreed: workflow triggers after "Processed." Tested on real deal. Blocker: co-signer requirement.</div></div>
+        <div class="tl-item crit"><div class="tl-date">May 14 · #4645</div><div class="tl-text"><strong>Duplicate line items.</strong> Processing quote added a duplicate product. Root cause: SimpleStrat workflow stripped dedup keys.</div></div>
+        <div class="tl-item"><div class="tl-date">May 26 · Fathom</div><div class="tl-text"><strong>Quote expiration triggers re-sync.</strong> Expired quote caused duplicate line items on a closed deal. A new failure mode nobody anticipated.</div></div>
+        <div class="tl-item crit"><div class="tl-date">May 27 · #4814</div><div class="tl-text"><strong>Auto-renewal creates duplicate deal + doubled amounts.</strong> Heather discovers auto-renewal is on. Plus: "I am back to feeling like MN is a lost cause."</div></div>
+        <div class="tl-item"><div class="tl-date">May 28 · Fathom</div><div class="tl-text"><strong>Full escalation.</strong> Meeting with Perry + Krishna booked for May 29. Custom field solution proposed for auto-renewal T&C language.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ISSUE 4: AUTO RENEWAL ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">4</div>
+    <div class="sec-title">Auto-Renewal — Separate Issue, Now Contained</div>
+    <div class="sec-sub">#4814</div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">Auto-Renewal Creates Duplicate Deals + Inflated Pipeline</span>
+      <span class="tag t-crit">Critical</span>
+      <span class="st s-fixed">Contained</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">What Happened</div>
+      <div class="cb-t">42 Xage contracts had auto-renew enabled. When contracts hit their cancellation deadline, MN auto-generated a renewal quote, auto-processed it, and created a new HubSpot deal. This duplicated deals Xage had already manually created for their renewal pipeline, inflating amounts and confusing forecasting.</div>
+
+      <div class="cb-l">Heather's Frustration</div>
+      <div class="cb-quote">"The thing is, I want it on most quotes. I just don't want MN to do this process of creating deals and quotes." — She wants "auto-renew" as contractual language on the quote, not as a system action.</div>
+
+      <div class="cb-l">What's Been Done</div>
+      <div class="cb-ok">Kevin turned off auto-renew on 14 contracts with 2026 end dates. Heather confirmed.</div>
+
+      <div class="cb-l">Remaining Fix</div>
+      <div class="cb-t">Custom dropdown field in MN ("Auto-Renewal: Yes/No") mapped to conditional T&C language on the quote template. This decouples the contractual language from the system behavior. Kevin is building a demo video in Xage's test account. <strong>This is straightforward and solvable.</strong></div>
+
+      <div class="cb-warn"><strong>Open question:</strong> What about the deals already created by auto-renewal? Pat Park's renewal (quot_bqVKv6mHHJUTU) auto-processed on May 14 — a rep noticed it and asked Heather if it was sent to the customer. It wasn't (auto-renewals don't email), but the confusion was real. These zombie deals need cleanup.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ISSUE 5: OTHER HS GAPS ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">5</div>
+    <div class="sec-title">Other HubSpot Gaps (Non-Line-Item)</div>
+    <div class="sec-sub">Surfaced across tickets but lower priority</div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">Expired Quote Triggers Re-Sync (#4565, May 26 call)</span>
+      <span class="tag t-crit">Critical</span>
+      <span class="st s-open">Open</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-t">A quote expiring fires a <code>Quote.Update</code> webhook (status change to Expired). The connector has no status guard — it re-syncs. If the SimpleStrat workflow already corrected line items, this overwrites them and/or creates duplicates. This is the newest failure mode and breaks the "sequence after Processed" fix because expiration can happen at any time.</div>
+      <div class="cb-gap"><strong>This is the biggest unsolved gap.</strong> The sequencing fix agreed on May 11 doesn't account for expiration events on other quotes attached to the same deal.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">POC Quotes: Link Without Sync (#4557)</span>
+      <span class="tag t-high">High</span>
+      <span class="st s-open">Open</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-t">Xage creates $0 POC quotes and wants them linked to the deal for traceability but NOT synced (because it zeros out the deal amount). MN has no "link without sync" capability — any linked quote triggers full line-item reconciliation.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">Product Catalog Not Synced (#3701)</span>
+      <span class="tag t-med">Medium</span>
+      <span class="st s-open">Known Gap</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-t">MN used to sync products to HubSpot's product library but stopped. Documentation wasn't updated until Heather caught it. This means HS product library and MN catalog are disconnected — line items reference products that don't exist in HS's native product object.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">Partner Quote Shows Wrong Customer Name (#4402)</span>
+      <span class="tag t-med">Medium</span>
+      <span class="st s-fixed">Fix Shipped</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-t">E-sign page showed primary customer name instead of partner name for linked accounts. Fix shipped (BP-16925). Needs production verification and customer notification.</div>
+    </div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">Bill-To/Ship-To Address Sync (#2474, #3009, #3017)</span>
+      <span class="tag t-med">Medium</span>
+      <span class="st s-open">Feature Request</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-t">Multiple tickets requesting HS company address → MN quote bill-to/ship-to sync. Address field truncation also reported. Feature request logged since Nov 2025.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 6: THE REAL DIAGNOSIS ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">6</div>
+    <div class="sec-title">The Real Diagnosis — Where Our Solutioning Failed</div>
+  </div>
+
+  <div class="card open" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">Why the SimpleStrat Workaround Was Doomed From the Start</span>
+      <span class="tag t-crit">Root Cause</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">The Fundamental Error</div>
+      <div class="cb-t">We told Xage: "The real values are in the custom properties, use those to fix the native fields." This sounds logical. But it ignores the fact that <strong>MN's connector treats line items as its own managed objects</strong> — it diffs, creates, updates, and deletes them on every sync event. Any external process that modifies those objects is working against MN's reconciliation loop. The SimpleStrat workflow is effectively <strong>fighting the connector for ownership of the same data</strong>.</div>
+
+      <div class="cb-l">The Three Things We Got Wrong</div>
+      <div class="cb-t">
+        <strong>1. We told Heather "we don't sync after Processed"</strong> (Kevin, #4498, Apr 30). The codebase proves this is wrong. <code>syncQuote()</code> has no status guard. The only thing that stops sync is: the quote isn't the primary quote, or it's a migration quote. This misinformation shaped Xage's entire workflow design around a false assumption.
+      </div>
+      <div class="cb-t" style="margin-top:8px">
+        <strong>2. We never warned about deduplication keys.</strong> When SimpleStrat built the workflow, nobody told them that <code>monetize_quoteitem_id</code> and <code>monetize_quoteoffering_id</code> are critical dedup keys. If the workflow deletes and recreates line items (which is the natural HS workflow pattern), those keys vanish, and MN will create duplicates on next sync. We knew this (Huy confirmed it immediately when asked), but nobody proactively communicated it.
+      </div>
+      <div class="cb-t" style="margin-top:8px">
+        <strong>3. We treated the symptom (bad line item values) instead of the system interaction.</strong> The right question was never "how do we fix the line items after MN sends them" — it was "how do we make MN and HS agree on who owns line item data." We let an external workflow fight the connector instead of designing a data ownership boundary.
+      </div>
+
+      <div class="cb-l">What An Expert Would Have Done Differently</div>
+      <div class="cb-t">Instead of telling Xage to build a corrective workflow (which fights the connector), the right approach would have been one of:</div>
+      <div class="cb-ok" style="margin-top:8px">
+        <strong>Option A — Workflow Preserves Dedup Keys:</strong> If SimpleStrat's workflow must run, it should UPDATE the existing line items in place (not delete + recreate). This preserves <code>monetize_quoteitem_id</code> and <code>monetize_quoteoffering_id</code>. MN's next sync will find matching items and UPDATE them (overwriting the corrected values, yes — but if the workflow triggers after the last MN sync, it gets the final word). The workflow must be an UPDATE, never a delete-and-recreate.
+      </div>
+      <div class="cb-ok" style="margin-top:8px">
+        <strong>Option B — MN Stops Syncing After Processed (Code Change):</strong> Add a status guard in <code>syncQuote()</code> or <code>syncQuoteOfferings()</code>: if the quote is already Processed, skip line-item reconciliation. This makes Processed a true lock. Xage's workflow becomes the permanent authority. This is the cleanest fix but requires product team involvement.
+      </div>
+      <div class="cb-ok" style="margin-top:8px">
+        <strong>Option C — MN Sends Correct Values (The Real Fix):</strong> Write real quantity and real unit price to the native HS fields. Yes, this means <code>amount</code> (quantity × price) might differ from the MN total if discounts are applied. But you can set <code>discount</code> on the line item to compensate. Or accept the rollup discrepancy and let Xage use <code>monetize_quote_arr</code> for the deal amount via a simple HubSpot workflow (most MN+HS customers already do this). This eliminates the entire workaround chain.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">What We Can Fix NOW Without Product Help</span>
+      <span class="tag t-mn">Actionable</span>
+      <span class="st s-wip">For Tomorrow's Call</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">Fix 1: Redesign the SimpleStrat Workflow (No product change needed)</div>
+      <div class="cb-t">Work with Ryan to change the workflow from "delete + recreate" to "update in place." The workflow should:<br>
+      — Trigger on <code>monetize_quote_status = Processed</code> (already agreed)<br>
+      — PATCH existing line items with correct native values (qty, unit price, billing freq, discount)<br>
+      — NEVER delete or clear <code>monetize_quoteitem_id</code> or <code>monetize_quoteoffering_id</code><br>
+      — This means the next MN sync (if one happens) will find existing items, UPDATE them, and the workflow can re-run after if needed
+      </div>
+
+      <div class="cb-l">Fix 2: Handle the Expiration Resync</div>
+      <div class="cb-t">The May 26 bug: expired quote on a closed deal triggered resync. Two paths:<br>
+      — <strong>Quick:</strong> Tell Xage to set longer expiration dates or manually cancel quotes before they expire (process discipline, not elegant)<br>
+      — <strong>Better:</strong> Add the workflow trigger to also fire on <code>Quote.Expired</code> status changes, so even if MN resyncs on expiration, the workflow re-corrects immediately after. Since the workflow is now UPDATE-based (not delete+recreate), this becomes safe.
+      </div>
+
+      <div class="cb-l">Fix 3: Auto-Renewal (Already in Progress)</div>
+      <div class="cb-t">Custom field + conditional T&C language. Kevin is building the demo. 14 contracts already turned off. Cleanup of zombie deals created by auto-renewal needed.</div>
+
+      <div class="cb-l">Fix 4: Communication Cleanup</div>
+      <div class="cb-t">
+      — Correct the record: "We do sync after Processed" — own the misinformation<br>
+      — Explain the dedup key requirement to Ryan explicitly<br>
+      — Provide Ryan with the full list of <code>monetize_*</code> properties and which ones are dedup-critical vs. data-only<br>
+      — Set up a shared doc between MN, Xage, and SimpleStrat showing the agreed data flow
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 7: WHAT TO SAY TOMORROW ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">7</div>
+    <div class="sec-title">For the May 29 Call With Heather</div>
+  </div>
+
+  <div class="card open" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">What Heather Needs to Hear</span>
+      <span class="tag t-crit">Critical</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">Acknowledge</div>
+      <div class="cb-t">This has been a frustrating 5 months. The issues aren't random — they trace back to one root cause that we should have addressed differently from the start. We gave your team information that was incomplete (specifically about post-processed syncing) and that shaped a workaround that was always going to conflict with our connector.</div>
+
+      <div class="cb-l">Own</div>
+      <div class="cb-t">Three specific things we got wrong: (1) We told you sync stops after Processed — it doesn't, and we should have verified before saying it. (2) We didn't warn SimpleStrat about the dedup keys, which caused the duplicate line items. (3) We should have been in the room with Ryan from day one designing this workflow together, not letting you figure it out alone.</div>
+
+      <div class="cb-l">Fix</div>
+      <div class="cb-t">Here's what we're doing — not band-aids, real fixes: (1) The SimpleStrat workflow gets redesigned to UPDATE in place, preserving dedup keys. We'll be on the call with Ryan to make sure it's right. (2) The workflow triggers on Processed AND Expired, so even edge-case resyncs get corrected. (3) Auto-renewal is decoupled from T&C language via a custom field — demo ready. (4) We're giving Ryan the full property map so nothing is guessed at again.</div>
+
+      <div class="cb-l">What NOT to Say</div>
+      <div class="cb-gap">Don't say "this is a HubSpot limitation." It is, technically, but that's not what Heather needs. She needs to know we own the solution. Don't say "we're building a new connector" as a future promise — she's heard that and it doesn't help today. Don't over-explain the code; explain the fix in business terms.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 8: COMPLETE ISSUE INDEX ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">8</div>
+    <div class="sec-title">Complete HubSpot Issue Index</div>
+    <div class="sec-sub">Every issue, categorized</div>
+  </div>
+
+  <div style="overflow-x:auto;margin-top:8px">
+  <table style="width:100%;border-collapse:collapse;font-size:12px">
+    <thead>
+      <tr style="background:#f1f5f9;text-align:left">
+        <th style="padding:8px 10px;font-weight:700;border-bottom:2px solid var(--bdr)">Pylon #</th>
+        <th style="padding:8px 10px;font-weight:700;border-bottom:2px solid var(--bdr)">Issue</th>
+        <th style="padding:8px 10px;font-weight:700;border-bottom:2px solid var(--bdr)">Root Cause</th>
+        <th style="padding:8px 10px;font-weight:700;border-bottom:2px solid var(--bdr)">Status</th>
+        <th style="padding:8px 10px;font-weight:700;border-bottom:2px solid var(--bdr)">Connected To</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4814</td>
+        <td style="padding:8px 10px">Duplicate line items from expired quote re-sync</td>
+        <td style="padding:8px 10px"><span class="tag t-crit">Root Cause 1+2</span></td>
+        <td style="padding:8px 10px"><span class="st s-esc">Escalated</span></td>
+        <td style="padding:8px 10px">Also surfaced auto-renewal</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4645</td>
+        <td style="padding:8px 10px">Processing quote added duplicate line item</td>
+        <td style="padding:8px 10px"><span class="tag t-crit">Dedup key stripped</span></td>
+        <td style="padding:8px 10px">Closed</td>
+        <td style="padding:8px 10px">SimpleStrat workflow</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4565</td>
+        <td style="padding:8px 10px">Do expired/canceled quotes still sync?</td>
+        <td style="padding:8px 10px"><span class="tag t-high">Sync behavior</span></td>
+        <td style="padding:8px 10px">Answered (incorrectly)</td>
+        <td style="padding:8px 10px">Expiration re-sync bug</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4557</td>
+        <td style="padding:8px 10px">Quote sync failure + POC link-without-sync need</td>
+        <td style="padding:8px 10px"><span class="tag t-high">No selective sync</span></td>
+        <td style="padding:8px 10px">Open</td>
+        <td style="padding:8px 10px">Product gap</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4498</td>
+        <td style="padding:8px 10px">Re-sync after Closed Won overwrites corrected values</td>
+        <td style="padding:8px 10px"><span class="tag t-crit">Root Cause 2</span></td>
+        <td style="padding:8px 10px">Fix agreed (May 11)</td>
+        <td style="padding:8px 10px">Core sequencing issue</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4380</td>
+        <td style="padding:8px 10px">Deal-to-quote sync failure</td>
+        <td style="padding:8px 10px"><span class="tag t-med">Sync intermittent</span></td>
+        <td style="padding:8px 10px">Closed</td>
+        <td style="padding:8px 10px">—</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#3825</td>
+        <td style="padding:8px 10px">Resync quote to HubSpot deal (manual request)</td>
+        <td style="padding:8px 10px"><span class="tag t-med">Manual resync</span></td>
+        <td style="padding:8px 10px">On Hold</td>
+        <td style="padding:8px 10px">—</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#3701</td>
+        <td style="padding:8px 10px">Product Library sync — docs said yes, reality no</td>
+        <td style="padding:8px 10px"><span class="tag t-high">Docs wrong</span></td>
+        <td style="padding:8px 10px">Closed (corrected docs)</td>
+        <td style="padding:8px 10px">Trust dent</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#3418</td>
+        <td style="padding:8px 10px">HubSpot not syncing (first flag)</td>
+        <td style="padding:8px 10px"><span class="tag t-med">Unknown</span></td>
+        <td style="padding:8px 10px">On Hold</td>
+        <td style="padding:8px 10px">—</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#4402</td>
+        <td style="padding:8px 10px">E-sign shows wrong customer name (partner)</td>
+        <td style="padding:8px 10px"><span class="tag t-mn">Product bug</span></td>
+        <td style="padding:8px 10px"><span class="st s-fixed">Fix shipped</span></td>
+        <td style="padding:8px 10px">Linked accounts</td>
+      </tr>
+      <tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:8px 10px;font-weight:700">#2474</td>
+        <td style="padding:8px 10px">Bill-To/Ship-To address sync request</td>
+        <td style="padding:8px 10px"><span class="tag t-med">Feature request</span></td>
+        <td style="padding:8px 10px">Open</td>
+        <td style="padding:8px 10px">—</td>
+      </tr>
+      <tr>
+        <td style="padding:8px 10px;font-weight:700">#1150</td>
+        <td style="padding:8px 10px">Monetize product fields in HubSpot</td>
+        <td style="padding:8px 10px"><span class="tag t-med">Feature request</span></td>
+        <td style="padding:8px 10px">Closed</td>
+        <td style="padding:8px 10px">Root cause 1</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ==================== SECTION 9: VERDICT ==================== -->
+<div class="sec">
+  <div class="sec-hdr">
+    <div class="sec-num">9</div>
+    <div class="sec-title">Verdict — Is This a Product Gap or a Solutioning Gap?</div>
+  </div>
+
+  <div class="card open" onclick="this.classList.toggle('open')">
+    <div class="card-top">
+      <span class="chev">›</span>
+      <span class="card-name">It's Both — But the Solutioning Gap Is the Bigger Failure</span>
+    </div>
+    <div class="card-body">
+      <div class="cb-l">The Product Gap (Real, But Known)</div>
+      <div class="cb-t">HubSpot's calculated line item fields force the qty=1/price=blob pattern. This is a real platform constraint that MN chose to work around rather than fight. Every HS customer is affected, though most don't notice because they don't run HS workflows on line items. The product gap is: MN should write real values to native fields and accept the rollup trade-off (use deal-level custom props for accurate totals).</div>
+
+      <div class="cb-l">The Solutioning Gap (Where We Failed Xage)</div>
+      <div class="cb-gap">
+      <strong>We had all the pieces.</strong> The custom properties carry real values. The connector has clear dedup behavior. The webhook events are documented. The sync lifecycle is well-defined in code. But we never connected these dots for Xage or SimpleStrat. We:
+      <br><br>
+      — Let a third party build a workflow against our connector without being in the design room<br>
+      — Gave incorrect information about post-processed sync behavior<br>
+      — Didn't proactively communicate dedup key requirements<br>
+      — Treated each ticket as isolated instead of seeing the pattern<br>
+      — Proposed a sequencing fix that doesn't account for expiration events
+      <br><br>
+      The information existed. The solution was possible. We just didn't assemble it correctly.
+      </div>
+
+      <div class="cb-l">The Fix Is Available Without Product</div>
+      <div class="cb-ok">
+      <strong>Step 1:</strong> Redesign SimpleStrat workflow to UPDATE (not delete/recreate). Preserve dedup keys.<br>
+      <strong>Step 2:</strong> Trigger on Processed + Expired + any other terminal status.<br>
+      <strong>Step 3:</strong> MN provides full property map + dedup key documentation to Ryan.<br>
+      <strong>Step 4:</strong> Auto-renewal decoupled via custom field (already in progress).<br>
+      <strong>Step 5:</strong> Joint MN + SimpleStrat session to validate the complete flow end-to-end.<br>
+      <strong>Step 6 (optional, product):</strong> Request a <code>syncQuoteOfferings</code> guard: skip line-item sync when quote status is Processed or Expired. This makes the fix bulletproof.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('.card').forEach(c => {
+  c.addEventListener('click', () => c.classList.toggle('open'));
+});
+</script>
+</body>
+</html>
