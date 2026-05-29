@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xage — HubSpot Issue Landscape</title>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Red Hat Display',system-ui,sans-serif;background:#f1f5f9;color:#1e293b;line-height:1.6;padding:32px 20px 60px}
+.wrap{max-width:780px;margin:0 auto}
+h1{font-size:22px;font-weight:700;color:#0f172a;margin-bottom:4px}
+.sub{font-size:13px;color:#64748b;margin-bottom:28px}
+
+.lane{margin-bottom:28px}
+.lane-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #e2e8f0}
+.lane-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.lane-title{font-size:16px;font-weight:700;color:#0f172a}
+.lane-ct{font-size:12px;color:#94a3b8;margin-left:auto;font-weight:500}
+
+.c{border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;background:#fff;overflow:hidden;transition:box-shadow .15s}
+.c:hover{box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.c-top{display:flex;align-items:center;gap:10px;padding:14px 18px;cursor:pointer;user-select:none}
+.c-name{font-size:14px;font-weight:500;color:#1e293b;flex:1}
+.tg{font-size:10px;font-weight:700;padding:3px 10px;border-radius:5px;white-space:nowrap;letter-spacing:.02em}
+.t-r{background:#fef2f2;color:#991b1b} .t-a{background:#fffbeb;color:#92400e} .t-g{background:#ecfdf5;color:#065f46}
+.t-b{background:#eff6ff;color:#1e40af} .t-p{background:#f5f3ff;color:#5b21b6} .t-gray{background:#f1f5f9;color:#475569}
+.chv{font-size:11px;color:#94a3b8;transition:transform .2s;flex-shrink:0}
+.c.open .chv{transform:rotate(90deg)}
+.c-body{display:none;padding:0 18px 16px;font-size:13px;line-height:1.7;color:#475569}
+.c.open .c-body{display:block}
+
+.ev{padding:10px 14px;border-radius:8px;margin-top:10px;font-size:12px;line-height:1.6}
+.ev-bad{background:#fef2f2;color:#991b1b;border-left:3px solid #ef4444}
+.ev-ok{background:#ecfdf5;color:#065f46;border-left:3px solid #10b981}
+.ev-warn{background:#fffbeb;color:#92400e;border-left:3px solid #f59e0b}
+.ev-info{background:#f8fafc;color:#475569;border-left:3px solid #94a3b8}
+.pylon{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:11px;color:#94a3b8;margin-top:8px}
+.conn{font-size:12px;color:#64748b;margin-top:8px;font-style:italic;padding-left:12px;border-left:2px solid #e2e8f0}
+code{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#0f172a}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Xage × HubSpot — Issue Landscape</h1>
+<div class="sub">Every HubSpot issue Xage has raised, organized by category. Source: 92 Pylon tickets, 5 Fathom calls, Slack. Updated May 29, 2026.</div>
+
+<!-- ===== LINE ITEM SYNC ===== -->
+<div class="lane">
+<div class="lane-hdr">
+  <div class="lane-dot" style="background:#dc2626"></div>
+  <div class="lane-title">Line item sync → HubSpot deal</div>
+  <div class="lane-ct">The core pain</div>
+</div>
+
+<div class="c open" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">MN sends qty=1 + price=blob to native HS fields</span>
+    <span class="tg t-r">Structural</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Real values exist in <code>monetize_quoteitem_*</code> custom properties but native HS fields show meaningless data. This is why Xage hired SimpleStrat to build a corrective workflow.
+    <div class="ev ev-bad">Heather's reporting, forecasting, and pipeline all run on native HS fields. "1 × $127,500" tells her nothing.</div>
+    <div class="pylon">#1150, #3662, #3701</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">SimpleStrat workflow strips MN dedup keys → duplicates</span>
+    <span class="tg t-r">Active</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Workflow corrects native values but deletes + recreates line items, losing <code>monetize_quoteitem_id</code> and <code>monetize_quoteoffering_id</code>. Next MN sync can't find matches → creates duplicates.
+    <div class="ev ev-bad">Confirmed by Huy Ngo (MN eng) May 14: "If the fields that we depend on have their values removed, we can't deduplicate so we end up creating more line items."</div>
+    <div class="pylon">#4645</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">MN re-syncs after quote is processed → overwrites corrections</span>
+    <span class="tg t-r">Active</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Xage's process: close deal as Won first → then process quote in MN. MN fires webhook on Processed → full line item resync → overwrites what SimpleStrat just fixed.
+    <div class="ev ev-warn">May 11 fix agreed: trigger workflow AFTER Processed. But Heather has to manually move quotes to Processed due to co-signer step blocker.</div>
+    <div class="pylon">#4498</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Quote expiration triggers re-sync on closed deals</span>
+    <span class="tg t-r">Active</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Heather reported May 27: an expired quote re-synced and doubled line items + amount on a closed deal.
+    <div class="ev ev-bad">This breaks the "sequence after Processed" fix — expiration can fire at any time on any linked quote and re-trigger the whole overwrite chain.</div>
+    <div class="pylon">#4814 (same ticket as auto-renewal — both surfaced together)</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== DEAL SYNC ===== -->
+<div class="lane">
+<div class="lane-hdr">
+  <div class="lane-dot" style="background:#f59e0b"></div>
+  <div class="lane-title">Deal creation + sync</div>
+  <div class="lane-ct">3 issues</div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Quote created from deal doesn't sync back</span>
+    <span class="tg t-a">Intermittent</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Heather reported quotes created from HS deals that didn't sync product back to deal line items. Logs showed 200 status — engineering re-fired webhook to fix. No clear root cause found.
+    <div class="pylon">#4557, #4380</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">POC quotes: need link without sync</span>
+    <span class="tg t-b">Feature gap</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Xage creates $0 POC quotes and wants them linked to a deal for traceability but NOT synced — syncing zeros out the deal amount and ARR. MN has no "link without sync" capability.
+    <div class="ev ev-warn">Kevin missed this nuance and triggered a resync, zeroing out the deal. Heather: "I really wish you had looked at what I said completely before taking action."</div>
+    <div class="pylon">#4557</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Manual resync requests</span>
+    <span class="tg t-a">Recurring</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    When sync breaks, Heather has to ask MN to manually re-fire webhooks. No self-serve way to trigger a resync.
+    <div class="pylon">#3825, #3418</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== AUTO-RENEWAL ===== -->
+<div class="lane">
+<div class="lane-hdr">
+  <div class="lane-dot" style="background:#f59e0b"></div>
+  <div class="lane-title">Auto-renewal → HubSpot</div>
+  <div class="lane-ct">Contained</div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Auto-renewal creates duplicate deals in pipeline</span>
+    <span class="tg t-g">Contained</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    42 contracts had auto-renew on. MN auto-processed renewals and created new HS deals — duplicating deals Xage already manually created for their renewal pipeline.
+    <div class="ev ev-ok">Kevin turned off auto-renew on 14 contracts with 2026 end dates. Custom field solution for T&C language decoupling in progress.</div>
+    <div class="conn">"I want it on most quotes. I just don't want MN to do this process of creating deals and quotes." — Heather, May 27</div>
+    <div class="pylon">#4814</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== PRODUCT / CATALOG ===== -->
+<div class="lane">
+<div class="lane-hdr">
+  <div class="lane-dot" style="background:#7c3aed"></div>
+  <div class="lane-title">Product catalog + field sync</div>
+  <div class="lane-ct">Known gaps</div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Product library not synced (docs were wrong)</span>
+    <span class="tg t-p">Known gap</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    MN used to sync products to HS product library but stopped. Heather found MN docs claiming it still works — Kevin confirmed it doesn't and updated docs.
+    <div class="pylon">#3701</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">SKU mapping: pull from rates not offerings</span>
+    <span class="tg t-g">Resolved</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Xage needed SKUs on quotes to come from rate-level custom fields, not offering level. Custom fields added to rates — now working.
+    <div class="pylon">#3662</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Expired/canceled quote sync behavior unclear</span>
+    <span class="tg t-a">Misinformed</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Heather asked if expired/canceled quotes still sync. Kevin said no. Turned out to be wrong — expiration itself is a status change that triggers sync. This directly caused the May 27 incident.
+    <div class="pylon">#4565</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== PARTNER ===== -->
+<div class="lane">
+<div class="lane-hdr">
+  <div class="lane-dot" style="background:#059669"></div>
+  <div class="lane-title">Partner + linked accounts</div>
+  <div class="lane-ct">Xage sells through channel</div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">E-sign page showed wrong customer name for partner quotes</span>
+    <span class="tg t-g">Fix shipped</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Quote for a partner (linked account) showed primary customer name on signing page. Fix shipped (BP-16925). Needs production verification and Heather notification.
+    <div class="pylon">#4402</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Primary partner selection from HubSpot deal</span>
+    <span class="tg t-b">On hold</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Workflow for selecting primary partner on a deal doesn't integrate cleanly with MN's linked accounts feature.
+    <div class="pylon">#3749, #367</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Partner contacts didn't sync (association labels)</span>
+    <span class="tg t-g">Fix shipped</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Contacts on partner company in HS didn't pull into MN because they lacked association labels. Fixed as part of BP-16925.
+    <div class="pylon">#4402</div>
+  </div>
+</div>
+</div>
+
+<!-- ===== ADDRESS / CONTACTS ===== -->
+<div class="lane">
+<div class="lane-hdr">
+  <div class="lane-dot" style="background:#64748b"></div>
+  <div class="lane-title">Address + contact sync</div>
+  <div class="lane-ct">Feature requests</div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Bill-to / Ship-to address sync from HS company</span>
+    <span class="tg t-b">Feature request</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Xage wants HS company address to flow to MN quote bill-to/ship-to fields. Address truncation also reported separately.
+    <div class="pylon">#2474, #3009, #3017</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Quote creation pulls multiple deal contacts</span>
+    <span class="tg t-g">Resolved</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    When creating a quote from a deal, all deal contacts were being pulled in instead of the relevant one. Quick resolution.
+    <div class="pylon">#4334</div>
+  </div>
+</div>
+
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <span class="c-name">Mandatory contact association on quotes</span>
+    <span class="tg t-b">On hold</span>
+    <span class="chv">›</span>
+  </div>
+  <div class="c-body">
+    Xage wants enforcement that a contact is always associated to a quote. Escalated but on hold.
+    <div class="pylon">#3529</div>
+  </div>
+</div>
+</div>
+
+</div>
+<script>
+document.querySelectorAll('.c').forEach(c=>{
+  c.querySelector('.c-top').addEventListener('click',e=>{
+    e.stopPropagation();c.classList.toggle('open')
+  })
+})
+</script>
+</body>
+</html>
