@@ -223,21 +223,21 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 
 <div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Contract Gaps · 438 MN Quotes Not in SFDC</span><span class="c-chev">›</span></div>
+    <div class="c-row1"><span class="c-name">Contract Sync Gap · 438 Quotes Missing SFDC Opp Association</span><span class="c-chev">›</span></div>
     <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-tag t-dat">Data</span><span class="c-tag t-new">Audit</span><span class="c-st s-ip">Options Identified</span></div>
     <div class="c-own"><span class="own"><b class="fd">B</b>Ben · confirm path</span><span class="own"><b class="mn">K</b>Krishna · analysis</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Scope</div>
-    <div class="cb-t"><strong>438 MN processed quotes</strong> where the linked opportunity has no SFDC Opp ID (MN Metabase query). These quotes created contracts in MN but those contracts can't sync to SFDC because the opp chain is broken.</div>
-    <div class="cb-t">On the SFDC side: <strong>438 contracts</strong> missing the Original Opportunity link (<code>monetize__OriginalOpportunity__c = null</code>). Same pattern as the quote orphan issue (#4666). <strong>5 active contracts</strong> show $0 Amount, all confirmed $0 in MN too (not a sync error).</div>
+    <div class="cb-t"><strong>438 MN processed quotes</strong> were never associated with an SFDC Opportunity ID. Without that link, the MN-to-SFDC contract sync has no target to write to, so contract records in SFDC are missing their Original Opportunity reference.</div>
+    <div class="cb-t">On the SFDC side: <strong>438 contracts</strong> have a blank Original Opportunity link (<code>monetize__OriginalOpportunity__c = null</code>). Same pattern as the quote orphan issue (#4666). <strong>5 active contracts</strong> show $0 Amount, all confirmed $0 in MN too (not a sync error).</div>
     <div class="cb-l">Root Cause</div>
-    <div class="cb-t">The MN-to-SFDC contract sync depends on the quote having a valid SFDC Opp link. Since 438 quotes are missing that link (subset of the 519 orphan issue), the downstream contract records in SFDC are also orphaned from their opportunities.</div>
+    <div class="cb-t">These quotes were created during migration without an SFDC Opp ID mapped to the MN opportunity. The contract sync depends on that link to associate the SFDC contract back to the right opportunity. Since the opp association was never established, the contracts synced but landed without a parent opp reference.</div>
     <div class="cb-l">Resolution Options (Need FirstDue Input)</div>
-    <div class="cb-t"><strong>Option A:</strong> If these contracts already exist in SFDC (migrated from Zoho by FirstDue/VTG separately), no action needed. The SFDC contract records are already there, just not linked to MN.</div>
-    <div class="cb-t"><strong>Option B:</strong> If they don't exist in SFDC, FirstDue provides the accurate SFDC Opp IDs for these 438 records. MN associates the quotes with the correct opps and triggers a resync. This creates/links the contract records in SFDC.</div>
+    <div class="cb-t"><strong>Option A: No action needed</strong> if these contracts were already migrated into SFDC separately by FirstDue/VTG from Zoho. The SFDC contract records exist, they just aren't linked to MN. Reporting may already cover them.</div>
+    <div class="cb-t"><strong>Option B: Associate and resync.</strong> FirstDue provides the correct SFDC Opp IDs for these 438 records. MN maps the quotes to the right opps and triggers a resync, which links the contract records to their parent opportunities in SFDC.</div>
     <div class="cb-l">Next Steps</div>
-    <div class="cb-t">FirstDue confirms which path applies. Likely resolves in parallel with the 519 quote backfill (#4666), since fixing the opp links on quotes cascades to contracts.</div>
+    <div class="cb-t">FirstDue confirms which path applies. If Option B, this resolves in parallel with the 519 quote backfill (#4666) since fixing the opp associations on quotes cascades to contracts.</div>
     <div class="cb-t"><a class="cb-ref" href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit" target="_blank">Working spreadsheet: Contract Gaps ↗</a></div>
   </div></div>
 </div>
