@@ -55,7 +55,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     </div>
     <div class="hero-nums">
       <div class="hn"><div class="hn-v">29</div><div class="hn-l">Ghost Quotes (not 1,900)</div></div>
-      <div class="hn"><div class="hn-v">519</div><div class="hn-l">Opp Link Backfill</div></div>
+      <div class="hn"><div class="hn-v">519</div><div class="hn-l">Quote-Opp Association Backfill</div></div>
       <div class="hn"><div class="hn-v">12</div><div class="hn-l">CAD Mismatch Opps</div></div>
       <div class="hn"><div class="hn-v">0</div><div class="hn-l">New Orphans Since Jun 1</div></div>
     </div>
@@ -119,7 +119,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Amendment Opp Links · Fix Live, Backfill Needed</span><span class="c-chev">›</span></div>
+    <div class="c-row1"><span class="c-name">Quote-to-Opp Link · 519 SFDC Quotes Need Opp Association</span><span class="c-chev">›</span></div>
     <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4666</a><span class="c-st s-sess">Backfill Required</span></div>
     <div class="c-own"><span class="own"><b class="en">H</b>Huy / Austin · backfill script</span></div>
   </div>
@@ -129,12 +129,12 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-l">Forward Fix: Deployed and Verified</div>
     <div class="cb-t">Huy's fix is <strong>live in prod</strong>. Confirmed Jun 9: SOQL query for quotes with null <code>monetize__Opportunity__c</code> created after Jun 1 returned <strong>zero results</strong>. The leak is plugged. All new quotes correctly populate the Opp link.</div>
     <div class="cb-l">Backfill Scope</div>
-    <div class="cb-t"><strong>519 SFDC quote records</strong> where <code>monetize__Opportunity__c</code> is null (up from Ben's May estimate of ~436, because quotes created between May 21 and fix deployment also had the issue). Statuses are mixed: PROCESSED, DRAFT, ARCHIVED, CANCELLED, EXPIRED. Priority should be PROCESSED first (active contracts, blocks amendments), then DRAFT (active pipeline).</div>
+    <div class="cb-t"><strong>519 SFDC quote records</strong> exist in Salesforce but have a blank <code>monetize__Opportunity__c</code> field. The quotes are there, the data is correct, they're just not linked to their parent Opportunity. Once the MN internal Opp ID is populated on these records, the quotes will appear in the SFDC Opportunity's related list and amendment workflows will resolve correctly. Up from Ben's May estimate of ~436 because quotes created between May 21 and fix deployment also had the issue. Statuses are mixed: PROCESSED, DRAFT, ARCHIVED, CANCELLED, EXPIRED. Priority should be PROCESSED first (active contracts, blocks amendments), then DRAFT (active pipeline).</div>
     <div class="cb-l">To Resolve</div>
     <ol class="cb-steps">
-      <li><strong>Eng runs backfill script</strong> to populate <code>monetize__Opportunity__c</code> on 519 records. Mapping data exists in MN (each quote has <code>opportunity.customId</code> = SFDC Opp ID)</li>
+      <li><strong>Eng runs backfill script</strong> to populate <code>monetize__Opportunity__c</code> with the MN Opp ID on 519 SFDC quote records. Mapping data exists in MN (each quote's <code>opportunity.customId</code> = SFDC Opp ID). This links the existing quotes to their parent Opportunities.</li>
       <li><strong>Prioritize PROCESSED quotes</strong> first to unblock amendment workflows immediately</li>
-      <li><strong>Verify</strong> a sample of backfilled records shows quotes in SFDC Opp related list</li>
+      <li><strong>Verify</strong> a sample of backfilled records shows quotes appearing in the SFDC Opp related list</li>
     </ol>
     <div class="cb-t"><strong>Data exported:</strong> 519 records from Developer Console (Id, Name, Status, CreatedDate) into Google Sheet for eng.</div>
   </div></div>
