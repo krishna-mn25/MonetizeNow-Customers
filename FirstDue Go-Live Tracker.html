@@ -40,8 +40,8 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <nav class="top">
   <div class="top-l"><div class="mn-m">M</div><span class="top-t">FirstDue × MonetizeNow · Post Go-Live Tracker</span></div>
   <div class="pills">
-    <span class="pl pl-r"><i></i>3 SFDC Scoped</span>
-    <span class="pl pl-a"><i></i>5 Strategic</span>
+    <span class="pl pl-r"><i></i>3 Core SFDC</span>
+    <span class="pl pl-a"><i></i>4 Sync Audits</span>
     <span class="pl pl-g"><i></i>7 Resolved</span>
   </div>
 </nav>
@@ -51,7 +51,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="hero-txt">
       <div class="hero-badge"><b>FD</b><span>Post Go-Live · Migration Cleanup + Stabilization</span></div>
       <h1>SFDC issues scoped. <em>Ready to execute.</em></h1>
-      <p class="hero-sub">Updated Jun 9 (post-investigation). Three SFDC issues fully scoped with root cause, blast radius, and fix paths. SFDC reports created in FirstDue's org. All items ready for eng action or FirstDue confirmation.</p>
+      <p class="hero-sub">Updated Jun 9 (post-investigation). Three core SFDC issues fully scoped. Four additional sync health audits completed across all MN objects. All analysis and data in <a href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit" target="_blank" style="color:#fff;text-decoration:underline;font-weight:600">the working spreadsheet ↗</a>. SFDC reports created in FirstDue's org.</p>
     </div>
     <div class="hero-nums">
       <div class="hn"><div class="hn-v">29</div><div class="hn-l">Ghost Quotes (not 1,900)</div></div>
@@ -66,7 +66,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 
 <!-- ═══ LANE 1: WORKING SESSION ═══ -->
 <div class="lane">
-<div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">SFDC Issues · Investigated Jun 9</span><span class="lane-ct">5</span></div>
+<div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">SFDC Issues · Investigated Jun 9</span><span class="lane-ct">9</span></div>
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
@@ -163,6 +163,82 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="cb-t">Ben flagged billing schedule on quote output shows pre-discount (standard) amounts. Discount Products are applied at invoicing as credits, so schedule reflects standard charges. Ben expected to see post-discount amounts.</div>
     <div class="cb-l">Options Provided</div>
     <ol class="cb-steps"><li><strong>Keep as-is</strong> and rely on totals box (which reflects discounts) + share invoice preview for first bill</li><li><strong>Add output note</strong> on template clarifying discounts are applied on invoice</li></ol>
+  </div></div>
+</div>
+
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Account Sync Errors · 805 Records</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-tag t-new">Audit</span><span class="c-st s-ip">Error Patterns Identified</span></div>
+    <div class="c-own"><span class="own"><b class="fd">C</b>Carlos · cleanup</span><span class="own"><b class="mn">K</b>Krishna · triage</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Scope</div>
+    <div class="cb-t"><strong>805 accounts</strong> with sync errors where MonetizeNow Id is blank (never successfully synced). Filtered from Carlos's original 62,975-row report, which included all SFDC accounts with <code>EnableSync = true</code> (default on every account). The 62K is noise. SFDC report: "MN: Account Sync Errors".</div>
+    <div class="cb-l">Error Patterns</div>
+    <div class="cb-t"><strong>Timeout:</strong> "Exceeded maximum time allotted for callout (120000 ms)" -- MN API didn't respond in time.</div>
+    <div class="cb-t"><strong>Credential:</strong> "We couldn't access the credential(s)... external credential 'MonetizeNow' might not exist." -- Named credential was broken during setup.</div>
+    <div class="cb-t"><strong>JSON parse:</strong> "Unexpected character ('u' (code 117)): expected a valid value..." -- MN returned unparseable response.</div>
+    <div class="cb-l">Next Steps</div>
+    <div class="cb-t">Discuss error patterns on next call. Determine which of the 805 are actual customers vs. prospect accounts that never needed to sync.</div>
+    <div class="cb-t"><a class="cb-ref" href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit#gid=765098051" target="_blank">Working spreadsheet: Account Sync ↗</a></div>
+  </div></div>
+</div>
+
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Opportunity Sync Issues · 10 Records</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-tag t-new">Audit</span><span class="c-st s-ip">Error Patterns Identified</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · triage</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Scope</div>
+    <div class="cb-t"><strong>1 opportunity</strong> with explicit sync error. <strong>9 opportunities</strong> where MN quote exists and is synced but not linked to the SFDC opp (same family as the 519 quote orphan issue in #4666).</div>
+    <div class="cb-l">Error Pattern</div>
+    <div class="cb-t"><strong>Credential:</strong> "We couldn't access the credential(s)... external credential 'MonetizeNow' might not exist." -- Same named credential issue as accounts.</div>
+    <div class="cb-l">Next Steps</div>
+    <div class="cb-t">The 9 missing quote links likely resolve when the 519-record backfill (#4666) runs. Confirm after backfill. The 1 credential error is stale.</div>
+    <div class="cb-t"><a class="cb-ref" href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit" target="_blank">Working spreadsheet: Opp Sync ↗</a></div>
+  </div></div>
+</div>
+
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Quote Sync Errors · 36 Records</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-tag t-new">Audit</span><span class="c-st s-ip">Error Patterns Identified</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · triage</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Scope</div>
+    <div class="cb-t"><strong>36 SFDC quote records</strong> where <code>monetize__LastSyncDate__c</code> is null (never synced). Exported via Developer Console (no SFDC report type available for MN Quote object).</div>
+    <div class="cb-l">Error Patterns</div>
+    <div class="cb-t"><strong>Permissions:</strong> "You don't have read permissions on the User External Credential object." -- Stored in <code>AdditionalDataSyncError</code> field.</div>
+    <div class="cb-t"><strong>Null endpoint:</strong> "The endpoint GET /api/quotes/null was not found" -- Quote ID was null when sync attempted.</div>
+    <div class="cb-t"><strong>Credential:</strong> "We couldn't access the credential(s)..." -- Same named credential issue as other objects.</div>
+    <div class="cb-l">Next Steps</div>
+    <div class="cb-t">Discuss error patterns on next call. Permissions error may require SFDC integration user profile update.</div>
+    <div class="cb-t"><a class="cb-ref" href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit" target="_blank">Working spreadsheet: Quote Sync ↗</a></div>
+  </div></div>
+</div>
+
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Contract Gaps · 438 MN Quotes Not in SFDC</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-tag t-dat">Data</span><span class="c-tag t-new">Audit</span><span class="c-st s-ip">Options Identified</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · confirm path</span><span class="own"><b class="mn">K</b>Krishna · analysis</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Scope</div>
+    <div class="cb-t"><strong>438 MN processed quotes</strong> where the linked opportunity has no SFDC Opp ID (MN Metabase query). These quotes created contracts in MN but those contracts can't sync to SFDC because the opp chain is broken.</div>
+    <div class="cb-t">On the SFDC side: <strong>438 contracts</strong> missing the Original Opportunity link (<code>monetize__OriginalOpportunity__c = null</code>). Same pattern as the quote orphan issue (#4666). <strong>5 active contracts</strong> show $0 Amount, all confirmed $0 in MN too (not a sync error).</div>
+    <div class="cb-l">Root Cause</div>
+    <div class="cb-t">The MN-to-SFDC contract sync depends on the quote having a valid SFDC Opp link. Since 438 quotes are missing that link (subset of the 519 orphan issue), the downstream contract records in SFDC are also orphaned from their opportunities.</div>
+    <div class="cb-l">Resolution Options (Need FirstDue Input)</div>
+    <div class="cb-t"><strong>Option A:</strong> If these contracts already exist in SFDC (migrated from Zoho by FirstDue/VTG separately), no action needed. The SFDC contract records are already there, just not linked to MN.</div>
+    <div class="cb-t"><strong>Option B:</strong> If they don't exist in SFDC, FirstDue provides the accurate SFDC Opp IDs for these 438 records. MN associates the quotes with the correct opps and triggers a resync. This creates/links the contract records in SFDC.</div>
+    <div class="cb-l">Next Steps</div>
+    <div class="cb-t">FirstDue confirms which path applies. Likely resolves in parallel with the 519 quote backfill (#4666), since fixing the opp links on quotes cascades to contracts.</div>
+    <div class="cb-t"><a class="cb-ref" href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit" target="_blank">Working spreadsheet: Contract Gaps ↗</a></div>
   </div></div>
 </div>
 
@@ -316,15 +392,15 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   <div class="foot-card">
     <div>
       <div class="fc-l">Investigation Summary · Jun 9</div>
-      <div class="fc-v"><strong>CAD Currency:</strong> Case sensitivity clean. Field mapping is rep friction only, no data corruption. Fix: remap field + cleanup 127 opps. <strong>Ghost Quotes:</strong> 29 records, not 1,900. Re-import from Zoho needed. <strong>Opp Links:</strong> Fix deployed, 519 backfill pending.</div>
+      <div class="fc-v"><strong>Core SFDC:</strong> CAD currency (rep friction, not data corruption), 29 ghost quotes (not 1,900), 519 opp link backfill (fix live, backfill pending). <strong>Sync Audit:</strong> 805 account errors, 36 quote errors, 10 opp issues, 438 contract gaps. Common thread: stale named credential errors + the #4666 orphan issue cascading across objects.</div>
     </div>
     <div>
       <div class="fc-l">Pending from FirstDue</div>
-      <div class="fc-v"><strong>Ben/Jason:</strong> Zoho source data for 29 ghost quotes. <strong>Carlos:</strong> Update <code>Currency__c</code> to CAD on 127 opps. <strong>Ben:</strong> "command center" analysis + SKU mapping for call volume automation.</div>
+      <div class="fc-v"><strong>Ben/Jason:</strong> Zoho source data for 29 ghost quotes. <strong>Carlos:</strong> Update <code>Currency__c</code> on 127 opps. <strong>Ben:</strong> Confirm if 438 contracts exist in SFDC (Option A vs B). <strong>Ben:</strong> "command center" analysis + SKU mapping.</div>
     </div>
     <div>
       <div class="fc-l">Pending from Engineering</div>
-      <div class="fc-v"><strong>Huy/Austin:</strong> Backfill <code>monetize__Opportunity__c</code> on 519 SFDC quotes (prioritize PROCESSED). Investigate why 29 of 2,191 migration imports failed silently. Re-import once Zoho data provided.</div>
+      <div class="fc-v"><strong>Huy/Austin:</strong> Backfill 519 quote opp links (cascades to 438 contract gaps + 9 opp issues). Re-import 29 ghost quotes. <strong>All data:</strong> <a href="https://docs.google.com/spreadsheets/d/15v416Z_ZNDG3CUxnwY2sC6sujkn6-YjVJDXgpS48VmE/edit" target="_blank" style="color:#60a5fa;text-decoration:underline">Working spreadsheet ↗</a></div>
     </div>
   </div>
 </div>
