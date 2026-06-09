@@ -40,8 +40,8 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <nav class="top">
   <div class="top-l"><div class="mn-m">M</div><span class="top-t">FirstDue × MonetizeNow · Post Go-Live Tracker</span></div>
   <div class="pills">
-    <span class="pl pl-r"><i></i>3 Working Session</span>
-    <span class="pl pl-a"><i></i>3 Strategic</span>
+    <span class="pl pl-r"><i></i>3 SFDC Scoped</span>
+    <span class="pl pl-a"><i></i>5 Strategic</span>
     <span class="pl pl-g"><i></i>7 Resolved</span>
   </div>
 </nav>
@@ -50,14 +50,14 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   <div class="hero-in">
     <div class="hero-txt">
       <div class="hero-badge"><b>FD</b><span>Post Go-Live · Migration Cleanup + Stabilization</span></div>
-      <h1>Working session today. <em>Knock off open items together.</em></h1>
-      <p class="hero-sub">Updated Jun 9. Working session scheduled for today (Jun 8, 1 PM CT) with MonetizeNow engineering. Dependency matrix delivered. MonetizeNow resolving MN-owned items async. Cadence: Wed (support/ops) + Mon (product/strategy).</p>
+      <h1>SFDC issues scoped. <em>Ready to execute.</em></h1>
+      <p class="hero-sub">Updated Jun 9 (post-investigation). Three SFDC issues fully scoped with root cause, blast radius, and fix paths. SFDC reports created in FirstDue's org. All items ready for eng action or FirstDue confirmation.</p>
     </div>
     <div class="hero-nums">
-      <div class="hn"><div class="hn-v">15%</div><div class="hn-l">Zoho Data Remaining</div></div>
-      <div class="hn"><div class="hn-v">$24M</div><div class="hn-l">ARR Gap to Close</div></div>
-      <div class="hn"><div class="hn-v">7</div><div class="hn-l">Tickets Closed</div></div>
-      <div class="hn"><div class="hn-v">Jun 8</div><div class="hn-l">Working Session</div></div>
+      <div class="hn"><div class="hn-v">29</div><div class="hn-l">Ghost Quotes (not 1,900)</div></div>
+      <div class="hn"><div class="hn-v">519</div><div class="hn-l">Opp Link Backfill</div></div>
+      <div class="hn"><div class="hn-v">12</div><div class="hn-l">CAD Mismatch Opps</div></div>
+      <div class="hn"><div class="hn-v">0</div><div class="hn-l">New Orphans Since Jun 1</div></div>
     </div>
   </div>
 </section>
@@ -66,7 +66,7 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 
 <!-- ═══ LANE 1: WORKING SESSION ═══ -->
 <div class="lane">
-<div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">Working Session · Jun 8</span><span class="lane-ct">5</span></div>
+<div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">SFDC Issues · Investigated Jun 9</span><span class="lane-ct">5</span></div>
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
@@ -75,38 +75,68 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="c-own"><span class="own"><b class="fd">C</b>Carlos · SFDC data job</span><span class="own"><b class="mn">K</b>Krishna · backend fix</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Current State</div>
-    <div class="cb-t">Root cause confirmed: lowercase <code>cad</code> in <code>monetize__BillingCurrency__c</code> instead of uppercase <code>CAD</code>. Case sensitivity causes deserialization failures. One account (#4863) already fixed by Krishna Jun 1. Carlos ran a report and found no others, but added a sprint task to look deeper. <a class="cb-ref" href="https://docs.google.com/document/d/1XeOSIdbM7X5LzLu7z05QgB1peacMxwu4ToPdKzJ0SO4/edit" target="_blank">Currency hierarchy doc ↗</a></div>
-    <div class="cb-l">Session Goal</div>
-    <div class="cb-t">Run final sweep of all Canadian accounts. Carlos runs SFDC data job. Krishna runs backend fix on any stuck quotes. Close this out permanently.</div>
+    <div class="cb-l">Investigation Complete (Jun 9)</div>
+    <div class="cb-t"><strong>Two layers investigated, both scoped:</strong></div>
+    <div class="cb-l">Layer 1: Case Sensitivity (#4863)</div>
+    <div class="cb-t">Lowercase <code>cad</code> in <code>monetize__BillingCurrency__c</code> causing deserialization failures. One account fixed Jun 1. <strong>SOQL sweep returned 0 remaining accounts with malformed currency values.</strong> This layer is clean.</div>
+    <div class="cb-l">Layer 2: Field Mapping Mismatch (#4621)</div>
+    <div class="cb-t">Opp-to-Quote mapping pointed to VTG's custom <code>Currency__c</code> field (USD) instead of <code>monetize__QuoteCurrency__c</code> (CAD). 115 opps have the mismatch, but all are migrated records where currency was set correctly on the MN quote via API. <strong>No processed quotes were affected.</strong> 12 non-migrated opps also have the mismatch, all early stage (Prospecting/Qualification). Reps work around it by archiving USD quotes and re-creating in CAD. This is rep friction, not data corruption. <a class="cb-ref" href="https://docs.google.com/document/d/1XeOSIdbM7X5LzLu7z05QgB1peacMxwu4ToPdKzJ0SO4/edit" target="_blank">Currency hierarchy doc ↗</a></div>
+    <div class="cb-l">To Resolve</div>
+    <ol class="cb-steps">
+      <li><strong>Change field mapping</strong> from <code>Currency__c</code> to <code>monetize__QuoteCurrency__c</code> (prevents future mismatch)</li>
+      <li><strong>Carlos updates</strong> <code>Currency__c</code> to CAD on the 12 active + 115 migrated opps (reporting hygiene)</li>
+    </ol>
+    <div class="cb-t"><strong>SFDC Reports created:</strong> "MN: CAD vs USD mismatch quotes" (12 non-migrated), "MN: Original $0 Estimate (includes renewals)"</div>
   </div></div>
 </div>
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">~1,900 Migrated Opps · Value Refresh</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4608" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4608</a><span class="c-st s-sess">Session Item</span></div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · refresh script</span><span class="own"><b class="en">A</b>Austin / Huy · eng support</span></div>
+    <div class="c-row1"><span class="c-name">29 Ghost Quotes · Migration Re-Import Needed</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-int">SFDC</span><span class="c-st s-sess">Eng Required</span></div>
+    <div class="c-own"><span class="own"><b class="en">A</b>Austin / Huy · re-import</span><span class="own"><b class="fd">B</b>Ben / Jason · Zoho source data</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Current State</div>
-    <div class="cb-t">Migrated opportunities show $0 or wrong stage values, causing rep confusion and tickets. From <a class="cb-ref" href="https://fathom.video/calls/695744140?timestamp=375" target="_blank">Jun 3 call ↗</a>: these opps were processed but failed to create records in MonetizeNow, blocking QA.</div>
-    <div class="cb-l">Session Goal</div>
-    <div class="cb-t">Refresh opportunity values from processed quotes. <strong>Critical constraint:</strong> must not touch closed May billing periods. Ben stressed this on Jun 3 call.</div>
+    <div class="cb-l">Corrected Scope (Jun 9 Investigation)</div>
+    <div class="cb-t">The original "~1,900 broken migrated opps" was a <strong>miscount</strong>. The report used "contains Active Contracts" which matched both original migration opps AND 1,890 auto-generated "Renewal for Active Contracts" opps that are legitimately $0 (future pipeline, working as designed). <strong>Actual broken opps: 29.</strong></div>
+    <div class="cb-l">Root Cause</div>
+    <div class="cb-t">Migration partially completed for 29 of 2,191 records during the Apr 26-27 import. For each: MN has the Opportunity (with <code>primary_quote_id</code> empty), SFDC has a <code>monetize__Quote__c</code> shell ($0, $0 line items), but the quote ID on that shell <strong>does not exist in MN</strong>. Not active, not archived, not in reporting tables. The MN quote creation failed silently while the SFDC connector created the shell record. No sync errors logged because there was never any data to push.</div>
+    <div class="cb-l">Verified On</div>
+    <div class="cb-t">Stapleton Volunteer Fire &amp; Rescue (AL), Grand Valley and District Fire Department (ON), Reems Creek Fire Dept (NC), and others. Same pattern on all: Opp exists in MN, ghost quote in SFDC, no MN quote data.</div>
+    <div class="cb-l">Previous Ticket Reference</div>
+    <div class="cb-t">Tracker previously referenced Pylon #4608. That ticket is about the Call Volume automation feature (Sandeep + Ben). No Pylon ticket exists for this issue. Sources: <a class="cb-ref" href="https://fathom.video/calls/667713132?timestamp=2570" target="_blank">May 11 call ↗</a> + <a class="cb-ref" href="https://fathom.video/calls/695744140?timestamp=375" target="_blank">Jun 3 call ↗</a></div>
+    <div class="cb-l">To Resolve</div>
+    <ol class="cb-steps">
+      <li><strong>Eng investigates</strong> why these 29 of 2,191 failed (migration logs from Apr 26-27)</li>
+      <li><strong>Ben/Jason provide</strong> original Zoho source data for these 29 records</li>
+      <li><strong>Eng re-imports</strong> from Zoho source with API bypass parameter configured</li>
+      <li><strong>Clean up</strong> SFDC ghost quote shells (overwrite or delete)</li>
+    </ol>
+    <div class="cb-t"><strong>This is not a sync-back fix.</strong> No MN data exists to refresh. The source quotes need to be recreated.</div>
+    <div class="cb-t"><strong>SFDC Reports created:</strong> "MN: Migrated Opps - Actual $0 (29)", "MN: Renewal Opps - $0 by Design (1,890)", "MN: Original $0 Estimate (includes renewals) (1,919)"</div>
   </div></div>
 </div>
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Amendment Opp Links · Huy's Fix</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4666</a><span class="c-st s-sess">Session Item</span></div>
-    <div class="c-own"><span class="own"><b class="en">H</b>Huy · fix in dev</span><span class="own"><b class="en">A</b>Austin · testing</span></div>
+    <div class="c-row1"><span class="c-name">Amendment Opp Links · Fix Live, Backfill Needed</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4666</a><span class="c-st s-sess">Backfill Required</span></div>
+    <div class="c-own"><span class="own"><b class="en">H</b>Huy / Austin · backfill script</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Current State</div>
-    <div class="cb-t">Root cause found May 15 (Austin): Opportunity Id not populated on SFDC quote record due to non-unique external ID issue. Huy has fix in dev. Austin to test before promote. From <a class="cb-ref" href="https://fathom.video/calls/687448543?timestamp=2058" target="_blank">May 27 call ↗</a>: "fix is in progress."</div>
-    <div class="cb-l">Session Goal</div>
-    <div class="cb-t">Confirm fix is promoted to prod. Run backfill on affected records. Ben estimated ~436 accounts.</div>
+    <div class="cb-l">Root Cause</div>
+    <div class="cb-t">Found May 15 (Austin): <code>monetize__Opportunity__c</code> lookup field on SFDC quote records not populated due to non-unique external ID issue in the SFDC connector. Quotes exist in SFDC but are orphaned from their parent Opportunity. Reps see no quotes in the Opp related list, and amendments can't resolve the contract chain.</div>
+    <div class="cb-l">Forward Fix: Deployed and Verified</div>
+    <div class="cb-t">Huy's fix is <strong>live in prod</strong>. Confirmed Jun 9: SOQL query for quotes with null <code>monetize__Opportunity__c</code> created after Jun 1 returned <strong>zero results</strong>. The leak is plugged. All new quotes correctly populate the Opp link.</div>
+    <div class="cb-l">Backfill Scope</div>
+    <div class="cb-t"><strong>519 SFDC quote records</strong> where <code>monetize__Opportunity__c</code> is null (up from Ben's May estimate of ~436, because quotes created between May 21 and fix deployment also had the issue). Statuses are mixed: PROCESSED, DRAFT, ARCHIVED, CANCELLED, EXPIRED. Priority should be PROCESSED first (active contracts, blocks amendments), then DRAFT (active pipeline).</div>
+    <div class="cb-l">To Resolve</div>
+    <ol class="cb-steps">
+      <li><strong>Eng runs backfill script</strong> to populate <code>monetize__Opportunity__c</code> on 519 records. Mapping data exists in MN (each quote has <code>opportunity.customId</code> = SFDC Opp ID)</li>
+      <li><strong>Prioritize PROCESSED quotes</strong> first to unblock amendment workflows immediately</li>
+      <li><strong>Verify</strong> a sample of backfilled records shows quotes in SFDC Opp related list</li>
+    </ol>
+    <div class="cb-t"><strong>Data exported:</strong> 519 records from Developer Console (Id, Name, Status, CreatedDate) into Google Sheet for eng.</div>
   </div></div>
 </div>
 
@@ -285,20 +315,20 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <div class="foot">
   <div class="foot-card">
     <div>
-      <div class="fc-l">Today: Jun 8 Working Session</div>
-      <div class="fc-v"><strong>1 PM CT, 90 mins.</strong> Krishna + Austin/Huy + Perry (MN). Ben + Carlos (FD). Goal: resolve all MN-owned items. Dependency matrix delivered. MN pre-resolved async items.</div>
+      <div class="fc-l">Investigation Summary · Jun 9</div>
+      <div class="fc-v"><strong>CAD Currency:</strong> Case sensitivity clean. Field mapping is rep friction only, no data corruption. Fix: remap field + cleanup 127 opps. <strong>Ghost Quotes:</strong> 29 records, not 1,900. Re-import from Zoho needed. <strong>Opp Links:</strong> Fix deployed, 519 backfill pending.</div>
     </div>
     <div>
       <div class="fc-l">Pending from FirstDue</div>
-      <div class="fc-v"><strong>Ben's "command center"</strong> analysis of full data migration (was due Jun 3). <strong>SKU mapping</strong> for call volume automation. <strong>DocuSign integration path</strong> decision.</div>
+      <div class="fc-v"><strong>Ben/Jason:</strong> Zoho source data for 29 ghost quotes. <strong>Carlos:</strong> Update <code>Currency__c</code> to CAD on 127 opps. <strong>Ben:</strong> "command center" analysis + SKU mapping for call volume automation.</div>
     </div>
     <div>
-      <div class="fc-l">Team + Transition</div>
-      <div class="fc-v"><strong>Carlos Zaldivar</strong> now active as FD ops (handling SFDC data jobs). <strong>Mary</strong> observing, ramping for Jul 1 handoff from Ben. <strong>Gina Little</strong> (VP Finance) interested in dunning/billing.</div>
+      <div class="fc-l">Pending from Engineering</div>
+      <div class="fc-v"><strong>Huy/Austin:</strong> Backfill <code>monetize__Opportunity__c</code> on 519 SFDC quotes (prioritize PROCESSED). Investigate why 29 of 2,191 migration imports failed silently. Re-import once Zoho data provided.</div>
     </div>
   </div>
 </div>
 
-<div class="attr">FirstDue × MonetizeNow · Confidential · Updated June 9, 2026</div>
+<div class="attr">FirstDue × MonetizeNow · Confidential · Updated June 9, 2026 (Post-Investigation)</div>
 </body>
 </html>
