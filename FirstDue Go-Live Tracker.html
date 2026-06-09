@@ -11,70 +11,27 @@
 html{scroll-behavior:smooth}
 body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--bk);-webkit-font-smoothing:antialiased}
 .top{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--bdr);padding:10px 28px;display:flex;align-items:center;justify-content:space-between}
-.top-l{display:flex;align-items:center;gap:10px}
-.mn-m{width:26px;height:26px;background:var(--mn-blue);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px}
-.top-t{font-size:12px;font-weight:500;color:#64748b;letter-spacing:.03em}
-.pills{display:flex;gap:6px}
-.pl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:14px;display:flex;align-items:center;gap:4px}
-.pl i{width:5px;height:5px;border-radius:50%;display:inline-block}
-.pl-r{background:#fef2f2;color:var(--red)}.pl-r i{background:var(--red)}
-.pl-a{background:#fffbeb;color:var(--amber)}.pl-a i{background:var(--amber)}
-.pl-g{background:#ecfdf5;color:var(--green)}.pl-g i{background:var(--green)}
-.hero{background:var(--mn-blue);padding:36px 32px 32px;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;top:-60%;right:-8%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(211,238,244,.1),transparent 70%)}
-.hero-in{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.hero-txt{max-width:640px}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:4px 12px;margin-bottom:14px}
-.hero-badge span{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.hero-badge b{background:rgba(255,255,255,.12);border-radius:3px;padding:1px 7px;font-size:10px;color:#fff}
-.hero h1{font-size:clamp(22px,3vw,32px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}
-.hero h1 em{font-style:normal;color:var(--mn-lb)}
-.hero-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;font-weight:400}
-.hero-nums{display:flex;gap:24px;flex-wrap:wrap}
-.hn{text-align:center}.hn-v{font-size:24px;font-weight:900;color:#fff}.hn-l{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
-.lanes{max-width:1320px;margin:28px auto 0;padding:0 28px 48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
-@media(max-width:1000px){.lanes{grid-template-columns:1fr 1fr}}
-@media(max-width:660px){.lanes{grid-template-columns:1fr}}
-.lane-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:0 2px}
-.lane-dot{width:8px;height:8px;border-radius:50%}.lane-dot.now{background:var(--red)}.lane-dot.par{background:var(--mn-blue)}.lane-dot.lat{background:#94a3b8}
-.lane-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--bk)}
-.lane-ct{font-size:10px;font-weight:600;color:#94a3b8;margin-left:auto;background:#f1f5f9;border-radius:10px;padding:2px 8px}
-.c{border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;cursor:pointer;user-select:none}
-.c:hover{box-shadow:0 2px 12px rgba(5,33,171,.07);border-color:#cbd5e1}
-.c-blue{background:#f8fbff;border-left:3px solid #60a5fa}
-.c-amber{background:#fffdf5;border-left:3px solid #fbbf24}
-.c-green{background:#f6fef9;border-left:3px solid #34d399}
-.c-purple{background:#faf5ff;border-left:3px solid #a78bfa}
-.c-red{background:#fef7f7;border-left:3px solid var(--red)}
-.c-gray{background:#f8fafc;border-left:3px solid #cbd5e1}
-.c-top{padding:14px 16px 12px;display:flex;flex-direction:column;gap:8px}
-.c-row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.c-name{font-size:13px;font-weight:700;color:var(--bk);line-height:1.35;flex:1}
-.c-chev{color:#b0b8c4;font-size:14px;transition:transform .2s;flex-shrink:0;margin-top:1px}
-.c.open .c-chev{transform:rotate(90deg)}
-.c-row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.c-tag{font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
-.t-cfg{background:#eff6ff;color:var(--mn-blue)}.t-prd{background:#faf5ff;color:var(--purple)}.t-dat{background:#fefce8;color:var(--amber)}.t-int{background:#f0fdf4;color:var(--green)}.t-sup{background:#f1f5f9;color:#475569}.t-prc{background:#fef2f2;color:var(--red)}.t-hi{background:#fef2f2;color:var(--red);font-weight:800}.t-new{background:#dbeafe;color:#1e40af}
-.c-st{font-size:9px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:10px;margin-left:auto;white-space:nowrap}
-.s-input{background:#dbeafe;color:#1e40af}.s-wt{background:#fef3c7;color:#92400e}.s-ip{background:#ede9fe;color:#6d28d9}.s-ok{background:#d1fae5;color:#065f46}.s-nw{background:#f1f5f9;color:#64748b}.s-rdy{background:#d1fae5;color:#065f46}.s-urg{background:#fee2e2;color:#991b1b}.s-done{background:#d1fae5;color:#065f46}
-.c-own{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
-.own{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:500;color:#94a3b8;background:transparent;border:none;padding:0 2px}
-.own b{width:12px;height:12px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:6px;color:#fff;font-weight:800;opacity:.65}
-.own b.fd{background:#475569}.own b.mn{background:var(--mn-blue)}.own b.en{background:var(--purple)}
-.c-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.c.open .c-body{max-height:1200px}
-.c-body-in{padding:0 16px 16px;border-top:1px solid var(--bdr);padding-top:14px}
-.cb-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:5px;margin-top:12px}.cb-l:first-child{margin-top:0}
-.cb-t{font-size:12px;color:#334155;line-height:1.65}.cb-t strong{color:var(--bk)}.cb-t code{background:#f1f5f9;padding:0 4px;border-radius:3px;font-size:10px;font-family:'SF Mono',Menlo,monospace;color:var(--mn-blue)}
-.cb-steps{list-style:none;counter-reset:s;margin-top:4px}
-.cb-steps li{counter-increment:s;padding-left:22px;position:relative;font-size:12px;color:#334155;line-height:1.6;margin-bottom:6px}
-.cb-steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--mn-blue);color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.top-l{display:flex;align-items:center;gap:10px}.mn-m{width:26px;height:26px;background:var(--mn-blue);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px}.top-t{font-size:12px;font-weight:500;color:#64748b;letter-spacing:.03em}
+.pills{display:flex;gap:6px}.pl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:14px;display:flex;align-items:center;gap:4px}.pl i{width:5px;height:5px;border-radius:50%;display:inline-block}.pl-r{background:#fef2f2;color:var(--red)}.pl-r i{background:var(--red)}.pl-a{background:#fffbeb;color:var(--amber)}.pl-a i{background:var(--amber)}.pl-g{background:#ecfdf5;color:var(--green)}.pl-g i{background:var(--green)}
+.hero{background:var(--mn-blue);padding:36px 32px 32px;position:relative;overflow:hidden}.hero::after{content:'';position:absolute;top:-60%;right:-8%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(211,238,244,.1),transparent 70%)}
+.hero-in{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}.hero-txt{max-width:640px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:4px 12px;margin-bottom:14px}.hero-badge span{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.06em;text-transform:uppercase}.hero-badge b{background:rgba(255,255,255,.12);border-radius:3px;padding:1px 7px;font-size:10px;color:#fff}
+.hero h1{font-size:clamp(22px,3vw,32px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}.hero h1 em{font-style:normal;color:var(--mn-lb)}.hero-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;font-weight:400}
+.hero-nums{display:flex;gap:24px;flex-wrap:wrap}.hn{text-align:center}.hn-v{font-size:24px;font-weight:900;color:#fff}.hn-l{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
+.lanes{max-width:1320px;margin:28px auto 0;padding:0 28px 48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}@media(max-width:1000px){.lanes{grid-template-columns:1fr 1fr}}@media(max-width:660px){.lanes{grid-template-columns:1fr}}
+.lane-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:0 2px}.lane-dot{width:8px;height:8px;border-radius:50%}.lane-dot.now{background:var(--red)}.lane-dot.par{background:var(--mn-blue)}.lane-dot.lat{background:#94a3b8}.lane-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--bk)}.lane-ct{font-size:10px;font-weight:600;color:#94a3b8;margin-left:auto;background:#f1f5f9;border-radius:10px;padding:2px 8px}
+.c{border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;cursor:pointer;user-select:none}.c:hover{box-shadow:0 2px 12px rgba(5,33,171,.07);border-color:#cbd5e1}
+.c-blue{background:#f8fbff;border-left:3px solid #60a5fa}.c-amber{background:#fffdf5;border-left:3px solid #fbbf24}.c-green{background:#f6fef9;border-left:3px solid #34d399}.c-purple{background:#faf5ff;border-left:3px solid #a78bfa}.c-red{background:#fef7f7;border-left:3px solid var(--red)}.c-gray{background:#f8fafc;border-left:3px solid #cbd5e1}
+.c-top{padding:14px 16px 12px;display:flex;flex-direction:column;gap:8px}.c-row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.c-name{font-size:13px;font-weight:700;color:var(--bk);line-height:1.35;flex:1}.c-chev{color:#b0b8c4;font-size:14px;transition:transform .2s;flex-shrink:0;margin-top:1px}.c.open .c-chev{transform:rotate(90deg)}
+.c-row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.c-tag{font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:4px}.t-cfg{background:#eff6ff;color:var(--mn-blue)}.t-prd{background:#faf5ff;color:var(--purple)}.t-dat{background:#fefce8;color:var(--amber)}.t-int{background:#f0fdf4;color:var(--green)}.t-sup{background:#f1f5f9;color:#475569}.t-prc{background:#fef2f2;color:var(--red)}.t-hi{background:#fef2f2;color:var(--red);font-weight:800}.t-new{background:#dbeafe;color:#1e40af}.t-clm{background:#fff7ed;color:#c2410c}
+.c-st{font-size:9px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:10px;margin-left:auto;white-space:nowrap}.s-input{background:#dbeafe;color:#1e40af}.s-wt{background:#fef3c7;color:#92400e}.s-ip{background:#ede9fe;color:#6d28d9}.s-ok{background:#d1fae5;color:#065f46}.s-nw{background:#f1f5f9;color:#64748b}.s-rdy{background:#d1fae5;color:#065f46}.s-urg{background:#fee2e2;color:#991b1b}.s-done{background:#d1fae5;color:#065f46}.s-sess{background:#fef3c7;color:#92400e}
+.c-own{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}.own{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:500;color:#94a3b8;background:transparent;border:none;padding:0 2px}.own b{width:12px;height:12px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:6px;color:#fff;font-weight:800;opacity:.65}.own b.fd{background:#475569}.own b.mn{background:var(--mn-blue)}.own b.en{background:var(--purple)}
+.c-body{max-height:0;overflow:hidden;transition:max-height .3s ease}.c.open .c-body{max-height:1400px}.c-body-in{padding:0 16px 16px;border-top:1px solid var(--bdr);padding-top:14px}
+.cb-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:5px;margin-top:12px}.cb-l:first-child{margin-top:0}.cb-t{font-size:12px;color:#334155;line-height:1.65}.cb-t strong{color:var(--bk)}.cb-t code{background:#f1f5f9;padding:0 4px;border-radius:3px;font-size:10px;font-family:'SF Mono',Menlo,monospace;color:var(--mn-blue)}
+.cb-steps{list-style:none;counter-reset:s;margin-top:4px}.cb-steps li{counter-increment:s;padding-left:22px;position:relative;font-size:12px;color:#334155;line-height:1.6;margin-bottom:6px}.cb-steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--mn-blue);color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .cb-ref{color:var(--mn-blue);font-weight:600;text-decoration:none;font-size:11px;border-bottom:1px dashed rgba(5,33,171,.3)}
-.foot{max-width:1320px;margin:0 auto;padding:0 28px 40px}
-.foot-card{background:var(--bk);border-radius:var(--r);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
-@media(max-width:800px){.foot-card{grid-template-columns:1fr}}
-.fc-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:6px}
-.fc-v{font-size:12px;line-height:1.6;color:rgba(255,255,255,.8)}.fc-v strong{color:#fff}
+.foot{max-width:1320px;margin:0 auto;padding:0 28px 40px}.foot-card{background:var(--bk);border-radius:var(--r);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}@media(max-width:800px){.foot-card{grid-template-columns:1fr}}
+.fc-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:6px}.fc-v{font-size:12px;line-height:1.6;color:rgba(255,255,255,.8)}.fc-v strong{color:#fff}
 .attr{text-align:center;padding:16px;font-size:10px;color:#94a3b8;letter-spacing:.04em}
 </style>
 </head>
@@ -83,137 +40,152 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <nav class="top">
   <div class="top-l"><div class="mn-m">M</div><span class="top-t">FirstDue × MonetizeNow · Post Go-Live Tracker</span></div>
   <div class="pills">
-    <span class="pl pl-r"><i></i>3 Active</span>
-    <span class="pl pl-a"><i></i>3 Waiting</span>
-    <span class="pl pl-g"><i></i>2 Delivered</span>
+    <span class="pl pl-r"><i></i>3 Working Session</span>
+    <span class="pl pl-a"><i></i>3 Strategic</span>
+    <span class="pl pl-g"><i></i>7 Resolved</span>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-in">
     <div class="hero-txt">
-      <div class="hero-badge"><b>FD</b><span>Post Go-Live · Stabilization + Optimization</span></div>
-      <h1>Post go-live. <em>Shared status on open items.</em></h1>
-      <p class="hero-sub">Reps are quoting in MonetizeNow daily. Updated May 27 with latest from <a class="cb-ref" href="https://fathom.video/calls/678915652" target="_blank" style="color:rgba(255,255,255,.8)">May 20 call ↗</a> and subsequent ticket progress. New cadence: Wed (support/ops) + Mon (product/strategy).</p>
+      <div class="hero-badge"><b>FD</b><span>Post Go-Live · Migration Cleanup + Stabilization</span></div>
+      <h1>Working session today. <em>Knock off open items together.</em></h1>
+      <p class="hero-sub">Updated Jun 9. Working session scheduled for today (Jun 8, 1 PM CT) with MonetizeNow engineering. Dependency matrix delivered. MonetizeNow resolving MN-owned items async. Cadence: Wed (support/ops) + Mon (product/strategy).</p>
     </div>
     <div class="hero-nums">
-      <div class="hn"><div class="hn-v">~1.9K</div><div class="hn-l">Migration Refresh</div></div>
-      <div class="hn"><div class="hn-v">5</div><div class="hn-l">Product Enhancements</div></div>
-      <div class="hn"><div class="hn-v">38</div><div class="hn-l">CAD Quotes to Fix</div></div>
-      <div class="hn"><div class="hn-v">Jul 1</div><div class="hn-l">Ben → Mary Handoff</div></div>
+      <div class="hn"><div class="hn-v">15%</div><div class="hn-l">Zoho Data Remaining</div></div>
+      <div class="hn"><div class="hn-v">$24M</div><div class="hn-l">ARR Gap to Close</div></div>
+      <div class="hn"><div class="hn-v">7</div><div class="hn-l">Tickets Closed</div></div>
+      <div class="hn"><div class="hn-v">Jun 8</div><div class="hn-l">Working Session</div></div>
     </div>
   </div>
 </section>
 
 <div class="lanes">
 
-<!-- ═══ LANE 1: ACTIVE ═══ -->
+<!-- ═══ LANE 1: WORKING SESSION ═══ -->
 <div class="lane">
-<div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">Active · This Week</span><span class="lane-ct">6</span></div>
+<div class="lane-hdr"><span class="lane-dot now"></span><span class="lane-title">Working Session · Jun 8</span><span class="lane-ct">5</span></div>
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">CAD Currency · Root Cause Found, Fix Ready</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-cfg">Config</span><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4621" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4621</a><span class="c-st s-wt">Waiting on Review</span></div>
-    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · review report + SFDC job</span><span class="own"><b class="mn">K</b>Krishna · backend fix ready</span></div>
+    <div class="c-row1"><span class="c-name">CAD Currency · Backend Fix + SFDC Data Job</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-cfg">Config</span><span class="c-tag t-int">SFDC</span><span class="c-st s-sess">Session Item</span></div>
+    <div class="c-own"><span class="own"><b class="fd">C</b>Carlos · SFDC data job</span><span class="own"><b class="mn">K</b>Krishna · backend fix</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Root Cause (identified May 20)</div>
-    <div class="cb-t">Conflicting SFDC currency field mapping. <code>monetize__BillingCurrency__c</code> on SFDC Account drives everything into MN, but VTG added a separate <code>Currency__c</code> field and <code>CurrencyIsoCode</code> was also in play. <a class="cb-ref" href="https://docs.google.com/document/d/1XeOSIdbM7X5LzLu7z05QgB1peacMxwu4ToPdKzJ0SO4/edit" target="_blank">Full currency hierarchy doc ↗</a></div>
-    <div class="cb-l">Impact</div>
-    <div class="cb-t"><a class="cb-ref" href="https://reporting.monetizeplatform.com/question/42869-cad-currency-issue-impact-analysis-4666" target="_blank">Impact analysis report ↗</a> shows <strong>38 quotes</strong> across Canadian accounts sitting in USD. Ben estimated 436 accounts; Krishna's analysis found ~40. Need alignment on how Ben got his list.</div>
-    <div class="cb-l">Next Steps</div>
-    <ol class="cb-steps"><li><strong>Ben reviews</strong> impact report and flags any intentional USD-for-CAD accounts</li><li><strong>Ben runs SFDC data job</strong> targeting <code>monetize__BillingCurrency__c</code> for ACCOUNT+QUOTE rows</li><li><strong>MonetizeNow runs backend fix</strong> for stuck quotes (ready same day Ben confirms)</li></ol>
+    <div class="cb-l">Current State</div>
+    <div class="cb-t">Root cause confirmed: lowercase <code>cad</code> in <code>monetize__BillingCurrency__c</code> instead of uppercase <code>CAD</code>. Case sensitivity causes deserialization failures. One account (#4863) already fixed by Krishna Jun 1. Carlos ran a report and found no others, but added a sprint task to look deeper. <a class="cb-ref" href="https://docs.google.com/document/d/1XeOSIdbM7X5LzLu7z05QgB1peacMxwu4ToPdKzJ0SO4/edit" target="_blank">Currency hierarchy doc ↗</a></div>
+    <div class="cb-l">Session Goal</div>
+    <div class="cb-t">Run final sweep of all Canadian accounts. Carlos runs SFDC data job. Krishna runs backend fix on any stuck quotes. Close this out permanently.</div>
   </div></div>
 </div>
 
-<div class="c c-purple" onclick="this.classList.toggle('open')">
+<div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">~1,900 Migrated Opps · Value Refresh</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-int">SFDC</span><span class="c-st s-ip">MN Prepping</span></div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · refresh script</span></div>
+    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-int">SFDC</span><span class="c-st s-sess">Session Item</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · refresh script</span><span class="own"><b class="en">A</b>Austin / Huy · eng support</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Updated Scope (from <a class="cb-ref" href="https://fathom.video/calls/678915652?timestamp=387" target="_blank">May 20 call ↗</a>)</div>
-    <div class="cb-t">Reframed from original understanding. Issue is migrated opportunities show <strong>$0 or wrong stage values</strong>, causing rep confusion and tickets. MonetizeNow will refresh these opps to stamp correct values from processed quotes.</div>
-    <div class="cb-l">Next Steps</div>
-    <ol class="cb-steps"><li><strong>MonetizeNow refreshes</strong> opportunity values from quote data</li><li><strong>Both teams validate</strong> no double-count risk with future historic imports</li></ol>
+    <div class="cb-l">Current State</div>
+    <div class="cb-t">Migrated opportunities show $0 or wrong stage values, causing rep confusion and tickets. From <a class="cb-ref" href="https://fathom.video/calls/695744140?timestamp=375" target="_blank">Jun 3 call ↗</a>: these opps were processed but failed to create records in MonetizeNow, blocking QA.</div>
+    <div class="cb-l">Session Goal</div>
+    <div class="cb-t">Refresh opportunity values from processed quotes. <strong>Critical constraint:</strong> must not touch closed May billing periods. Ben stressed this on Jun 3 call.</div>
   </div></div>
 </div>
 
 <div class="c c-amber" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Amendment Opps · Missing SFDC Link</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4666</a><span class="c-st s-wt">RCA Found</span></div>
-    <div class="c-own"><span class="own"><b class="en">A</b>Austin · root cause</span><span class="own"><b class="en">H</b>Huy · fix in dev</span></div>
+    <div class="c-row1"><span class="c-name">Amendment Opp Links · Huy's Fix</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-st s-sess">Session Item</span></div>
+    <div class="c-own"><span class="own"><b class="en">H</b>Huy · fix in dev</span><span class="own"><b class="en">A</b>Austin · testing</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Root Cause (identified May 15)</div>
-    <div class="cb-t">Austin traced it: the opp already has a processed quote linked in MN, but Opportunity Id field is <strong>not populated on SFDC quote record</strong>. Logs show successful sync on Apr 29 but data didn't land in SFDC. Ben says ~436 accounts may be affected. Huy has a fix in dev for the underlying SFDC sync issue (non-unique external ID).</div>
-    <div class="cb-l">Next Steps</div>
-    <ol class="cb-steps"><li><strong>Huy promotes fix</strong> from dev to prod (Austin to test first)</li><li><strong>Ben confirms</strong> whether 436 accounts is accurate or needs re-scoping</li><li><strong>Backfill</strong> affected records once fix is live</li></ol>
+    <div class="cb-l">Current State</div>
+    <div class="cb-t">Root cause found May 15 (Austin): Opportunity Id not populated on SFDC quote record due to non-unique external ID issue. Huy has fix in dev. Austin to test before promote. From <a class="cb-ref" href="https://fathom.video/calls/687448543?timestamp=2058" target="_blank">May 27 call ↗</a>: "fix is in progress."</div>
+    <div class="cb-l">Session Goal</div>
+    <div class="cb-t">Confirm fix is promoted to prod. Run backfill on affected records. Ben estimated ~436 accounts.</div>
   </div></div>
 </div>
 
 <div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Amendment End Date Shifting</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-sup">Support</span><a href="https://app.usepylon.com/issues?issueNumber=4692" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4692</a><span class="c-st s-input">Needs FD Input</span></div>
-    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · new sample</span><span class="own"><b class="mn">K</b>Krishna · validate</span></div>
+    <div class="c-row1"><span class="c-name">Product Name Prefix in SFDC</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">SFDC</span><span class="c-tag t-new">New</span><span class="c-st s-ip">Investigating</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · investigate</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Hypothesis (from <a class="cb-ref" href="https://fathom.video/calls/678915652?timestamp=1236" target="_blank">May 20 call ↗</a>)</div>
-    <div class="cb-t">Likely caused by <strong>multiple parallel amendments</strong> with conflicting contract lengths. When two amendments are in flight on the same contract, end dates can shift unexpectedly.</div>
-    <div class="cb-l">Next Steps</div>
-    <ol class="cb-steps"><li><strong>Ben provides</strong> new sample to validate theory</li><li><strong>MonetizeNow reviews</strong> amendment sequence and coterminous logic</li></ol>
+    <div class="cb-l">Problem (from <a class="cb-ref" href="https://fathom.video/calls/687448543?timestamp=3379" target="_blank">May 27 call ↗</a>)</div>
+    <div class="cb-t">Product names sync to SFDC with "Offering Name - " prefix, making reporting difficult. Krishna investigating whether a clean product name can sync to a separate field.</div>
   </div></div>
 </div>
 
-<div class="c c-green" onclick="this.classList.toggle('open')">
+<div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">SFDC Quote Sync · Missing OTF / PS Lines</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-int">SFDC</span><a href="https://app.usepylon.com/issues?issueNumber=4704" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4704</a><span class="c-st s-ok">Fix Applied</span></div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · investigating root cause</span></div>
+    <div class="c-row1"><span class="c-name">Billing Schedule · Pre-Discount Amount Display</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-sup">Support</span><a href="https://app.usepylon.com/issues?issueNumber=4913" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4913</a><span class="c-st s-input">Waiting on Response</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · confirm approach</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Status</div>
-    <div class="cb-t">Manual catalog refresh fixed known gap. From May 20 call: MonetizeNow will investigate root cause of why products failed to sync to SFDC price book, to prevent recurrence.</div>
+    <div class="cb-l">Problem</div>
+    <div class="cb-t">Ben flagged billing schedule on quote output shows pre-discount (standard) amounts. Discount Products are applied at invoicing as credits, so schedule reflects standard charges. Ben expected to see post-discount amounts.</div>
+    <div class="cb-l">Options Provided</div>
+    <ol class="cb-steps"><li><strong>Keep as-is</strong> and rely on totals box (which reflects discounts) + share invoice preview for first bill</li><li><strong>Add output note</strong> on template clarifying discounts are applied on invoice</li></ol>
   </div></div>
 </div>
+
+</div>
+
+<!-- ═══ LANE 2: STRATEGIC ═══ -->
+<div class="lane">
+<div class="lane-hdr"><span class="lane-dot par"></span><span class="lane-title">Strategic Workstreams</span><span class="lane-ct">5</span></div>
 
 <div class="c c-red" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Offering Editing Limitation</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-new">New Issue</span><span class="c-st s-urg">Needs Assessment</span></div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · assess</span></div>
+    <div class="c-row1"><span class="c-name">15% Zoho Data Gap · $24M ARR Discrepancy</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-dat">Migration</span><span class="c-tag t-hi">P1 for Leadership</span><span class="c-st s-urg">Analysis Pending</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · command center analysis</span><span class="own"><b class="mn">K</b>Krishna · pattern assessment</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Problem (from <a class="cb-ref" href="https://fathom.video/calls/678915652?timestamp=106" target="_blank">May 20 call ↗</a>)</div>
-    <div class="cb-t">Products cannot be added to an offering after an order is processed. This forces creation of new offerings for simple product additions, complicating FirstDue's goal of a single offering per contract.</div>
-    <div class="cb-l">Impact</div>
-    <div class="cb-t">Every product addition creates a new offering instead of modifying existing one. Breaks catalog simplicity and creates downstream complexity for renewals and reporting.</div>
+    <div class="cb-l">Problem (from <a class="cb-ref" href="https://fathom.video/calls/687448543?timestamp=2725" target="_blank">May 27 call ↗</a>)</div>
+    <div class="cb-t">~15% of accounts were not migrated from Zoho. Creates a <strong>~$24M ARR reporting gap</strong> ($67M actual vs $43M in MonetizeNow). Reps can't amend contracts for these accounts. CRO/CSO Andreas lacks visibility into accurate bookings data.</div>
+    <div class="cb-l">Clarification (from <a class="cb-ref" href="https://fathom.video/calls/695744140?timestamp=1284" target="_blank">Jun 3 call ↗</a>)</div>
+    <div class="cb-t">15% was <strong>intentionally excluded</strong> due to data quality issues (e.g., accounts with three active acquisitions) or being "in flight" (Q2 renewals). The 85% success rate applies to data cleared for migration, not the full Zoho dataset.</div>
+    <div class="cb-l">To Resolve</div>
+    <ol class="cb-steps"><li><strong>Ben delivers</strong> "command center" analysis of full data migration (was due Jun 3)</li><li><strong>Krishna reviews</strong> patterns and categorizes by: fixable via workaround, needs product change, or FD data quality issue</li><li><strong>Separate project</strong> to track this 15% once patterns are clear</li></ol>
   </div></div>
 </div>
 
+<div class="c c-purple" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">CLM Strategy · DocuSign Integration</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-clm">CLM</span><span class="c-tag t-new">New</span><span class="c-st s-ip">MVP in ~3 Weeks</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · DS setup</span><span class="own"><b class="mn">K</b>Krishna · integration docs</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Context (from <a class="cb-ref" href="https://fathom.video/calls/687448543?timestamp=1178" target="_blank">May 27 call ↗</a>)</div>
+    <div class="cb-t">FirstDue adopting DocuSign for CLM. MVP planned in ~3 weeks. Two integration paths under evaluation:</div>
+    <ol class="cb-steps"><li><strong>MonetizeNow → DocuSign:</strong> MN generates envelope, enabling native signature tracking + auto-processing of quotes</li><li><strong>MonetizeNow → Salesforce → DocuSign:</strong> DS connects to SFDC directly, requires custom triggers to inform MN of signature status</li></ol>
+    <div class="cb-l">Key Feature</div>
+    <div class="cb-t">MonetizeNow has "send on behalf of" feature that solves their current DocuSign issue (reps can't see signing status because envelopes sent by integration user). Krishna to send documentation.</div>
+  </div></div>
 </div>
 
-<!-- ═══ LANE 2: PRODUCT ═══ -->
-<div class="lane">
-<div class="lane-hdr"><span class="lane-dot par"></span><span class="lane-title">Product Enhancements</span><span class="lane-ct">5</span></div>
-
-<div class="c c-green" onclick="this.classList.toggle('open')">
+<div class="c c-purple" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Quote Template · Revised Output Controls</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-prd">Product</span><a href="https://app.usepylon.com/issues?issueNumber=4809" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4809</a><span class="c-st s-done">Delivered ✓</span></div>
-    <div class="c-own"><span class="own"><b class="en">S</b>Sandeep · delivered</span></div>
+    <div class="c-row1"><span class="c-name">Template Self-Service Toggles + Approval Workflow</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-ip">In Progress</span></div>
+    <div class="c-own"><span class="own"><b class="en">S</b>Sandeep · delivering</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What Shipped</div>
-    <div class="cb-t">Sandeep personally led the template overhaul. Revised quote output now supports subscription vs OTF breakdown, proper subtotals, and tenant-level customize settings so admins control what reps can toggle. OTF discount SKU handling resolved (discounts net from OTF subtotal per Ben's confirmation).</div>
-    <div class="cb-l">Customer Feedback (May 27)</div>
-    <div class="cb-t">Ben: <strong>"The revised quote template was a breath of fresh air yesterday. Thank you."</strong></div>
-    <div class="cb-l">Remaining</div>
-    <div class="cb-t">Customize Settings on Quote moving to tenant settings so admins decide which options reps see. Still in progress per Sandeep (May 21).</div>
+    <div class="cb-t">Revised template delivered May 27. Ben: <strong>"a breath of fresh air."</strong> OTF discount handling resolved. Subscription vs OTF breakdown working.</div>
+    <div class="cb-l">Still In Progress</div>
+    <div class="cb-t">From <a class="cb-ref" href="https://fathom.video/calls/687448543?timestamp=690" target="_blank">May 27 call ↗</a>: Reps need self-service toggles to control template elements (show/hide line-item amounts) without submitting support tickets. Must trigger approval workflow for governance. Customize Settings moving from Quote-level to tenant settings (Sandeep, May 21).</div>
+    <div class="cb-l">Also Needed</div>
+    <div class="cb-t"><strong>Recurring reseller discount:</strong> current OTF discount requires manual re-entry at renewal. Need a recurring negative line item for explicit reseller discounts (e.g., 5%). Krishna to discuss with Sandeep.</div>
   </div></div>
 </div>
 
@@ -224,104 +196,86 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
     <div class="c-own"><span class="own"><b class="en">E</b>Eng · scope</span><span class="own"><b class="fd">J</b>Josh · requested</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Problem</div>
-    <div class="cb-t">FirstDue's entire catalog is formula-driven: 4 input variables determine all pricing. Tier-based pricing approximates formula logic but doesn't fully replicate it. Open since Sep 2025 (<a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=1859" target="_blank">Ticket #1859</a>). Josh requested timeline.</div>
     <div class="cb-l">Status</div>
-    <div class="cb-t">No new progress since May 20. Scoping started Oct 2025 (Sandeep + Austin), design hasn't shipped. Call volume automation (below) is an interim bridge.</div>
+    <div class="cb-t">No new progress. Open since Sep 2025 (<a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=1859" target="_blank">Ticket #1859</a>). Josh requested timeline. Call volume automation (below) remains interim bridge. Sandeep handling product requirements per <a class="cb-ref" href="https://fathom.video/calls/695744140" target="_blank">Jun 3 call ↗</a>.</div>
   </div></div>
 </div>
 
 <div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Automate Call Volume Entry</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-tag t-cfg">Config</span><span class="c-st s-input">Needs FD Input</span></div>
-    <div class="c-own"><span class="own"><b class="fd">B</b>Ben · SKU mapping</span><span class="own"><b class="en">E</b>Eng · build</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Status (from <a class="cb-ref" href="https://fathom.video/calls/678915652?timestamp=1403" target="_blank">May 20 call ↗</a>)</div>
-    <div class="cb-t">In progress. Ben to provide required SKU mapping (which products inherit call volume from which of 4 fields). Once received, MonetizeNow creates custom quote fields, configures Opp→Quote mapping, and tests on sandbox. <a class="cb-ref" href="https://docs.google.com/document/d/1RCLrkEbOtjgSKZ4dhD_QcGPj1o3rlve5LVZeEOXd3zU/edit" target="_blank">Requirements doc ↗</a></div>
-  </div></div>
-</div>
-
-<div class="c c-purple" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">"Force Save" Button on Quote</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-ip">In Progress</span></div>
-    <div class="c-own"><span class="own"><b class="en">E</b>Eng · build + ship</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Status</div>
-    <div class="cb-t">Confirmed in progress on <a class="cb-ref" href="https://fathom.video/calls/678915652?timestamp=1454" target="_blank">May 20 call ↗</a>. No dependency on FirstDue. Triggers rules engine re-evaluation on demand so reps can clear validation errors without the net-terms workaround.</div>
-  </div></div>
-</div>
-
-<div class="c c-gray" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Renewal Uplift + Target ARR / Discount by ARR</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-nw">Ideation Phase</span></div>
+    <div class="c-row1"><span class="c-name">Call Volume Automation + Force Save + Uplift/ARR</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-ip">Various Stages</span></div>
     <div class="c-own"><span class="own"><b class="en">S</b>Sandeep · leading</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Status Update</div>
-    <div class="cb-t">Previously estimated at "3-4 weeks" and "&lt; 3 weeks" respectively. On May 20 call, both moved to <strong>ideation phase</strong>. Sandeep will lead discussions on system-level default for renewal uplift and enabling discounts based on ARR. No committed timeline yet.</div>
+    <div class="cb-l">Call Volume Automation</div>
+    <div class="cb-t">Waiting on Ben's SKU mapping. <a class="cb-ref" href="https://docs.google.com/document/d/1RCLrkEbOtjgSKZ4dhD_QcGPj1o3rlve5LVZeEOXd3zU/edit" target="_blank">Requirements doc ↗</a></div>
+    <div class="cb-l">Force Save Button</div>
+    <div class="cb-t">In development. No FirstDue dependency.</div>
+    <div class="cb-l">Renewal Uplift + Target ARR</div>
+    <div class="cb-t">Ideation phase. Sandeep leading.</div>
+    <div class="cb-l">Self-Service Resync Button</div>
+    <div class="cb-t">~85% complete per May 27 call. Once live, reps can resync quotes without support tickets.</div>
   </div></div>
 </div>
 
 </div>
 
-<!-- ═══ LANE 3: TRACKED ═══ -->
+<!-- ═══ LANE 3: DELIVERED + TRACKED ═══ -->
 <div class="lane">
-<div class="lane-hdr"><span class="lane-dot lat"></span><span class="lane-title">Tracked + Recently Closed</span><span class="lane-ct">4</span></div>
+<div class="lane-hdr"><span class="lane-dot lat"></span><span class="lane-title">Delivered + Tracked</span><span class="lane-ct">4</span></div>
 
-<div class="c c-amber" onclick="this.classList.toggle('open')">
+<div class="c c-green" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Quote Template · Remove Renewal Section</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-cfg">Config</span><span class="c-st s-wt">Ties to Uplift Work</span></div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · after uplift ships</span></div>
+    <div class="c-row1"><span class="c-name">Tickets Resolved Since Last Update (7)</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-sup">Resolved</span><span class="c-st s-ok">Closed</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Context</div>
-    <div class="cb-t">Output side of uplift centralization. Once uplift moves to quote header, per-offering section removed from template cleanly. Can do a template-only hide sooner if needed. May partially overlap with newly shipped template improvements.</div>
+    <div class="cb-l">Closed Since May 27</div>
+    <div class="cb-t">
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4704" target="_blank">#4704</a></strong> SFDC Quote Sync / Missing OTF lines (Jun 1)<br>
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4692" target="_blank">#4692</a></strong> Amendment End Date Shifting<br>
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4666" target="_blank">#4666</a></strong> Amendment Opps Missing Contract Links<br>
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4621" target="_blank">#4621</a></strong> CAD Currency Mismatch<br>
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4809" target="_blank">#4809</a></strong> Template Feedback (positive)<br>
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4764" target="_blank">#4764</a></strong> OTF Discount SKU Handling<br>
+      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4863" target="_blank">#4863</a></strong> Account Sync Failure (CAD case sensitivity)
+    </div>
+  </div></div>
+</div>
+
+<div class="c c-green" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Quote Template · Delivered</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-prd">Product</span><span class="c-st s-done">Delivered ✓</span></div>
+    <div class="c-own"><span class="own"><b class="en">S</b>Sandeep · shipped</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What Shipped</div>
+    <div class="cb-t">Revised template with subscription vs OTF breakdown, proper subtotals, OTF discount handling. Customize settings moving to tenant level. Self-service toggles with approval workflow still in progress (tracked in Strategic lane).</div>
   </div></div>
 </div>
 
 <div class="c c-gray" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Legacy → Standard Offering Conversion</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-tag t-prc">Process</span><span class="c-st s-nw">Future Planning</span></div>
-    <div class="c-own"><span class="own"><b class="fd">B</b>Ben / Josh · timing</span><span class="own"><b class="mn">S</b>Sandeep · tooling</span></div>
+    <div class="c-row2"><span class="c-tag t-dat">Data</span><span class="c-st s-nw">Future</span></div>
+    <div class="c-own"><span class="own"><b class="fd">B</b>Ben / Josh · timing</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">Context</div>
-    <div class="cb-t">All active contracts sit on a single "Legacy Offering" with custom pricing. Long-term goal: convert to standard offerings so rate changes auto-propagate. Natural conversion point is when FirstDue's pricing overhaul lands (~6 months).</div>
-  </div></div>
-</div>
-
-<div class="c c-green" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Recently Closed (5 tickets)</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-sup">Resolved</span><span class="c-st s-ok">Closed</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Closed Since Last Update</div>
-    <div class="cb-t">
-      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4660" target="_blank">#4660</a></strong> Missing Implementation/Essentials lines in SFDC Amendment<br>
-      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4615" target="_blank">#4615</a></strong> Access issues with Monetize tenant resolution<br>
-      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4609" target="_blank">#4609</a></strong> Quote Creation for Renewal Outside Existing Contract<br>
-      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4608" target="_blank">#4608</a></strong> Legacy contract mapping and value defaults<br>
-      <strong><a class="cb-ref" href="https://app.usepylon.com/issues?issueNumber=4601" target="_blank">#4601</a></strong> Original Contract ID field insertion error
-    </div>
+    <div class="cb-t">All active contracts on "Legacy Offering" with custom pricing. Conversion timing tied to pricing overhaul (~6 months) and resolution of 15% Zoho gap.</div>
   </div></div>
 </div>
 
 <div class="c c-gray" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">VP Finance (Gina Little) · Billing Interest</span><span class="c-chev">›</span></div>
-    <div class="c-row2"><span class="c-tag t-sup">Context</span><span class="c-st s-nw">Tracking</span></div>
+    <div class="c-row1"><span class="c-name">VTG MuleSoft Issue · First Line Item Only</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-int">Integration</span><span class="c-tag t-new">Context</span><span class="c-st s-nw">FD / VTG Owned</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Context</div>
-    <div class="cb-t">New VP Finance (Gina Little) joined FirstDue and is "intrigued" by MonetizeNow's Dunning process. Getting up to speed on billing across NetSuite and MN. Josh/CFO introduced her to Sandeep. Relevant context for billing upsell conversations.</div>
+    <div class="cb-l">Context (from <a class="cb-ref" href="https://fathom.video/calls/695744140?timestamp=1112" target="_blank">Jun 3 call ↗</a>)</div>
+    <div class="cb-t">VTG's MuleSoft integration is only sending first line item from orders. Impacts May revenue processing. Not a MonetizeNow issue, but creates billing accuracy concerns for FirstDue. Worth tracking as it may generate downstream tickets.</div>
   </div></div>
 </div>
 
@@ -331,20 +285,20 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <div class="foot">
   <div class="foot-card">
     <div>
-      <div class="fc-l">Shared Next Steps</div>
-      <div class="fc-v"><strong>Wednesday (support/ops):</strong> Ben reviews CAD impact report, confirms 436 vs 38 account count, and provides amendment end date sample. <strong>Monday (product/strategy):</strong> formula pricing timeline, call volume SKU mapping, uplift ideation.</div>
+      <div class="fc-l">Today: Jun 8 Working Session</div>
+      <div class="fc-v"><strong>1 PM CT, 90 mins.</strong> Krishna + Austin/Huy + Perry (MN). Ben + Carlos (FD). Goal: resolve all MN-owned items. Dependency matrix delivered. MN pre-resolved async items.</div>
     </div>
     <div>
-      <div class="fc-l">MonetizeNow Moving Independently</div>
-      <div class="fc-v"><strong>Huy's SFDC sync fix</strong> promoting from dev (amendment opp linking). <strong>Opp value refresh</strong> script prepping for 1,900 records. <strong>Force Save button</strong> in development. <strong>Product catalog sync</strong> root cause investigation underway.</div>
+      <div class="fc-l">Pending from FirstDue</div>
+      <div class="fc-v"><strong>Ben's "command center"</strong> analysis of full data migration (was due Jun 3). <strong>SKU mapping</strong> for call volume automation. <strong>DocuSign integration path</strong> decision.</div>
     </div>
     <div>
-      <div class="fc-l">Transition Planning</div>
-      <div class="fc-v"><strong>Ben → Mary handoff targeting Jul 1.</strong> All communications stay through Ben until then. Mary is observing and ramping internally. Regular cadence will transfer to Mary once she's ready.</div>
+      <div class="fc-l">Team + Transition</div>
+      <div class="fc-v"><strong>Carlos Zaldivar</strong> now active as FD ops (handling SFDC data jobs). <strong>Mary</strong> observing, ramping for Jul 1 handoff from Ben. <strong>Gina Little</strong> (VP Finance) interested in dunning/billing.</div>
     </div>
   </div>
 </div>
 
-<div class="attr">FirstDue × MonetizeNow · Confidential · Updated May 27, 2026</div>
+<div class="attr">FirstDue × MonetizeNow · Confidential · Updated June 9, 2026</div>
 </body>
 </html>
