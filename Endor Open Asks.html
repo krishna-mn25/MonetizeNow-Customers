@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Endor Labs × MonetizeNow · Solution Playbook</title>
+<title>Endor Labs × MonetizeNow · Open Asks</title>
 <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -12,35 +12,32 @@ html{scroll-behavior:smooth}
 body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--bk);-webkit-font-smoothing:antialiased}
 .top{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--bdr);padding:10px 28px;display:flex;align-items:center;justify-content:space-between}
 .top-l{display:flex;align-items:center;gap:10px}.mn-m{width:26px;height:26px;background:var(--mn-blue);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px}.top-t{font-size:12px;font-weight:500;color:#64748b;letter-spacing:.03em}
-.pills{display:flex;gap:6px;flex-wrap:wrap}.pl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:14px;display:flex;align-items:center;gap:4px}.pl i{width:5px;height:5px;border-radius:50%;display:inline-block}.pl-r{background:#fef2f2;color:var(--red)}.pl-r i{background:var(--red)}.pl-a{background:#fffbeb;color:var(--amber)}.pl-a i{background:var(--amber)}.pl-g{background:#ecfdf5;color:var(--green)}.pl-g i{background:var(--green)}.pl-b{background:#eff6ff;color:var(--mn-blue)}.pl-b i{background:var(--mn-blue)}
+.pills{display:flex;gap:6px;flex-wrap:wrap}.pl{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:14px;display:flex;align-items:center;gap:4px}.pl i{width:5px;height:5px;border-radius:50%;display:inline-block}.pl-r{background:#fef2f2;color:var(--red)}.pl-r i{background:var(--red)}.pl-a{background:#fffbeb;color:var(--amber)}.pl-a i{background:var(--amber)}.pl-g{background:#ecfdf5;color:var(--green)}.pl-g i{background:var(--green)}.pl-b{background:#eff6ff;color:var(--mn-blue)}.pl-b i{background:var(--mn-blue)}.pl-p{background:#faf5ff;color:var(--purple)}.pl-p i{background:var(--purple)}
 .hero{background:var(--mn-blue);padding:36px 32px 32px;position:relative;overflow:hidden}.hero::after{content:'';position:absolute;top:-60%;right:-8%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(211,238,244,.1),transparent 70%)}
 .hero-in{max-width:1320px;margin:0 auto;position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap}.hero-txt{max-width:680px}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:4px 12px;margin-bottom:14px}.hero-badge span{font-size:10px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.06em;text-transform:uppercase}.hero-badge b{background:rgba(255,255,255,.12);border-radius:3px;padding:1px 7px;font-size:10px;color:#fff}
 .hero h1{font-size:clamp(22px,3vw,30px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px}.hero h1 em{font-style:normal;color:var(--mn-lb)}.hero-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;font-weight:400}
 .hero-nums{display:flex;gap:24px;flex-wrap:wrap}.hn{text-align:center}.hn-v{font-size:24px;font-weight:900;color:#fff}.hn-l{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:2px}
-
-/* Sections layout — single column with section headers */
 .content{max-width:900px;margin:28px auto 0;padding:0 28px 48px}
 .sec{margin-bottom:32px}
 .sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:0 2px}
-.sec-dot{width:8px;height:8px;border-radius:50%}.sec-dot.now{background:var(--red)}.sec-dot.set{background:var(--mn-blue)}.sec-dot.eng{background:var(--purple)}.sec-dot.done{background:var(--green)}
+.sec-dot{width:8px;height:8px;border-radius:50%}.sec-dot.now{background:var(--red)}.sec-dot.set{background:var(--mn-blue)}.sec-dot.eng{background:var(--purple)}.sec-dot.done{background:var(--green)}.sec-dot.add{background:#94a3b8}
 .sec-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--bk)}.sec-ct{font-size:10px;font-weight:600;color:#94a3b8;margin-left:auto;background:#f1f5f9;border-radius:10px;padding:2px 8px}
-
-/* Cards — exactly matching FirstDue tracker */
 .c{border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:10px;overflow:hidden;transition:box-shadow .2s,border-color .2s;cursor:pointer;user-select:none;background:var(--card)}.c:hover{box-shadow:0 2px 12px rgba(5,33,171,.07);border-color:#cbd5e1}
 .c-red{background:#fef7f7;border-left:3px solid var(--red)}.c-amber{background:#fffdf5;border-left:3px solid #fbbf24}.c-green{background:#f6fef9;border-left:3px solid #34d399}.c-purple{background:#faf5ff;border-left:3px solid #a78bfa}.c-blue{background:#f8fbff;border-left:3px solid #60a5fa}.c-gray{background:#f8fafc;border-left:3px solid #cbd5e1}
 .c-top{padding:14px 16px 12px;display:flex;flex-direction:column;gap:8px}.c-row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.c-name{font-size:13px;font-weight:700;color:var(--bk);line-height:1.35;flex:1}.c-chev{color:#b0b8c4;font-size:14px;transition:transform .2s;flex-shrink:0;margin-top:1px}.c.open .c-chev{transform:rotate(90deg)}
 .c-row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.c-tag{font-size:9px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:4px}
-.t-disc{background:#eff6ff;color:var(--mn-blue)}.t-part{background:#f0fdf4;color:var(--green)}.t-life{background:#fefce8;color:var(--amber)}.t-tmpl{background:#faf5ff;color:var(--purple)}.t-sfdc{background:#f1f5f9;color:#475569}.t-prtn{background:#fff7ed;color:#c2410c}.t-proc{background:#fef2f2;color:var(--red)}.t-enbl{background:#ecfdf5;color:var(--green)}.t-hi{background:#fef2f2;color:var(--red);font-weight:800}
-.c-st{font-size:9px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:10px;margin-left:auto;white-space:nowrap}.s-now{background:#fee2e2;color:#991b1b}.s-rdy{background:#d1fae5;color:#065f46}.s-test{background:#fef3c7;color:#92400e}.s-eng{background:#ede9fe;color:#6d28d9}.s-done{background:#d1fae5;color:#065f46}.s-sess{background:#dbeafe;color:#1e40af}
+.t-disc{background:#eff6ff;color:var(--mn-blue)}.t-part{background:#f0fdf4;color:var(--green)}.t-life{background:#fefce8;color:var(--amber)}.t-tmpl{background:#faf5ff;color:var(--purple)}.t-sfdc{background:#f1f5f9;color:#475569}.t-proc{background:#fef2f2;color:var(--red)}.t-enbl{background:#ecfdf5;color:var(--green)}.t-hi{background:#fef2f2;color:var(--red);font-weight:800}.t-fr{background:#fef3c7;color:#92400e}.t-terms{background:#fff7ed;color:#c2410c}
+.c-st{font-size:9px;font-weight:700;letter-spacing:.03em;padding:2px 8px;border-radius:10px;margin-left:auto;white-space:nowrap}.s-now{background:#fee2e2;color:#991b1b}.s-rdy{background:#d1fae5;color:#065f46}.s-test{background:#fef3c7;color:#92400e}.s-eng{background:#ede9fe;color:#6d28d9}.s-done{background:#d1fae5;color:#065f46}.s-sess{background:#dbeafe;color:#1e40af}.s-fr{background:#fef3c7;color:#92400e}.s-q{background:#fce7f3;color:#9d174d}
 .c-own{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}.own{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:500;color:#94a3b8}.own b{width:12px;height:12px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:6px;color:#fff;font-weight:800;opacity:.65}.own b.el{background:#475569}.own b.mn{background:var(--mn-blue)}.own b.en{background:var(--purple)}
-.c-body{max-height:0;overflow:hidden;transition:max-height .35s ease}.c.open .c-body{max-height:2400px}.c-body-in{padding:0 16px 16px;border-top:1px solid var(--bdr);padding-top:14px}
+.c-body{max-height:0;overflow:hidden;transition:max-height .35s ease}.c.open .c-body{max-height:3200px}.c-body-in{padding:0 16px 16px;border-top:1px solid var(--bdr);padding-top:14px}
 .cb-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:5px;margin-top:12px}.cb-l:first-child{margin-top:0}
 .cb-t{font-size:12px;color:#334155;line-height:1.65;margin-bottom:4px}.cb-t strong{color:var(--bk)}
 .cb-t a{color:var(--mn-blue);font-weight:600;text-decoration:none;border-bottom:1px dashed rgba(5,33,171,.3)}.cb-t a:hover{border-bottom-style:solid}
 .cb-steps{list-style:none;counter-reset:s;margin-top:4px;margin-bottom:8px}.cb-steps li{counter-increment:s;padding-left:22px;position:relative;font-size:12px;color:#334155;line-height:1.6;margin-bottom:6px}.cb-steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:16px;height:16px;border-radius:50%;background:var(--mn-blue);color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .cb-warn{font-size:11px;background:#fffbeb;border-left:3px solid var(--amber);padding:8px 12px;border-radius:0 4px 4px 0;margin:8px 0;color:#92400e;line-height:1.5}
 .cb-info{font-size:11px;background:#eff6ff;border-left:3px solid var(--mn-blue);padding:8px 12px;border-radius:0 4px 4px 0;margin:8px 0;color:#1e40af;line-height:1.5}
+.cb-q{font-size:11px;background:#fce7f3;border-left:3px solid #ec4899;padding:8px 12px;border-radius:0 4px 4px 0;margin:8px 0;color:#9d174d;line-height:1.5}
 .cb-ref{color:var(--mn-blue);font-weight:600;text-decoration:none;font-size:11px;border-bottom:1px dashed rgba(5,33,171,.3)}
 .foot{max-width:900px;margin:0 auto;padding:0 28px 40px}.foot-card{background:var(--bk);border-radius:var(--r);padding:24px 28px;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}@media(max-width:800px){.foot-card{grid-template-columns:1fr}}
 .fc-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:6px}.fc-v{font-size:12px;line-height:1.6;color:rgba(255,255,255,.8)}.fc-v strong{color:#fff}
@@ -50,27 +47,27 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <body>
 
 <nav class="top">
-  <div class="top-l"><div class="mn-m">M</div><span class="top-t">Endor Labs × MonetizeNow · Solution Playbook</span></div>
+  <div class="top-l"><div class="mn-m">M</div><span class="top-t">Endor Labs × MonetizeNow · Open Asks</span></div>
   <div class="pills">
-    <span class="pl pl-r"><i></i>3 Solve This Week</span>
-    <span class="pl pl-b"><i></i>4 Set Up</span>
-    <span class="pl pl-a"><i></i>3 Engineering</span>
-    <span class="pl pl-g"><i></i>2 Delivered</span>
+    <span class="pl pl-r"><i></i>6 Pending Items</span>
+    <span class="pl pl-a"><i></i>3 Additional Issues</span>
+    <span class="pl pl-b"><i></i>8 From Working Sessions</span>
+    <span class="pl pl-p"><i></i>1 Feature Request</span>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-in">
     <div class="hero-txt">
-      <div class="hero-badge"><b>EL</b><span>Discount + Lifecycle Stabilization · Leidy &amp; Casey</span></div>
-      <h1>Every open ask mapped. <em>Solutions ready.</em></h1>
-      <p class="hero-sub">Covers all requests from the last 3 months across 6 working sessions, support tickets, and Slack. Grouped by what moves the needle first. Ramp/schedule change pattern solves 4 of the top 6 items with one mechanism. Two items need template engineering. Everything else is configuration we can set up together.</p>
+      <div class="hero-badge"><b>EL</b><span>Leidy Tovar · Casey Moore · RevOps</span></div>
+      <h1>All open asks mapped. <em>Solutions and next steps for each.</em></h1>
+      <p class="hero-sub">Starting with Leidy's pending items list, followed by additional issues and questions from the sheet, then everything else surfaced across 6 working sessions and support tickets. Every item has either an in-product solution, a workaround, or a clear next step. Open questions are flagged for discussion.</p>
     </div>
     <div class="hero-nums">
-      <div class="hn"><div class="hn-v">8</div><div class="hn-l">Categories Covered</div></div>
-      <div class="hn"><div class="hn-v">10</div><div class="hn-l">In-Product Today</div></div>
-      <div class="hn"><div class="hn-v">2</div><div class="hn-l">Template Eng. Items</div></div>
-      <div class="hn"><div class="hn-v">2</div><div class="hn-l">Blueprints to Build</div></div>
+      <div class="hn"><div class="hn-v">13</div><div class="hn-l">In-Product Today</div></div>
+      <div class="hn"><div class="hn-v">2</div><div class="hn-l">Template Eng.</div></div>
+      <div class="hn"><div class="hn-v">1</div><div class="hn-l">Feature Request</div></div>
+      <div class="hn"><div class="hn-v">4</div><div class="hn-l">Open Questions</div></div>
     </div>
   </div>
 </section>
@@ -78,15 +75,40 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <div class="content">
 
 <!-- ═══════════════════════════════════════════════ -->
-<!-- SECTION 1: SOLVE THIS WEEK -->
+<!-- SECTION 1: LEIDY'S PENDING ITEMS (1-6) -->
 <!-- ═══════════════════════════════════════════════ -->
 <div class="sec">
-<div class="sec-hdr"><span class="sec-dot now"></span><span class="sec-title">Solve This Week — Unblocking Reps</span><span class="sec-ct">5</span></div>
+<div class="sec-hdr"><span class="sec-dot now"></span><span class="sec-title">Leidy's Pending Items (1-6)</span><span class="sec-ct">6</span></div>
 
-<!-- CARD: First X months free -->
+<!-- #1 Partner Quotes -->
+<div class="c c-amber" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">1. Partner Quotes — Partner contact not visible in signing section</span><span class="c-chev">›</span></div>
+    <div class="c-row2">
+      <span class="c-tag t-part">Partner</span>
+      <a href="https://app.usepylon.com/issues?issueNumber=4606" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4606</a>
+      <span class="c-st s-test">Verifying Fix</span>
+    </div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · verify in prod</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What You're Running Into</div>
+    <div class="cb-t">When a partner account is added to a quote via <a href="https://docs.monetizenow.io/docs/linked-accounts" target="_blank">Linked Accounts</a>, the e-sign signing section still shows the end-customer's contact instead of the partner's. This blocks partner deal execution since the contract needs to be signed between Endor and the partner.</div>
+
+    <div class="cb-l">Where We Are</div>
+    <div class="cb-t">The fix was deployed to production on May 20 (Jira BP-16925). The signing section now pulls the contact from the linked (partner) account when one is selected.</div>
+
+    <div class="cb-l">Next Step</div>
+    <div class="cb-t">Krishna will create a test partner quote in production and confirm end-to-end that the signing page shows the correct partner name, email, and company before your next call. If the company name still shows the end-customer in any scenario, we'll file a follow-up.</div>
+
+    <div class="cb-t"><strong>Docs:</strong> <a href="https://docs.monetizenow.io/docs/linked-accounts" target="_blank">Linked Accounts setup</a> · <a href="https://docs.monetizenow.io/docs/esign" target="_blank">E-Sign configuration</a></div>
+  </div></div>
+</div>
+
+<!-- #2 One-Time Discount -->
 <div class="c c-red" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">"First 2-3 Months Free" Entrance Discount</span><span class="c-chev">›</span></div>
+    <div class="c-row1"><span class="c-name">2. One-Time Discount — Applied to first-year billing only</span><span class="c-chev">›</span></div>
     <div class="c-row2">
       <span class="c-tag t-disc">Discounts</span>
       <span class="c-tag t-hi">#1 Priority</span>
@@ -96,264 +118,36 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What You're Running Into</div>
-    <div class="cb-t">Reps are offering 2-3 months free as an intro incentive, but there's no obvious way to set that up in MonetizeNow. So they're building quotes manually in Google Sheets and emailing PDFs. That means Salesforce data is incomplete, auditing is manual, and Casey can't see accurate pipeline numbers.</div>
+    <div class="cb-t">Reps offer 2-3 months free (or a discounted first year) as an entrance incentive. There's no obvious way to set this up so the discount only applies to the first billing period and renewals come in clean. Reps are building quotes manually in Google Sheets and emailing PDFs. That breaks Salesforce data, makes auditing manual, and hides pipeline from Casey.</div>
 
-    <div class="cb-l">How We Solve It</div>
-    <div class="cb-t">MonetizeNow has a feature called <strong><a href="https://docs.monetizenow.io/docs/schedule-change" target="_blank">Schedule Changes</a></strong> that lets you set different pricing for different periods within the same contract. We use this to build a "first 3 months free" structure with the real product (not a separate promo SKU):</div>
+    <div class="cb-l">How We Solve It — Schedule Change Ramp</div>
+    <div class="cb-t">MonetizeNow supports <strong><a href="https://docs.monetizenow.io/docs/schedule-change" target="_blank">Schedule Changes</a></strong> at any date within a contract (not just annual boundaries). We use this to build the promo structure directly on the real product:</div>
     <ol class="cb-steps">
-      <li><strong>Add the actual subscription product</strong> to the quote (e.g., Endor Package Firewall). Not a promo version, the real one.</li>
+      <li><strong>Add the actual subscription product</strong> to the quote (e.g., Endor Package Firewall). Not a promo version.</li>
       <li><strong>Apply a 100% discount</strong> on that line item for the first period.</li>
-      <li><strong>Add a Schedule Change</strong> at month 4 (or whenever the free period ends). On this segment, set the discount to 0%. Full price kicks in automatically.</li>
-      <li><strong>Result:</strong> months 1-3 bill at $0, month 4+ bills at full price. One line item, one product, clean billing schedule.</li>
+      <li><strong>Add a Schedule Change</strong> at the date the free period ends (month 4, end of Y1, etc.). Set discount to 0% on that segment.</li>
+      <li><strong>Result:</strong> Free period bills at $0, everything after bills at full price. One product, one line item, clean billing schedule.</li>
     </ol>
-    <div class="cb-t">Schedule changes can be set at <strong>any date</strong> in the contract, not just annual boundaries. So "3 months free" or "2 months free" or "45 days free" all work.</div>
 
-    <div class="cb-l">We'll Package This as a Blueprint</div>
-    <div class="cb-t">To make this repeatable for reps, we'll save this structure as a <strong><a href="https://docs.monetizenow.io/docs/quote-blueprints" target="_blank">Quote Blueprint</a></strong> called "New Deal — 3 Months Free." When a rep creates a new quote, they select this blueprint and the entire ramp structure is pre-built. They just adjust the customer, quantities, and dates. Blueprints preserve the full schedule change structure, so nothing needs to be re-added manually.</div>
-    <div class="cb-t">We'll also create a <strong>"Renewal — Full Price"</strong> blueprint with zero discounts and no ramps, so renewal quotes start clean.</div>
+    <div class="cb-l">Blueprints Make This Repeatable</div>
+    <div class="cb-t">We'll save this as a <strong><a href="https://docs.monetizenow.io/docs/quote-blueprints" target="_blank">Quote Blueprint</a></strong> called "New Deal — 3 Months Free." Rep selects it, gets the full ramp pre-built, and only adjusts customer, quantities, and dates. Blueprints preserve the entire schedule change structure.</div>
+    <div class="cb-t">We'll also create a <strong>"Renewal — Full Price"</strong> blueprint for renewal quotes.</div>
 
     <div class="cb-l">Renewal Behavior</div>
-    <div class="cb-t">For contracts with promotional ramps, we'll set the renewal type to <strong>Manual Renewal</strong>. That means when renewal time comes, Leidy or the rep creates the renewal quote using the "Full Price" blueprint. No promotional pricing carries forward by accident.</div>
+    <div class="cb-t">For contracts with promo ramps, we set renewal type to <strong>Manual Renewal</strong> (<a href="https://docs.monetizenow.io/docs/contract-renewal" target="_blank">contract renewal settings</a>). When renewal time comes, Leidy or the rep creates the renewal using the "Full Price" blueprint. No promo pricing carries forward.</div>
 
-    <div class="cb-warn"><strong>Sandbox first.</strong> We'll build both blueprints in sandbox, run a full lifecycle test (quote → process → billing run → renewal generation), and walk through it together before deploying to production. Krishna will have sandbox ready for review by Thursday.</div>
+    <div class="cb-warn"><strong>Sandbox first.</strong> We'll build both blueprints in sandbox and test the full lifecycle (quote → process → billing run → renewal). Krishna will have sandbox ready for review by Thursday.</div>
 
-    <div class="cb-l">What About ARR?</div>
-    <div class="cb-t">During the free months, ARR will show $0 for those periods. MonetizeNow calculates ARR from the billing amount in effect. If Casey needs a report showing the full committed contract value regardless of the promo, we can build a custom report that annualizes total contract value (TCV). We'll discuss this in the Casey meeting.</div>
+    <div class="cb-q"><strong>Open question for Casey:</strong> During free months, ARR will show $0 for those periods since MonetizeNow calculates ARR from the billing amount. If you need ARR to show the full committed contract value regardless of the promo, we can build a custom TCV report. Should we discuss this in the Casey meeting?</div>
+
+    <div class="cb-t"><strong>Docs:</strong> <a href="https://docs.monetizenow.io/docs/schedule-change" target="_blank">Schedule Changes</a> · <a href="https://docs.monetizenow.io/docs/quote-blueprints" target="_blank">Quote Blueprints</a> · <a href="https://docs.monetizenow.io/docs/contract-renewal" target="_blank">Contract Renewal</a></div>
   </div></div>
 </div>
 
-<!-- CARD: Year-specific discounts -->
-<div class="c c-green" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Year-Specific Discounts (e.g., 50% Off Year 2 Only)</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-disc">Discounts</span>
-      <span class="c-st s-done">Already Set Up</span>
-    </div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">How It Works</div>
-    <div class="cb-t">Same <a href="https://docs.monetizenow.io/docs/schedule-change" target="_blank">Schedule Change</a> mechanism. For a 3-year contract with 50% off only in Year 2:</div>
-    <ol class="cb-steps">
-      <li>Year 1 segment: 0% discount (full price)</li>
-      <li>Schedule Change at Year 2 start: 50% discount</li>
-      <li>Schedule Change at Year 3 start: 0% discount (back to full price)</li>
-    </ol>
-    <div class="cb-t">Blueprints for common discount structures are already saved in your tenant under <strong>Settings → Quote Blueprints</strong>. If you need additional scenarios (e.g., "Year 1 at 30%, Year 2 at 15%, Year 3 full price"), let us know and we'll create the blueprint.</div>
-  </div></div>
-</div>
-
-<!-- CARD: Proration -->
-<div class="c c-red" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Proration Discrepancy on Co-Term Quotes (OpenAI $2K Issue)</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-disc">Pricing</span>
-      <span class="c-st s-test">Sandbox Test Needed</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · test + recommend</span><span class="own"><b class="el">L</b>Leidy / Casey · decide</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What You're Running Into</div>
-    <div class="cb-t">On the OpenAI quote, 2,600 seats × $310 should equal $806,000. MonetizeNow calculated $804,000 because it prorates to the exact day. A 7-month-5-day period doesn't divide to a round number, so there's a ~$2K difference from what your customer expected (simple seats × unit price).</div>
-
-    <div class="cb-l">The Option</div>
-    <div class="cb-t">MonetizeNow has a <strong>product-level setting</strong> that turns off day-level proration entirely. When enabled, the system charges the full period amount regardless of partial-period math. 2,600 × $310 = $806,000 exactly.</div>
-    <ol class="cb-steps">
-      <li>Go to <strong>Product Catalog</strong> → select the product</li>
-      <li>Find <strong>Proration Policy</strong></li>
-      <li>Change from "Prorated" to <strong>"Non-Prorated"</strong></li>
-    </ol>
-
-    <div class="cb-warn"><strong>This is a product-level setting, not per-quote.</strong> It applies to every quote using that product. If some deals need exact day-level proration and others need simple multiplication, this single toggle won't cover both. We should discuss which products to apply this to and test in sandbox with an amendment scenario (adding seats mid-term) to make sure the behavior matches what your team expects.</div>
-
-    <div class="cb-l">Interim for the OpenAI Quote</div>
-    <div class="cb-t">For this specific quote, Krishna will correct the pricing directly so the rep can send a MonetizeNow-generated document instead of the manual one they used.</div>
-  </div></div>
-</div>
-
-<!-- CARD: Partner signing section -->
-<div class="c c-amber" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Partner Contact Not Showing in Signing Section</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-part">Partner</span>
-      <a href="https://app.usepylon.com/issues?issueNumber=4606" target="_blank" style="font-size:9px;color:#94a3b8;font-weight:600;text-decoration:none;border-bottom:1px dashed #cbd5e1">#4606</a>
-      <span class="c-st s-test">Verifying Fix</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · verify in prod</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What Was Happening</div>
-    <div class="cb-t">When you linked a partner account to a quote, the e-sign signing section showed the end-customer's contact info instead of the partner's. This blocked partner deal execution since the contract needs to be signed between Endor and the partner.</div>
-
-    <div class="cb-l">Where We Are</div>
-    <div class="cb-t">The fix was deployed to production on May 20. The signing section should now correctly show the <a href="https://docs.monetizenow.io/docs/linked-accounts" target="_blank">Linked Account's</a> (partner's) contact when selected.</div>
-
-    <div class="cb-l">Next Step</div>
-    <div class="cb-t">Krishna will create a test quote in production with a partner linked account and confirm end-to-end that the signing page shows the correct partner name, email, and company. If there's an edge case where the company name still shows the end-customer (which QA flagged during testing), we'll file a follow-up. We'll have confirmation before your next call.</div>
-  </div></div>
-</div>
-
-<!-- CARD: Promo product cleanup -->
-<div class="c c-amber" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Promo Product Cleanup (Firewall Promo, Patches Promo)</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-disc">Catalog</span>
-      <span class="c-st s-test">Phase Out</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="el">L</b>Leidy · confirm no active quotes</span><span class="own"><b class="mn">K</b>Krishna · deactivate</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What Happened</div>
-    <div class="cb-t">The Firewall Promo and Patches Promo products were created as <strong>"One-Time" products</strong> (which charge once as a line item) instead of <strong>"One-Time Discount" products</strong> (which apply a credit). The naming is confusing, and the distinction matters for how billing and renewals work.</div>
-
-    <div class="cb-l">What Changes</div>
-    <div class="cb-t">With the new schedule change approach (first card above), we don't need separate promo products at all. The real subscription product handles both the free period and the paid period in one line item. Once all existing quotes using the promo products are either processed or cancelled, we'll deactivate them from the catalog so reps aren't tempted to use them.</div>
-
-    <div class="cb-info"><strong>Your conditional terms still work.</strong> The promo T&C language you set up triggers based on the product being on the quote. When we switch to the ramp approach, we'll update the conditional terms to fire on the real product (when a 100% discount is present) instead of the promo product.</div>
-  </div></div>
-</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- SECTION 2: SET UP TOGETHER -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="sec">
-<div class="sec-hdr"><span class="sec-dot set"></span><span class="sec-title">Set Up Together — Rules, Process, Enablement</span><span class="sec-ct">5</span></div>
-
-<!-- CARD: ASR guardrails -->
-<div class="c c-blue" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Pricing Guardrails — Reps Can Mark Up, Markdowns Need Approval</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-disc">Discounts</span>
-      <span class="c-tag t-proc">Rules</span>
-      <span class="c-st s-rdy">Ready to Configure</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · build rule</span><span class="own"><b class="el">L</b>Leidy · approve logic</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What You're Looking For</div>
-    <div class="cb-t">Reps need the ability to adjust unit prices upward (anchoring strategy), but you don't want them able to drop below list price without RevOps approval. Right now only admins can make these changes, which makes you the bottleneck.</div>
-
-    <div class="cb-l">Two-Step Setup</div>
-    <div class="cb-t"><strong>Step 1: Open up pricing permissions.</strong> In <a href="https://docs.monetizenow.io/docs/account-specific-rates" target="_blank">Quote Settings → Account Specific Rates</a>, grant your sales reps the ability to adjust prices on quotes.</div>
-    <div class="cb-t"><strong>Step 2: Add the guardrail.</strong> We'll create an <a href="https://docs.monetizenow.io/docs/approvals" target="_blank">Approval Rule</a> that triggers whenever a rep sets a price <em>below</em> list. The way MonetizeNow tracks this: any price below list shows up as a positive discount percentage. So the rule fires when <strong>discount percentage is greater than 0% on an account-specific rate</strong>. Markups (above list) show as zero discount and sail through without approval.</div>
-
-    <div class="cb-info"><strong>For Leidy:</strong> You (or whoever you designate) will get an approval notification only when a rep tries to go below list price. Everything at or above list just works. This removes you as the bottleneck for standard pricing while keeping you in the loop for exceptions.</div>
-
-    <div class="cb-l">Next Step</div>
-    <div class="cb-t">Krishna will build this rule in sandbox. We'll test it together with a few scenarios (markup, markdown, exact list price) to make sure it fires correctly before enabling in production.</div>
-  </div></div>
-</div>
-
-<!-- CARD: Validation rule — SFDC opp -->
-<div class="c c-blue" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Require Salesforce Opportunity Before Quote Can Move Forward</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-sfdc">Salesforce</span>
-      <span class="c-tag t-proc">Rules</span>
-      <span class="c-st s-rdy">Ready to Configure</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · build rule</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What You're Running Into</div>
-    <div class="cb-t">Reps sometimes create quotes without linking a Salesforce opportunity. That means Salesforce reporting is incomplete and audit trails break. You've been catching these manually during reviews.</div>
-
-    <div class="cb-l">How We Fix It</div>
-    <div class="cb-t">We'll create a <a href="https://docs.monetizenow.io/docs/validation-rules" target="_blank">Validation Rule</a> that checks whether a quote has an opportunity linked. If not, MonetizeNow shows an error message and <strong>blocks the quote from leaving draft</strong>. The rep has to link an opportunity before the quote can be submitted for review or approval.</div>
-    <div class="cb-t">Error message will say something like: <em>"Please link a Salesforce opportunity to this quote before submitting."</em></div>
-
-    <div class="cb-l">Next Step</div>
-    <div class="cb-t">Krishna deploys to sandbox this week, production next week after confirmation. Going forward, every new quote will require an opportunity. For existing unlinked quotes, Leidy sends the list and we relink in the backend.</div>
-  </div></div>
-</div>
-
-<!-- CARD: Primary quote rules -->
-<div class="c c-blue" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Primary Quote Flag — How It Works (for Your Reps)</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-life">Lifecycle</span>
-      <span class="c-st s-sess">Ready to Share</span>
-    </div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What Was Confusing</div>
-    <div class="cb-t">Reps noticed the "primary" flag on quotes seemed to change on its own. Sometimes a cancelled quote was still marked primary, or a new draft unexpectedly became primary.</div>
-
-    <div class="cb-l">The Rules (Share with Reps)</div>
-    <div class="cb-t"><strong>A quote becomes primary when:</strong></div>
-    <div class="cb-t">It's the <strong>first quote</strong> linked to an opportunity. Or it's <strong>accepted/processed</strong> (and at this point all other non-finalized quotes on that opportunity automatically cancel with "Suppressed by Processed Quote"). Or a rep <strong>manually sets it</strong> using the "Set as Primary" button on the quote.</div>
-
-    <div class="cb-t" style="margin-top:8px"><strong>A quote stops being primary when:</strong></div>
-    <div class="cb-t">It's <strong>deleted or cancelled</strong>. MonetizeNow auto-picks a replacement (highest stage quote first, then most recently created). If no quotes remain, the primary field goes blank. Or <strong>another quote is set as primary</strong> manually.</div>
-
-    <div class="cb-info"><strong>The takeaway for reps:</strong> Creating multiple drafts is fine. They all clean up automatically when one gets processed. If your primary looks wrong, just click "Set as Primary" on the correct quote. And only process the quote you actually want to close, because processing cancels all the others.</div>
-  </div></div>
-</div>
-
-<!-- CARD: Expired/cancelled quotes process -->
-<div class="c c-blue" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Quote Expiration and Recovery Process</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-life">Lifecycle</span>
-      <span class="c-st s-sess">Ready to Share</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="el">L</b>Leidy · weekly check</span></div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">How Expiration Works</div>
-    <div class="cb-t">MonetizeNow auto-expires quotes <strong>30 days</strong> after creation (configurable). After expiration, there's a <strong>7-day grace period</strong> to reactivate. After that, the quote auto-cancels permanently.</div>
-
-    <div class="cb-l">Preventing Expirations (Going Forward)</div>
-    <div class="cb-t">The <strong>"MonetizeNow View for RevOps"</strong> dashboard is already in your tenant under Reporting. It shows each rep's quotes, their status, and expiration dates. If a rep sees their quote is expiring soon, they can extend the expiration date directly from the quote header (15/30/60/90 days).</div>
-    <div class="cb-t"><strong>Recommended weekly check:</strong> Every Monday, open the dashboard, filter for quotes expiring this week, and Slack each rep whose quotes are at risk. Five minutes, prevents 100% of the problem going forward.</div>
-
-    <div class="cb-l">Recovering Expired Quotes</div>
-    <div class="cb-t"><strong>Still within 7 days?</strong> Go to Sales → Quotes → filter "Expired." Click <strong>"Reactivate Quote"</strong> and set a new expiration date. The quote returns to where it was.</div>
-    <div class="cb-t"><strong>Already cancelled (past 7 days)?</strong> Open the cancelled quote and click <strong>"Recreate."</strong> This creates a new draft with the same products, pricing, and structure. If the Salesforce opportunity is closed-won and the UI can't link to it, send Krishna the quote ID and opportunity ID and we'll connect them on our end.</div>
-  </div></div>
-</div>
-
-<!-- CARD: SLAs -->
-<div class="c" onclick="this.classList.toggle('open')">
-  <div class="c-top">
-    <div class="c-row1"><span class="c-name">Support SLAs and Response Times</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-enbl">Process</span>
-      <span class="c-st s-sess">Ready to Share</span>
-    </div>
-  </div>
-  <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">By Issue Type</div>
-    <div class="cb-t"><strong>Deal blocker</strong> (rep can't create or send a quote): First response same business day, resolution target 1-2 days.</div>
-    <div class="cb-t"><strong>Configuration or how-to</strong> (discount setup, blueprint creation, report request): First response same business day, resolution 1-3 days.</div>
-    <div class="cb-t"><strong>Data correction</strong> (quote relinking, contract cleanup): First response 1 day, resolution 2-3 days.</div>
-    <div class="cb-t"><strong>Template change</strong> (new section, layout, conditional display): First response 1 day, delivery 2-3 weeks (includes review cycle with you).</div>
-    <div class="cb-t"><strong>Feature request</strong> (new capability): Acknowledged within 1 day. Timeline depends on product roadmap, and we'll share what we know.</div>
-
-    <div class="cb-l">How to Reach Us</div>
-    <div class="cb-t">Post in the <strong>Endor Labs Slack channel</strong>. Every message automatically creates a tracked support ticket. You can also use the <a href="https://support.monetizenow.io" target="_blank">support portal</a> directly. For anything urgent, tag Krishna or message directly.</div>
-  </div></div>
-</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════ -->
-<!-- SECTION 3: TEMPLATE ENGINEERING -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="sec">
-<div class="sec-hdr"><span class="sec-dot eng"></span><span class="sec-title">Template + Engineering — Separate Track</span><span class="sec-ct">3</span></div>
-
-<!-- CARD: Template — cost disaggregation -->
+<!-- #3 Billing Details Disaggregation -->
 <div class="c c-purple" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Quote Template — Clearer Cost Breakdown for Customer Finance Teams</span><span class="c-chev">›</span></div>
+    <div class="c-row1"><span class="c-name">3. Billing Details — Split and itemize by period of time</span><span class="c-chev">›</span></div>
     <div class="c-row2">
       <span class="c-tag t-tmpl">Template</span>
       <span class="c-st s-eng">Engineering · 2-3 Weeks</span>
@@ -362,132 +156,373 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What You're Running Into</div>
-    <div class="cb-t">Customer finance teams are pushing back on amendment quotes because the billing section shows multiple date ranges and charges without clearly breaking down what's new vs. what's existing. Two of your AEs have independently asked for a clearer layout. The OpenAI quote is a good example of where this creates friction.</div>
+    <div class="cb-t">Customer finance teams push back on quotes because the billing section shows charges without clearly breaking them down by period. On amendments especially, multiple date ranges and charges appear without context on what's new vs. existing. Two AEs independently asked for this.</div>
 
     <div class="cb-l">What We'll Build</div>
-    <div class="cb-t">A customized quote template for Endor that includes a <strong>cost disaggregation section</strong>. When a quote has schedule changes or amendments, the template will show a clear period-by-period breakdown (e.g., "June 2026 - January 2027: $X" / "January 2027 - January 2028: $Y"). When a quote is a simple new contract without ramps, this section stays hidden.</div>
-    <div class="cb-t">This is Endor's first template customization. We'll also address the billing schedule display, making sure amounts shown reflect the pricing the customer actually pays (not pre-discount standard charges).</div>
+    <div class="cb-t">A customized quote template for Endor with a <strong>cost disaggregation section</strong>. When a quote has schedule changes or amendments, it shows a period-by-period breakdown (e.g., "Jun 2026 - Jan 2027: $X" / "Jan 2027 - Jan 2028: $Y"). On simple new contracts, this section stays hidden.</div>
+    <div class="cb-t">This is Endor's first template customization. We'll also address the billing schedule showing pre-discount amounts (item 2 in your sheet is related, since the ramp approach fixes billing display for most deals).</div>
 
     <div class="cb-l">Interim Workaround</div>
-    <div class="cb-t">While the template is being built, reps can use <strong>Quote Item Notes</strong> to add explanatory text directly on the quote line. For example: "June - January: 2,600 seats × $310 = $806,000." It's manual, but it gives the customer the clarity they need right now. Quote Item Notes can be enabled in <a href="https://docs.monetizenow.io/docs/quote-settings" target="_blank">Settings → Quote Settings → Additional Settings</a>.</div>
+    <div class="cb-t">While the template is being built, reps can add explanatory text using <strong>Quote Item Notes</strong> directly on the quote line. Example: "Jun - Jan: 2,600 seats × $310 = $806,000." Enable in <a href="https://docs.monetizenow.io/docs/quote-settings" target="_blank">Settings → Quote Settings → Additional Settings</a>.</div>
 
     <div class="cb-l">Next Step</div>
-    <div class="cb-t">Krishna submits the template request. Once engineering has a draft, we'll share a sample using the OpenAI quote as the reference so you can review before we finalize.</div>
+    <div class="cb-t">Krishna submits the template request. Once engineering has a draft, we'll share a sample using one of your real quotes so you can review before we finalize.</div>
+
+    <div class="cb-t"><strong>Docs:</strong> <a href="https://docs.monetizenow.io/docs/quote-settings" target="_blank">Quote Settings</a> · <a href="https://docs.monetizenow.io/docs/quote-templates" target="_blank">Quote Templates</a></div>
   </div></div>
 </div>
 
-<!-- CARD: OTF billing schedule display -->
-<div class="c c-purple" onclick="this.classList.toggle('open')">
+<!-- #4 Proration -->
+<div class="c c-red" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Billing Schedule Showing Pre-Discount Amounts</span><span class="c-chev">›</span></div>
+    <div class="c-row1"><span class="c-name">4. Proration — Prorated value not displaying total correctly</span><span class="c-chev">›</span></div>
     <div class="c-row2">
-      <span class="c-tag t-tmpl">Template</span>
-      <span class="c-st s-eng">Bundled with Above</span>
+      <span class="c-tag t-disc">Pricing</span>
+      <span class="c-st s-test">Sandbox Test Needed</span>
     </div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · test + recommend</span><span class="own"><b class="el">L</b>Leidy / Casey · decide</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
     <div class="cb-l">What You're Running Into</div>
-    <div class="cb-t">When a quote-level discount is applied, the billing schedule section on the PDF still shows the original amounts (e.g., $108K instead of $100K). The discount applies at invoicing as a credit, so the schedule reflects standard charges. Customers do the math and get confused.</div>
+    <div class="cb-t">On the OpenAI quote, 2,600 seats × $310 should be $806,000. MonetizeNow calculated ~$804,000 because it prorates to the exact day. A 7-month-5-day co-term period doesn't divide cleanly, so there's a ~$2K difference from what the customer expected.</div>
 
-    <div class="cb-l">Two Paths Forward</div>
-    <div class="cb-t"><strong>Path 1 (template):</strong> We'll adjust the template to show post-discount billing amounts. This gets bundled with the cost disaggregation work above. Same timeline.</div>
-    <div class="cb-t"><strong>Path 2 (recommended for most Endor deals):</strong> For discounts that apply to a specific period (first year free, first 3 months free), use the <strong>schedule change ramp approach</strong> instead of the one-time discount product. Per-line discounts with schedule changes already show correctly in the billing schedule because they're applied directly to the line item, not as a separate credit. This eliminates the problem entirely for the majority of your deals.</div>
+    <div class="cb-l">The Option</div>
+    <div class="cb-t">MonetizeNow has a <strong>product-level setting</strong> that turns off day-level proration. When set to "Non-Prorated," the system charges the full period amount. 2,600 × $310 = $806,000 exactly.</div>
+    <ol class="cb-steps">
+      <li>Go to <strong>Product Catalog</strong> → select the product</li>
+      <li>Find <strong>Proration Policy</strong></li>
+      <li>Change from "Prorated" to <strong>"Non-Prorated"</strong></li>
+    </ol>
 
-    <div class="cb-info"><strong>Bottom line:</strong> Reserve the one-time discount product for true lump-sum contract credits where period doesn't matter. For period-specific promos, the ramp approach gives you a clean billing schedule out of the box.</div>
+    <div class="cb-warn"><strong>Product-level, not per-quote.</strong> This applies to every quote using that product. If some deals need exact day-level proration and others need simple multiplication, this toggle won't cover both. We should test in sandbox with an amendment scenario (adding seats mid-term) to confirm the behavior.</div>
+
+    <div class="cb-q"><strong>Decision needed from Leidy/Casey:</strong> Which products should have proration disabled? All of them, or only specific ones? And should we fix the OpenAI quote directly so the rep can send a MonetizeNow-generated document instead of the manual form they used?</div>
   </div></div>
 </div>
 
-<!-- CARD: Partner contact sync -->
-<div class="c c-purple" onclick="this.classList.toggle('open')">
+<!-- #5 ASR Guardrails -->
+<div class="c c-blue" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Partner Contact Sync (~1,500 Contacts)</span><span class="c-chev">›</span></div>
+    <div class="c-row1"><span class="c-name">5. SKU Pricing — Reps can mark up, but markdowns need approval</span><span class="c-chev">›</span></div>
+    <div class="c-row2">
+      <span class="c-tag t-disc">Pricing</span>
+      <span class="c-tag t-proc">Rules</span>
+      <span class="c-st s-rdy">Ready to Configure</span>
+    </div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · build rule</span><span class="own"><b class="el">L</b>Leidy · approve logic</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What You're Running Into</div>
+    <div class="cb-t">Reps need to adjust unit prices upward (anchoring strategy), but enabling <a href="https://docs.monetizenow.io/docs/account-specific-rates" target="_blank">Account Specific Rates</a> also lets them lower prices below list. You don't want that without RevOps approval. Right now only admins can make changes, making you the bottleneck.</div>
+
+    <div class="cb-l">Two-Step Setup</div>
+    <div class="cb-t"><strong>Step 1: Open up pricing permissions.</strong> In Quote Settings → Account Specific Rates, grant your sales reps the ability to adjust prices on quotes.</div>
+    <div class="cb-t"><strong>Step 2: Add the guardrail.</strong> We create an <a href="https://docs.monetizenow.io/docs/approvals" target="_blank">Approval Rule</a> that fires when a rep sets a price below list. MonetizeNow tracks this as a positive discount percentage. So the rule condition is: <strong>discount percentage > 0% on an account-specific rate</strong>. Markups show as zero discount and go through without approval.</div>
+
+    <div class="cb-info"><strong>What this means for you:</strong> You only get approval notifications when a rep goes below list. Everything at or above list price just works. You're no longer the bottleneck for standard pricing.</div>
+
+    <div class="cb-l">Next Step</div>
+    <div class="cb-t">Krishna builds this in sandbox, we test a few scenarios together (markup, markdown, exact list), then enable in production.</div>
+
+    <div class="cb-t"><strong>Docs:</strong> <a href="https://docs.monetizenow.io/docs/account-specific-rates" target="_blank">Account Specific Rates</a> · <a href="https://docs.monetizenow.io/docs/approvals" target="_blank">Approval Rules</a> · <a href="https://docs.monetizenow.io/docs/rules-engine" target="_blank">Rules Engine</a></div>
+  </div></div>
+</div>
+
+<!-- #6 No MSA on Renewals -->
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">6. No MSA for Renewals</span><span class="c-chev">›</span></div>
+    <div class="c-row2">
+      <span class="c-tag t-terms">Terms</span>
+      <span class="c-tag t-proc">Rules</span>
+      <span class="c-st s-rdy">Ready to Configure</span>
+    </div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · configure</span><span class="own"><b class="el">L</b>Leidy · choose option</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What You're Looking For</div>
+    <div class="cb-t">Renewal quotes shouldn't include the MSA since the customer already signed it on the original deal. Keeps the renewal document clean and focused on the order form only.</div>
+
+    <div class="cb-l">Option A — Conditional Term (Recommended)</div>
+    <div class="cb-t">MonetizeNow's <a href="https://docs.monetizenow.io/docs/rules-engine" target="_blank">Rules Engine</a> exposes <strong>quote type</strong> (New, Renewal, Amendment) as a condition field for <a href="https://docs.monetizenow.io/docs/conditional-terms" target="_blank">Conditional Terms</a>. So we:</div>
+    <ol class="cb-steps">
+      <li>Remove the MSA from the default <a href="https://docs.monetizenow.io/docs/quote-settings" target="_blank">Quote Documents</a> section (Settings → Quote Settings → Quote Documents), so it doesn't auto-attach to every quote</li>
+      <li>Create a new conditional term: <strong>"Master Service Agreement (New Deals Only)"</strong></li>
+      <li>Condition: <strong>quote type = New</strong></li>
+      <li>Renewals and amendments skip the MSA automatically. New deals get it every time.</li>
+    </ol>
+
+    <div class="cb-l">Option B — Manual Attach (if all renewals go through a CSM)</div>
+    <div class="cb-t">If every renewal has a human reviewing before it goes out:</div>
+    <ol class="cb-steps">
+      <li>Remove the MSA from default Quote Documents</li>
+      <li>Reps manually attach the MSA from the quote-level document upload on new deals only</li>
+      <li>Add a <a href="https://docs.monetizenow.io/docs/validation-rules" target="_blank">Validation Rule</a>: if quote type = New AND no MSA document attached → block with "Please attach the MSA for new customer deals"</li>
+    </ol>
+
+    <div class="cb-info"><strong>Option A is more reliable</strong> since it's fully automated. Option B works if your team is disciplined and every renewal has human review before sending.</div>
+
+    <div class="cb-q"><strong>Open question:</strong> Do all your renewals go through Leidy or a CSM before being sent, or do some auto-send? This determines which option is safer.</div>
+
+    <div class="cb-t"><strong>Docs:</strong> <a href="https://docs.monetizenow.io/docs/conditional-terms" target="_blank">Conditional Terms</a> · <a href="https://docs.monetizenow.io/docs/rules-engine" target="_blank">Rules Engine</a> · <a href="https://docs.monetizenow.io/docs/quote-settings" target="_blank">Quote Documents</a></div>
+  </div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 2: ADDITIONAL ISSUES FROM SHEET -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-dot set"></span><span class="sec-title">Additional Issues from Leidy's Sheet</span><span class="sec-ct">3</span></div>
+
+<!-- Reseller Terms -->
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Partner Quotes — Reseller terms not populating on order</span><span class="c-chev">›</span></div>
     <div class="c-row2">
       <span class="c-tag t-part">Partner</span>
-      <span class="c-tag t-sfdc">Salesforce</span>
-      <span class="c-st s-sess">Walk Through Together</span>
+      <span class="c-tag t-terms">Terms</span>
+      <span class="c-st s-rdy">Ready to Configure</span>
     </div>
+    <div class="c-own"><span class="own"><b class="el">L</b>Leidy · provide terms language</span><span class="own"><b class="mn">K</b>Krishna · configure rule</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What You're Running Into</div>
+    <div class="cb-t">When a partner is attached to the SFDC opportunity and the quote generates, the order uses standard end-customer terms instead of reseller-specific language. You had to pull reseller terms from a separate channel quote manually.</div>
+
+    <div class="cb-l">How We Solve It — Conditional Terms with Partner Detection</div>
+    <div class="cb-t">You already created a <strong>Channel_Partner_Name__c</strong> formula field in Salesforce (March 11). We use that as the trigger:</div>
+    <ol class="cb-steps">
+      <li>Map Channel_Partner_Name__c to a <strong>custom field on the MonetizeNow Quote</strong> (Settings → <a href="https://docs.monetizenow.io/docs/custom-fields" target="_blank">Custom Fields</a> → Quote object). It syncs automatically via the SFDC connector.</li>
+      <li>Create a <a href="https://docs.monetizenow.io/docs/conditional-terms" target="_blank">Conditional Term</a>: <strong>"Reseller Terms and Conditions"</strong></li>
+      <li>Condition: <strong>custom field "Channel Partner Name" is not empty</strong></li>
+      <li>Upload the reseller terms language (Leidy provides this from legal/channel team)</li>
+    </ol>
+    <div class="cb-t">Any quote with a channel partner automatically gets reseller terms. Direct deals (no partner) skip them.</div>
+
+    <div class="cb-q"><strong>Open question for Leidy:</strong> Do the reseller terms <em>replace</em> the standard customer terms, or appear <em>in addition to</em> them? If they replace, we also add a condition on your "Default Terms" to exclude partner deals (Channel Partner Name is empty).</div>
+
+    <div class="cb-t"><strong>Docs:</strong> <a href="https://docs.monetizenow.io/docs/custom-fields" target="_blank">Custom Fields</a> · <a href="https://docs.monetizenow.io/docs/conditional-terms" target="_blank">Conditional Terms</a> · <a href="https://docs.monetizenow.io/docs/rules-engine" target="_blank">Rules Engine</a></div>
+  </div></div>
+</div>
+
+<!-- PO Binding Language -->
+<div class="c c-blue" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Partner Quotes — PO binding and non-cancellable language</span><span class="c-chev">›</span></div>
+    <div class="c-row2">
+      <span class="c-tag t-part">Partner</span>
+      <span class="c-tag t-terms">Terms</span>
+      <span class="c-st s-rdy">Bundled with Above</span>
+    </div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What You're Looking For</div>
+    <div class="cb-t">Partners typically don't sign the order form directly. They issue a Purchase Order that references the quote. You need explicit language on partner quotes stating that issuing a PO constitutes acceptance and creates a binding, non-cancellable agreement.</div>
+
+    <div class="cb-l">How It's Set Up</div>
+    <div class="cb-t">This gets bundled into the <strong>"Reseller Terms and Conditions"</strong> conditional term from the card above. The PO binding clause is part of the reseller terms language. Same trigger (Channel Partner Name is present), same conditional term, just includes both the reseller-specific contract language AND the PO binding clause.</div>
+
+    <div class="cb-t">Example PO clause: <em>"Issuance of a Purchase Order referencing this quote constitutes acceptance of these terms and conditions and creates a binding, non-cancellable agreement between the parties."</em></div>
+
+    <div class="cb-l">Next Step</div>
+    <div class="cb-t">Leidy or legal drafts the full reseller terms (including PO clause). Krishna plugs it into the conditional term. Test on one partner quote in sandbox, then go live.</div>
+  </div></div>
+</div>
+
+<!-- Primary Quote -->
+<div class="c c-green" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Primary Quote in SFDC — How to change it</span><span class="c-chev">›</span></div>
+    <div class="c-row2">
+      <span class="c-tag t-life">Lifecycle</span>
+      <span class="c-tag t-sfdc">Salesforce</span>
+      <span class="c-st s-done">Answered</span>
+    </div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">Your Question</div>
+    <div class="cb-t">"I am unable to change the primary quote in SFDC. Is this function not available? Or does it just make the most recent quote the primary without the ability to change?"</div>
+
+    <div class="cb-l">How It Works</div>
+    <div class="cb-t">Primary quote is managed in <strong>MonetizeNow, not Salesforce</strong>. It syncs to SFDC but can't be changed from the SFDC side. To change it:</div>
+    <ol class="cb-steps">
+      <li>Open the quote in MonetizeNow</li>
+      <li>Click <strong>"Set as Primary"</strong> on the quote you want</li>
+      <li>The change syncs to Salesforce automatically</li>
+    </ol>
+
+    <div class="cb-l">The Auto-Assignment Rules</div>
+    <div class="cb-t"><strong>Becomes primary:</strong> First quote linked to an opp. Or when a quote is accepted/processed (all other non-finalized quotes auto-cancel). Or when manually set.</div>
+    <div class="cb-t"><strong>Stops being primary:</strong> When deleted or cancelled (system picks a replacement: highest stage, then newest). Or when another quote is manually set as primary.</div>
+
+    <div class="cb-info"><strong>For your reps:</strong> Multiple drafts are fine, they clean up automatically when one gets processed. If the primary looks wrong, just click "Set as Primary" on the correct quote in MonetizeNow.</div>
+  </div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 3: Y1 QUOTE-LEVEL DISCOUNT -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-dot eng"></span><span class="sec-title">Discount Scenario — Year 1 Quote-Level Credit</span><span class="sec-ct">1</span></div>
+
+<div class="c c-purple" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Y1-Only Discount Shown as a Negative Line Item at Quote Level</span><span class="c-chev">›</span></div>
+    <div class="c-row2">
+      <span class="c-tag t-disc">Discounts</span>
+      <span class="c-tag t-fr">Feature Request</span>
+      <span class="c-st s-fr">Workaround Available</span>
+    </div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · workaround setup</span><span class="own"><b class="en">E</b>Eng · feature request</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What You're Looking For</div>
+    <div class="cb-t">On a 3-year contract, you want to apply a discount that <strong>only hits Year 1</strong>, and you want it to show as a <strong>separate negative line item at the bottom of the quote</strong> (like the existing <a href="https://docs.monetizenow.io/docs/one-time-discount" target="_blank">One-Time Discount</a> product does). Customer sees the full product pricing, then a clear "-$X Year 1 Discount" at the bottom. Clean, transparent, easy for their finance team to understand.</div>
+
+    <div class="cb-l">Why It Doesn't Work Today</div>
+    <div class="cb-t">The One-Time Discount product (the negative line item at the bottom) distributes its credit <strong>evenly across all billing periods</strong>. On a 3-year annual contract, a $30K OTF discount shows as $10K credit per year, not $30K in Year 1 only. There's no setting to front-load the credit to a specific period.</div>
+
+    <div class="cb-l">Feature Request (Logged)</div>
+    <div class="cb-t">We've logged this as a feature request: <strong>add an allocation strategy to the One-Time Discount product</strong> (options: "Even across all periods" vs. "Apply to first period only"). This would give you the exact visual and billing behavior you want. We'll share timeline when product prioritizes it.</div>
+
+    <div class="cb-l">Workaround A — Per-Line Schedule Change (Functional Match)</div>
+    <div class="cb-t">This achieves the <strong>exact same billing result</strong> (Y1 discounted, Y2-3 full price) using <a href="https://docs.monetizenow.io/docs/schedule-change" target="_blank">Schedule Changes</a>:</div>
+    <ol class="cb-steps">
+      <li>Apply the discount directly on each product line for Y1 (e.g., 20% off)</li>
+      <li>Add a schedule change at Y2 start, set discount to 0%</li>
+      <li>Y1 invoices reflect the discount, Y2-3 invoice at full price</li>
+    </ol>
+    <div class="cb-t"><strong>Trade-off:</strong> The discount shows on each line item (e.g., each product shows "$X minus 20%"), not as a single negative line at the bottom. The math is identical. The visual is different. For most customer finance teams, per-line discounts are actually easier to reconcile than a separate credit line.</div>
+
+    <div class="cb-l">Workaround B — OTF Discount + Template Note (Visual Match)</div>
+    <div class="cb-t">If the visual presentation (single negative line at the bottom) matters more than period-specific allocation:</div>
+    <ol class="cb-steps">
+      <li>Use the existing One-Time Discount product for the full discount amount</li>
+      <li>Accept that it distributes evenly across all 3 years</li>
+      <li>Add a Quote Item Note or template note clarifying: "Discount of $X applied, representing a Year 1 entrance incentive"</li>
+    </ol>
+    <div class="cb-t"><strong>Trade-off:</strong> The visual is what you want (single line at bottom), but the billing distribution is even, not Y1-only. Y1 invoices don't get the full credit. This works if the customer cares about the total discount amount more than which invoice it hits.</div>
+
+    <div class="cb-l">Workaround C — Both Together (Best of Both)</div>
+    <div class="cb-t">Use the per-line schedule change (Workaround A) for the <strong>actual billing math</strong>, then request the <strong>template customization</strong> (item #3 above) to add a "Total Year 1 Discount: -$X" summary line at the bottom of the quote output. This gives you both the correct billing AND the visual presentation. The template change is already in the engineering queue.</div>
+
+    <div class="cb-info"><strong>Our recommendation: Workaround C.</strong> Per-line schedule change handles the billing correctly. The template customization (already needed for the cost disaggregation request) adds the visual summary line. This covers both needs without waiting for the feature request.</div>
+  </div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 4: ADDITIONAL FROM WORKING SESSIONS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="sec">
+<div class="sec-hdr"><span class="sec-dot add"></span><span class="sec-title">Additional Items from Working Sessions</span><span class="sec-ct">8</span></div>
+
+<!-- Quote Lifecycle -->
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Quote Expiration and Recovery Process</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-life">Lifecycle</span><span class="c-st s-sess">Ready to Share</span></div>
+    <div class="c-own"><span class="own"><b class="el">L</b>Leidy · weekly check</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">How Expiration Works</div>
+    <div class="cb-t">Quotes auto-expire <strong>30 days</strong> after creation (configurable). Then a <strong>7-day grace period</strong> to reactivate. After that, auto-cancel.</div>
+    <div class="cb-l">Prevention</div>
+    <div class="cb-t">The <strong>"MonetizeNow View for RevOps"</strong> dashboard is in your tenant under Reporting. Shows each rep's quotes, status, and expiration dates. Reps can extend expiration from the quote header. <strong>Recommended:</strong> Every Monday, 5 minutes, check for expiring quotes, Slack each rep.</div>
+    <div class="cb-l">Recovery</div>
+    <div class="cb-t"><strong>Within 7 days:</strong> Sales → Quotes → filter "Expired" → <strong>"Reactivate Quote."</strong> <strong>Past 7 days:</strong> Open the cancelled quote → <strong>"Recreate"</strong> (same products/pricing, new draft). If the SFDC opp is closed-won and can't relink from UI, send Krishna the quote + opp IDs.</div>
+  </div></div>
+</div>
+
+<!-- SFDC Opp Validation -->
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Require Salesforce Opportunity Before Quote Can Progress</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-sfdc">Salesforce</span><span class="c-tag t-proc">Rules</span><span class="c-st s-rdy">Ready to Configure</span></div>
+    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · build rule</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-l">What It Does</div>
+    <div class="cb-t">A <a href="https://docs.monetizenow.io/docs/validation-rules" target="_blank">Validation Rule</a> that checks whether a quote has an opportunity linked. If not, <strong>blocks the quote from leaving draft</strong>. Rep sees: "Please link a Salesforce opportunity to this quote before submitting."</div>
+    <div class="cb-l">Next Step</div>
+    <div class="cb-t">Krishna deploys to sandbox this week, production next week. For existing unlinked quotes, Leidy sends the list and we relink in the backend.</div>
+  </div></div>
+</div>
+
+<!-- Promo Product Cleanup -->
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Promo Product Cleanup (Firewall Promo, Patches Promo)</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-disc">Catalog</span><span class="c-st s-test">Phase Out</span></div>
+    <div class="c-own"><span class="own"><b class="el">L</b>Leidy · confirm no active quotes</span><span class="own"><b class="mn">K</b>Krishna · deactivate</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-t">The Firewall Promo and Patches Promo products were created as "One-Time" products (charge once) instead of "One-Time Discount" products (apply credit). With the schedule change approach (item #2), separate promo products aren't needed. Once all existing promo-product quotes are processed or cancelled, we deactivate them. Your "PROMO Terms and conditions" conditional term can be updated to fire on the real product with 100% discount instead.</div>
+  </div></div>
+</div>
+
+<!-- Billing schedule pre-discount -->
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Billing Schedule Showing Pre-Discount Amounts</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-tmpl">Template</span><span class="c-st s-eng">Bundled with Item #3</span></div>
+  </div>
+  <div class="c-body"><div class="c-body-in">
+    <div class="cb-t">When a quote-level discount is applied, the billing schedule still shows standard charges (e.g., $108K instead of $100K). The credit applies at invoicing. Two paths: <strong>(1)</strong> Template adjustment to show post-discount amounts (bundled with item #3 above). <strong>(2)</strong> Use the schedule change ramp approach for period-specific discounts — per-line discounts show correctly in the billing schedule because they apply directly to the line item. <strong>Recommendation:</strong> Use ramps for most deals, reserve OTF discount for true lump-sum credits.</div>
+  </div></div>
+</div>
+
+<!-- Partner Contact Sync -->
+<div class="c" onclick="this.classList.toggle('open')">
+  <div class="c-top">
+    <div class="c-row1"><span class="c-name">Partner Contact Sync (~1,500 Contacts)</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-part">Partner</span><span class="c-tag t-sfdc">Salesforce</span><span class="c-st s-sess">Walk Through Together</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · guide</span><span class="own"><b class="el">L</b>Leidy · execute</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What Happened</div>
-    <div class="cb-t">Eric tried syncing all ~1,500 partner contacts at once from Salesforce and hit a timeout error. Only 1 contact came through. This isn't a MonetizeNow limit. It's a Salesforce processing limit that fires when too many records are pushed in a single batch.</div>
-
-    <div class="cb-l">How to Get Them In</div>
-    <div class="cb-t">Run the sync in <strong>smaller batches</strong> (200-300 contacts at a time). This stays within Salesforce's processing limits and each batch should complete in under a minute.</div>
-
-    <div class="cb-l">Next Step</div>
-    <div class="cb-t">If you're comfortable running this yourself, Krishna can walk you through the batch approach on your next call. If you'd prefer us to handle it, we can run the batches on your behalf or loop in your Salesforce admin.</div>
+    <div class="cb-t">Eric tried syncing all ~1,500 partner contacts at once and hit a Salesforce processing limit. Run in <strong>smaller batches</strong> (200-300 at a time). This is a Salesforce governor limit, not a MonetizeNow restriction. Krishna can walk you through the batch approach on your next call, or run it on your behalf.</div>
   </div></div>
 </div>
-</div>
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- SECTION 4: ENABLEMENT -->
-<!-- ═══════════════════════════════════════════════ -->
-<div class="sec">
-<div class="sec-hdr"><span class="sec-dot done"></span><span class="sec-title">Enablement + Reporting — Ongoing</span><span class="sec-ct">3</span></div>
-
-<!-- CARD: Leidy enablement -->
+<!-- SLAs -->
 <div class="c" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Product Walkthrough for Leidy (with Perry)</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-enbl">Enablement</span>
-      <span class="c-st s-sess">Scheduling</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="mn">P</b>Perry · lead session</span><span class="own"><b class="mn">K</b>Krishna · context brief</span></div>
+    <div class="c-row1"><span class="c-name">Support SLAs and Response Times</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-enbl">Process</span><span class="c-st s-sess">Ready to Share</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What This Covers</div>
-    <div class="cb-t">A full product walkthrough from a RevOps perspective. How MonetizeNow's quoting, discounting, approvals, and Salesforce integration work together. Designed to give you the big picture before we drill into individual features. Perry (Head of CX) will lead this, and Krishna will brief her on Endor's specific setup and priorities ahead of time.</div>
-
-    <div class="cb-l">Next Step</div>
-    <div class="cb-t">Krishna will share Perry's calendar link. Find an hour that works. After this session, we'll schedule topic-specific deep dives based on where you want to go deeper.</div>
+    <div class="cb-t"><strong>Deal blocker:</strong> Same-day response, 1-2 day resolution. <strong>Config/how-to:</strong> Same-day response, 1-3 days. <strong>Data correction:</strong> 1-day response, 2-3 days. <strong>Template change:</strong> 1-day response, 2-3 week delivery. <strong>Feature request:</strong> Acknowledged within 1 day, timeline per roadmap.</div>
+    <div class="cb-t"><strong>How to reach us:</strong> Post in the Endor Labs Slack channel (auto-creates a tracked ticket). For urgent items, tag Krishna directly.</div>
   </div></div>
 </div>
 
-<!-- CARD: Rep enablement -->
+<!-- Enablement -->
 <div class="c" onclick="this.classList.toggle('open')">
   <div class="c-top">
-    <div class="c-row1"><span class="c-name">Sales Rep Training — Loom Library + Office Hours</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-enbl">Enablement</span>
-      <span class="c-st s-rdy">Building</span>
-    </div>
-    <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · create videos</span></div>
+    <div class="c-row1"><span class="c-name">Enablement — Product Walkthrough + Rep Training</span><span class="c-chev">›</span></div>
+    <div class="c-row2"><span class="c-tag t-enbl">Enablement</span><span class="c-st s-sess">Scheduling</span></div>
+    <div class="c-own"><span class="own"><b class="mn">P</b>Perry · Leidy session</span><span class="own"><b class="mn">K</b>Krishna · rep videos</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">What We'll Provide</div>
-    <div class="cb-t">Short Loom videos (2-3 min each) covering the most common rep scenarios:</div>
-    <ol class="cb-steps">
-      <li>How to extend a quote's expiration date</li>
-      <li>How to reactivate an expired quote</li>
-      <li>How to use blueprints for discount scenarios</li>
-      <li>How to attach an externally-signed document to a quote</li>
-      <li>How to link (or change) a Salesforce opportunity on a quote</li>
-    </ol>
-    <div class="cb-t">We can also do one <strong>open office hours session</strong> where AEs bring live questions. Open invitation, low commitment. This usually surfaces the things reps don't know how to ask about.</div>
+    <div class="cb-t"><strong>For Leidy:</strong> Full product walkthrough from RevOps perspective with Perry (Head of CX). Krishna briefs Perry on Endor's setup beforehand. Scheduling this week.</div>
+    <div class="cb-t"><strong>For reps:</strong> Short Loom videos (2-3 min each): extending quote expiration, reactivating expired quotes, using blueprints, attaching external docs, linking SFDC opportunities. Plus one open office hours session where AEs bring live questions.</div>
   </div></div>
 </div>
 
-<!-- CARD: Reporting -->
+<!-- Reporting -->
 <div class="c" onclick="this.classList.toggle('open')">
   <div class="c-top">
     <div class="c-row1"><span class="c-name">Reports for Casey Meeting</span><span class="c-chev">›</span></div>
-    <div class="c-row2">
-      <span class="c-tag t-proc">Reporting</span>
-      <span class="c-st s-rdy">Building</span>
-    </div>
+    <div class="c-row2"><span class="c-tag t-proc">Reporting</span><span class="c-st s-rdy">Building</span></div>
     <div class="c-own"><span class="own"><b class="mn">K</b>Krishna · build reports</span></div>
   </div>
   <div class="c-body"><div class="c-body-in">
-    <div class="cb-l">Priority Reports</div>
-    <div class="cb-t"><strong>Quotes expiring this week (per rep)</strong> — already built and available in your Reporting section.</div>
-    <div class="cb-t"><strong>Quotes without Salesforce opportunity</strong> — cleanup backlog + ongoing monitoring. Building this week.</div>
-    <div class="cb-t"><strong>Discount usage by product and rep</strong> — for Casey's audit: who's discounting what, how often, how much. Will be ready for the Casey meeting.</div>
-
-    <div class="cb-l">Later</div>
-    <div class="cb-t">Contract health, CRM hygiene, and product-level pricing deviation reports come after the discount and lifecycle items are stable. We'll build these incrementally based on what Casey wants to see.</div>
+    <div class="cb-t"><strong>Quotes expiring this week (per rep)</strong> — already built, in your Reporting section.</div>
+    <div class="cb-t"><strong>Quotes without SFDC opportunity</strong> — cleanup backlog + ongoing monitoring. Building this week.</div>
+    <div class="cb-t"><strong>Discount usage by product and rep</strong> — who's discounting what, how often, how much. Ready for Casey meeting.</div>
+    <div class="cb-t"><strong>Later:</strong> Contract health, CRM hygiene, pricing deviations. After discount and lifecycle items stabilize.</div>
   </div></div>
 </div>
 </div>
@@ -499,16 +534,16 @@ body{font-family:'Red Hat Display',sans-serif;background:var(--bg);color:var(--b
 <div class="foot">
   <div class="foot-card">
     <div>
-      <div class="fc-l">The One Pattern That Solves Most of This</div>
-      <div class="fc-v"><strong>Schedule Change (Ramp) + Blueprint.</strong> This single mechanism solves the entrance discount, year-specific discounts, trial-to-paid conversion, and billing schedule accuracy. Once the "3 Months Free" blueprint is tested and deployed, reps have no reason to bypass MonetizeNow for discount scenarios.</div>
+      <div class="fc-l">Open Questions (4)</div>
+      <div class="fc-v"><strong>1.</strong> ARR during promo months — show $0 or full TCV? (Casey)<br><strong>2.</strong> Proration disable — which products? (Leidy/Casey)<br><strong>3.</strong> MSA — do renewals go through a CSM or auto-send? (Leidy)<br><strong>4.</strong> Reseller terms — replace customer terms or add to them? (Leidy/Legal)</div>
     </div>
     <div>
       <div class="fc-l">Pending from Endor</div>
-      <div class="fc-v"><strong>Leidy:</strong> Sandbox sign-off on discount blueprints. Confirm promo product phase-out timing. List of unlinked quotes for backend relink. <strong>Casey:</strong> Decision on proration toggle (product-level). ARR display preference during promo periods.</div>
+      <div class="fc-v"><strong>Leidy:</strong> Sandbox sign-off on blueprints. Reseller terms language from legal. Answers to 4 open questions. List of unlinked quotes for backend relink. <strong>Casey:</strong> Proration toggle decision. ARR preference.</div>
     </div>
     <div>
       <div class="fc-l">Pending from MonetizeNow</div>
-      <div class="fc-v"><strong>Krishna:</strong> Build blueprints in sandbox. Deploy validation + approval rules. Verify partner signing fix. Build discount report. Loom videos. <strong>Engineering:</strong> Template customization (cost disaggregation + billing schedule).</div>
+      <div class="fc-v"><strong>Krishna:</strong> Build blueprints in sandbox. Deploy validation + approval rules. Configure conditional terms (MSA + reseller). Verify partner fix. Build reports. Loom videos. <strong>Eng:</strong> Template (cost disaggregation + billing schedule + Y1 summary line).</div>
     </div>
   </div>
 </div>
