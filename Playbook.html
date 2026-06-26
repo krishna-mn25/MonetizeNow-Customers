@@ -420,7 +420,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
     </div>
   </div>
   <div class="topbar-right">
-    <span class="meta-pill">v1.0 · May 2026</span>
+    <span class="meta-pill"> · June 2026</span>
     <span class="meta-pill live">Production</span>
   </div>
 </div>
@@ -660,7 +660,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
 
   <!-- HUB FOOTER -->
   <div class="foot">
-    ENTR × MonetizeNow &nbsp;·&nbsp; Operating Runbook v1.0 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Maintained by MonetizeNow CX &nbsp;·&nbsp; Questions: <a href="#">Hello@monetizenow.com</a>
+    ENTR × MonetizeNow &nbsp;·&nbsp; Operating Runbook  &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Maintained by MonetizeNow CX &nbsp;·&nbsp; Questions: <a href="#">Hello@monetizenow.com</a>
   </div>
 
 </div>
@@ -1060,19 +1060,19 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
 
       <div class="g-card">
         <div class="g-term"><span class="g-name">Product</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Catalog</span></div>
-        <div class="g-d">A billable thing. Could be a subscription seat, a usage meter, a one-time service. The smallest commercial unit. Has a type (subscription, one-time, usage) and a billing pattern.</div>
+        <div class="g-d">A billable unit in the catalog. At ENTR: Platform Fee (annual subscription), User Seats (monthly or annual), feature add-ons like Label Proofing. Each product has a type (subscription, one-time, usage) and a billing pattern.</div>
         <div class="g-meta"><span><b>In MN:</b> Product</span> · <span><b>In HubSpot:</b> Product (mirrored)</span></div>
       </div>
 
       <div class="g-card">
         <div class="g-term"><span class="g-name">Offering</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Catalog</span></div>
-        <div class="g-d">A package of Products sold together. Maps to a customer-visible tier or bundle. Each Offering has a list of Required and Optional Products.</div>
-        <div class="g-meta"><span><b>In MN:</b> Offering</span> · <span><b>Example:</b> "Pro Plan" or "Enterprise Tier"</span></div>
+        <div class="g-d">A package of Products sold together. At ENTR, one Master Offering ("ENTR Platform") with Platform Fee as required and everything else optional. Reps build custom deals by toggling products on or off within this single offering.</div>
+        <div class="g-meta"><span><b>In MN:</b> Offering</span> · <span><b>ENTR:</b> "ENTR Platform" (single Master Offering)</span></div>
       </div>
 
       <div class="g-card">
         <div class="g-term"><span class="g-name">Rate (Rate Card)</span><span class="g-type" style="background:#EEF2FF; color:var(--mn-d); border:1px solid #C7D2FE;">Catalog</span></div>
-        <div class="g-d">The price applied to an Offering. Includes per-unit pricing, tiered pricing, volume breaks, currency, and billing frequency. One Offering can have multiple Rates (e.g. monthly vs annual).</div>
+        <div class="g-d">The price applied to an Offering. At ENTR: $7,500/year Platform Fee, $160/user/month for monthly seats, and annual user-based rates. One Offering can carry multiple Rates (monthly vs annual billing).</div>
         <div class="g-meta"><span><b>In MN:</b> Rate</span> · <span><b>Billing freq:</b> monthly, quarterly, annual</span></div>
       </div>
 
@@ -1787,7 +1787,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
     <div class="g2 mb20">
       <div class="panel">
         <div class="panel-title">Dunning sequence when charges fail</div>
-        <div class="panel-sub">Configured per ENTR policy in MN. Standard pattern shown.</div>
+        <div class="panel-sub">Not active at launch. All invoicing starts manual. When ENTR enables auto-charge in Phase 2, this is the standard pattern:</div>
         <div class="tbl-wrap" style="margin:0;">
           <table>
             <thead><tr><th>Attempt</th><th>When</th><th>Action</th></tr></thead>
@@ -1816,7 +1816,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
 
     <div class="co co-green">
       <span class="co-ico">●</span>
-      <div><strong>Day-to-day at ENTR.</strong> No one needs to log into Stripe. Finance audits any charge by clicking from an MN Invoice. Customer Success reads dunning state from MN. Stripe dashboard is for occasional inspection.</div>
+      <div><strong>Day-to-day at ENTR.</strong> No one needs to log into Stripe. Finance audits any charge by clicking from an MN Invoice. At launch, all invoicing is manual (no auto-invoice, no auto-charge). Auto-pay and dunning sequences are Phase 2, enabled after the team builds confidence with the first batch of live invoices.</div>
     </div>
 
   </div>
@@ -1832,7 +1832,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
     <div class="sec-head" style="margin-top:18px;">
       <div class="sec-eye">Part 3 · Section 09</div>
       <h1 class="sec-h">QuickBooks · Today vs Future</h1>
-      <p class="sec-lede">Today, ENTR does not invoice from QuickBooks. There is no live integration between MN and QBO. Finance pulls invoice, payment, credit, and revenue data from MN reports and continues working in QBO as they always have. A QBO connection only becomes relevant if ENTR decides to post MN invoices into QBO at some point. Both states are covered below.</p>
+      <p class="sec-lede">Today, ENTR does not have a live integration between MN and QBO. Gentry's third-party accountants manage QBO separately. Finance pulls invoice, payment, credit, and revenue data from MN reports and posts to QBO on their close cadence. QBO connection is Phase 2, pending accountants granting admin access.</p>
     </div>
 
     <!-- Mode toggle -->
@@ -1962,7 +1962,10 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
         </div>
 
         <div style="margin-top:16px; padding:12px 14px; background:var(--qb-b); border:1px solid var(--qb-br); border-radius:8px; font-size:12px; color:var(--qb-d); line-height:1.55;">
-          <strong>Where these live:</strong> MN platform, under <em>Reporting → QuickBooks Reports</em>. Each report is downloadable as CSV. Finance pulls what they need on close cadence (typically monthly). Direct links available from inside MN.
+          <strong>Where these live:</strong> MN platform, under <em>Reporting</em>. Each report is downloadable as CSV. Finance pulls what they need on close cadence (typically monthly).<br><br>
+          <strong>ENTR live reports:</strong><br>
+          <a href="https://reporting.monetizeplatform.com/question/52010-arr-basic-report" target="_blank" style="color:var(--qb-d); font-weight:600;">ARR Basic Report</a>  · active contract ARR, drillable by account<br>
+          <a href="https://reporting.monetizeplatform.com/question/52042-invoice-audit-paid-unpaid" target="_blank" style="color:var(--qb-d); font-weight:600;">Invoice Audit (Paid/Unpaid)</a>  · full invoice register with payment status, for reconciliation
         </div>
       </div>
 
@@ -2452,7 +2455,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
           <div class="r-ico cpq">C</div>
           <div>
             <div class="r-name">CPQ Admin</div>
-            <div class="r-who">Typically RevOps · one person</div>
+            <div class="r-who">Chelsea · RevOps + Primary Seller</div>
           </div>
         </div>
         <div class="r-section">Owns</div>
@@ -2476,7 +2479,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
           <div class="r-ico bill">B</div>
           <div>
             <div class="r-name">Billing / Finance Admin</div>
-            <div class="r-who">Typically Finance · one person</div>
+            <div class="r-who">Gentry · Finance (third-party accountants manage QBO)</div>
           </div>
         </div>
         <div class="r-section">Owns</div>
@@ -2501,7 +2504,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
           <div class="r-ico tech">T</div>
           <div>
             <div class="r-name">Technical Admin</div>
-            <div class="r-who">Typically IT · part-time</div>
+            <div class="r-who">Chelsea (HubSpot Super Admin) + MN CX support</div>
           </div>
         </div>
         <div class="r-section">Owns</div>
@@ -2525,7 +2528,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
           <div class="r-ico spon">E</div>
           <div>
             <div class="r-name">Executive Sponsor</div>
-            <div class="r-who">Typically Finance or RevOps leader</div>
+            <div class="r-who">Kristin · Decision-maker + Secondary Seller</div>
           </div>
         </div>
         <div class="r-section">Owns</div>
@@ -2568,18 +2571,18 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
     <!-- Realistic coverage -->
     <div class="panel">
       <div class="panel-title">Realistic coverage at ENTR's stage</div>
-      <div class="panel-sub">A dedicated hire per role is not required. Most companies of similar shape combine roles like this:</div>
+      <div class="panel-sub">ENTR is a 2-seller team with a lean finance setup. Here is how roles map today:</div>
       <div class="g3">
-        <div style="background:var(--soft); border-radius:8px; padding:14px;">
-          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Minimum</div>
-          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">One person from RevOps covers CPQ Admin + Executive Sponsor proxy. One person from Finance covers Billing Admin. IT covers Technical Admin part-time.</div>
-        </div>
-        <div style="background:var(--soft); border-radius:8px; padding:14px;">
-          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Typical</div>
-          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Dedicated CPQ Admin in RevOps. Dedicated Billing Admin in Finance. IT covers Technical. CFO or VP RevOps is Exec Sponsor.</div>
-        </div>
         <div style="background:#EEF2FF; border:1px solid #C7D2FE; border-radius:8px; padding:14px;">
-          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Mature</div>
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">ENTR Today</div>
+          <div style="font-size:12.5px; color:var(--mn-d); line-height:1.55;">Chelsea covers CPQ Admin + Technical Admin (HubSpot Super Admin, catalog owner, makes updates directly in Live). Gentry covers Billing/Finance with third-party accountants managing QBO. Kristin is Executive Sponsor and secondary seller. MN CX handles integration health and escalations.</div>
+        </div>
+        <div style="background:var(--soft); border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">Approval Pattern</div>
+          <div style="font-size:12.5px; color:var(--ink-3); line-height:1.55;">Peer approval: Chelsea approves Kristin's deals, Kristin approves Chelsea's. Optional, light touch. No escalation tiers needed at current volume. Easy to expand later if the team grows.</div>
+        </div>
+        <div style="background:var(--soft); border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--mn-d); margin-bottom:6px;">At Scale</div>
           <div style="font-size:12.5px; color:var(--mn-d); line-height:1.55;">Separate CPQ Admin and Billing Operations roles. Dedicated Technical Admin. Cross-functional revenue ops council that meets monthly.</div>
         </div>
       </div>
@@ -2595,7 +2598,7 @@ table tbody td code{font-family:'JetBrains Mono',monospace; font-size:11.5px; ba
 
 <!-- Footer outside the hub (for non-hub views) -->
 <div class="foot">
-  ENTR × MonetizeNow &nbsp;·&nbsp; Operating Runbook v1.0 &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Maintained by MonetizeNow CX
+  ENTR × MonetizeNow &nbsp;·&nbsp; Operating Runbook  &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Maintained by MonetizeNow CX
 </div>
 
 </div><!-- /#runbook -->
