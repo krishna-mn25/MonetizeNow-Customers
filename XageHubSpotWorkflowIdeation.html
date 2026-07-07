@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xage Option 2 — Solution Vision Map</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.5;padding:24px}
+.header{background:#0521AB;color:#fff;padding:32px 40px;border-radius:16px;margin-bottom:32px}
+.header h1{font-size:28px;font-weight:700;margin-bottom:4px}
+.header p{color:#D3EEF4;font-size:14px}
+.section{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.section h2{font-size:20px;font-weight:700;color:#0521AB;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #D3EEF4}
+.section h3{font-size:15px;font-weight:600;color:#334155;margin:16px 0 8px}
+
+/* Lifecycle Chain */
+.chain{display:flex;gap:4px;overflow-x:auto;padding:16px 0}
+.stage{flex:0 0 auto;width:140px;text-align:center;position:relative}
+.stage-box{background:#f1f5f9;border:2px solid #e2e8f0;border-radius:10px;padding:12px 8px;min-height:80px;display:flex;flex-direction:column;justify-content:center;cursor:pointer;transition:all .2s}
+.stage-box:hover{border-color:#0521AB;background:#f0f4ff}
+.stage-box.mn{background:#EFF6FF;border-color:#93c5fd}
+.stage-box.hs{background:#fef3c7;border-color:#fcd34d}
+.stage-box.wf{background:#f0fdf4;border-color:#86efac}
+.stage-box.final{background:#0521AB;border-color:#0521AB;color:#fff}
+.stage-num{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:4px}
+.stage-box.mn .stage-num{color:#3b82f6}
+.stage-box.hs .stage-num{color:#d97706}
+.stage-box.wf .stage-num{color:#16a34a}
+.stage-box.final .stage-num{color:#D3EEF4}
+.stage-label{font-size:12px;font-weight:600;line-height:1.3}
+.stage-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:#94a3b8;font-size:18px;z-index:1}
+.stage:last-child .stage-arrow{display:none}
+
+/* Detail cards */
+.detail{display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-top:8px;font-size:13px;text-align:left}
+.detail.open{display:block}
+.detail-fields{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.field-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.field-tag.sync{background:#dbeafe;color:#1d4ed8}
+.field-tag.wf{background:#dcfce7;color:#166534}
+.field-tag.computed{background:#fef3c7;color:#92400e}
+.field-tag.nochange{background:#f1f5f9;color:#64748b}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{background:#0521AB;color:#fff;padding:10px 12px;text-align:left;font-size:12px;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even){background:#f8fafc}
+tr.red td{background:#fef2f2}
+tr.amber td{background:#fef3c7}
+tr.green td{background:#f0fdf4}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}
+.badge.mn{background:#dbeafe;color:#1d4ed8}
+.badge.wf{background:#dcfce7;color:#166534}
+.badge.hs{background:#fef3c7;color:#92400e}
+.badge.gap{background:#fef2f2;color:#dc2626}
+.badge.ok{background:#f0fdf4;color:#16a34a}
+
+/* Decision tree */
+.tree{padding:12px 0}
+.tree-row{display:flex;align-items:flex-start;gap:12px;padding:8px 12px;margin:4px 0;border-radius:6px;font-size:13px}
+.tree-row.match{background:#f0fdf4;border-left:3px solid #16a34a}
+.tree-row.partial{background:#fef3c7;border-left:3px solid #d97706}
+.tree-row.blocked{background:#fef2f2;border-left:3px solid #dc2626}
+.tree-cond{font-weight:600;min-width:220px;flex-shrink:0}
+.tree-action{color:#475569}
+
+/* Callout boxes */
+.callout{padding:12px 16px;border-radius:8px;margin:12px 0;font-size:13px}
+.callout.warn{background:#fef3c7;border-left:3px solid #d97706;color:#92400e}
+.callout.info{background:#eff6ff;border-left:3px solid #0521AB;color:#1e40af}
+.callout.gap{background:#fef2f2;border-left:3px solid #dc2626;color:#991b1b}
+.callout.task{background:#f0fdf4;border-left:3px solid #16a34a;color:#166534}
+.callout strong{display:block;margin-bottom:4px}
+
+/* Task list */
+.task-list{list-style:none;padding:0}
+.task-list li{padding:8px 12px;margin:4px 0;border-radius:6px;font-size:13px;display:flex;gap:8px;align-items:flex-start}
+.task-list li::before{content:"☐";flex-shrink:0;font-size:14px}
+.task-list li.prereq{background:#fef3c7}
+.task-list li.build{background:#eff6ff}
+.task-list li.verify{background:#f0fdf4}
+.task-list li.ask{background:#fef2f2}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;font-size:12px}
+.legend-item{display:flex;align-items:center;gap:4px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Option 2: Solution Vision Map</h1>
+  <p>Xage HubSpot Line Item Accuracy — End-to-End Workflow Design</p>
+</div>
+
+<!-- ═══ SECTION 1: LIFECYCLE CHAIN ═══ -->
+<div class="section">
+  <h2>1. End-to-End Lifecycle</h2>
+  <p style="font-size:13px;color:#64748b;margin-bottom:8px">Click any stage to see what happens at that step.</p>
+  
+  <div class="legend">
+    <div class="legend-item"><span style="width:12px;height:12px;background:#dbeafe;border-radius:3px;display:inline-block"></span> MN action</div>
+    <div class="legend-item"><span style="width:12px;height:12px;background:#fef3c7;border-radius:3px;display:inline-block"></span> HubSpot action</div>
+    <div class="legend-item"><span style="width:12px;height:12px;background:#dcfce7;border-radius:3px;display:inline-block"></span> Workflow action</div>
+  </div>
+
+  <div class="chain" id="chain">
+    <div class="stage" onclick="toggle('d1')">
+      <div class="stage-box hs"><div class="stage-num">Stage 1</div><div class="stage-label">Deal Created in HS</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d1">
+        <b>Rep creates deal in HubSpot.</b><br>
+        No MN data yet. HS native fields are empty or default.<br>
+        <span style="color:#64748b">No line items exist at this point.</span>
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d2')">
+      <div class="stage-box mn"><div class="stage-num">Stage 2</div><div class="stage-label">Quote Draft in MN</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d2">
+        <b>Rep starts quote in MN.</b> MN creates opportunity + syncs deal properties to HS.<br>
+        <b>First line item sync fires:</b>
+        <div class="detail-fields">
+          <span class="field-tag sync">name = product name</span>
+          <span class="field-tag sync">qty = 1</span>
+          <span class="field-tag sync">price = draft amount</span>
+          <span class="field-tag sync">start/end dates</span>
+        </div>
+        <b>Deal properties also sync:</b> monetize_quote_status = DRAFT, monetize_quote_type, all monetize_quoteitem_* properties.
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d3')">
+      <div class="stage-box mn"><div class="stage-num">Stage 3</div><div class="stage-label">Quote Updates</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d3">
+        <b>Every quote save in MN triggers re-sync.</b><br>
+        Line items updated: price may change as rep adjusts products, quantities, discounts.<br>
+        monetize_ deal properties update with each save.<br>
+        <div class="callout warn"><strong>⚠ Workflow should NOT fire here.</strong>Data is in flux. Workflow only runs after PROCESSED status.</div>
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d4')">
+      <div class="stage-box mn"><div class="stage-num">Stage 4</div><div class="stage-label">Approval + Sent</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d4">
+        <b>Quote goes through approval chain.</b><br>
+        monetize_quote_status changes: REVIEW → APPROVED → SENT<br>
+        Line item values may adjust during approval iterations.<br>
+        MN re-syncs on each status change.
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d5')">
+      <div class="stage-box hs"><div class="stage-num">Stage 5</div><div class="stage-label">Closed Won in HS</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d5">
+        <b>Heather marks deal as Closed Won in HubSpot.</b><br>
+        HS deal stage changes. <b>Existing HS workflows fire</b> (pipeline stage automations, notifications, etc).<br>
+        <div class="callout warn"><strong>⚠ MN quote is NOT yet processed.</strong>
+        Line item values are still from the latest MN sync (qty=1, price=amount). Heather may see "incorrect" values but they will be corrected after MN processing + workflow.</div>
+        <b>This is Xage's fixed sequence:</b> Closed Won always happens before MN processing. Cannot change.
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d6')">
+      <div class="stage-box mn"><div class="stage-num">Stage 6</div><div class="stage-label">Quote Processed in MN</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d6">
+        <b>Heather processes quote in MN.</b> This is the final MN action.<br>
+        <b>MN fires FINAL sync to HS:</b>
+        <div class="detail-fields">
+          <span class="field-tag sync">qty = 1 (final)</span>
+          <span class="field-tag sync">price = final total amount</span>
+          <span class="field-tag sync">start/end dates (final)</span>
+          <span class="field-tag sync">name (final)</span>
+        </div>
+        <b>Deal properties update:</b> monetize_quote_status = <b>PROCESSED</b>, all monetize_quoteitem_* fields carry final accurate values.<br>
+        <div class="callout info"><strong>This is the trigger point for the workflow.</strong>
+        After this sync, no further MN updates will occur (quote is locked post-processing). Safe for workflow to make its updates.</div>
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d7')">
+      <div class="stage-box wf"><div class="stage-num">Stage 7</div><div class="stage-label">Workflow Fires</div></div>
+      <span class="stage-arrow">→</span>
+      <div class="detail" id="d7">
+        <b>Trigger:</b> monetize_quote_status = PROCESSED<br>
+        <b>Workflow reads monetize_ deal properties and updates native HS line item fields:</b>
+        <div class="detail-fields">
+          <span class="field-tag wf">billing_frequency → from MN billing data</span>
+          <span class="field-tag wf">recurring/one-time → from MN product type</span>
+          <span class="field-tag wf">term → from MN contract length</span>
+        </div>
+        <b>After workflow updates these fields, HubSpot auto-recomputes:</b>
+        <div class="detail-fields">
+          <span class="field-tag computed">ARR (from price × freq)</span>
+          <span class="field-tag computed">MRR (from ARR / 12)</span>
+          <span class="field-tag computed">TCV</span>
+          <span class="field-tag computed">ACV</span>
+        </div>
+        <div class="callout task"><strong>Key: workflow runs ONCE after processing.</strong>No re-runs needed. Quote is locked. MN won't overwrite. This is the final state.</div>
+      </div>
+    </div>
+
+    <div class="stage" onclick="toggle('d8')">
+      <div class="stage-box final"><div class="stage-num">Stage 8</div><div class="stage-label">Final State ✓</div></div>
+      <div class="detail" id="d8">
+        <b>HS line items now reflect:</b><br>
+        • qty = 1, price = total (MN sync — keeps amount correct)<br>
+        • billing_frequency = correct value (workflow)<br>
+        • recurring/one-time = correct (workflow)<br>
+        • term = contract length (workflow)<br>
+        • ARR = recomputed by HS using updated frequency<br>
+        • amount = correct (was always correct via MN sync)<br><br>
+        <b>For reporting:</b> Any fields not natively accurate (quantity, unit price, discount) → use monetize_ deal properties in reports.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2: FIELD OWNERSHIP ═══ -->
+<div class="section">
+  <h2>2. Field Ownership Matrix</h2>
+  <p style="font-size:13px;color:#64748b;margin-bottom:12px">Every field has exactly ONE owner. No overlap. No stepping on each other.</p>
+  
+  <table>
+    <tr>
+      <th>HS Line Item Field</th>
+      <th>Owner</th>
+      <th>Value Source</th>
+      <th>When Updated</th>
+      <th>Accurate?</th>
+    </tr>
+    <tr class="green">
+      <td><b>Name</b></td>
+      <td><span class="badge mn">MN Sync</span></td>
+      <td>MN product name</td>
+      <td>Every MN sync event</td>
+      <td><span class="badge ok">✓ Accurate</span></td>
+    </tr>
+    <tr>
+      <td><b>Quantity</b></td>
+      <td><span class="badge mn">MN Sync</span></td>
+      <td>Always 1 (by design)</td>
+      <td>Every MN sync event</td>
+      <td><span class="badge gap">≠ MN qty</span></td>
+    </tr>
+    <tr>
+      <td><b>Price</b></td>
+      <td><span class="badge mn">MN Sync</span></td>
+      <td>Total line item amount</td>
+      <td>Every MN sync event</td>
+      <td><span class="badge gap">≠ unit price</span></td>
+    </tr>
+    <tr class="green">
+      <td><b>Start Date</b></td>
+      <td><span class="badge mn">MN Sync</span></td>
+      <td>Quote offering start date</td>
+      <td>Every MN sync event</td>
+      <td><span class="badge ok">✓ Accurate</span></td>
+    </tr>
+    <tr class="green">
+      <td><b>End Date</b></td>
+      <td><span class="badge mn">MN Sync</span></td>
+      <td>Quote offering end date</td>
+      <td>Every MN sync event</td>
+      <td><span class="badge ok">✓ Accurate</span></td>
+    </tr>
+    <tr class="green">
+      <td><b>Billing Frequency</b></td>
+      <td><span class="badge wf">Workflow</span></td>
+      <td>monetize_ billing frequency property</td>
+      <td>After PROCESSED only</td>
+      <td><span class="badge ok">✓ ~95%</span></td>
+    </tr>
+    <tr class="green">
+      <td><b>Recurring / One-time</b></td>
+      <td><span class="badge wf">Workflow</span></td>
+      <td>monetize_quoteitem_product_type</td>
+      <td>After PROCESSED only</td>
+      <td><span class="badge ok">✓ Accurate</span></td>
+    </tr>
+    <tr class="green">
+      <td><b>Term</b></td>
+      <td><span class="badge wf">Workflow</span></td>
+      <td>MN contract length in months</td>
+      <td>After PROCESSED only</td>
+      <td><span class="badge ok">✓ Accurate</span></td>
+    </tr>
+    <tr class="amber">
+      <td><b>ARR</b></td>
+      <td><span class="badge hs">HS Computed</span></td>
+      <td>price × qty × (12 / billing_months)</td>
+      <td>Auto after any field change</td>
+      <td><span class="badge ok">✓ full-year</span> <span class="badge gap">≈ prorated</span></td>
+    </tr>
+    <tr class="amber">
+      <td><b>MRR</b></td>
+      <td><span class="badge hs">HS Computed</span></td>
+      <td>ARR / 12</td>
+      <td>Auto after any field change</td>
+      <td><span class="badge ok">✓ full-year</span> <span class="badge gap">≈ prorated</span></td>
+    </tr>
+    <tr class="green">
+      <td><b>Amount</b></td>
+      <td><span class="badge hs">HS Computed</span></td>
+      <td>price × qty = total × 1 = total</td>
+      <td>Auto</td>
+      <td><span class="badge ok">✓ Always correct</span></td>
+    </tr>
+    <tr>
+      <td><b>Unit Discount</b></td>
+      <td><span class="badge mn">MN Sync</span></td>
+      <td>0 (embedded in price)</td>
+      <td>Every MN sync event</td>
+      <td><span class="badge gap">≠ MN discount</span></td>
+    </tr>
+  </table>
+
+  <div class="callout info">
+    <strong>Fields marked ≠: not inaccurate, just not matching MN's per-unit breakdown.</strong>
+    For reporting on these fields (quantity, unit price, discount), use the monetize_ deal properties which carry accurate values. This is the reporting transition work (Option 2A/2B in the presentation).
+  </div>
+</div>
+
+<!-- ═══ SECTION 3: WORKFLOW DECISION LOGIC ═══ -->
+<div class="section">
+  <h2>3. Workflow Decision Logic</h2>
+  
+  <h3>Trigger</h3>
+  <div class="callout info">
+    <strong>When: Deal property monetize_quote_status changes to PROCESSED</strong>
+    This fires AFTER MN's final sync. Quote is locked. No further MN updates will occur. Safe to write.
+  </div>
+
+  <h3>Billing Frequency Mapping</h3>
+  <div class="tree">
+    <div class="tree-row match">
+      <span class="tree-cond">MN = MONTHLY (1 month)</span>
+      <span class="tree-action">→ Set hs_recurring_billing_period = <b>"monthly"</b></span>
+    </div>
+    <div class="tree-row match">
+      <span class="tree-cond">MN = QUARTERLY (3 months)</span>
+      <span class="tree-action">→ Set <b>"quarterly"</b></span>
+    </div>
+    <div class="tree-row match">
+      <span class="tree-cond">MN = SEMI_ANNUALLY (6 months)</span>
+      <span class="tree-action">→ Set <b>"semi_annually"</b></span>
+    </div>
+    <div class="tree-row match">
+      <span class="tree-cond">MN = ANNUALLY (12 months)</span>
+      <span class="tree-action">→ Set <b>"annually"</b></span>
+    </div>
+    <div class="tree-row match">
+      <span class="tree-cond">MN = BIENNIALLY (24 months)</span>
+      <span class="tree-action">→ Set <b>"per_two_years"</b></span>
+    </div>
+    <div class="tree-row match">
+      <span class="tree-cond">MN = TRIENNIALLY (36 months)</span>
+      <span class="tree-action">→ Set <b>"per_three_years"</b></span>
+    </div>
+    <div class="tree-row blocked">
+      <span class="tree-cond">MN = CUSTOM (7, 4, 11, etc.)</span>
+      <span class="tree-action">→ <b>No matching HS value.</b> See 95/5% handling below.</span>
+    </div>
+  </div>
+
+  <h3>Recurring / One-time Mapping</h3>
+  <div class="tree">
+    <div class="tree-row match">
+      <span class="tree-cond">MN product_type = ADVANCE</span>
+      <span class="tree-action">→ Set as <b>Recurring</b></span>
+    </div>
+    <div class="tree-row match">
+      <span class="tree-cond">MN product_type = ONE_TIME</span>
+      <span class="tree-action">→ Set as <b>One-time</b></span>
+    </div>
+    <div class="tree-row partial">
+      <span class="tree-cond">MN product_type = ARREARS / USAGE</span>
+      <span class="tree-action">→ <b>TBD:</b> How should usage products be classified?</span>
+    </div>
+  </div>
+
+  <h3>Term Mapping</h3>
+  <div class="tree">
+    <div class="tree-row match">
+      <span class="tree-cond">MN contractLength available</span>
+      <span class="tree-action">→ Set hs_term_in_months = MN contract length (e.g., 12)</span>
+    </div>
+    <div class="tree-row partial">
+      <span class="tree-cond">Contract is partial month (11m 30d)</span>
+      <span class="tree-action">→ Round to nearest month (12)? Or leave exact? <b>Need Xage input.</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: 95/5% HANDLING ═══ -->
+<div class="section">
+  <h2>4. The 95% / 5% Split</h2>
+  
+  <h3>95% — Standard billing frequencies</h3>
+  <div class="callout task">
+    <strong>These map 1:1 to HubSpot values. Workflow handles them automatically.</strong>
+    Monthly, quarterly, semi-annual, annual, bi-annual, tri-annual → direct match. No human intervention needed.
+  </div>
+
+  <p style="margin:12px 0;font-size:14px"><b>ARR accuracy for the 95%:</b></p>
+  <table>
+    <tr><th>Deal type</th><th>MN Amount</th><th>HS ARR after workflow</th><th>MN ARR</th><th>Match?</th></tr>
+    <tr class="green">
+      <td>Full-year annual (no proration)</td>
+      <td>$4,712.77</td>
+      <td>$4,712.77 × (12/12) = $4,712.77</td>
+      <td>$4,712.77</td>
+      <td><span class="badge ok">✓ Exact</span></td>
+    </tr>
+    <tr class="amber">
+      <td>Prorated annual (11m 30d)</td>
+      <td>$4,700.10</td>
+      <td>$4,700.10 × (12/12) = $4,700.10</td>
+      <td>$4,712.77</td>
+      <td><span class="badge gap">Off by $12.67</span></td>
+    </tr>
+  </table>
+
+  <div class="callout warn">
+    <strong>Prorated deals: HS ARR will always differ from MN ARR by the proration gap.</strong>
+    HS computes ARR = price × (12/period). MN's price is the prorated total. HS annualizes the prorated amount at 1:1 for annual billing, producing a lower ARR than MN's annualized calculation.
+    <br><br>
+    <b>Workaround:</b> For exact ARR in reports, use <code>monetize_quoteitem_arr</code> deal property. For HS-computed ARR, the gap is small and only affects prorated deals (typically net-new or mid-term amendments, not renewals).
+    <br><br>
+    <b>Question for Xage:</b> Is this gap acceptable? Most renewals are full-year (no gap). Net-new deals starting mid-period will have a small ARR gap. The monetize_ ARR property always has the exact number.
+  </div>
+
+  <h3>5% — Custom billing frequencies (7-month, 4-month, etc.)</h3>
+  
+  <div class="callout gap">
+    <strong>HubSpot will not accept custom month values for billing frequency.</strong>
+    The workflow cannot set "7-month" or "4-month." Options:
+  </div>
+
+  <table>
+    <tr><th>Approach</th><th>What happens</th><th>ARR impact</th><th>Human intervention?</th></tr>
+    <tr>
+      <td><b>A: Round to nearest</b><br>7-month → semi_annually</td>
+      <td>HS accepts the value. Billing frequency shows "semi-annually" instead of 7-month.</td>
+      <td>HS ARR = price × (12/6) = 2× price. <b>Wrong.</b> Doubles the ARR.</td>
+      <td>No, but ARR is very wrong.</td>
+    </tr>
+    <tr>
+      <td><b>B: Set to annually</b><br>Always default to annual</td>
+      <td>HS accepts. Shows "annually."</td>
+      <td>HS ARR = price × (12/12) = price. For a 7-month deal, this understates ARR.</td>
+      <td>No, but ARR is understated.</td>
+    </tr>
+    <tr style="background:#f0fdf4">
+      <td><b>C: Leave blank</b><br>Don't set billing frequency for custom deals</td>
+      <td>HS may show default or "--". Billing frequency absent.</td>
+      <td>HS ARR may default to 0 or compute incorrectly.</td>
+      <td>No workflow action. Reports use monetize_ ARR.</td>
+    </tr>
+    <tr>
+      <td><b>D: Flag for Heather</b><br>Set a custom property "needs_review" = true</td>
+      <td>HS shows whatever default. A separate report flags these deals for manual review.</td>
+      <td>HS ARR may be wrong. monetize_ ARR is correct.</td>
+      <td>Yes, Heather reviews flagged deals.</td>
+    </tr>
+  </table>
+
+  <div class="callout warn">
+    <strong>Decision needed from Xage:</strong> Which approach for the ~5%? Our recommendation is <b>Option C or D</b>. Reports that need accurate ARR for these deals should use monetize_quoteitem_arr. The workflow handles the 95% correctly. The 5% gets flagged or left for the monetize_ property to carry.
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: SEQUENCE PROTECTION ═══ -->
+<div class="section">
+  <h2>5. Sequence Protection: Closed Won → Processed</h2>
+  
+  <div style="display:flex;gap:12px;margin:16px 0;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px;background:#fef3c7;border-radius:8px;padding:16px">
+      <b style="color:#92400e">❌ What used to happen (the "undoing" problem)</b>
+      <ol style="margin:8px 0;padding-left:20px;font-size:13px;color:#78350f">
+        <li>Heather manually corrects HS line item values</li>
+        <li>Heather marks deal Closed Won in HS</li>
+        <li>She expects nothing to change</li>
+        <li>She processes quote in MN</li>
+        <li>MN fires final sync → <b>overwrites her corrections</b></li>
+        <li>HS values back to "incorrect"</li>
+      </ol>
+    </div>
+    <div style="flex:1;min-width:280px;background:#f0fdf4;border-radius:8px;padding:16px">
+      <b style="color:#166534">✓ How it works now with Option 2</b>
+      <ol style="margin:8px 0;padding-left:20px;font-size:13px;color:#14532d">
+        <li>Heather does NOT manually correct HS values</li>
+        <li>She marks deal Closed Won in HS</li>
+        <li>She processes quote in MN</li>
+        <li>MN fires final sync (qty=1, price=total, dates)</li>
+        <li>monetize_quote_status = PROCESSED</li>
+        <li><b>Workflow fires:</b> sets billing freq, recurring/one-time, term</li>
+        <li>HS recomputes ARR/MRR from updated fields</li>
+        <li>Final state reached. No further updates.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="callout info">
+    <strong>The key change:</strong> Heather stops manually correcting HS values. The workflow does it after MN processing. MN sync and workflow never conflict because:
+    <br>• MN owns: qty, price, dates (writes on every sync)
+    <br>• Workflow owns: billing freq, recurring/one-time, term (writes only after PROCESSED)
+    <br>• No field has two owners. No stepping on each other.
+  </div>
+</div>
+
+<!-- ═══ SECTION 6: KNOWN GAPS ═══ -->
+<div class="section">
+  <h2>6. Known Gaps (Things That Won't Be Solved)</h2>
+  
+  <table>
+    <tr><th>Gap</th><th>Why</th><th>Workaround</th></tr>
+    <tr class="red">
+      <td><b>HS line item qty = 1</b></td>
+      <td>Required by HS amount calculation. Cannot change.</td>
+      <td>Reports use <code>monetize_quoteitem_quantity</code></td>
+    </tr>
+    <tr class="red">
+      <td><b>HS line item price = total</b></td>
+      <td>Required for amount accuracy. Cannot change.</td>
+      <td>Reports use <code>monetize_quoteitem_unit_price</code></td>
+    </tr>
+    <tr class="red">
+      <td><b>HS discount = 0</b></td>
+      <td>Embedded in price. HS applies discount at wrong step.</td>
+      <td>Reports use <code>monetize_quoteitem_discount_*</code></td>
+    </tr>
+    <tr class="amber">
+      <td><b>ARR gap on prorated deals</b></td>
+      <td>HS computes ARR from prorated price, not annualized. Small gap ($12.67 on SEMPRE).</td>
+      <td>Reports use <code>monetize_quoteitem_arr</code> for exact ARR</td>
+    </tr>
+    <tr class="amber">
+      <td><b>~5% custom billing freq</b></td>
+      <td>HS won't accept 7-month, 4-month, etc.</td>
+      <td>Decision needed: round, default, or flag</td>
+    </tr>
+  </table>
+
+  <div class="callout info">
+    <strong>These gaps only matter for reports using native HS line item fields.</strong>
+    Reports using monetize_ deal properties have accurate values for ALL fields including quantity, unit price, discount, ARR, MRR. The Option 2A/2B reporting transition work addresses this.
+  </div>
+</div>
+
+<!-- ═══ SECTION 7: PREREQUISITES + TASKS ═══ -->
+<div class="section">
+  <h2>7. Prerequisites + Task List</h2>
+  
+  <h3>Prerequisites (must be done before workflow can be built)</h3>
+  <ul class="task-list">
+    <li class="prereq"><b>MN ships billing frequency as a deal property.</b> Sandeep committed by June 29. MN data source: <code>billingFrequency</code> (ANNUALLY, MONTHLY, etc.) + <code>billingFrequencyInMonths</code> (12, 7, etc.) from quote offering. Property name TBD when shipped. <span class="badge mn">MN eng — June 29</span></li>
+    <li class="prereq"><b>Disable existing SimpleStrat line item correction workflows.</b> These will conflict with the new workflow. Ryan to identify which ones touch line item fields. <span class="badge wf">Ryan — before go-live</span></li>
+  </ul>
+
+  <h3>Confirmed property names (for workflow logic)</h3>
+  <table>
+    <tr><th>What</th><th>Property name</th><th>Where it lives</th><th>Status</th></tr>
+    <tr class="green"><td>Product type (recurring/one-time)</td><td><code>monetize_quoteitem_product_type</code></td><td>HS line item</td><td>Already synced</td></tr>
+    <tr class="green"><td>Offering start date</td><td><code>monetize_quoteoffering_effective_date</code></td><td>HS line item</td><td>Already synced</td></tr>
+    <tr class="green"><td>Offering end date</td><td><code>monetize_quoteoffering_end_date</code></td><td>HS line item</td><td>Already synced</td></tr>
+    <tr class="green"><td>Quote status (workflow trigger)</td><td><code>monetize_quote_status</code></td><td>HS deal</td><td>Already synced</td></tr>
+    <tr class="green"><td>ARR</td><td><code>monetize_quoteitem_arr</code></td><td>HS line item</td><td>Already synced</td></tr>
+    <tr class="amber"><td>Billing frequency</td><td>TBD (Sandeep shipping by June 29)</td><td>HS deal</td><td>Being built</td></tr>
+    <tr class="green"><td>Contract length (term)</td><td>Derive from start/end dates above</td><td>HS line item</td><td>Available today</td></tr>
+  </table>
+
+  <h3>Build plan (MN builds sample → Ryan validates and extends)</h3>
+  <ul class="task-list">
+    <li class="build"><b>MN (Krishna) builds sample workflow for billing frequency mapping.</b> Trigger: monetize_quote_status = PROCESSED. Maps MN billing frequency → HS hs_recurring_billing_period per decision tree in Section 3. Tested on 2-3 sample deals. <span class="badge mn">Krishna</span></li>
+    <li class="build"><b>MN (Krishna) builds sample workflow for recurring/one-time.</b> Reads monetize_quoteitem_product_type. ADVANCE → recurring, ONE_TIME → one-time. <span class="badge mn">Krishna</span></li>
+    <li class="build"><b>MN (Krishna) builds sample workflow for term.</b> Derives contract months from monetize_quoteoffering_effective_date and end_date. Sets hs_term_in_months. <span class="badge mn">Krishna</span></li>
+    <li class="build"><b>Ryan validates sample workflows.</b> Tests against broader deal set. Checks for conflicts with existing automations. Extends for any Xage-specific edge cases MN may have missed. <span class="badge wf">Ryan</span></li>
+    <li class="build"><b>Ryan handles 5% custom billing.</b> Implements chosen approach (C or D) for non-standard frequencies based on Xage's decision. <span class="badge wf">Ryan</span></li>
+  </ul>
+
+  <h3>Verify (test scenarios)</h3>
+  <ul class="task-list">
+    <li class="verify"><b>Annual deal, full year (no proration):</b> billing freq = annually, ARR matches MN ARR exactly, amount correct.</li>
+    <li class="verify"><b>Annual deal, prorated (like SEMPRE 11m30d):</b> billing freq = annually, ARR = price (small gap vs MN ARR — expected), amount correct.</li>
+    <li class="verify"><b>One-time product:</b> classified as one-time, no billing frequency set, amount correct.</li>
+    <li class="verify"><b>Custom billing (7-month):</b> chosen approach works, monetize_quoteitem_arr carries exact ARR.</li>
+    <li class="verify"><b>Closed Won → Processed sequence:</b> workflow fires after MN final sync, values stick, no undoing.</li>
+    <li class="verify"><b>Quote update after processing:</b> no MN re-sync fires (quote locked), workflow doesn't re-trigger.</li>
+  </ul>
+
+  <h3>One decision from Xage</h3>
+  <ul class="task-list">
+    <li class="ask"><b>5% custom billing: which approach?</b> Option C (leave blank, use monetize_ ARR for reporting) or Option D (flag for manual review). See Section 4 for tradeoffs.</li>
+  </ul>
+</div>
+
+<!-- ═══ SECTION 8: SEPARATE WORKSTREAM ═══ -->
+<div class="section">
+  <h2>8. Separate Workstream: Reporting Transition (Option 2A/2B)</h2>
+  
+  <div class="callout info">
+    <strong>The workflow above solves: billing frequency, recurring/one-time, term, and by extension ARR/amount accuracy in native HS fields.</strong>
+    <br><br>
+    For fields that CANNOT be made accurate in native HS line items (quantity, unit price, discount), the reporting transition work (with Ryan) swaps those fields in existing HS reports with monetize_ equivalents.
+    <br><br>
+    This is a separate workstream. The workflow must be built and validated first. Reporting transition happens in parallel or after.
+  </div>
+
+  <table>
+    <tr><th>Report field needed</th><th>HS native (wrong)</th><th>monetize_ equivalent (accurate)</th></tr>
+    <tr><td>Quantity</td><td>1 (always)</td><td>monetize_quoteitem_quantity</td></tr>
+    <tr><td>Unit price</td><td>Total amount</td><td>monetize_quoteitem_unit_price</td></tr>
+    <tr><td>Price after discount</td><td>N/A</td><td>monetize_quoteitem_unit_price_after_discount</td></tr>
+    <tr><td>Discount %</td><td>0</td><td>monetize_quoteitem_discount_percentage</td></tr>
+    <tr><td>Discount $</td><td>$0</td><td>monetize_quoteitem_discount_amount</td></tr>
+    <tr><td>ARR (exact)</td><td>HS computed (may differ for prorated)</td><td>monetize_quoteitem_arr</td></tr>
+    <tr><td>MRR (exact)</td><td>HS computed (may differ)</td><td>monetize_quoteitem_mrr</td></tr>
+  </table>
+</div>
+
+<script>
+function toggle(id){
+  const el=document.getElementById(id);
+  document.querySelectorAll('.detail').forEach(d=>{if(d.id!==id)d.classList.remove('open')});
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
