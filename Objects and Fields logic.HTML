@@ -27,7 +27,7 @@
   aside { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 24px 16px 40px; border-right: 1px solid var(--mn-border); background: var(--mn-bg); }
   aside .brand { font-weight: 700; font-size: 1rem; color: var(--mn-blue); }
   aside .sub { font-size: 0.75rem; color: var(--mn-muted); margin: 2px 0 20px; line-height: 1.4; }
-  nav .gl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: .1em; color: var(--mn-faint); margin: 16px 0 5px; font-weight: 700; padding-left: 8px; }
+  nav .gl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: .1em; color: var(--mn-blue); margin: 16px 0 5px; font-weight: 700; padding: 4px 8px; background: rgba(211,238,244,0.5); border-radius: 4px; }
   nav a { display: block; padding: 5px 8px; border-radius: 6px; font-size: 0.84rem; color: var(--mn-muted); text-decoration: none; margin-bottom: 1px; border-left: 2px solid transparent; transition: background .12s; }
   nav a code { font-family: var(--mono); font-size: 0.8rem; }
   nav a:hover { background: var(--mn-blue-10); color: var(--mn-text); }
@@ -40,15 +40,15 @@
   .lede code { font-family: var(--mono); font-size: 0.82rem; background: var(--mn-bg); padding: 1px 5px; border-radius: 4px; }
 
   section.obj { scroll-margin-top: 20px; margin-top: 46px; }
-  .obj-head { border-top: 2px solid var(--mn-border); padding-top: 16px; }
+  .obj-head { border-top: 3px solid var(--mn-blue); padding-top: 20px; }
   h2 { font-size: 1.35rem; letter-spacing: -0.01em; margin: 0 0 4px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; color: var(--mn-black); }
   h2 .cls { font-family: var(--mono); font-size: 0.78rem; color: var(--mn-blue); font-weight: 600; background: var(--mn-blue-10); padding: 2px 9px; border-radius: 6px; }
-  h2.group-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--mn-faint); border: 0; margin: 50px 0 -8px; padding: 0; }
+  h2.group-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--mn-blue); border: 0; margin: 56px 0 -4px; padding: 10px 14px; background: var(--mn-light-blue); border-radius: 6px; font-weight: 700; }
   .endpoints { font-family: var(--mono); font-size: 0.75rem; color: var(--mn-muted); margin: 6px 0 2px; line-height: 1.7; }
   .endpoints .verb { font-weight: 700; color: var(--mn-blue); }
-  h3.sub { font-size: 0.9rem; font-weight: 700; margin: 22px 0 6px; color: var(--mn-black); }
+  h3.sub { font-size: 0.9rem; font-weight: 700; margin: 24px 0 6px; color: var(--mn-black); padding-left: 12px; border-left: 3px solid var(--mn-blue); }
 
-  .callout { background: var(--mn-white); border: 1px solid var(--mn-border); border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow); }
+  .callout { background: var(--mn-white); border: 1.5px solid rgba(5,33,171,0.30); border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow); }
   .callout.intro { margin-top: 20px; }
   .callout h3 { margin: 0 0 10px; font-size: 0.95rem; }
   .callout ul { margin: 0; padding-left: 18px; }
@@ -64,10 +64,10 @@
   .warn ul { margin: 4px 0 0; padding-left: 18px; }
   .info { background: var(--mn-info-bg); border-left: 3px solid var(--mn-info-border); border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-size: 0.86rem; }
 
-  .twrap { margin-top: 12px; border: 1px solid var(--mn-border); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  .twrap { margin-top: 12px; border: 1.5px solid rgba(5,33,171,0.28); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
   .tscroll { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
-  thead th { position: sticky; top: 0; background: var(--mn-bg); color: var(--mn-muted); text-align: left; font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: .06em; padding: 9px 13px; border-bottom: 1px solid var(--mn-border); white-space: nowrap; z-index: 1; }
+  thead th { position: sticky; top: 0; background: var(--mn-light-blue); color: var(--mn-blue); text-align: left; font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: .06em; padding: 9px 13px; border-bottom: 2px solid rgba(5,33,171,0.28); white-space: nowrap; z-index: 1; }
   tbody td { padding: 8px 13px; border-bottom: 1px solid #f0f0f5; vertical-align: top; }
   tbody tr:last-child td { border-bottom: 0; }
   tbody tr { background: var(--mn-white); }
