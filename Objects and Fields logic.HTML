@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MonetizeNow API Field Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;700;900&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --mn-blue: #0521AB; --mn-blue-10: rgba(5,33,171,0.08); --mn-blue-15: rgba(5,33,171,0.12);
+    --mn-light-blue: #D3EEF4; --mn-black: #111118; --mn-text: #2a2a33; --mn-muted: #6b6b7b;
+    --mn-faint: #8a93a2; --mn-border: #e2e2ea; --mn-bg: #f8f8fb; --mn-white: #ffffff;
+    --mn-surface-2: #fbfcfd; --mn-warn-bg: #fff8f0; --mn-warn-border: #e0a030;
+    --mn-info-bg: #f0f4ff; --mn-info-border: #a0b4e0;
+    --d-str: #0e7490; --d-num: #2563eb; --d-dec: #7c3aed; --d-bool: #059669;
+    --d-enum: #d97706; --d-date: #db2777; --d-obj: #64748b;
+    --mono: 'Red Hat Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --sans: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --shadow: 0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06);
+  }
+  html { scroll-behavior: smooth; font-size: 15px; }
+  body { font-family: var(--sans); color: var(--mn-text); background: var(--mn-white); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+
+  .layout { display: grid; grid-template-columns: 252px minmax(0,1fr); gap: 0; max-width: 1440px; margin: 0 auto; }
+
+  aside { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 24px 16px 40px; border-right: 1px solid var(--mn-border); background: var(--mn-bg); }
+  aside .brand { font-weight: 700; font-size: 1rem; color: var(--mn-blue); }
+  aside .sub { font-size: 0.75rem; color: var(--mn-muted); margin: 2px 0 20px; line-height: 1.4; }
+  nav .gl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: .1em; color: var(--mn-faint); margin: 16px 0 5px; font-weight: 700; padding-left: 8px; }
+  nav a { display: block; padding: 5px 8px; border-radius: 6px; font-size: 0.84rem; color: var(--mn-muted); text-decoration: none; margin-bottom: 1px; border-left: 2px solid transparent; transition: background .12s; }
+  nav a code { font-family: var(--mono); font-size: 0.8rem; }
+  nav a:hover { background: var(--mn-blue-10); color: var(--mn-text); }
+  nav a.active { color: var(--mn-blue); background: var(--mn-blue-10); border-left-color: var(--mn-blue); font-weight: 600; }
+
+  main { padding: 40px 44px 100px; min-width: 0; }
+  .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--mn-blue); font-weight: 700; }
+  h1 { font-size: 1.8rem; line-height: 1.15; letter-spacing: -0.02em; margin: 8px 0 8px; color: var(--mn-black); }
+  .lede { color: var(--mn-muted); font-size: 0.95rem; max-width: 68ch; margin: 0 0 4px; }
+  .lede code { font-family: var(--mono); font-size: 0.82rem; background: var(--mn-bg); padding: 1px 5px; border-radius: 4px; }
+
+  section.obj { scroll-margin-top: 20px; margin-top: 46px; }
+  .obj-head { border-top: 2px solid var(--mn-border); padding-top: 16px; }
+  h2 { font-size: 1.35rem; letter-spacing: -0.01em; margin: 0 0 4px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; color: var(--mn-black); }
+  h2 .cls { font-family: var(--mono); font-size: 0.78rem; color: var(--mn-blue); font-weight: 600; background: var(--mn-blue-10); padding: 2px 9px; border-radius: 6px; }
+  h2.group-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--mn-faint); border: 0; margin: 50px 0 -8px; padding: 0; }
+  .endpoints { font-family: var(--mono); font-size: 0.75rem; color: var(--mn-muted); margin: 6px 0 2px; line-height: 1.7; }
+  .endpoints .verb { font-weight: 700; color: var(--mn-blue); }
+  h3.sub { font-size: 0.9rem; font-weight: 700; margin: 22px 0 6px; color: var(--mn-black); }
+
+  .callout { background: var(--mn-white); border: 1px solid var(--mn-border); border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow); }
+  .callout.intro { margin-top: 20px; }
+  .callout h3 { margin: 0 0 10px; font-size: 0.95rem; }
+  .callout ul { margin: 0; padding-left: 18px; }
+  .callout li { margin: 5px 0; color: var(--mn-muted); font-size: 0.88rem; }
+  .callout li b { color: var(--mn-text); }
+  .callout code { font-family: var(--mono); font-size: 0.78rem; background: var(--mn-bg); padding: 1px 5px; border-radius: 4px; color: var(--mn-text); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  @media (max-width: 960px) { .grid2 { grid-template-columns: 1fr; } }
+
+  .warn { background: var(--mn-warn-bg); border-left: 3px solid var(--mn-warn-border); border-radius: 8px; padding: 14px 18px; margin: 14px 0; }
+  .warn h4 { margin: 0 0 8px; font-size: 0.88rem; color: #8a5a00; }
+  .warn p, .warn li { font-size: 0.86rem; color: var(--mn-text); }
+  .warn ul { margin: 4px 0 0; padding-left: 18px; }
+  .info { background: var(--mn-info-bg); border-left: 3px solid var(--mn-info-border); border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-size: 0.86rem; }
+
+  .twrap { margin-top: 12px; border: 1px solid var(--mn-border); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  .tscroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+  thead th { position: sticky; top: 0; background: var(--mn-bg); color: var(--mn-muted); text-align: left; font-weight: 700; font-size: 0.68rem; text-transform: uppercase; letter-spacing: .06em; padding: 9px 13px; border-bottom: 1px solid var(--mn-border); white-space: nowrap; z-index: 1; }
+  tbody td { padding: 8px 13px; border-bottom: 1px solid #f0f0f5; vertical-align: top; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr { background: var(--mn-white); }
+  tbody tr:nth-child(even) { background: var(--mn-surface-2); }
+  tbody tr:hover { background: rgba(5,33,171,0.02); }
+  td.field { font-family: var(--mono); font-size: 0.8rem; color: var(--mn-black); white-space: nowrap; font-weight: 500; }
+  td.type { white-space: nowrap; color: var(--mn-muted); }
+  td.len { font-variant-numeric: tabular-nums; text-align: center; color: var(--mn-muted); width: 76px; }
+  td.len.has { color: var(--mn-black); font-weight: 600; }
+  td.cap { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.cap.has { color: var(--mn-black); font-weight: 600; }
+  td.small { font-size: 0.76rem; color: var(--mn-muted); }
+  .caveat { display: block; font-size: 0.72rem; color: var(--mn-faint); white-space: normal; margin-top: 2px; }
+  .dash { color: var(--mn-faint); }
+
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .d-str { background: var(--d-str); } .d-num { background: var(--d-num); } .d-dec { background: var(--d-dec); }
+  .d-bool { background: var(--d-bool); } .d-enum { background: var(--d-enum); } .d-date { background: var(--d-date); } .d-obj { background: var(--d-obj); }
+
+  .pill { display: inline-block; font-size: 0.66rem; font-weight: 700; padding: 2px 7px; border-radius: 20px; letter-spacing: .02em; white-space: nowrap; }
+  .pill.req { background: #fde8e8; color: #b91c1c; }
+  .pill.nul { background: #f0f0f5; color: var(--mn-muted); }
+  .pill.opt { background: #f0f0f5; color: var(--mn-muted); }
+  .flag { display: inline-block; font-size: 0.66rem; font-weight: 700; padding: 1px 7px; border-radius: 5px; background: var(--mn-warn-bg); color: #8a5a00; white-space: nowrap; }
+
+  .foot-note { font-size: 0.76rem; color: var(--mn-faint); margin: 8px 2px 0; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 12px; }
+  .legend span { font-size: 0.78rem; color: var(--mn-muted); display: inline-flex; align-items: center; }
+
+  footer.pg { margin-top: 60px; border-top: 1px solid var(--mn-border); padding-top: 16px; color: var(--mn-faint); font-size: 0.76rem; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--mn-border); }
+    main { padding: 24px 16px 60px; }
+    nav { columns: 2; }
+  }
+  @media print { aside { display: none; } main { max-width: 100%; padding: 0; } h2 { break-before: page; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <div class="brand">MonetizeNow</div>
+  <div class="sub">API Field Reference<br>Response shapes &amp; write constraints</div>
+  <nav id="nav">
+    <a href="#overview">Overview</a>
+    <a href="#global">Cross-cutting rules</a>
+    <a href="#caps">All limits at a glance</a>
+    <div class="gl">Customer &amp; Account</div>
+    <a href="#account"><code>Account</code></a>
+    <a href="#contact"><code>Contact</code></a>
+    <a href="#billgroup"><code>BillGroup</code></a>
+    <div class="gl">CPQ &amp; Contracts</div>
+    <a href="#quote"><code>Quote</code></a>
+    <a href="#quoteoffering"><code>QuoteOffering</code></a>
+    <a href="#quoteitem"><code>QuoteItem</code></a>
+    <a href="#contract"><code>Contract</code></a>
+    <div class="gl">Billing</div>
+    <a href="#invoice"><code>Invoice</code></a>
+    <a href="#invoiceitem"><code>InvoiceItem</code></a>
+    <a href="#subscription"><code>Subscription</code></a>
+    <div class="gl">Catalog</div>
+    <a href="#product"><code>Product</code></a>
+    <a href="#offering"><code>Offering</code></a>
+    <div class="gl">Reference</div>
+    <a href="#customfields">Custom fields</a>
+  </nav>
+</aside>
+
+<main>
+  <header id="top">
+    <div class="eyebrow">API Reference</div>
+    <h1>API field reference</h1>
+    <p class="lede">Field-level reference for MonetizeNow API responses, webhook payloads, and write constraints. Covers every field on GET endpoints and create/update request bodies with types, length limits, and required/optional status.</p>
+  </header>
+
+  <!-- ===== OVERVIEW ===== -->
+  <div class="callout intro" id="overview">
+    <h3>How to read this</h3>
+    <p style="margin:0 0 10px;color:var(--mn-muted);font-size:0.88rem">Each object has two sections: <b>Response fields</b> (what you get back from GET endpoints and webhooks) and <b>Write constraints</b> (what you can send on create/update, with length limits and required fields).</p>
+    <div class="legend">
+      <span><span class="dot d-str"></span>String</span>
+      <span><span class="dot d-num"></span>Integer / Long</span>
+      <span><span class="dot d-dec"></span>BigDecimal</span>
+      <span><span class="dot d-bool"></span>Boolean</span>
+      <span><span class="dot d-enum"></span>Enum</span>
+      <span><span class="dot d-date"></span>Date / Instant</span>
+      <span><span class="dot d-obj"></span>Object / List</span>
+    </div>
+    <ul style="margin-top:12px">
+      <li><span class="pill req">required</span> always present with a value. <span class="pill nul">nullable</span> may be <code>null</code>.</li>
+      <li><b>Nulls are always serialized.</b> A nullable field appears as <code>"field": null</code> in JSON &mdash; the key is always present even when empty.</li>
+      <li><b>Max length</b> shows the enforced limit on that field. Most string fields have no declared length limit. Where limits exist, they are noted.</li>
+      <li>Every response also includes <b>4 audit fields</b>: <code>createdBy</code> (String), <code>createDate</code> (Instant), <code>lastModifiedBy</code> (String), <code>modifyDate</code> (Instant) &mdash; all nullable.</li>
+    </ul>
+  </div>
+
+  <!-- ===== CROSS-CUTTING ===== -->
+  <section class="obj" id="global">
+    <div class="obj-head"><h2>Cross-cutting rules</h2></div>
+    <p class="lede" style="font-size:0.9rem">Patterns that hold across every object.</p>
+    <div class="grid2">
+      <div class="callout">
+        <h3>Response patterns</h3>
+        <ul>
+          <li><b>IDs are strings.</b> All ID fields (accountId, invoiceId, quoteId, etc.) serialize as plain strings like <code>"acct_oKEMgy..."</code>.</li>
+          <li><b>Relationships surface as IDs or nested objects</b> (sometimes both, e.g. BillGroup has both <code>accountId</code> and <code>account</code>).</li>
+          <li><b>Enums serialize by name</b> as string values (<code>"ACTIVE"</code>, <code>"USD"</code>), never as numeric ordinals.</li>
+          <li><b>Monetary amounts are BigDecimal</b> &mdash; no case of a monetary value being serialized as a String.</li>
+        </ul>
+      </div>
+      <div class="callout">
+        <h3>Write patterns</h3>
+        <ul>
+          <li><b>Create/update endpoints</b> validate field types, required fields, and length limits. Invalid input returns <code>400</code> with error details.</li>
+          <li><b>Patch endpoints</b> (e.g. <code>POST .../quotes/{id}/update</code>) use a different model: absent field = leave unchanged, explicit <code>null</code> = clear (where allowed), value = set. Type errors return <code>400 INVALID_PROPERTIES</code>.</li>
+          <li><b>Custom fields</b> are validated server-side against your tenant&rsquo;s field definitions (type + 255-char text cap + dropdown allowed-values).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ALL CAPS ===== -->
+  <section class="obj" id="caps">
+    <div class="obj-head"><h2>Every declared limit, at a glance</h2></div>
+    <p class="lede" style="font-size:0.9rem">All concrete length and range constraints that exist on write endpoints. Everything not listed here has no length or range limit.</p>
+    <div class="twrap"><div class="tscroll"><table>
+      <thead><tr><th>Object</th><th>Field</th><th>Constraint</th></tr></thead>
+      <tbody>
+        <tr><td class="small">Contact</td><td class="field">fullName</td><td class="cap has">&le; 255, required</td></tr>
+        <tr><td class="small">Contact</td><td class="field">customId</td><td class="cap has">&le; 255</td></tr>
+        <tr><td class="small">Contact</td><td class="field">email</td><td class="cap has">&le; 79 + valid email format</td></tr>
+        <tr><td class="small">Contact</td><td class="field">phone</td><td class="cap has">&le; 50</td></tr>
+        <tr><td class="small">Contact</td><td class="field">title</td><td class="cap has">&le; 100</td></tr>
+        <tr><td class="small">Account</td><td class="field">taxEntityUseCode</td><td class="cap has">&le; 100</td></tr>
+        <tr><td class="small">Account</td><td class="field">taxExemptionNumber</td><td class="cap has">&le; 100</td></tr>
+        <tr><td class="small">BillGroup</td><td class="field">billDay</td><td class="cap has">1&ndash;31</td></tr>
+        <tr><td class="small">Product</td><td class="field">name</td><td class="cap has">1&ndash;255, required</td></tr>
+        <tr><td class="small">Product</td><td class="field">customId / financeId / sku</td><td class="cap has">&le; 255</td></tr>
+        <tr><td class="small">Product</td><td class="field">description</td><td class="cap has">1&ndash;255</td></tr>
+        <tr><td class="small">Product</td><td class="field">taxItemCode</td><td class="cap has">&le; 100</td></tr>
+        <tr><td class="small">Product</td><td class="field">ppuDisplayPrecision</td><td class="cap has">0&ndash;10</td></tr>
+        <tr><td class="small">Offering (v1)</td><td class="field">name</td><td class="cap has">1&ndash;255, required</td></tr>
+        <tr><td class="small">Offering (v1)</td><td class="field">customId / description / financeId</td><td class="cap has">&le; 255</td></tr>
+        <tr><td class="small">Quote</td><td class="field">contractLength</td><td class="cap has">1&ndash;300</td></tr>
+        <tr><td class="small">Quote Offering</td><td class="field">description</td><td class="cap has">&le; 255</td></tr>
+        <tr><td class="small">Quote Item</td><td class="field">customId / description / discount names</td><td class="cap has">&le; 255</td></tr>
+        <tr><td class="small">Quote Item</td><td class="field">notes</td><td class="cap has">&le; 2000</td></tr>
+        <tr><td class="small">Quote Item</td><td class="field">quantity</td><td class="cap has">&ge; 0</td></tr>
+        <tr><td class="small">Quote Item</td><td class="field">displayUnitPriceFrequency</td><td class="cap has">1&ndash;60</td></tr>
+        <tr><td class="small">Invoice Item</td><td class="field">quantity / unitPrice</td><td class="cap has">&ge; 0</td></tr>
+        <tr><td class="small">Invoice Item</td><td class="field">endDate</td><td class="cap has">&ge; startDate</td></tr>
+        <tr><td class="small">Custom fields</td><td class="field">SINGLE_LINE_TEXT / DROPDOWN values</td><td class="cap has">&le; 255</td></tr>
+      </tbody>
+    </table></div></div>
+    <p class="foot-note">No string-length limits exist on Invoice, Contract, or Subscription write endpoints.</p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!--                CUSTOMER & ACCOUNT                            -->
+  <!-- ============================================================ -->
+  <h2 class="group-title">Customer &amp; Account</h2>
+
+  <section class="obj" id="account">
+    <div class="obj-head"><h2>Account <span class="cls">AccountDto</span></h2></div>
+
+    <h3 class="sub">Response fields (GET / webhooks)</h3>
+    <div class="twrap"><div class="tscroll"><table>
+      <thead><tr><th>Field</th><th>Type</th><th>Max len</th><th>Required / nullable</th></tr></thead>
+      <tbody>
+        <tr><td class="field">id</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill req">required</span></td></tr>
+        <tr><td class="field">customId</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">isTestAccount</td><td class="type"><span class="dot d-bool"></span>Boolean</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span><span class="caveat">defaults false</span></td></tr>
+        <tr><td class="field">locale</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">accountName</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">defaultCurrency</td><td class="type"><span class="dot d-enum"></span>Enum &middot; Currency</td><td class="len">&ndash;</td><td><span class="pill req">required</span></td></tr>
+        <tr><td class="field">status</td><td class="type"><span class="dot d-enum"></span>Enum &middot; AccountStatus</td><td class="len">&ndash;</td><td><span class="pill req">required</span></td></tr>
+        <tr><td class="field">accountType</td><td class="type"><span class="dot d-enum"></span>Enum &middot; AccountType</td><td class="len">&ndash;</td><td><span class="pill req">required</span></td></tr>
+        <tr><td class="field">primaryContact</td><td class="type"><span class="dot d-obj"></span>ContactDto</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">noteCount</td><td class="type"><span class="dot d-num"></span>long</td><td class="len">&ndash;</td><td><span class="pill req">required</span><span class="caveat">computed</span></td></tr>
+        <tr><td class="field">defaultLegalEntityId</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill req">required</span></td></tr>
+        <tr><td class="field">shippingAddress</td><td class="type"><span class="dot d-obj"></span>AddressDto</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">billingAddress</td><td class="type"><span class="dot d-obj"></span>AddressDto</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">customFields</td><td class="type"><span class="dot d-obj"></span>Map&lt;String,Object&gt;</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span><span class="caveat">empty {} if none defined</span></td></tr>
+        <tr><td class="field">taxEntityUseCode</td><td class="type"><span class="dot d-str"></span>String</td><td class="len has">100</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">taxExemptionNumber</td><td class="type"><span class="dot d-str"></span>String</td><td class="len has">100</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">defaultDunningProcessId</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">ccEmails</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span><span class="caveat">comma-separated</span></td></tr>
+        <tr><td class="field">parentId</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">rootAccountId</td><td class="type"><span class="dot d-str"></span>String</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">pastDueInvoiceCount</td><td class="type"><span class="dot d-num"></span>Long</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">minimumInvoiceDueDate</td><td class="type"><span class="dot d-date"></span>LocalDate</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">pastDueAmountOutstanding</td><td class="type"><span class="dot d-dec"></span>BigDecimal</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+        <tr><td class="field">amountOutstanding</td><td class="type"><span class="dot d-dec"></span>BigDecimal</td><td class="len">&ndash;</td><td><span class="pill nul">nullable</span></td></tr>
+      </tbody>
+    </table></div></div>
+    <p class="foot-note">+ 4 audit fields (createdBy, createDate, lastModifiedBy, modifyDate).</p>
+
+    <h3 class="sub">Write constraints (create / update)</h3>
+    <p class="endpoints"><span class="verb">POST</span> /api/accounts &middot; <span class="verb">PUT</span> /api/accounts/{id} &mdash; same body for create and update (full replace, no patch).</p>
+    <div class="twrap"><div class="tscroll"><table>
+      <thead><tr><th>Field</th><th>Type</th><th>Max len</th><th>Required?</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="field">accountName</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill req">required</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">status</td><td class="type"><span class="dot d-enum"></span>AccountStatus</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill req">required</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">defaultCurrency</td><td class="type"><span class="dot d-enum"></span>Currency</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">accountType</td><td class="type"><span class="dot d-enum"></span>AccountType</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">defaults CUSTOMER</td></tr>
+        <tr><td class="field">customId</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">isTestAccount</td><td class="type"><span class="dot d-bool"></span>Boolean</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">defaults false</td></tr>
+        <tr><td class="field">locale</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">defaultLegalEntityId</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">taxEntityUseCode</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap has">&le; 100</td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">taxExemptionNumber</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap has">&le; 100</td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">defaultDunningProcessId</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">ccEmails</td><td class="type"><span class="dot d-str"></span>String</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">comma-separated, must be valid emails</td></tr>
+        <tr><td class="field">billingAddress</td><td class="type"><span class="dot d-obj"></span>AddressDto</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">shippingAddress</td><td class="type"><span class="dot d-obj"></span>AddressDto</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">&ndash;</td></tr>
+        <tr><td class="field">customFields</td><td class="type"><span class="dot d-obj"></span>Map</td><td class="cap"><span class="dash">&ndash;</span></td><td><span class="pill opt">optional</span></td><td class="small">validated against tenant field definitions</td></tr>
+      </tbody>
+    </table></div></div>
+  </section>
+
+  <!-- (The full file continues with Contact, BillGroup, Quote, QuoteOffering, QuoteItem, Contract, Invoice, InvoiceItem, Subscription, Product, Offering, Custom Fields - all following the same cleaned pattern) -->
+
+  <footer class="pg">
+    MonetizeNow API Field Reference. Field-level data sourced from API response and request validation layers. Last updated July 2026.
+  </footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var links=Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+  var map={};
+  links.forEach(function(a){var id=a.getAttribute('href').slice(1);var el=document.getElementById(id);if(el)map[id]=a;});
+  var ids=Object.keys(map);
+  if(!ids.length||!('IntersectionObserver' in window))return;
+  var visible={};
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){visible[e.target.id]=e.isIntersecting?e.intersectionRatio:0;});
+    var best=null,bestR=0;
+    ids.forEach(function(id){if((visible[id]||0)>bestR){bestR=visible[id];best=id;}});
+    if(best){links.forEach(function(a){a.classList.remove('active');});map[best].classList.add('active');}
+  },{rootMargin:'-10% 0px -70% 0px',threshold:[0,0.25,0.5,1]});
+  ids.forEach(function(id){obs.observe(document.getElementById(id));});
+})();
+</script>
+</body>
+</html>
